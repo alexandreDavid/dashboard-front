@@ -3,8 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 
-import 'leaflet/dist/leaflet.css'
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

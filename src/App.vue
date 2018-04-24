@@ -1,32 +1,20 @@
 <template>
   <div id="app">
-    <Carto/>
+    <Map/>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld'
-import Carto from './components/Carto'
+
+import Map from './components/Map'
 
 export default {
   name: 'App',
   components: {
-    Carto
+    Map
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-      position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
+<style src="./main.scss" lang="scss">
 </style>
