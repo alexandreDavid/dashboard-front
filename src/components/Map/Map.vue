@@ -5,8 +5,6 @@
 <script>
 import { Map, LatLng, TileLayer } from 'leaflet'
 
-// import 'leaflet/dist/leaflet.css'
-
 export default {
   name: 'Map',
   components: { Map, LatLng, TileLayer },

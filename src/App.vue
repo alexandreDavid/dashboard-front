@@ -6,7 +6,7 @@
 
 <script>
 
-import Map from './components/Map'
+import Map from './components/Map/Map'
 
 export default {
   name: 'App',
