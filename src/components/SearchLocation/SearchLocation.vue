@@ -1,6 +1,5 @@
 <template>
   <div id="search-location" class="over-map">
-    {{hello}}
     <div class="autocomplete">
       <input
         type="text"
@@ -25,7 +24,7 @@
           @click="setResult(result)"
           class="autocomplete-result"
           :class="{ 'is-active': i === arrowCounter }">
-          {{ result }}
+          {{ result.title }}
         </li>
       </ul>
     </div>
@@ -39,18 +38,28 @@ import gql from 'graphql-tag'
 export default {
   name: 'SearchLocation',
   apollo: {
-    posts: gql`
-      {
-        posts {
-          id
-          title
-          author {
-            id
-            name
+    results: {
+      // gql query
+      query: gql`
+        query Movies($name: String!, $limit: Int!) {
+          movies(subString: $name, limit: $limit) {
+            title
           }
         }
+      `,
+      // Reactive parameters
+      variables() {
+        // Use vue reactive properties here
+        return {
+          name: this.search,
+          limit: 5
+        }
+      },
+      loadingKey: 'isLoading',
+      update(data) {
+        return data.movies;
       }
-    `
+    }
   },
   props: {
     isAsync: {
@@ -67,18 +76,17 @@ export default {
       search: '',
       isLoading: false,
       arrowCounter: 0,
-      hello: ''
+      movies: []
     }
   },
 
   methods: {
     onChange() {
-      // Let's warn the parent that a change was made
-      this.$emit('input', this.search)
-      this.isLoading = true
+      this.isOpen = !!this.search
+      this.arrowCounter = 0
     },
     setResult(result) {
-      this.search = result
+      this.search = result.title
       this.isOpen = false
     },
     onArrowDown(evt) {
@@ -92,8 +100,7 @@ export default {
       }
     },
     onEnter() {
-      this.search = this.results[this.arrowCounter]
-      this.isOpen = false
+      this.setResult(this.results[this.arrowCounter])
       this.arrowCounter = -1
     },
     handleClickOutside(evt) {
@@ -101,13 +108,6 @@ export default {
         this.isOpen = false
         this.arrowCounter = -1
       }
-    }
-  },
-  watch: {
-    items: function(val, oldValue) {
-      this.results = val
-      this.isOpen = true
-      this.isLoading = false
     }
   },
   mounted() {
@@ -148,7 +148,7 @@ export default {
   cursor: pointer;
 }
 
-.autocomplete-result:hover {
+.autocomplete-result:hover, .autocomplete-result.is-active {
   background-color: #4aae9b;
   color: white;
 }
