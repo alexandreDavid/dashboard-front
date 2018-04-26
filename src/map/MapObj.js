@@ -12,7 +12,7 @@ export var MapObj = {
     }).addTo(map)
 
     new Control.Zoom({
-      position: 'topright'
+      position: 'bottomleft'
     }).addTo(map)
   },
   setDisplayedLayer () {
