@@ -13,7 +13,7 @@ const httpLink = new HttpLink({
 export const apolloClient = new ApolloClient({
   link: httpLink,
   cache: new InMemoryCache(),
-  connectToDevTools: true
+  connectToDevTools: (process.env.NODE_ENV === 'production')
 })
 
 // Install the vue plugin
