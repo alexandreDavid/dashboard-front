@@ -1,5 +1,5 @@
 <template>
-  <div id="search-location" class="over-map">
+  <div id="search-location">
     <div class="autocomplete">
       <input
         type="text"
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-// import { MapObj } from '../../map/MapObj'
+
 import gql from 'graphql-tag'
 
 export default {
@@ -120,13 +120,6 @@ export default {
 </script>
 
 <style scoped>
-.over-map {
-  margin-top: 10px;
-  margin-left: 10px;
-  z-index: 400;
-  position: absolute;
-  top: 0;
-}
 
 .autocomplete {
   position: relative;

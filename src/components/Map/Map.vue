@@ -5,13 +5,9 @@
 
 <script>
 import { MapObj } from '../../map/MapObj'
-import SearchLocation from '../SearchLocation/SearchLocation'
 
 export default {
   name: 'Map',
-  components: {
-    SearchLocation
-  },
   mounted () {
     MapObj.init('map')
     MapObj.setDisplayedLayer()

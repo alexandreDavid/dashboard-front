@@ -1,5 +1,5 @@
 <template>
-  <div id="managing" class="over-map">
+  <div id="managing">
     <b-container>
         <b-row align-h="end" class="mb-2">
             <div>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { Modal } from '../Modal/Modal'
+import { Modal } from '../../Modal/Modal'
 export default {
   name: 'Managing',
   components: {
@@ -29,7 +29,6 @@ export default {
   },
   data() {
     return {
-      message: 'hello',
       showModal: false
     }
   }
@@ -37,12 +36,4 @@ export default {
 </script>
 
 <style scoped>
-.over-map {
-  margin-top: 10px;
-  margin-left: 10px;
-  z-index: 400;
-  position: absolute;
-  top: 0;
-  right: 0;
-}
 </style>
