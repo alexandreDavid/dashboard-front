@@ -1,4 +1,5 @@
-import { Map, TileLayer, Control } from 'leaflet'
+import { Map, TileLayer, Control, Marker, Icon } from 'leaflet'
+import img from '../assets/logo.png'
 
 let map
 export var MapObj = {
@@ -14,6 +15,8 @@ export var MapObj = {
     new Control.Zoom({
       position: 'bottomleft'
     }).addTo(map)
+
+    this._setCurrentLocationLayer()
   },
   setDisplayedLayer () {
     new TileLayer.WMS('http://localhost:8080/geoserver/geonode/wms', {
@@ -21,5 +24,18 @@ export var MapObj = {
       format: 'image/png',
       transparent: true
     }).addTo(map)
+  },
+  _setCurrentLocationLayer () {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        new Marker([position.coords.latitude, position.coords.longitude], {
+          icon: new Icon({
+            iconUrl: img,
+            iconSize: [38, 95],
+            iconAnchor: [22, 94]
+          })
+        }).addTo(map)
+      })
+    }
   }
 }
