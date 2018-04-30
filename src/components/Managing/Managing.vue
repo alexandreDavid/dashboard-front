@@ -8,21 +8,29 @@
             </div>
         </b-row>
         <b-row align-h="end" class="mb-2">
-            <b-badge pill variant="primary">ECMWF: Temperature</b-badge>
+          <b-badge pill variant="primary" href="#" @click="showModal = true">ECMWF: Temperature</b-badge>
+          <modal v-if="showModal" @close="showModal = false">
+            <h3 slot="header">custom headerhtr</h3>
+          </modal>
         </b-row>
         <b-row align-h="end">
-            <b-badge pill variant="secondary">REPORTED: Temperature</b-badge>
+            <b-badge pill variant="secondary" href="#">REPORTED: Temperature</b-badge>
         </b-row>
     </b-container>
   </div>
 </template>
 
 <script>
+import { Modal } from '../Modal/Modal'
 export default {
   name: 'Managing',
+  components: {
+    Modal
+  },
   data() {
     return {
-      message: 'hello'
+      message: 'hello',
+      showModal: false
     }
   }
 }
