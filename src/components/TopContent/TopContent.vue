@@ -4,7 +4,7 @@
       <SearchLocationResult v-if="searchLocationResult" v-bind:searchLocationResult="searchLocationResult"></SearchLocationResult>
       <div class="d-flex flex-nowrap position-relative">
         <div class="order-2 p-1 flex-grow-1"><SearchLocation @input="onSearchLocationSelected"></SearchLocation></div>
-        <div class="order-1 p-1"><img src="../../assets/logo.png" style="width: 38px;"></div>
+        <div class="order-1 p-1"><img src="../../assets/logo.png" style="height: 36px;"></div>
         <div class="order-3 p-1">
           <button type="button" class="btn btn-primary align-top"><font-awesome-icon :icon="iconLocate" /></button>
         </div>
