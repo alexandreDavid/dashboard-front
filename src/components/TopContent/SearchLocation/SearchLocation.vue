@@ -4,6 +4,7 @@
       <input
         type="text"
         @input="onChange"
+        @focus="onFocus"
         v-model="search"
         @keyup.down="onArrowDown"
         @keyup.up="onArrowUp"
@@ -61,14 +62,6 @@ export default {
       }
     }
   },
-  props: {
-    isAsync: {
-      type: Boolean,
-      required: false,
-      default: false
-    }
-  },
-
   data() {
     return {
       isOpen: false,
@@ -83,11 +76,18 @@ export default {
   methods: {
     onChange() {
       this.isOpen = !!this.search
+      this.$emit('input', false);
+      this.arrowCounter = 0
+    },
+    onFocus() {
+      this.isOpen = !!this.search
       this.arrowCounter = 0
     },
     setResult(result) {
       this.search = result.title
       this.isOpen = false
+      // Let's warn the parent that a change was made
+      this.$emit('input', this.search);
     },
     onArrowDown(evt) {
       if (this.arrowCounter < this.results.length) {
@@ -119,22 +119,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .autocomplete {
   position: relative;
-  width: 130px;
+  width: 100%;
+
+  input {
+    width: 100%;
+  }
 }
 
 .autocomplete-results {
   padding: 0;
   margin: 0;
-  border: 1px solid #eeeeee;
-  height: 120px;
-  overflow: auto;
 }
 
 .autocomplete-result {
+  background-color: #eeeeee;
   list-style: none;
   text-align: left;
   padding: 4px 2px;
