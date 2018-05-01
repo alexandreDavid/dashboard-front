@@ -1,22 +1,22 @@
 <template>
   <div id="managing">
-    <b-container>
-        <b-row align-h="end" class="mb-2">
-            <div>
-                <b-badge pill variant="primary">About</b-badge>
-                <b-badge pill variant="secondary">Profile</b-badge>
-            </div>
-        </b-row>
-        <b-row align-h="end" class="mb-2">
-          <b-badge pill variant="primary" href="#" @click="showModal = true">ECMWF: Temperature</b-badge>
-          <modal v-if="showModal" @close="showModal = false">
-            <h3 slot="header">custom headerhtr</h3>
-          </modal>
-        </b-row>
-        <b-row align-h="end">
-            <b-badge pill variant="secondary" href="#">REPORTED: Temperature</b-badge>
-        </b-row>
-    </b-container>
+    <div class="container">
+      <div class="row mb-2 justify-content-end">
+        <div>
+          <span class="badge badge-primary badge-pill">About</span>
+          <span class="badge badge-secondary badge-pill">Profile</span>
+        </div>
+      </div>
+      <div class="row mb-2 justify-content-end">
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill">ECMWF: Temperature</a>
+        <modal v-if="showModal" @close="showModal = false">
+          <h3 slot="header">custom headerhtr</h3>
+        </modal>
+      </div>
+      <div class="row justify-content-end">
+        <a href="#" target="_self" class="badge badge-secondary badge-pill">REPORTED: Temperature</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -36,4 +36,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>
