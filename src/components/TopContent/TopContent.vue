@@ -2,14 +2,18 @@
   <div id="top-content" class="over-map">
     <div class="over-map-left">
       <SearchLocationResult v-if="searchLocationResult" v-bind:searchLocationResult="searchLocationResult"></SearchLocationResult>
-      <div class="position-relative">
-        <img src="../../assets/logo.png" class="align-top d-inline-block" style="width: 38px;">
-        <SearchLocation @input="onSearchLocationSelected" class="search-location"></SearchLocation>
-        <button type="button" class="btn btn-primary align-top"><font-awesome-icon :icon="iconLocate" /></button>
-        <button type="button" class="btn btn-primary d-inline-block d-sm-none align-top"><font-awesome-icon :icon="iconMenu" /></button>
+      <div class="d-flex flex-nowrap position-relative">
+        <div class="order-2 p-1 flex-grow-1"><SearchLocation @input="onSearchLocationSelected"></SearchLocation></div>
+        <div class="order-1 p-1"><img src="../../assets/logo.png" style="width: 38px;"></div>
+        <div class="order-3 p-1">
+          <button type="button" class="btn btn-primary align-top"><font-awesome-icon :icon="iconLocate" /></button>
+        </div>
+        <div class="order-4 p-1 d-block d-sm-none">
+          <button type="button" class="btn btn-primary d-inline-block d-sm-none align-top"><font-awesome-icon :icon="iconMenu" /></button>
+        </div>
       </div>
     </div>
-    <div class="over-map-right">
+    <div class="over-map-right d-none d-sm-block">
       <Managing/>
     </div>
   </div>

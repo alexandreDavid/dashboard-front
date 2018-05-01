@@ -7,23 +7,13 @@
     left: 0;
     top: 0;
     position: absolute;
-    width: 300px;
-    .search-location {
-      display: inline-block;
-      width: calc(100% - 90px);
-    }
+    width: 400px;
     @include media-breakpoint-down(xs) {
       width: 100%;
-      .search-location {
-        width: calc(100% - 135px);
-      }
     }
   }
 
   .over-map-right {
-    @include media-breakpoint-down(xs) {
-      display: none;
-    }
     margin-top: 10px;
     margin-right: 10px;
     right: 0;
