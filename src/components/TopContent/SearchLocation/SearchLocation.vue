@@ -3,12 +3,14 @@
     <div class="autocomplete">
       <input
         type="text"
+        class="form-control"
+        placeholder="Search a location"
         @input="onChange"
         @focus="onFocus"
         v-model="search"
         @keyup.down="onArrowDown"
         @keyup.up="onArrowUp"
-        @keyup.enter="onEnter"/>
+        @keyup.enter="onEnter">
       <ul
         id="autocomplete-results"
         v-show="isOpen"

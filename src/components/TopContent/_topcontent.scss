@@ -3,19 +3,20 @@
   top: 0;
 
   .over-map-left {
-    @include media-breakpoint-down(xs) {
-      width: 100%;
-      .over-map-right {
-        display: inline;
-      }
-    }
     padding: 10px;
     left: 0;
     top: 0;
     position: absolute;
     width: 300px;
-    .over-map-right {
-      display: none;
+    .search-location {
+      display: inline-block;
+      width: calc(100% - 90px);
+    }
+    @include media-breakpoint-down(xs) {
+      width: 100%;
+      .search-location {
+        width: calc(100% - 135px);
+      }
     }
   }
 
