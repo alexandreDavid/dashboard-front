@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import { MapObj } from '../../../../map/MapObj'
+
 export default {
   name: 'ForecastSelection',
   data() {
@@ -29,7 +31,7 @@ export default {
         id : 'temperature',
         label: 'Temperature',
         active: true,
-        LayerUrl: 'http://localhost:8080/geoserver/geonode/wms',
+        layerUrl: 'http://localhost:8080/geoserver/geonode/wms',
         layerParameters: {
           layers: 'geonode:uganda_regions_2014_shp',
           format: 'image/png',
@@ -38,9 +40,9 @@ export default {
       }, {
         id : 'air_pressure',
         label: 'Air pressure',
-        LayerUrl: 'http://localhost:8080/geoserver/geonode/wms',
+        layerUrl: 'http://localhost:8080/geoserver/geonode/wms',
         layerParameters: {
-          layers: 'geonode:uganda_regions_2014_shp',
+          layers: 'geonode:san_andres_y_providencia_water',
           format: 'image/png',
           transparent: true
         }
@@ -57,6 +59,7 @@ export default {
       for (let forecastParameter of this.forecastParameters) {
           forecastParameter.active = (forecastParameter.id === selectedForecastParameter.id)
       }
+      MapObj.setDisplayedLayer(selectedForecastParameter.layerUrl, selectedForecastParameter.layerParameters)
     }
   }
 }

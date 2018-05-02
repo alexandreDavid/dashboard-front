@@ -10,7 +10,11 @@ export default {
   name: 'Map',
   mounted () {
     MapObj.init('map')
-    MapObj.setDisplayedLayer()
+    MapObj.setDisplayedLayer('http://localhost:8080/geoserver/geonode/wms', {
+      layers: 'geonode:uganda_regions_2014_shp',
+      format: 'image/png',
+      transparent: true
+    })
   }
 }
 </script>

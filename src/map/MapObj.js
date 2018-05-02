@@ -1,7 +1,7 @@
 import { Map, TileLayer, Control, Marker, Icon } from 'leaflet'
-import img from '../assets/logo.png'
 
 let map
+let displayedLayer
 export var MapObj = {
   init (id) {
     map = new Map(id, {
@@ -18,12 +18,13 @@ export var MapObj = {
 
     this._setCurrentLocationLayer()
   },
-  setDisplayedLayer () {
-    new TileLayer.WMS('http://localhost:8080/geoserver/geonode/wms', {
-      layers: 'geonode:uganda_regions_2014_shp',
-      format: 'image/png',
-      transparent: true
-    }).addTo(map)
+  setDisplayedLayer (layerUrl, options = {}) {
+    if (!displayedLayer) {
+      displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
+    } else {
+      displayedLayer.setUrl(layerUrl, true)
+      displayedLayer.setParams(options)
+    }
   },
   _setCurrentLocationLayer () {
     if (navigator.geolocation) {
