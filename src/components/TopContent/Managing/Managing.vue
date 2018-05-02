@@ -10,7 +10,8 @@
       <div class="row mb-2 justify-content-end">
         <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill">ECMWF: Temperature</a>
         <modal v-if="showModal" @close="showModal = false">
-          <h3 slot="header">custom headerhtr</h3>
+          <h3 slot="header">Forecast model parameters</h3>
+          <ForecastSelection slot="body"></ForecastSelection>
         </modal>
       </div>
       <div class="row justify-content-end">
@@ -22,10 +23,13 @@
 
 <script>
 import { Modal } from '../../Modal/Modal'
+import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
+
 export default {
   name: 'Managing',
   components: {
-    Modal
+    Modal,
+    ForecastSelection
   },
   data() {
     return {
