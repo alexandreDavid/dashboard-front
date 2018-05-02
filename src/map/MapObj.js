@@ -3,7 +3,7 @@ import { Map, TileLayer, Control, CircleMarker } from 'leaflet'
 let map
 let displayedLayer
 let currentLocationMarker
-export var MapObj = {
+export default {
   init (id) {
     map = new Map(id, {
       attributionControl: false,

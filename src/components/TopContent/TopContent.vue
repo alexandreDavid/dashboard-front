@@ -22,7 +22,7 @@
 <script>
 import SearchLocation from './SearchLocation/SearchLocation'
 import Managing from './Managing/Managing'
-import { MapObj } from '../../map/MapObj'
+import MapObj from '../../map/MapObj'
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faLocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow'

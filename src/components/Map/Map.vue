@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import { MapObj } from '../../map/MapObj'
+import MapObj from '../../map/MapObj'
 
 export default {
   name: 'Map',
