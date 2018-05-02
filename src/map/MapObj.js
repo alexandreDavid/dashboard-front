@@ -1,7 +1,8 @@
-import { Map, TileLayer, Control, Marker, Icon } from 'leaflet'
+import { Map, TileLayer, Control, CircleMarker } from 'leaflet'
 
 let map
 let displayedLayer
+let currentLocationMarker
 export var MapObj = {
   init (id) {
     map = new Map(id, {
@@ -15,8 +16,6 @@ export var MapObj = {
     new Control.Zoom({
       position: 'bottomleft'
     }).addTo(map)
-
-    this._setCurrentLocationLayer()
   },
   setDisplayedLayer (layerUrl, options = {}) {
     if (!displayedLayer) {
@@ -26,17 +25,25 @@ export var MapObj = {
       displayedLayer.setParams(options)
     }
   },
-  _setCurrentLocationLayer () {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        new Marker([position.coords.latitude, position.coords.longitude], {
-          icon: new Icon({
-            iconUrl: img,
-            iconSize: [38, 95],
-            iconAnchor: [22, 94]
-          })
-        }).addTo(map)
-      })
-    }
+  setCurrentLocationLayer () {
+    return new Promise((resolve, reject) => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          currentLocationMarker = new CircleMarker([position.coords.latitude, position.coords.longitude], {
+            radius: 5,
+            color: '#FFF',
+            weight: 1,
+            fillColor: '#3388ff',
+            fillOpacity: 1
+          }).addTo(map)
+          resolve(true)
+        })
+      } else {
+        resolve(false)
+      }
+    })
+  },
+  zoomToCurrentLocation () {
+    map.setView(currentLocationMarker.getLatLng())
   }
 }
