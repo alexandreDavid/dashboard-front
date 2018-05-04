@@ -1,13 +1,15 @@
 <template>
   <transition name="sidebar">
-    <nav class="sidebar pt-5" v-bind:class="position">
+    <div class="sidebar" v-bind:class="position">
         <div class="dismiss">
           <button type="button" class="close" aria-label="Close" @click="$emit('close')">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <slot></slot>
-    </nav>
+        <div class="sidebar-container">
+          <slot></slot>
+        </div>
+    </div>
   </transition>
 </template>
 
