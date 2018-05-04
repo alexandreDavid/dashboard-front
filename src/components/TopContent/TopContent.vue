@@ -9,7 +9,15 @@
           <button type="button" class="btn btn-primary align-top" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
         </div>
         <div class="order-4 p-1 d-block d-sm-none">
-          <button type="button" class="btn btn-primary d-inline-block d-sm-none align-top"><font-awesome-icon :icon="iconMenu" /></button>
+          <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top"><font-awesome-icon :icon="iconMenu" /></button>
+          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right">
+            <div class="card">
+              <h5 class="card-header">Forecast model parameters</h5>
+              <div class="card-body">
+                <ForecastSelection></ForecastSelection>
+              </div>
+            </div>
+          </SideBar>
         </div>
       </div>
     </div>
@@ -23,6 +31,7 @@
 import SearchLocation from './SearchLocation/SearchLocation'
 import Managing from './Managing/Managing'
 import MapObj from '../../map/MapObj'
+import ForecastSelection from './Managing/ForecastSelection/ForecastSelection'
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faLocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow'
@@ -34,7 +43,9 @@ export default {
     SearchLocation,
     SearchLocationResult: () => import('./SearchLocationResult/SearchLocationResult'),
     Managing,
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    SideBar: () => import('../SideBar/SideBar'),
+    ForecastSelection
   },
   computed: {
     iconLocate () {
@@ -50,7 +61,8 @@ export default {
   data () {
     return {
       searchLocationResult: '',
-      hasCurrentLocation: false
+      hasCurrentLocation: false,
+      showSidebar: false
     }
   },
   methods: {

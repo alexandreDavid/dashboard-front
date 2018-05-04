@@ -1,15 +1,12 @@
 @import "../node_modules/leaflet/dist/leaflet.css";
+
+// $theme-colors: (
+//   "primary": #6784a0
+// );
 @import "~bootstrap/scss/bootstrap.scss";
 
 @import "./components/TopContent/topcontent";
-
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
-
-body {
-  font: 100% $font-stack;
-  color: $primary-color;
-}
+@import "./components/SideBar/sidebar";
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
