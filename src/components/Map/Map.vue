@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import MapObj from '@/map/MapObj'
+import MapObj from '@/map'
 import TopContent from './TopContent/TopContent'
 
 export default {

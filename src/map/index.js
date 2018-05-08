@@ -28,14 +28,17 @@ export default {
   setCurrentLocationLayer () {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          currentLocationMarker = new CircleMarker([position.coords.latitude, position.coords.longitude], {
-            radius: 5,
-            color: '#FFF',
-            weight: 1,
-            fillColor: '#3388ff',
-            fillOpacity: 1
-          }).addTo(map)
+        navigator.geolocation.getCurrentPosition(position => {
+          currentLocationMarker = new CircleMarker(
+            [position.coords.latitude, position.coords.longitude],
+            {
+              radius: 5,
+              color: '#FFF',
+              weight: 1,
+              fillColor: '#3388ff',
+              fillOpacity: 1
+            }
+          ).addTo(map)
           resolve(true)
         })
       } else {

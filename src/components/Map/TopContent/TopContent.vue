@@ -30,7 +30,7 @@
 <script>
 import SearchLocation from './SearchLocation/SearchLocation'
 import Managing from './Managing/Managing'
-import MapObj from '@/map/MapObj'
+import MapObj from '@/map'
 import ForecastSelection from './Managing/ForecastSelection/ForecastSelection'
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'

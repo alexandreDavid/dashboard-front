@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import MapObj from '@/map/MapObj'
+import MapObj from '@/map'
 
 export default {
   name: 'ForecastSelection',
