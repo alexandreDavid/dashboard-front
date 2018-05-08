@@ -4,7 +4,7 @@
       <SearchLocationResult v-if="searchLocationResult" v-bind:searchLocationResult="searchLocationResult"></SearchLocationResult>
       <div class="d-flex flex-nowrap position-relative">
         <div class="order-2 p-1 flex-grow-1"><SearchLocation @input="onSearchLocationSelected"></SearchLocation></div>
-        <div class="order-1 p-1"><img src="../../assets/logo.png" style="height: 36px;"></div>
+        <div class="order-1 p-1"><img src="@/assets/logo.png" style="height: 36px;"></div>
         <div class="order-3 p-1">
           <button type="button" class="btn btn-primary align-top" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
         </div>
@@ -30,7 +30,7 @@
 <script>
 import SearchLocation from './SearchLocation/SearchLocation'
 import Managing from './Managing/Managing'
-import MapObj from '../../map/MapObj'
+import MapObj from '@/map/MapObj'
 import ForecastSelection from './Managing/ForecastSelection/ForecastSelection'
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
@@ -44,7 +44,7 @@ export default {
     SearchLocationResult: () => import('./SearchLocationResult/SearchLocationResult'),
     Managing,
     FontAwesomeIcon,
-    SideBar: () => import('../SideBar/SideBar'),
+    SideBar: () => import('@/components/SideBar/SideBar'),
     ForecastSelection
   },
   computed: {

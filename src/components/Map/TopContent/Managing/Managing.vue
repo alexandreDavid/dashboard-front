@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { Modal } from '../../Modal/Modal'
+import { Modal } from '@/components/Modal/Modal'
 import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
 
 export default {

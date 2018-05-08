@@ -7,7 +7,7 @@
 
 <script>
 import MapObj from '@/map/MapObj'
-import TopContent from '@/components/TopContent/TopContent'
+import TopContent from './TopContent/TopContent'
 
 export default {
   name: 'Map',
