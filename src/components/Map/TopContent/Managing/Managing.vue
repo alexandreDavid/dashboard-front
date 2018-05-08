@@ -4,7 +4,7 @@
       <div class="row mb-2 justify-content-end">
         <div>
           <span class="badge badge-primary badge-pill">About</span>
-          <span class="badge badge-secondary badge-pill">Profile</span>
+          <a href="#" @click="$router.push({ name: 'Login' })" target="_self" class="badge badge-secondary badge-pill">Profile</a>
         </div>
       </div>
       <div class="row mb-2 justify-content-end">
