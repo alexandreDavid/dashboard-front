@@ -14,11 +14,6 @@ export default {
   components: {TopContent},
   mounted () {
     MapObj.init('map-container')
-    MapObj.setDisplayedLayer('http://localhost:8080/geoserver/geonode/wms', {
-      layers: 'geonode:uganda_regions_2014_shp',
-      format: 'image/png',
-      transparent: true
-    })
   }
 }
 </script>
