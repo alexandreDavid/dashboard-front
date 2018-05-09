@@ -9,18 +9,20 @@ let defaultParams = {
     zoom: 8
   },
   baseLayer: {
-    url: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    layerUrl: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
     options: {
       maxZoom: 18
     }
   },
   displayedLayer: {
-    url: 'http://localhost:8080/geoserver/geonode/wms',
+    layerUrl: 'http://localhost:8080/geoserver/geonode/wms',
     options: {
       layers: 'geonode:uganda_regions_2014_shp',
       format: 'image/png',
       transparent: true
-    }
+    },
+    legendUrl:
+      'http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=geonode:uganda_regions_2014_shp'
   }
 }
 export default {
@@ -33,22 +35,31 @@ export default {
       zoomControl: false
     }).setView(defaultParams.view.location, defaultParams.view.zoom)
 
-    new TileLayer(defaultParams.baseLayer.url, defaultParams.baseLayer.options).addTo(map)
+    new TileLayer(
+      defaultParams.baseLayer.layerUrl,
+      defaultParams.baseLayer.options
+    ).addTo(map)
 
-    this.setDisplayedLayer(defaultParams.displayedLayer.url, defaultParams.displayedLayer.options)
+    this.setDisplayedLayer(
+      defaultParams.displayedLayer.layerUrl,
+      defaultParams.displayedLayer.options,
+      defaultParams.displayedLayer.legendUrl
+    )
 
     new Control.Zoom({
       position: 'bottomleft'
     }).addTo(map)
   },
-  setDisplayedLayer (layerUrl, options = {}) {
+  setDisplayedLayer (layerUrl, options = {}, legendUrl) {
     if (!displayedLayer) {
       displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
     } else {
       displayedLayer.setUrl(layerUrl, true)
       displayedLayer.setParams(options)
     }
+    this.displayedLayerLegendUrl = legendUrl
   },
+  displayedLayerLegendUrl: '',
   setCurrentLocationLayer () {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {

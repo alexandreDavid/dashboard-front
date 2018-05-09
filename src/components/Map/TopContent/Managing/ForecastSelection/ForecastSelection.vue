@@ -36,7 +36,8 @@ export default {
           layers: 'geonode:uganda_regions_2014_shp',
           format: 'image/png',
           transparent: true
-        }
+        },
+        legendUrl: 'http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=geonode:uganda_regions_2014_shp'
       }, {
         id : 'air_pressure',
         label: 'Air pressure',
@@ -45,7 +46,8 @@ export default {
           layers: 'geonode:san_andres_y_providencia_water',
           format: 'image/png',
           transparent: true
-        }
+        },
+        legendUrl: 'http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=geonode:san_andres_y_providencia_water'
       }]
     }
   },
@@ -59,7 +61,7 @@ export default {
       for (let forecastParameter of this.forecastParameters) {
           forecastParameter.active = (forecastParameter.id === selectedForecastParameter.id)
       }
-      MapObj.setDisplayedLayer(selectedForecastParameter.layerUrl, selectedForecastParameter.layerParameters)
+      MapObj.setDisplayedLayer(selectedForecastParameter.layerUrl, selectedForecastParameter.layerParameters, selectedForecastParameter.legendUrl)
     }
   }
 }

@@ -14,8 +14,11 @@
           <ForecastSelection slot="body"></ForecastSelection>
         </modal>
       </div>
-      <div class="row justify-content-end">
+      <div class="row mb-2 justify-content-end">
         <a href="#" target="_self" class="badge badge-secondary badge-pill">REPORTED: Temperature</a>
+      </div>
+      <div class="row mb-2 justify-content-end">
+        <img :src="mapObj.displayedLayerLegendUrl">
       </div>
     </div>
   </div>
@@ -24,6 +27,7 @@
 <script>
 import { Modal } from '@/components/Modal/Modal'
 import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
+import MapObj from '@/map'
 
 export default {
   name: 'Managing',
@@ -33,7 +37,8 @@ export default {
   },
   data() {
     return {
-      showModal: false
+      showModal: false,
+      mapObj: MapObj
     }
   }
 }
