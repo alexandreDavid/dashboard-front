@@ -1,6 +1,7 @@
 import { Map, TileLayer, CircleMarker } from 'leaflet'
 
 let map
+let baseLayer
 let displayedLayer
 let currentLocationMarker
 let defaultParams = {
@@ -9,7 +10,7 @@ let defaultParams = {
     zoom: 8
   },
   baseLayer: {
-    layerUrl: 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+    layerUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
     options: {
       maxZoom: 18
     }
@@ -42,16 +43,21 @@ export default {
   setDefaultMap () {
     map.setView(defaultParams.view.location, defaultParams.view.zoom)
 
-    new TileLayer(
-      defaultParams.baseLayer.layerUrl,
-      defaultParams.baseLayer.options
-    ).addTo(map)
+    this.setBaseMapLayer(defaultParams.baseLayer.layerUrl, defaultParams.baseLayer.options)
 
     this.setDisplayedLayer(
       defaultParams.displayedLayer.layerUrl,
       defaultParams.displayedLayer.options,
       defaultParams.displayedLayer.legendUrl
     )
+  },
+  setBaseMapLayer (layerUrl, options = {}) {
+    if (!baseLayer) {
+      baseLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
+    } else {
+      baseLayer.setUrl(layerUrl, true)
+      baseLayer.setParams(options)
+    }
   },
   setDisplayedLayer (layerUrl, options = {}, legendUrl) {
     if (!displayedLayer) {
