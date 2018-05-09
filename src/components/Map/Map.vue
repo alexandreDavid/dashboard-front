@@ -1,7 +1,7 @@
 <template>
     <div id="map">
       <div id="map-container"></div>
-      <TopContent/>
+      <TopContent v-if="mapInitialised"/>
       <BottomContent v-if="mapInitialised"/>
     </div>
 </template>

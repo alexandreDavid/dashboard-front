@@ -3,6 +3,7 @@ import { Map, TileLayer, CircleMarker } from 'leaflet'
 let map
 let baseLayer
 let displayedLayer
+let displayedLayerLegendUrl
 let currentLocationMarker
 let defaultParams = {
   view: {
@@ -60,15 +61,16 @@ export default {
     }
   },
   setDisplayedLayer (layerUrl, options = {}, legendUrl) {
-    if (!displayedLayer) {
-      displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
-    } else {
-      displayedLayer.setUrl(layerUrl, true)
-      displayedLayer.setParams(options)
+    // Remove and add to activate the addlayer event
+    if (displayedLayer) {
+      displayedLayer.remove()
     }
-    this.displayedLayerLegendUrl = legendUrl
+    displayedLayerLegendUrl = legendUrl
+    displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
   },
-  displayedLayerLegendUrl: '',
+  getDisplayedLayerLegendUrl () {
+    return displayedLayerLegendUrl
+  },
   setCurrentLocationLayer () {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {

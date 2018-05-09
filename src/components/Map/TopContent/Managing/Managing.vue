@@ -18,7 +18,7 @@
         <a href="#" target="_self" class="badge badge-secondary badge-pill">REPORTED: Temperature</a>
       </div>
       <div class="row mb-2 justify-content-end">
-        <img :src="mapObj.displayedLayerLegendUrl">
+        <img v-bind:src="legendUrl">
       </div>
     </div>
   </div>
@@ -38,8 +38,15 @@ export default {
   data() {
     return {
       showModal: false,
-      mapObj: MapObj
+      legendUrl: false
     }
+  },
+  mounted() {
+    var vm = this
+    // On layer displayed change, legend refresh
+    MapObj.getMap().on('layeradd', function () {
+      vm.legendUrl = MapObj.getDisplayedLayerLegendUrl()
+    });
   }
 }
 </script>
