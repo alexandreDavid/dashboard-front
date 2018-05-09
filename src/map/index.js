@@ -29,11 +29,18 @@ export default {
   setDefaultParams (params) {
     Object.assign(defaultParams, params)
   },
+  getMap () {
+    return map
+  },
   init (id) {
     map = new Map(id, {
       attributionControl: false,
       zoomControl: false
-    }).setView(defaultParams.view.location, defaultParams.view.zoom)
+    })
+    this.setDefaultMap()
+  },
+  setDefaultMap () {
+    map.setView(defaultParams.view.location, defaultParams.view.zoom)
 
     new TileLayer(
       defaultParams.baseLayer.layerUrl,
@@ -45,9 +52,6 @@ export default {
       defaultParams.displayedLayer.options,
       defaultParams.displayedLayer.legendUrl
     )
-  },
-  getMap () {
-    return map
   },
   setDisplayedLayer (layerUrl, options = {}, legendUrl) {
     if (!displayedLayer) {

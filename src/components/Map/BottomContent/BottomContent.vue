@@ -2,6 +2,7 @@
   <div id="bottom-content" class="over-map">
     <div class="over-map-left d-none d-sm-block">
       <ZoomControl/>
+      <button type="button" class="btn btn-primary align-bottom" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
       <button type="button" class="btn btn-primary align-bottom"><font-awesome-icon :icon="iconGraph" /></button>
     </div>
   </div>
@@ -9,9 +10,9 @@
 
 <script>
 import MapObj from '@/map'
-
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
+import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
 import ZoomControl from './ZoomControl/ZoomControl'
 
 export default {
@@ -23,24 +24,14 @@ export default {
   computed: {
     iconGraph () {
       return faChartBar
-    }
-  },
-  async created () {
-    this.hasCurrentLocation = await MapObj.setCurrentLocationLayer()
-  },
-  data () {
-    return {
-      searchLocationResult: '',
-      hasCurrentLocation: false,
-      showSidebar: false
+    },
+    iconUndo () {
+      return faUndo
     }
   },
   methods: {
-    onSearchLocationSelected (newValue) {
-      this.searchLocationResult = newValue
-    },
-    zoomToCurrentLocation () {
-      MapObj.zoomToCurrentLocation()
+    resetMap () {
+      MapObj.setDefaultMap()
     }
   }
 }
