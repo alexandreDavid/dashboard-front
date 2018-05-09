@@ -39,6 +39,8 @@ export default {
       attributionControl: false,
       zoomControl: false
     })
+    // Need to display the baselayer
+    baseLayer = false
     this.setDefaultMap()
   },
   setDefaultMap () {
