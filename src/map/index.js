@@ -1,4 +1,4 @@
-import { Map, TileLayer, Control, CircleMarker } from 'leaflet'
+import { Map, TileLayer, CircleMarker } from 'leaflet'
 
 let map
 let displayedLayer
@@ -45,10 +45,9 @@ export default {
       defaultParams.displayedLayer.options,
       defaultParams.displayedLayer.legendUrl
     )
-
-    new Control.Zoom({
-      position: 'bottomleft'
-    }).addTo(map)
+  },
+  getMap () {
+    return map
   },
   setDisplayedLayer (layerUrl, options = {}, legendUrl) {
     if (!displayedLayer) {
