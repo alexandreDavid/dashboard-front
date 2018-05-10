@@ -10,7 +10,8 @@
         </div>
         <div class="order-4 p-1 d-block d-sm-none">
           <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top"><font-awesome-icon :icon="iconMenu" /></button>
-          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right">
+          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
+            <button @click="$router.push({ name: 'Settings' })" class="btn btn-secondary mb-2"><font-awesome-icon :icon="iconSettings" /> Settings</button>
             <div class="card">
               <h5 class="card-header">Forecast model parameters</h5>
               <div class="card-body">
@@ -36,6 +37,7 @@ import ForecastSelection from './Managing/ForecastSelection/ForecastSelection'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faLocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow'
 import faBars from '@fortawesome/fontawesome-free-solid/faBars'
+import faCog from '@fortawesome/fontawesome-free-solid/faCog'
 
 export default {
   name: 'TopContent',
@@ -53,6 +55,9 @@ export default {
     },
     iconMenu () {
       return faBars
+    },
+    iconSettings () {
+      return faCog
     }
   },
   async created () {

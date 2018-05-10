@@ -6,7 +6,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="sidebar-container">
+        <div class="sidebar-container p-2">
           <slot></slot>
         </div>
     </div>
