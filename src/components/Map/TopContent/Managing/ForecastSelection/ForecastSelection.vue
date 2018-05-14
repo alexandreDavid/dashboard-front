@@ -9,16 +9,29 @@
         {{parameter.displayName}}
       </a>
     </div>
-    <div v-if="!isLoaded">Loading</div>
+    <div v-if="!isLoaded" class="text-center p-3">
+      <font-awesome-icon :icon="iconSpinner" spin class="display-4 mb-2"/>
+      <div>Loading...</div>
+    </div>
   </div>
 </template>
 
 <script>
 import MapObj from '@/map'
 import Parameter from '@/parameter'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
 
 export default {
   name: 'ForecastSelection',
+  components: {
+    FontAwesomeIcon
+  },
+  computed: {
+    iconSpinner() {
+      return faSpinner
+    }
+  },
   data() {
     return {
       forecastModels: [{
