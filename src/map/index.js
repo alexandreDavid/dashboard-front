@@ -14,16 +14,6 @@ let defaultParams = {
     options: {
       maxZoom: 18
     }
-  },
-  displayedLayer: {
-    layerUrl: 'http://localhost:8080/geoserver/geonode/wms',
-    options: {
-      layers: 'geonode:uganda_regions_2014_shp',
-      format: 'image/png',
-      transparent: true
-    },
-    legendUrl:
-      'http://localhost:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=geonode:uganda_regions_2014_shp'
   }
 }
 export default {
@@ -47,11 +37,13 @@ export default {
 
     this.setBaseMapLayer(defaultParams.baseLayer.layerUrl, defaultParams.baseLayer.options)
 
-    this.setDisplayedLayer(
-      defaultParams.displayedLayer.layerUrl,
-      defaultParams.displayedLayer.options,
-      defaultParams.displayedLayer.legendUrl
-    )
+    if (defaultParams) {
+      this.setDisplayedLayer(
+        defaultParams.displayedLayer.layerUrl,
+        defaultParams.displayedLayer.options,
+        defaultParams.displayedLayer.legendUrl
+      )
+    }
   },
   setBaseMapLayer (layerUrl, options = {}) {
     if (!baseLayer) {
