@@ -27,7 +27,7 @@
           @click="setResult(result)"
           class="autocomplete-result"
           :class="{ 'is-active': i === arrowCounter }">
-          {{ result.title }}
+          {{ result.displayName }}
         </li>
       </ul>
     </div>
@@ -36,34 +36,35 @@
 
 <script>
 
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
+import Area from '@/area'
 
 export default {
   name: 'SearchLocation',
-  apollo: {
-    results: {
-      // gql query
-      query: gql`
-        query Movies($name: String!, $limit: Int!) {
-          movies(subString: $name, limit: $limit) {
-            title
-          }
-        }
-      `,
-      // Reactive parameters
-      variables() {
-        // Use vue reactive properties here
-        return {
-          name: this.search,
-          limit: 5
-        }
-      },
-      loadingKey: 'isLoading',
-      update(data) {
-        return data.movies;
-      }
-    }
-  },
+  // apollo: {
+  //   results: {
+  //     // gql query
+  //     query: gql`
+  //       query Movies($name: String!, $limit: Int!) {
+  //         movies(subString: $name, limit: $limit) {
+  //           title
+  //         }
+  //       }
+  //     `,
+  //     // Reactive parameters
+  //     variables() {
+  //       // Use vue reactive properties here
+  //       return {
+  //         name: this.search,
+  //         limit: 5
+  //       }
+  //     },
+  //     loadingKey: 'isLoading',
+  //     update(data) {
+  //       return data.movies;
+  //     }
+  //   }
+  // },
   data() {
     return {
       isOpen: false,
@@ -71,25 +72,32 @@ export default {
       search: '',
       isLoading: false,
       arrowCounter: 0,
-      movies: []
+      movies: [],
+      areas: []
     }
+  },
+  async created() {
+    this.areas = await Area.getAllAreas()
   },
 
   methods: {
     onChange() {
       this.isOpen = !!this.search
       this.$emit('input', false);
+      this.filterResults()
       this.arrowCounter = 0
     },
     onFocus() {
       this.isOpen = !!this.search
+      this.filterResults()
       this.arrowCounter = 0
     },
     setResult(result) {
-      this.search = result.title
+      this.search = result.displayName
       this.isOpen = false
+      Area.setSelectedArea(result)
       // Let's warn the parent that a change was made
-      this.$emit('input', this.search);
+      this.$emit('input', result);
     },
     onArrowDown(evt) {
       if (this.arrowCounter < this.results.length) {
@@ -110,6 +118,10 @@ export default {
         this.isOpen = false
         this.arrowCounter = -1
       }
+    },
+    filterResults() {
+      // Only 5 results
+      this.results = this.areas.filter(area => area.displayName.toLowerCase().indexOf(this.search.toLowerCase()) > -1).slice(0, 5);
     }
   },
   mounted() {

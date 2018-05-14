@@ -52,6 +52,7 @@ export default {
 #search-location-result {
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
   padding-top: 50px;
   background: rgba(100, 100, 100, 0.8);
