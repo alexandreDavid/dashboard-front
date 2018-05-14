@@ -21,9 +21,10 @@ export default {
   },
   async created() {
     // Get initial parameters
-    if (!await Api.getInitialEnvironmemt()) {
-      this.$router.push(this.$route.query.redirect || 'Error')
-    }
+    // if (!await Api.getInitialEnvironmemt()) {
+    //   this.$router.push(this.$route.query.redirect || 'Error')
+    // }
+    await Api.getInitialEnvironmemt()
     this.isLoading = false
   }
 }
