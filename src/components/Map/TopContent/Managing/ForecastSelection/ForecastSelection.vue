@@ -1,20 +1,21 @@
 <template>
-  <div id="forecast-selection" v-if="isLoaded">
-    <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
+  <div id="forecast-selection">
+    <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons" v-if="isLoaded">
       <label class="btn btn-primary" v-for="forecastModel in forecastModels" :key="forecastModel.id" v-bind:class="{ active: forecastModel.active }">
         <input type="radio" name="options" id="forecastModel.id" autocomplete="off" @click="selectForecastModel(forecastModel)"> {{forecastModel.label}}</label>
     </div>
-    <div class="list-group">
+    <div class="list-group" v-if="isLoaded">
       <a href="#" class="list-group-item list-group-item-action" v-for="parameter in parameters" :key="parameter.paramName" @click="selectParameter(parameter)" v-bind:class="{ active: parameter.paramName === activeParam }">
         {{parameter.displayName}}
       </a>
     </div>
+    <div v-if="!isLoaded">Loading</div>
   </div>
 </template>
 
 <script>
 import MapObj from '@/map'
-import Data from '@/data'
+import Parameter from '@/parameter'
 
 export default {
   name: 'ForecastSelection',
@@ -34,7 +35,7 @@ export default {
     }
   },
   async created() {
-    this.parameters = await Data.getAllParameters()
+    this.parameters = await Parameter.getAllParameters()
     this.isLoaded = true
   },
   methods: {
@@ -43,21 +44,9 @@ export default {
           forecastModel.active = (forecastModel.id === selectedForecastModel.id)
       }
     },
-    selectForecastParameter (selectedForecastParameter) {
-      for (let forecastParameter of this.forecastParameters) {
-          forecastParameter.active = (forecastParameter.id === selectedForecastParameter.id)
-      }
-      MapObj.setDisplayedLayer(selectedForecastParameter.layerUrl, selectedForecastParameter.layerParameters, selectedForecastParameter.legendUrl)
-    },
-    selectLayer (selectedLayer) {
-      for (let layer of this.layers) {
-          layer.active = (layer.id === selectedLayer.id)
-      }
-      MapObj.setDisplayedLayer(selectedLayer.layerUrl, selectedLayer.layerParameters, selectedLayer.legendUrl)
-    },
     selectParameter (selectedParameter) {
       this.activeParam = selectedParameter.paramName
-      MapObj.setDisplayedLayer(selectedParameter.layerUrl, selectedParameter.layerParameters, selectedParameter.legendUrl)
+      Parameter.setDisplayedParameter(selectedParameter)
     }
   }
 }

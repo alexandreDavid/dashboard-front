@@ -8,7 +8,8 @@
         </div>
       </div>
       <div class="row mb-2 justify-content-end">
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill">ECMWF: Temperature</a>
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill" v-if="displayedParameter.displayName">ECMWF: {{displayedParameter.displayName}}</a>
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill" v-else>Select a parameter</a>
         <modal v-if="showModal" @close="showModal = false">
           <h3 slot="header">Forecast model parameters</h3>
           <ForecastSelection slot="body"></ForecastSelection>
@@ -18,7 +19,7 @@
         <a href="#" target="_self" class="badge badge-secondary badge-pill">REPORTED: Temperature</a>
       </div>
       <div class="row mb-2 justify-content-end">
-        <img v-bind:src="legendUrl">
+        <img v-bind:src="displayedParameter.legendUrl">
       </div>
     </div>
   </div>
@@ -28,6 +29,7 @@
 import { Modal } from '@/components/Modal/Modal'
 import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
 import MapObj from '@/map'
+import Parameter from '@/parameter'
 
 export default {
   name: 'Managing',
@@ -38,19 +40,15 @@ export default {
   data() {
     return {
       showModal: false,
-      legendUrl: false
+      displayedParameter: {}
     }
   },
   mounted() {
     var vm = this
     // On layer displayed change, legend refresh
     MapObj.getMap().on('layeradd', function () {
-      vm.legendUrl = MapObj.getDisplayedLayerLegendUrl()
-    });
+      vm.displayedParameter = Parameter.getDisplayedParameter()
+    })
   }
 }
 </script>
-
-<style scoped>
-
-</style>
