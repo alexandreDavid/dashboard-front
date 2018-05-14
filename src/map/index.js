@@ -37,7 +37,7 @@ export default {
 
     this.setBaseMapLayer(defaultParams.baseLayer.layerUrl, defaultParams.baseLayer.options)
 
-    if (defaultParams) {
+    if (defaultParams.displayedLayer) {
       this.setDisplayedLayer(
         defaultParams.displayedLayer.layerUrl,
         defaultParams.displayedLayer.options,
