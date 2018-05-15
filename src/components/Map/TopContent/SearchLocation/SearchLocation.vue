@@ -132,33 +132,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-.autocomplete {
-  position: relative;
-  width: 100%;
-
-  input {
-    width: 100%;
-  }
-}
-
-.autocomplete-results {
-  padding: 0;
-  margin: 0;
-}
-
-.autocomplete-result {
-  background-color: #eeeeee;
-  list-style: none;
-  text-align: left;
-  padding: 4px 2px;
-  cursor: pointer;
-}
-
-.autocomplete-result:hover, .autocomplete-result.is-active {
-  background-color: #4aae9b;
-  color: white;
-}
-</style>
