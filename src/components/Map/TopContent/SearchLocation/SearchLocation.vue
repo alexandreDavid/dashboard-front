@@ -14,7 +14,7 @@
       <ul
         id="autocomplete-results"
         v-show="isOpen"
-        class="autocomplete-results">
+        class="autocomplete-results shadow">
         <li
           class="loading"
           v-if="isLoading">

@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-group-vertical">
+  <div class="btn-group-vertical shadow">
     <button type="button" class="btn btn-primary btn-sm border-bottom" @click="zoomIn" :disabled="zoomInDisabled"><font-awesome-icon :icon="iconPlus" /></button>
     <button type="button" class="btn btn-primary btn-sm border-top" @click="zoomOut" :disabled="zoomOutDisabled"><font-awesome-icon :icon="iconMinus" /></button>
   </div>

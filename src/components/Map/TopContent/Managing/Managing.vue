@@ -3,13 +3,13 @@
     <div class="container">
       <div class="row mb-2 justify-content-end">
         <div>
-          <span class="badge badge-primary badge-pill">About</span>
-          <a href="#" @click="$router.push({ name: 'Login' })" target="_self" class="badge badge-secondary badge-pill">Profile</a>
+          <span class="badge badge-primary badge-pill shadow">About</span>
+          <a href="#" @click="$router.push({ name: 'Login' })" target="_self" class="badge badge-secondary badge-pill shadow">Profile</a>
         </div>
       </div>
       <div class="row mb-2 justify-content-end">
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill" v-if="displayedParameter.displayName">ECMWF: {{displayedParameter.displayName}}</a>
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill" v-else>Select a parameter</a>
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow" v-if="displayedParameter.displayName">ECMWF: {{displayedParameter.displayName}}</a>
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow" v-else>Select a parameter</a>
         <modal v-if="showModal" @close="showModal = false">
           <h3 slot="header">Forecast model parameters</h3>
           <ForecastSelection slot="body"></ForecastSelection>

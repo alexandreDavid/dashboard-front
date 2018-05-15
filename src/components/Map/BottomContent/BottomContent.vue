@@ -2,8 +2,8 @@
   <div id="bottom-content" class="over-map">
     <div class="over-map-left d-none d-sm-block">
       <ZoomControl/>
-      <button type="button" class="btn btn-primary align-bottom" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
-      <button type="button" class="btn btn-primary align-bottom"><font-awesome-icon :icon="iconGraph" /></button>
+      <button type="button" class="btn btn-primary align-bottom shadow" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
+      <button type="button" class="btn btn-primary align-bottom shadow"><font-awesome-icon :icon="iconGraph" /></button>
     </div>
   </div>
 </template>
