@@ -18,8 +18,10 @@ export default {
   getActiveKeyById (id) {
     return this.getSettingById(id).value
   },
-  setActiveKeyById (id, key) {
-    this.getSettingById(id).value = key
+  setActiveKeyById (id, setting) {
+    let key = setting.key
+    let label = setting.label
+    Object.assign(this.getSettingById(id), { key, label })
     Api.setSettings(settings)
   }
 }

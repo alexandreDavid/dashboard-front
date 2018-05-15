@@ -4,7 +4,7 @@
       <h4>{{locationDetails.period}}</h4>
       <div class="d-flex">
         <div class="pr-2">
-          <img :src="locationDetails.weather.image" class="h-100">
+          <img :src="locationDetails.weather.image" class="weather-img">
         </div>
         <div class="pl-2 flex-grow-1">
           <div class="lead">{{locationDetails.weather.description}}</div>
@@ -88,5 +88,9 @@ export default {
   left: 0;
   right: 0;
   padding-top: 50px;
+
+  .weather-img {
+    width: 84px;
+  }
 }
 </style>
