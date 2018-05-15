@@ -46,5 +46,19 @@ export default {
     } catch (e) {
       return false
     }
+  },
+  async getAreaInfos (area) {
+    try {
+      const response = await axios.get(
+        `${urlRoot}/mock/area.json`, {
+          params: {
+            area: area
+          }
+        }
+      )
+      return response.data
+    } catch (e) {
+      return false
+    }
   }
 }

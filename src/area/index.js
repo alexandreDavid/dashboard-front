@@ -1,6 +1,7 @@
 import Data from '@/data'
 import MapObj from '@/map'
 import axios from 'axios'
+import Api from '@/api'
 
 let selectedArea = {}
 
@@ -26,8 +27,16 @@ export default {
       }
     )
     MapObj.setAreaLayer(areaData.data)
+    this.zoomToArea()
   },
   getSelectedArea () {
     return selectedArea
+  },
+  zoomToArea () {
+    MapObj.zoomToAreaLayer()
+  },
+  async getAreaInfos (area) {
+    const infos = await Api.getAreaInfos(area)
+    return infos
   }
 }

@@ -71,7 +71,6 @@ export default {
       color: 'black',
       fillOpacity: 0.0
     }).addTo(map)
-    map.fitBounds(areaLayer.getBounds())
   },
   setCurrentLocationLayer () {
     return new Promise((resolve, reject) => {
@@ -93,6 +92,9 @@ export default {
         resolve(false)
       }
     })
+  },
+  zoomToAreaLayer () {
+    map.fitBounds(areaLayer.getBounds())
   },
   zoomToCurrentLocation () {
     map.setView(currentLocationMarker.getLatLng())
