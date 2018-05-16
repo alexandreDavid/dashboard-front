@@ -25,5 +25,15 @@ export default {
     } else {
       return structureCache
     }
+  },
+  async getAreaParameterData (area, parameter) {
+    try {
+      const response = await axios.get(
+        `${urlRoot}/${area.type}/${area.paramName}/${parameter.paramName}`
+      )
+      return response.data[parameter.paramName]
+    } catch (e) {
+      return false
+    }
   }
 }

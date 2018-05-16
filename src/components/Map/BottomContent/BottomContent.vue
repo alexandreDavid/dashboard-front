@@ -3,23 +3,37 @@
     <div class="over-map-left d-none d-sm-block">
       <ZoomControl/>
       <button type="button" class="btn btn-primary align-bottom shadow" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
-      <button type="button" class="btn btn-primary align-bottom shadow"><font-awesome-icon :icon="iconGraph" /></button>
+      <button type="button" class="btn btn-primary align-bottom shadow" @click="showModal = true"><font-awesome-icon :icon="iconGraph" /></button>
+      <modal v-if="showModal" @close="showModal = false">
+        <h3 slot="header">Graph</h3>
+        <div slot="body"><Graph v-bind:area="selectedArea.getSelectedArea()" v-bind:parameter="selectedParameter.getDisplayedParameter()"></Graph></div>
+      </modal>
     </div>
   </div>
 </template>
 
 <script>
 import MapObj from '@/map'
+import Parameter from '@/parameter'
+import Area from '@/area'
+import ZoomControl from './ZoomControl/ZoomControl'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
-import ZoomControl from './ZoomControl/ZoomControl'
 
 export default {
   name: 'BottomContent',
   components: {
     FontAwesomeIcon,
-    ZoomControl
+    ZoomControl,
+    Graph: ()  => import('@/components/Graph/Graph')
+  },
+  data() {
+    return {
+      showModal: false,
+      selectedArea: Area,
+      selectedParameter: Parameter
+    }
   },
   computed: {
     iconGraph () {
