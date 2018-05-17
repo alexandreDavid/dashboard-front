@@ -19,6 +19,10 @@ export default {
     })
     return parameters
   },
+  async getAllParameterGroupings () {
+    let structure = await Data.getStructure()
+    return structure.parameterGroupings
+  },
   setDisplayedParameter (parameter) {
     displayedParameter = parameter
     MapObj.setDisplayedLayer(displayedParameter.layerUrl, displayedParameter.layerParameters)

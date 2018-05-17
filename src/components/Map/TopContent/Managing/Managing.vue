@@ -8,11 +8,11 @@
         </div>
       </div>
       <div class="row mb-2 justify-content-end">
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow" v-if="displayedParameter.displayName">ECMWF: {{displayedParameter.displayName}}</a>
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow" v-else>Select a parameter</a>
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow" v-if="displayedParameter.displayName">{{displayedParameter.displayName}}</a>
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow" v-else>Select a data</a>
         <modal v-if="showModal" @close="showModal = false">
-          <h3 slot="header">Forecast model parameters</h3>
-          <ForecastSelection slot="body"></ForecastSelection>
+          <h3 slot="header">Select data to display</h3>
+          <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
         </modal>
       </div>
       <div class="row mb-2 justify-content-end">
@@ -49,6 +49,11 @@ export default {
     MapObj.getMap().on('layeradd', function () {
       vm.displayedParameter = Parameter.getDisplayedParameter()
     })
+  },
+  methods: {
+    onSelectedParameter() {
+      this.showModal = false
+    }
   }
 }
 </script>
