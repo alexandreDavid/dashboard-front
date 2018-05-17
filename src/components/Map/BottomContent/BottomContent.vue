@@ -20,13 +20,18 @@ import ZoomControl from './ZoomControl/ZoomControl'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
+import Loading from '@/components/Loading/Loading'
 
 export default {
   name: 'BottomContent',
   components: {
     FontAwesomeIcon,
     ZoomControl,
-    Graph: ()  => import('@/components/Graph/Graph')
+    Graph: () => ({
+      component: import('@/components/Graph/Graph'),
+      loading: Loading,
+      delay: 0
+    })
   },
   data() {
     return {

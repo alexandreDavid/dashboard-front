@@ -3,10 +3,7 @@
     <div v-if="isLoaded">
       <LineChart :data="datacollection" :options="options"></LineChart>
     </div>
-    <div v-if="!isLoaded" class="text-center p-3">
-      <font-awesome-icon :icon="iconSpinner" spin class="display-4 mb-2"/>
-      <div>Loading...</div>
-    </div>
+    <Loading v-if="!isLoaded"/>
   </div>
 </template>
 
@@ -14,19 +11,13 @@
 import LineChart from './Charts/LineChart'
 import Chart from 'chart.js'
 import Data from '@/data'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
+import Loading from '@/components/Loading/Loading'
 
 export default {
   name: 'Graph',
   components: {
     LineChart,
-    FontAwesomeIcon
-  },
-  computed: {
-    iconSpinner() {
-      return faSpinner
-    }
+    Loading
   },
   props: ['area', 'parameter'],
   data() {
