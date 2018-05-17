@@ -72,7 +72,7 @@ export default {
       var convertDate = function(date){
         var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         var d = new Date(date);
-        return d.getDate() + " " + monthNames[d.getMonth()] + " " + d.getHours()+":"+ d.getMinutes();
+        return d.getDate() + " " + monthNames[d.getMonth()] + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2)
       }
 
       var valueConversion = function(value, unit){

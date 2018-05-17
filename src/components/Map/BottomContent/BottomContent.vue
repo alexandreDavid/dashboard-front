@@ -3,10 +3,10 @@
     <div class="over-map-left d-none d-sm-block">
       <ZoomControl/>
       <button type="button" class="btn btn-primary align-bottom shadow" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
-      <button type="button" class="btn btn-primary align-bottom shadow" @click="showModal = true"><font-awesome-icon :icon="iconGraph" /></button>
+      <button type="button" class="btn btn-primary align-bottom shadow" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
       <modal v-if="showModal" @close="showModal = false">
         <h3 slot="header">Graph</h3>
-        <div slot="body"><Graph v-bind:area="selectedArea.getSelectedArea()" v-bind:parameter="selectedParameter.getDisplayedParameter()"></Graph></div>
+        <div slot="body"><Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph></div>
       </modal>
     </div>
   </div>
@@ -31,8 +31,8 @@ export default {
   data() {
     return {
       showModal: false,
-      selectedArea: Area,
-      selectedParameter: Parameter
+      selectedArea: {},
+      selectedParameter: {}
     }
   },
   computed: {
@@ -46,6 +46,11 @@ export default {
   methods: {
     resetMap () {
       MapObj.setDefaultMap()
+    },
+    initModal () {
+      this.selectedArea = Area.getSelectedArea()
+      this.selectedParameter = Parameter.getDisplayedParameter()
+      this.showModal = true
     }
   }
 }
