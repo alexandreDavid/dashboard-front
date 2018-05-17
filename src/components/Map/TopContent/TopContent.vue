@@ -1,7 +1,7 @@
 <template>
   <div id="top-content" class="over-map">
     <div class="over-map-left">
-      <SearchLocationResult v-if="searchLocationResult" v-bind:searchLocationResult="searchLocationResult"></SearchLocationResult>
+      <SearchLocationResult v-if="false && searchLocationResult" v-bind:searchLocationResult="searchLocationResult"></SearchLocationResult>
       <div class="d-flex flex-nowrap position-relative">
         <div class="order-2 p-1 flex-grow-1"><SearchLocation @input="onSearchLocationSelected" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation></div>
         <div class="order-1 p-1"><img src="@/assets/logo.png" style="height: 36px;"></div>
