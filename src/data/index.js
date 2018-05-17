@@ -6,7 +6,7 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = token
 }
 
-const urlRoot = '/data'
+const urlRoot = process.env.DATA_URL
 
 let structureCache
 

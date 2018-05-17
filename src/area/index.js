@@ -16,7 +16,7 @@ export default {
   async setSelectedArea (area) {
     selectedArea = area
     const areaData = await axios.get(
-      `/geoserver/${selectedArea.workspaceName}/ows`, {
+      `${process.env.GEOSERVER_URL}/${selectedArea.workspaceName}/ows`, {
         params: {
           service: 'WFS',
           version: '1.1.1',

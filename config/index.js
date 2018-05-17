@@ -15,12 +15,6 @@ module.exports = {
         "target": 'http://localhost',
         "changeOrigin": true,
         "secure": true
-      },
-      "/data": {
-        "target": 'http://demo.dfms.co.uk',
-      },
-      "/geoserver": {
-        "target": 'http://demo.dfms.co.uk',
       }
     },
 
