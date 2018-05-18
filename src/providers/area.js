@@ -1,7 +1,7 @@
-import Data from '@/data'
-import MapObj from '@/map'
+import Data from '@/providers/data'
+import MapObj from '@/providers/map'
 import axios from 'axios'
-import Api from '@/api'
+import Api from '@/providers/api'
 
 let selectedArea = {}
 

@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import MapObj from '@/map'
-import Parameter from '@/parameter'
-import Area from '@/area'
+import MapObj from '@/providers/map'
+import Parameter from '@/providers/parameter'
+import Area from '@/providers/area'
 import ZoomControl from './ZoomControl/ZoomControl'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'

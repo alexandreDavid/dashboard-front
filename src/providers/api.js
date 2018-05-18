@@ -1,7 +1,7 @@
 import axios from 'axios'
-import Auth from '@/authentication'
-import Settings from '@/settings'
-import MapObj from '@/map'
+import Auth from '@/providers/authentication'
+import Settings from '@/providers/settings'
+import MapObj from '@/providers/map'
 
 const token = Auth.getToken()
 if (token) {

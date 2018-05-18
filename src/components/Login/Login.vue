@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import auth from '@/authentication'
+  import auth from '@/providers/authentication'
   export default {
     data () {
       return {

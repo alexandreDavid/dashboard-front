@@ -10,7 +10,7 @@
 <script>
 import LineChart from './Charts/LineChart'
 import Chart from 'chart.js'
-import Data from '@/data'
+import Data from '@/providers/data'
 import Loading from '@/components/Loading/Loading'
 
 export default {
