@@ -3,6 +3,7 @@
       <div id="map-container"></div>
       <TopContent v-if="mapInitialised"/>
       <BottomContent v-if="mapInitialised"/>
+      <Popup v-if="mapInitialised"/>
     </div>
 </template>
 
@@ -10,12 +11,14 @@
 import MapObj from '@/store/map'
 import TopContent from './TopContent/TopContent'
 import BottomContent from './BottomContent/BottomContent'
+import Popup from './Popup'
 
 export default {
   name: 'Map',
   components: {
     TopContent,
-    BottomContent
+    BottomContent,
+    Popup
   },
   data() {
     return {

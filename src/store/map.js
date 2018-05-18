@@ -2,7 +2,6 @@ import { Map, TileLayer, CircleMarker, GeoJSON } from 'leaflet'
 
 let map
 let baseLayer
-let displayedLayer
 let areaLayer
 let currentLocationMarker
 let defaultParams = {
@@ -37,14 +36,6 @@ export default {
     map.setView(defaultParams.view.location, defaultParams.view.zoom)
 
     this.setBaseMapLayer(defaultParams.baseLayer.layerUrl, defaultParams.baseLayer.options)
-
-    if (defaultParams.displayedLayer) {
-      this.setDisplayedLayer(
-        defaultParams.displayedLayer.layerUrl,
-        defaultParams.displayedLayer.options,
-        defaultParams.displayedLayer.legendUrl
-      )
-    }
   },
   setBaseMapLayer (layerUrl, options = {}) {
     if (!baseLayer) {
@@ -53,13 +44,6 @@ export default {
       baseLayer.setUrl(layerUrl, true)
       baseLayer.setParams(options)
     }
-  },
-  setDisplayedLayer (layerUrl, options = {}) {
-    // Remove and add to activate the addlayer event
-    if (displayedLayer) {
-      displayedLayer.remove()
-    }
-    displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
   },
   setAreaLayer (geoJson) {
     if (areaLayer) {

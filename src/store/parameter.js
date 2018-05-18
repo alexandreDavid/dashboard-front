@@ -1,5 +1,5 @@
 import Data from '@/store/data'
-import MapObj from '@/store/map'
+import DisplayedLayer from '@/store/displayedLayer'
 
 let parameters = []
 let displayedParameter = {}
@@ -25,7 +25,7 @@ export default {
   },
   setDisplayedParameter (parameter) {
     displayedParameter = parameter
-    MapObj.setDisplayedLayer(displayedParameter.layerUrl, displayedParameter.layerParameters)
+    DisplayedLayer.setDisplayedLayer(displayedParameter.layerUrl, displayedParameter.layerParameters)
   },
   getDisplayedParameter () {
     return displayedParameter
