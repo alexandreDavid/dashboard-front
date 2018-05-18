@@ -28,8 +28,8 @@
 <script>
 import { Modal } from '@/components/Modal/Modal'
 import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
-import MapObj from '@/providers/map'
-import Parameter from '@/providers/parameter'
+import MapObj from '@/store/map'
+import Parameter from '@/store/parameter'
 
 export default {
   name: 'Managing',

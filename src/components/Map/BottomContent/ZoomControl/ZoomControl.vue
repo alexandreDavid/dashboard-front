@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import MapObj from '@/providers/map'
+import MapObj from '@/store/map'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 import faMinus from '@fortawesome/fontawesome-free-solid/faMinus'

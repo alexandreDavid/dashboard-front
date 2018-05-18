@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Settings from '@/providers/settings'
+import Settings from '@/store/settings'
 
 export default {
   name: 'SettingControl',

@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Api from '@/providers/api'
+import Api from '@/store/api'
 import SettingsFamily from './SettingsFamily'
 
 export default {

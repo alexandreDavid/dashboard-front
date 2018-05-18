@@ -37,7 +37,7 @@
 <script>
 
 // import gql from 'graphql-tag'
-import Area from '@/providers/area'
+import Area from '@/store/area'
 
 export default {
   name: 'SearchLocation',

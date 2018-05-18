@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import MapObj from '@/providers/map'
+import MapObj from '@/store/map'
 import TopContent from './TopContent/TopContent'
 import BottomContent from './BottomContent/BottomContent'
 

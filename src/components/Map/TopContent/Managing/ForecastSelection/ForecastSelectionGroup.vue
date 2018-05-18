@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import MapObj from '@/providers/map'
-import Parameter from '@/providers/parameter'
+import MapObj from '@/store/map'
+import Parameter from '@/store/parameter'
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faCaretDown from '@fortawesome/fontawesome-free-solid/faCaretDown'

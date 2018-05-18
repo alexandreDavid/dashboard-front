@@ -1,4 +1,4 @@
-import Api from '@/providers/api'
+import Api from '@/store/api'
 
 let settings = []
 

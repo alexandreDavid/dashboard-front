@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Auth from '@/providers/authentication'
+import Auth from '@/store/authentication'
 
 const token = Auth.getToken()
 if (token) {

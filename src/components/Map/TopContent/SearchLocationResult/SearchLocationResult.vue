@@ -25,8 +25,8 @@
 
 <script>
 import gql from 'graphql-tag'
-import Area from '@/providers/area'
-import Settings from '@/providers/settings'
+import Area from '@/store/area'
+import Settings from '@/store/settings'
 
 export default {
   name: 'SearchLocationResult',

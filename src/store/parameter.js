@@ -1,5 +1,5 @@
-import Data from '@/providers/data'
-import MapObj from '@/providers/map'
+import Data from '@/store/data'
+import MapObj from '@/store/map'
 
 let parameters = []
 let displayedParameter = {}

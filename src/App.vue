@@ -7,7 +7,7 @@
 
 <script>
 import ModalInit from './components/Modal/ModalInit'
-import Api from '@/providers/api'
+import Api from '@/store/api'
 
 export default {
   name: 'App',
