@@ -9,21 +9,22 @@
 import ModalInit from './components/Modal/ModalInit'
 import Api from '@/store/api'
 
+import Auth from '@/store/authentication'
+
 export default {
   name: 'App',
   components: {
     ModalInit
   },
-  data() {
+  data () {
     return {
       isLoading: true
     }
   },
   async created() {
-    // Get initial parameters
-    // if (!await Api.getInitialEnvironmemt()) {
-    //   this.$router.push(this.$route.query.redirect || 'Error')
-    // }
+    if (!Auth.isAuthenticated()) {
+      Auth.handleAuthentication()
+    }
     await Api.getInitialEnvironmemt()
     this.isLoading = false
   }
@@ -31,5 +32,4 @@ export default {
 </script>
 
 <style src="./main.scss" lang="scss">
-
 </style>

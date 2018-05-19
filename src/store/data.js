@@ -1,10 +1,4 @@
 import axios from 'axios'
-import Auth from '@/store/authentication'
-
-const token = Auth.getToken()
-if (token) {
-  axios.defaults.headers.common['Authorization'] = token
-}
 
 const urlRoot = process.env.DATA_URL
 

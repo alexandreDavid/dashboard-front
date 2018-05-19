@@ -1,12 +1,6 @@
 import axios from 'axios'
-import Auth from '@/store/authentication'
 import Settings from '@/store/settings'
 import MapObj from '@/store/map'
-
-const token = Auth.getToken()
-if (token) {
-  axios.defaults.headers.common['Authorization'] = token
-}
 
 const urlRoot = 'http://localhost:3000'
 

@@ -8,6 +8,7 @@ import ErrorPage from '@/components/ErrorPage/ErrorPage'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',

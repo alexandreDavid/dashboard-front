@@ -1,59 +1,59 @@
-/* globals localStorage */
+import auth0 from 'auth0-js'
+import router from '@/router'
+
+let webAuth = new auth0.WebAuth({
+  domain: 'testada.eu.auth0.com',
+  clientID: 'qZ5DC0FX2jQJLAesP93f6YZW0EM1GZk5',
+  redirectUri: 'http://localhost:8081',
+  audience: 'https://testada.eu.auth0.com/userinfo',
+  responseType: 'token id_token',
+  scope: 'openid'
+})
 
 export default {
-  login (email, pass, cb) {
-    cb = arguments[arguments.length - 1]
-    if (localStorage.token) {
-      if (cb) {
-        cb(true)
-      }
-      this.onChange(true)
-      return
-    }
-    pretendRequest(email, pass, res => {
-      if (res.authenticated) {
-        localStorage.token = res.token
-        if (cb) {
-          cb(true)
-        }
-        this.onChange(true)
+  login () {
+    webAuth.authorize()
+  },
+
+  handleAuthentication () {
+    webAuth.parseHash((err, authResult) => {
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult)
+        router.replace('/')
+      } else if (err) {
+        router.replace('error')
       } else {
-        if (cb) {
-          cb(true)
-        }
-        this.onChange(false)
+        this.login()
       }
     })
   },
 
-  getToken () {
-    return localStorage.token
+  setSession (authResult) {
+    // Set the time that the Access Token will expire at
+    let expiresAt = JSON.stringify(
+      authResult.expiresIn * 1000 + new Date().getTime()
+    )
+    localStorage.setItem('access_token', authResult.accessToken)
+    localStorage.setItem('id_token', authResult.idToken)
+    localStorage.setItem('expires_at', expiresAt)
   },
 
-  logout (cb) {
-    delete localStorage.token
-    if (cb) cb()
-    this.onChange(false)
+  logout () {
+    // Clear Access Token and ID Token from local storage
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('id_token')
+    localStorage.removeItem('expires_at')
+    this.userProfile = null
+    this.authNotifier.emit('authChange', false)
+    // navigate to the home route
+    router.replace(router.query.redirect)
   },
 
-  loggedIn () {
-    return !!localStorage.token
-  },
+  isAuthenticated () {
+    // Check whether the current time is past the
+    // Access Token's expiry time
+    let expiresAt = JSON.parse(localStorage.getItem('expires_at'))
+    return new Date().getTime() < expiresAt
+  }
 
-  onChange () {}
-}
-
-function pretendRequest (email, pass, cb) {
-  setTimeout(() => {
-    if (email === 'joe@example.com' && pass === 'password1') {
-      cb({
-        authenticated: true,
-        token: Math.random()
-          .toString(36)
-          .substring(7)
-      })
-    } else {
-      cb({ authenticated: false })
-    }
-  }, 0)
 }
