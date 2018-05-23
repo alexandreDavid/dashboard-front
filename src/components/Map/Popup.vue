@@ -1,5 +1,5 @@
 <template>
-    <div id="popup">
+    <div id="popup" v-if="value">
       {{value}}
     </div>
 </template>
