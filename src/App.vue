@@ -9,8 +9,6 @@
 import ModalInit from './components/Modal/ModalInit'
 import Api from '@/store/api'
 
-import Auth from '@/store/authentication'
-
 export default {
   name: 'App',
   components: {
@@ -22,9 +20,6 @@ export default {
     }
   },
   async created() {
-    if (!Auth.isAuthenticated()) {
-      Auth.handleAuthentication()
-    }
     await Api.getInitialEnvironmemt()
     this.isLoading = false
   }

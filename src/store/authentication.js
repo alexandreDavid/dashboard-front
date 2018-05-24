@@ -4,7 +4,7 @@ import router from '@/router'
 let webAuth = new auth0.WebAuth({
   domain: 'testada.eu.auth0.com',
   clientID: 'qZ5DC0FX2jQJLAesP93f6YZW0EM1GZk5',
-  redirectUri: 'http://localhost:8081',
+  redirectUri: 'http://localhost:8081/authcallback',
   audience: 'https://testada.eu.auth0.com/userinfo',
   responseType: 'token id_token',
   scope: 'openid'
@@ -22,8 +22,6 @@ export default {
         router.replace('/')
       } else if (err) {
         router.replace('error')
-      } else {
-        this.login()
       }
     })
   },
