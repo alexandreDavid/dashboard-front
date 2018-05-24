@@ -4,7 +4,10 @@
       <div class="row mb-2 justify-content-end">
         <div>
           <span class="badge badge-primary badge-pill shadow">About</span>
-          <a href="#" @click="$router.push({ name: 'Login' })" target="_self" class="badge badge-secondary badge-pill shadow">Profile</a>
+          <a href="#" @click="showSidebar = true" target="_self" class="badge badge-secondary badge-pill shadow">Profile</a>
+          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
+            <ManagingSidebarContent/>
+          </SideBar>
         </div>
       </div>
       <div class="row mb-2 justify-content-end">
@@ -35,11 +38,14 @@ export default {
   name: 'Managing',
   components: {
     Modal,
-    ForecastSelection
+    ForecastSelection,
+    SideBar: () => import('@/components/SideBar/SideBar'),
+    ManagingSidebarContent: () => import('./ManagingSidebarContent')
   },
   data() {
     return {
       showModal: false,
+      showSidebar: false,
       displayedParameter: {}
     }
   },
