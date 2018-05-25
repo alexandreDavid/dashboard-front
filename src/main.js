@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import { apolloProvider } from './Apollo'
+import Tracking from './tracking'
 
 Vue.config.productionTip = false
 
@@ -15,3 +16,7 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+if (process.env.TRACKER_URL && process.env.TRACKER_SITE_ID) {
+  Tracking.init(process.env.TRACKER_URL, process.env.TRACKER_SITE_ID)
+}
