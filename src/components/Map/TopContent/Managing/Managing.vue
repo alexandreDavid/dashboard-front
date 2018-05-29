@@ -24,7 +24,7 @@
       <div class="row mb-2 justify-content-end over-map-control">
         <img v-bind:src="displayedParameter.legendUrl">
       </div>
-      <div class="slide-bar-content justify-content-end position-relative m-2">
+      <div class="slide-bar-content justify-content-end position-relative m-2" v-if="false">
         <VueSlideBar v-model="value" class="over-map-control"/>
       </div>
     </div>
