@@ -3,26 +3,29 @@
     <div class="container">
       <div class="row mb-2 justify-content-end">
         <div>
-          <span class="badge badge-primary badge-pill shadow">About</span>
-          <a href="#" @click="showSidebar = true" target="_self" class="badge badge-secondary badge-pill shadow">Profile</a>
-          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
+          <span class="badge badge-primary badge-pill shadow over-map-control">About</span>
+          <a href="#" @click="showSidebar = true" target="_self" class="badge badge-secondary badge-pill shadow over-map-control">Profile</a>
+          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2 over-map-control">
             <ManagingSidebarContent/>
           </SideBar>
         </div>
       </div>
       <div class="row mb-2 justify-content-end">
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow" v-if="displayedParameter.displayName">{{displayedParameter.displayName}}</a>
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow" v-else>Select a data</a>
-        <modal v-if="showModal" @close="showModal = false">
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control" v-if="displayedParameter.displayName">{{displayedParameter.displayName}}</a>
+        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control" v-else>Select a data</a>
+        <modal v-if="showModal" @close="showModal = false" class="over-map-control">
           <h3 slot="header">Select data to display</h3>
           <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
         </modal>
       </div>
       <div class="row mb-2 justify-content-end">
-        <a href="#" target="_self" class="badge badge-secondary badge-pill">REPORTED: Temperature</a>
+        <a href="#" target="_self" class="badge badge-secondary badge-pill over-map-control">REPORTED: Temperature</a>
       </div>
-      <div class="row mb-2 justify-content-end">
+      <div class="row mb-2 justify-content-end over-map-control">
         <img v-bind:src="displayedParameter.legendUrl">
+      </div>
+      <div class="slide-bar-content justify-content-end position-relative m-2">
+        <VueSlideBar v-model="value" class="over-map-control"/>
       </div>
     </div>
   </div>
@@ -33,12 +36,14 @@ import { Modal } from '@/components/Modal/Modal'
 import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
 import MapObj from '@/store/map'
 import Parameter from '@/store/parameter'
+import VueSlideBar from '@/components/Slider/Slider'
 
 export default {
   name: 'Managing',
   components: {
     Modal,
     ForecastSelection,
+    VueSlideBar,
     SideBar: () => import('@/components/SideBar/SideBar'),
     ManagingSidebarContent: () => import('./ManagingSidebarContent')
   },
@@ -46,7 +51,8 @@ export default {
     return {
       showModal: false,
       showSidebar: false,
-      displayedParameter: {}
+      displayedParameter: {},
+      value: 50
     }
   },
   mounted() {

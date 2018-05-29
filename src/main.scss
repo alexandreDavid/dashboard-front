@@ -13,4 +13,8 @@
 .over-map {
   z-index: 400;
   position: absolute;
+
+  .over-map-control {
+    pointer-events: auto;
+  }
 }
