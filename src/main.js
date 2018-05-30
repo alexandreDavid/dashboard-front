@@ -5,8 +5,17 @@ import App from './App'
 import router from './router'
 import { apolloProvider } from './Apollo'
 import Tracking from './tracking'
+import Authentication from './store/authentication'
 
 Vue.config.productionTip = false
+
+if (process.env.TRACKER_URL && process.env.TRACKER_SITE_ID) {
+  Tracking.init(process.env.TRACKER_URL, process.env.TRACKER_SITE_ID)
+}
+
+if (process.env.AUTH.domain && process.env.AUTH.clientID && process.env.AUTH.redirectUri) {
+  Authentication.init(process.env.AUTH.domain, process.env.AUTH.clientID, process.env.AUTH.redirectUri)
+}
 
 /* eslint-disable no-new */
 new Vue({
@@ -16,7 +25,3 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
-
-if (process.env.TRACKER_URL && process.env.TRACKER_SITE_ID) {
-  Tracking.init(process.env.TRACKER_URL, process.env.TRACKER_SITE_ID)
-}
