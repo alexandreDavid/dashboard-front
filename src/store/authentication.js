@@ -4,11 +4,11 @@ import router from '@/router'
 let webAuth
 
 export default {
-  init (domain, clientID, redirectUri) {
+  init (domain, clientID) {
     webAuth = new auth0.WebAuth({
       domain: domain,
       clientID: clientID,
-      redirectUri: redirectUri,
+      redirectUri: window.location.origin + '/',
       audience: `https://${domain}/userinfo`,
       responseType: 'token id_token',
       scope: 'openid'
@@ -19,12 +19,15 @@ export default {
   },
 
   handleAuthentication () {
+    const self = this
     webAuth.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult)
         router.replace('/')
       } else if (err) {
         router.replace('error')
+      } else {
+        self.login()
       }
     })
   },

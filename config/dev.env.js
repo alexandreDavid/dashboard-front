@@ -8,7 +8,6 @@ module.exports = merge(prodEnv, {
   TRACKER_SITE_ID: '1',
   AUTH: {
     domain: '"testada.eu.auth0.com"',
-    clientID: '"qZ5DC0FX2jQJLAesP93f6YZW0EM1GZk5"',
-    redirectUri: '"http://localhost:8081/authcallback"',
+    clientID: '"qZ5DC0FX2jQJLAesP93f6YZW0EM1GZk5"'
   }
 })

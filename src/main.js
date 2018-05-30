@@ -13,8 +13,8 @@ if (process.env.TRACKER_URL && process.env.TRACKER_SITE_ID) {
   Tracking.init(process.env.TRACKER_URL, process.env.TRACKER_SITE_ID)
 }
 
-if (process.env.AUTH.domain && process.env.AUTH.clientID && process.env.AUTH.redirectUri) {
-  Authentication.init(process.env.AUTH.domain, process.env.AUTH.clientID, process.env.AUTH.redirectUri)
+if (process.env.AUTH.domain && process.env.AUTH.clientID) {
+  Authentication.init(process.env.AUTH.domain, process.env.AUTH.clientID)
 }
 
 /* eslint-disable no-new */
