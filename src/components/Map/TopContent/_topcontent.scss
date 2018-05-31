@@ -13,6 +13,7 @@
     top: 0;
     position: absolute;
     width: 400px;
+    pointer-events: auto;
     @include media-breakpoint-down(xs) {
       width: 100%;
     }
