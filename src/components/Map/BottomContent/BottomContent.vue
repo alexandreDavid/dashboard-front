@@ -10,6 +10,9 @@
       </modal>
       <TimeSlot class="d-inline-block align-bottom"/>
     </div>
+    <div class="over-map-all-width d-block d-sm-none p-2">
+      <TimeSlotMobile/>
+    </div>
   </div>
 </template>
 
@@ -19,6 +22,7 @@ import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import ZoomControl from './ZoomControl/ZoomControl'
 import TimeSlot from './TimeSlot/TimeSlot'
+import TimeSlotMobile from './TimeSlot/TimeSlotMobile'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
@@ -30,6 +34,7 @@ export default {
     FontAwesomeIcon,
     ZoomControl,
     TimeSlot,
+    TimeSlotMobile,
     Graph: () => ({
       component: import('@/components/Graph/Graph'),
       loading: Loading,
