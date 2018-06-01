@@ -8,6 +8,7 @@
         <h3 slot="header">Graph</h3>
         <div slot="body"><Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph></div>
       </modal>
+      <TimeSlot class="d-inline-block align-bottom"/>
     </div>
   </div>
 </template>
@@ -17,6 +18,7 @@ import MapObj from '@/store/map'
 import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import ZoomControl from './ZoomControl/ZoomControl'
+import TimeSlot from './TimeSlot/TimeSlot'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
@@ -27,6 +29,7 @@ export default {
   components: {
     FontAwesomeIcon,
     ZoomControl,
+    TimeSlot,
     Graph: () => ({
       component: import('@/components/Graph/Graph'),
       loading: Loading,

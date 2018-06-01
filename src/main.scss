@@ -1,5 +1,6 @@
 @import "../node_modules/leaflet/dist/leaflet.css";
 @import "~bootstrap/scss/bootstrap.scss";
+@import "./components/Map/BottomContent/TimeSlot/timeslot";
 @import "./components/Map/TopContent/topcontent";
 @import "./components/SideBar/sidebar";
 #app {

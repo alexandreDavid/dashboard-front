@@ -1,0 +1,42 @@
+.time-slot {
+  height: 25px;
+  width: 50px;
+  position: relative;
+  padding-bottom: 0.5rem;
+
+  .time-slot-content {
+    @include button-variant($secondary, $secondary);
+    cursor: pointer;
+  }
+
+  &.with-indicator {
+    border-left: 1px solid var(--secondary);
+  }
+
+  .time-slot-indicator {
+    position: absolute;
+    top: 100%;
+    transform: translateX(-50%);
+    text-align: center;
+    line-height: 100%;
+  }
+
+  &.now {
+    pointer-events: none;
+    .now-content {
+      border: 1px solid var(--red);
+      color: var(--red);
+      &:after {
+        content: "NOW";
+        font-size: $small-font-size;
+        font-weight: $font-weight-normal;
+        line-height: 100%;
+        vertical-align: text-top;
+      }
+    }
+  }
+
+  &.current-time {
+    transition-duration: 0.3s;
+  }
+}
