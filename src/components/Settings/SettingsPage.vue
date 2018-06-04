@@ -6,7 +6,7 @@
       </button>
       Settings menu
     </h2>
-    <Settings/>
+    <Settings class="m-3"/>
   </div>
 </template>
 

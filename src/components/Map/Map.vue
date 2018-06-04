@@ -1,8 +1,8 @@
 <template>
     <div id="map">
       <div id="map-container"></div>
-      <TopContent v-if="mapInitialised"/>
       <BottomContent v-if="mapInitialised"/>
+      <TopContent v-if="mapInitialised"/>
       <Popup v-if="mapInitialised"/>
     </div>
 </template>

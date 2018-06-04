@@ -1,5 +1,5 @@
 <template>
-  <div id="settings" class="m-3">
+  <div id="settings">
     <SettingsFamily v-for="settingsFamily in settings" :key="settingsFamily.id" :settingsFamily="settingsFamily"></SettingsFamily>
   </div>
 </template>
