@@ -8,10 +8,10 @@
         <h3 slot="header">Graph</h3>
         <div slot="body"><Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph></div>
       </modal>
-      <TimeSlot class="d-inline-block align-bottom"/>
+      <TimeSlot class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
     </div>
     <div class="over-map-all-width d-block d-sm-none p-2">
-      <TimeSlotMobile/>
+      <TimeSlotMobile v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
     </div>
   </div>
 </template>
@@ -55,6 +55,13 @@ export default {
     iconUndo () {
       return faUndo
     }
+  },
+  mounted() {
+    var vm = this
+    // On layer displayed change, legend refresh
+    MapObj.getMap().on('layeradd', function () {
+      vm.selectedParameter = Parameter.getDisplayedParameter()
+    })
   },
   methods: {
     resetMap () {
