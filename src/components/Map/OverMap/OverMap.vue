@@ -1,0 +1,158 @@
+<template>
+  <div class="over-map">
+    <div class="over-map-left">
+      <SearchLocationResult v-if="false && searchLocationResult" v-bind:searchLocationResult="searchLocationResult"></SearchLocationResult>
+      <div class="d-flex flex-nowrap position-relative">
+        <div class="p-1 flex-grow-1"><SearchLocation @input="onSearchLocationSelected" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation></div>
+        <div class="p-1">
+          <button type="button" class="btn btn-primary align-top" v-bind:class="{shadow: !searchLocationResult}" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
+        </div>
+        <div class="p-1 d-block d-sm-none">
+          <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top" v-bind:class="{shadow: !searchLocationResult}"><font-awesome-icon :icon="iconMenu" /></button>
+          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
+            <button @click="$router.push({ name: 'settings' })" class="btn btn-secondary mb-2"><font-awesome-icon :icon="iconSettings" /> Settings</button>
+            <div class="card">
+              <h5 class="card-header">Forecast model parameters</h5>
+              <div class="card-body">
+                <ForecastSelection></ForecastSelection>
+              </div>
+            </div>
+          </SideBar>
+        </div>
+      </div>
+    </div>
+    <div class="over-map-right d-none d-sm-block">
+      <Managing/>
+    </div>
+    <div class="over-map-left-bottom d-none d-sm-block">
+      <ZoomControl/>
+      <button type="button" class="btn btn-primary align-bottom shadow" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
+      <button type="button" class="btn btn-primary align-bottom shadow" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
+      <modal v-if="showModal" @close="showModal = false">
+        <h3 slot="header">Graph</h3>
+        <div slot="body"><Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph></div>
+      </modal>
+      <TimeSlot class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
+    </div>
+    <div class="over-map-all-width d-block d-sm-none p-2">
+      <TimeSlotMobile v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
+    </div>
+  </div>
+</template>
+
+<script>
+import SearchLocation from './OverMapControl/SearchLocation/SearchLocation'
+import Managing from './OverMapControl/Managing/Managing'
+import MapObj from '@/store/map'
+import ForecastSelection from './OverMapControl/Managing/ForecastSelection/ForecastSelection'
+
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import faLocationArrow from '@fortawesome/fontawesome-free-solid/faLocationArrow'
+import faBars from '@fortawesome/fontawesome-free-solid/faBars'
+import faCog from '@fortawesome/fontawesome-free-solid/faCog'
+
+import Parameter from '@/store/parameter'
+import Area from '@/store/area'
+import ZoomControl from './OverMapControl/ZoomControl/ZoomControl'
+import TimeSlot from './OverMapControl/TimeSlot/TimeSlot'
+import TimeSlotMobile from './OverMapControl/TimeSlot/TimeSlotMobile'
+import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
+import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
+import Loading from '@/components/Loading/Loading'
+
+export default {
+  name: 'OverMap',
+  components: {
+    SearchLocation,
+    SearchLocationResult: () => import('./OverMapControl/SearchLocationResult/SearchLocationResult'),
+    Managing,
+    FontAwesomeIcon,
+    SideBar: () => import('@/components/SideBar/SideBar'),
+    ForecastSelection,
+    ZoomControl,
+    TimeSlot,
+    TimeSlotMobile,
+    Graph: () => ({
+      component: import('@/components/Graph/Graph'),
+      loading: Loading,
+      delay: 0
+    })
+  },
+  computed: {
+    iconLocate () {
+      return faLocationArrow
+    },
+    iconMenu () {
+      return faBars
+    },
+    iconSettings () {
+      return faCog
+    },
+    iconGraph () {
+      return faChartBar
+    },
+    iconUndo () {
+      return faUndo
+    }
+  },
+  async created () {
+    this.hasCurrentLocation = await MapObj.setCurrentLocationLayer()
+  },
+  data () {
+    return {
+      searchLocationResult: '',
+      hasCurrentLocation: false,
+      showSidebar: false,
+      showModal: false,
+      selectedArea: {},
+      selectedParameter: {}
+    }
+  },
+  mounted() {
+    var vm = this
+    // On layer displayed change, legend refresh
+    MapObj.getMap().on('layeradd', function () {
+      vm.selectedParameter = Parameter.getDisplayedParameter()
+    })
+  },
+  methods: {
+    onSearchLocationSelected (newValue) {
+      this.searchLocationResult = newValue
+    },
+    zoomToCurrentLocation () {
+      MapObj.zoomToCurrentLocation()
+    },
+    resetMap () {
+      MapObj.setDefaultMap()
+    },
+    initModal () {
+      this.selectedArea = Area.getSelectedArea()
+      this.selectedParameter = Parameter.getDisplayedParameter()
+      this.showModal = true
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+#bottom-content {
+  width: 100%;
+  bottom: 0;
+
+  .over-map-left {
+    padding: 10px;
+    left: 0;
+    bottom: 0;
+    position: absolute;
+  }
+
+  .over-map-right {
+    margin-bottom: 10px;
+    margin-right: 10px;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+  }
+}
+
+</style>

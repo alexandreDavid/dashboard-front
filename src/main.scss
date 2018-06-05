@@ -1,7 +1,6 @@
 @import "../node_modules/leaflet/dist/leaflet.css";
 @import "~bootstrap/scss/bootstrap.scss";
-@import "./components/Map/BottomContent/TimeSlot/timeslot";
-@import "./components/Map/TopContent/topcontent";
+@import "./components/Map/OverMap/overmap";
 @import "./components/SideBar/sidebar";
 #app {
   position: absolute;
@@ -9,15 +8,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-}
-
-.over-map {
-  z-index: 400;
-  position: absolute;
-
-  .over-map-control {
-    pointer-events: auto;
-  }
 }
 
 .shadow-top {

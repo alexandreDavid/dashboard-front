@@ -1,23 +1,20 @@
 <template>
     <div id="map">
       <div id="map-container"></div>
-      <BottomContent v-if="mapInitialised"/>
-      <TopContent v-if="mapInitialised"/>
+      <OverMap v-if="mapInitialised"/>
       <Popup v-if="mapInitialised"/>
     </div>
 </template>
 
 <script>
 import MapObj from '@/store/map'
-import TopContent from './TopContent/TopContent'
-import BottomContent from './BottomContent/BottomContent'
+import OverMap from './OverMap/OverMap'
 import Popup from './Popup'
 
 export default {
   name: 'Map',
   components: {
-    TopContent,
-    BottomContent,
+    OverMap,
     Popup
   },
   data() {

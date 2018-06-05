@@ -1,7 +1,7 @@
 .sidebar {
   position: fixed;
   /* top layer */
-  z-index: 9999;
+  z-index: $zindex-fixed;
   background: var(--white);
   transition: all 0.3s;
 
