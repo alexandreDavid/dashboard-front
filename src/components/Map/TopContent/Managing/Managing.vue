@@ -2,15 +2,6 @@
   <div id="managing">
     <div class="container">
       <div class="row mb-2 justify-content-end">
-        <div>
-          <a href="#" @click="openSideBar('about')" target="_self" class="badge badge-primary badge-pill shadow over-map-control">About</a>
-          <a href="#" @click="openSideBar('profile')" target="_self" class="badge badge-secondary badge-pill shadow over-map-control">Profile</a>
-          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2 over-map-control">
-            <ManagingSidebarContent v-bind:tab2Display="sideBarTab"/>
-          </SideBar>
-        </div>
-      </div>
-      <div class="row mb-2 justify-content-end">
         <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control" v-if="displayedParameter.displayName">{{displayedParameter.displayName}}</a>
         <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control" v-else>Select a data</a>
         <modal v-if="showModal" @close="showModal = false" class="over-map-control">
@@ -43,15 +34,11 @@ export default {
   components: {
     Modal,
     ForecastSelection,
-    VueSlideBar,
-    SideBar: () => import('@/components/SideBar/SideBar'),
-    ManagingSidebarContent: () => import('./ManagingSidebarContent')
+    VueSlideBar
   },
   data() {
     return {
       showModal: false,
-      showSidebar: false,
-      sideBarTab: '',
       displayedParameter: {},
       value: 50
     }
@@ -66,10 +53,6 @@ export default {
   methods: {
     onSelectedParameter() {
       this.showModal = false
-    },
-    openSideBar(sideBarTab) {
-      this.sideBarTab = sideBarTab
-      this.showSidebar = true
     }
   }
 }

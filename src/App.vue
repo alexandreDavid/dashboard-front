@@ -1,18 +1,31 @@
 <template>
   <div id="app">
-    <router-view v-if="!isLoading"/>
-    <ModalInit/>
+    <div class="d-flex flex-column h-100">
+      <NavBar />
+      <div class="position-relative h-100 order-2">
+        <div style="position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;">
+      <router-view v-if="!isLoading"/>
+      </div>
+      </div>
+      <ModalInit/>
+    </div>
   </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar/NavBar'
 import ModalInit from './components/Modal/ModalInit'
 import Api from '@/store/api'
 
 export default {
   name: 'App',
   components: {
-    ModalInit
+    ModalInit,
+    NavBar
   },
   data () {
     return {

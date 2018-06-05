@@ -20,30 +20,30 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/',
-      name: 'Map',
+      path: '/map',
+      name: 'map',
       component: Map,
       beforeEnter: checkAuth
     },
     {
       path: '/settings',
-      name: 'Settings',
+      name: 'settings',
       component: SettingsPage,
       beforeEnter: checkAuth
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: Login
     },
     {
       path: '/error',
-      name: 'ErrorPage',
+      name: 'errorPage',
       component: ErrorPage
     },
     {
       path: '*',
-      redirect: { name: 'Map' }
+      redirect: { name: 'map' }
     }
   ]
 })

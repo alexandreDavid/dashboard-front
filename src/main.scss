@@ -19,3 +19,7 @@
     pointer-events: auto;
   }
 }
+
+.shadow-top {
+  box-shadow: 0 0 1rem rgba($black, .15) !important;
+}
