@@ -20,9 +20,8 @@
         </li>
       </ul>
     </nav>
-    <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
-      <ManagingSidebarContent v-bind:tab2Display="sideBarTab"/>
-    </SideBar>
+    <ProfileAboutSidebar v-if="showSidebar" @close="showSidebar = false" v-bind:tab2Display="sideBarTab">
+    </ProfileAboutSidebar>
   </div>
 </template>
 
@@ -38,8 +37,7 @@ export default {
   name: 'NavBar',
   components: {
     FontAwesomeIcon,
-    SideBar: () => import('@/components/SideBar/SideBar'),
-    ManagingSidebarContent: () => import('./ManagingSidebarContent')
+    ProfileAboutSidebar: () => import('./ProfileAboutSidebar')
   },
   data() {
     let self = this

@@ -1,5 +1,5 @@
 <template>
-  <div id="ManagingSidebarContent">
+  <SideBar @close="close()" position="right" class="p-2">
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link" href="#" @click="selectedTab = 'profile'" v-bind:class="{'active': selectedTab === 'profile'}">Profile</a>
@@ -22,16 +22,17 @@
         </div>
       </div>
     </div>
-  </div>
+  </SideBar>
 </template>
 
 <script>
 import Settings from '@/components/Settings/Settings'
 import Authentication from '@/store/authentication'
+import SideBar from '@/components/SideBar/SideBar'
 
 export default {
-  name: 'ManagingSidebarContent',
-  components: {Settings},
+  name: 'ProfileAboutSidebar',
+  components: {Settings, SideBar},
   props: {
     tab2Display: {
       type: String,
@@ -40,12 +41,15 @@ export default {
   },
   data() {
     return {
-      selectedTab: this.tab2Display
+      selectedTab: this.tab2Display,
     }
   },
   methods: {
     logout() {
       Authentication.logout()
+    },
+    close() {
+      this.$emit('close')
     }
   }
 }
