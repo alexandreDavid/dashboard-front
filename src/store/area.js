@@ -1,6 +1,4 @@
 import Data from '@/store/data'
-import MapObj from '@/store/map'
-import axios from 'axios'
 import Api from '@/store/api'
 
 let selectedArea = {}
@@ -13,27 +11,11 @@ export default {
       return d
     })
   },
-  async setSelectedArea (area) {
+  setSelectedArea (area) {
     selectedArea = area
-    const areaData = await axios.get(
-      `${process.env.GEOSERVER_URL}/${selectedArea.workspaceName}/ows`, {
-        params: {
-          service: 'WFS',
-          version: '1.1.1',
-          request: 'GetFeature',
-          typeName: `${selectedArea.workspaceName}:${selectedArea.paramName}`,
-          outputFormat: 'application/json'
-        }
-      }
-    )
-    MapObj.setAreaLayer(areaData.data)
-    this.zoomToArea()
   },
   getSelectedArea () {
     return selectedArea
-  },
-  zoomToArea () {
-    MapObj.zoomToAreaLayer()
   },
   async getAreaInfos (area) {
     const infos = await Api.getAreaInfos(area)

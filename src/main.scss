@@ -2,6 +2,7 @@
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./components/Map/OverMap/overmap";
 @import "./components/SideBar/sidebar";
+@import "./components/SearchLocation/searchlocation";
 #app {
   position: absolute;
   top: 0;

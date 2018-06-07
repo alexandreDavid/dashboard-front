@@ -41,9 +41,10 @@
 </template>
 
 <script>
-import SearchLocation from './OverMapControl/SearchLocation/SearchLocation'
+import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import Managing from './OverMapControl/Managing/Managing'
 import MapObj from '@/store/map'
+import AreaLayer from '@/store/areaLayer'
 import ForecastSelection from './OverMapControl/Managing/ForecastSelection/ForecastSelection'
 
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
@@ -118,6 +119,9 @@ export default {
   methods: {
     onSearchLocationSelected (newValue) {
       this.searchLocationResult = newValue
+      if (newValue) {
+        AreaLayer.setSelectedArea(newValue)
+      }
     },
     zoomToCurrentLocation () {
       MapObj.zoomToCurrentLocation()

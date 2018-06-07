@@ -46,7 +46,6 @@ export default {
         {
           id: 'dashboard',
           label: 'Dashboard',
-          disabled: true,
           click() {
             self.goTo(this.id)
           },

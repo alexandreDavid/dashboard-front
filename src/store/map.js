@@ -1,8 +1,7 @@
-import { Map, TileLayer, CircleMarker, GeoJSON } from 'leaflet'
+import { Map, TileLayer, CircleMarker } from 'leaflet'
 
 let map
 let baseLayer
-let areaLayer
 let currentLocationMarker
 let defaultParams = {
   view: {
@@ -45,17 +44,6 @@ export default {
       baseLayer.setParams(options)
     }
   },
-  setAreaLayer (geoJson) {
-    if (areaLayer) {
-      areaLayer.remove()
-    }
-    areaLayer = new GeoJSON(geoJson, {
-      weight: 2,
-      width: 2,
-      color: 'black',
-      fillOpacity: 0.0
-    }).addTo(map)
-  },
   setCurrentLocationLayer () {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
@@ -76,9 +64,6 @@ export default {
         resolve(false)
       }
     })
-  },
-  zoomToAreaLayer () {
-    map.fitBounds(areaLayer.getBounds())
   },
   zoomToCurrentLocation () {
     map.setView(currentLocationMarker.getLatLng())
