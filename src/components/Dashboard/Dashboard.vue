@@ -62,10 +62,12 @@ export default {
       // Scroll to the next graph
       let container = document.querySelector("#page-container")
       this.$nextTick(() => {
-        container.scrollBy({ 
-          top: container.scrollHeight,
-          behavior: 'smooth' 
-        });
+        setTimeout(function() {
+          container.scrollBy({ 
+            top: container.scrollHeight,
+            behavior: 'smooth' 
+          });
+        }, 0);
       });
     }
   }
