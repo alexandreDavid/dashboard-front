@@ -1,7 +1,7 @@
 <template>
   <div id="graph">
     <div v-if="isLoaded">
-      <LineChart :data="datacollection" :options="options"></LineChart>
+      <LineChart v-bind:chartData="datacollection" :options="options"></LineChart>
     </div>
     <Loading v-if="!isLoaded"/>
   </div>
@@ -34,15 +34,13 @@ export default {
           xAxes: [{
             display: true,
             scaleLabel: {
-              display: true,
-              labelString: 'time'
+              display: true
             }
           }],
           yAxes: [{
             display: true,
             scaleLabel: {
-              display: true,
-              labelString: ''
+              display: true
             }
           }]
         }
@@ -50,13 +48,23 @@ export default {
     }
   },
   async created () {
-    const data = await Data.getAreaParameterData(this.chartArea, this.chartParameter)
-    this.fillData(data)
-    // axes Y title
-    this.options.scales.yAxes[0].scaleLabel.labelString = `${this.chartParameter.displayName} (${data.unit})`
-    this.isLoaded = true
+    await this.getData()
+  },
+  watch: {
+    // whenever question changes, this function will run
+    parameter: async function () {
+      await this.getData()
+    }
   },
   methods: {
+    async getData () {
+      this.isLoaded = false
+      const data = await Data.getAreaParameterData(this.chartArea, this.parameter)
+      this.fillData(data)
+      // axes Y title
+      this.options.scales.yAxes[0].scaleLabel.labelString = `${this.parameter.displayName} (${data.unit})`
+      this.isLoaded = true
+    },
     fillData(data) {
       const vm = this
 
@@ -85,6 +93,8 @@ export default {
       }
 
       // Adding every datasets
+      vm.datacollection.datasets = []
+      vm.datacollection.labels = []
       Object.keys(Object.values(data.data)[0]).forEach((value, key) => {
         vm.datacollection.datasets.push(
           {
@@ -103,8 +113,6 @@ export default {
         })
       })
     }
-  },
-  mounted() {
   }
 }
 </script>

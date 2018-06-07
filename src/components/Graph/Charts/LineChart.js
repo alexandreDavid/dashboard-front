@@ -2,7 +2,7 @@ import { Line } from 'vue-chartjs'
 
 export default {
   extends: Line,
-  props: ['data', 'options'],
+  props: ['chartData', 'options', 'plugins'],
   mounted () {
     const defaultOptions = {
       responsive: true,
@@ -21,19 +21,17 @@ export default {
         xAxes: [{
           display: true,
           scaleLabel: {
-            display: true,
-            labelString: 'Month'
+            display: true
           }
         }],
         yAxes: [{
           display: true,
           scaleLabel: {
-            display: true,
-            labelString: 'Value'
+            display: true
           }
         }]
       }
     }
-    this.renderChart(this.data, {...defaultOptions, ...this.options})
+    this.renderChart(this.chartData, {...defaultOptions, ...this.options})
   }
 }

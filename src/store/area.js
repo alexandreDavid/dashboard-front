@@ -1,7 +1,7 @@
 import Data from '@/store/data'
 import Api from '@/store/api'
 
-let selectedArea = {}
+let selectedArea
 
 export default {
   async getAllAreas () {

@@ -3,13 +3,9 @@
     <div class="d-flex flex-column h-100">
       <NavBar />
       <div class="position-relative h-100 order-2">
-        <div style="position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;">
-      <router-view v-if="!isLoading"/>
-      </div>
+        <div id="page-container">
+          <router-view v-if="!isLoading"/>
+        </div>
       </div>
       <ModalInit/>
     </div>

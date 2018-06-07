@@ -65,6 +65,12 @@ export default {
   //     }
   //   }
   // },
+  props: {
+    initialLocation: {
+      required: false,
+      default: ''
+    }
+  },
   data() {
     return {
       isOpen: false,
@@ -77,6 +83,7 @@ export default {
     }
   },
   async created() {
+    this.search = this.initialLocation
     this.areas = await Area.getAllAreas()
   },
 
