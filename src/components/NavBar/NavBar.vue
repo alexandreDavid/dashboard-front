@@ -3,7 +3,7 @@
     <nav class="navbar navbar-light navbar-expand bg-light d-none d-sm-flex">
       <a class="navbar-brand" href="#"><img src="@/assets/logo.png" style="height: 36px;"></a>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" v-for="(navItem, key) in leftNav(navItems)" :key="key" v-bind:class="{active: navItem.id === $router.currentRoute.name}">
+        <li class="nav-item" v-for="(navItem, key) in leftNav(navItems)" :key="key" v-bind:class="{active: navItem.id === activeNavItem}">
           <a class="nav-link" href="#" @click="navItem.click()" :class="{disabled: navItem.disabled}"><font-awesome-icon :icon="navItem.icon" /> {{navItem.label}}</a>
         </li>
       </ul>
@@ -15,7 +15,7 @@
     </nav>
     <nav class="navbar navbar-light navbar-expand bg-light d-sm-none shadow-top">
       <ul class="navbar-nav d-flex w-100 text-center">
-        <li class="nav-item flex-fill" v-for="(navItem, key) in smNav(navItems)" :key="key" v-bind:class="{active: navItem.id === $router.currentRoute.name}">
+        <li class="nav-item flex-fill" v-for="(navItem, key) in smNav(navItems)" :key="key" v-bind:class="{active: navItem.id === activeNavItem}">
           <a class="nav-link" href="#" @click="navItem.click()" :class="{disabled: navItem.disabled}"><font-awesome-icon :icon="navItem.icon" /></a>
         </li>
       </ul>
@@ -85,7 +85,13 @@ export default {
         }
       ],
       showSidebar: false,
-      sideBarTab: ''
+      sideBarTab: '',
+      activeNavItem: this.$router.currentRoute && this.$router.currentRoute.name
+    }
+  },
+  watch: {
+    $route (to) {
+      this.activeNavItem = to.name
     }
   },
   methods: {
