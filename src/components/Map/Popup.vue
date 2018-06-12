@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     async getFeatureInfo (evt) {
-      const featureInfo = await DisplayedLayer.getFeatureInfo(evt)
+      const featureInfo = await DisplayedLayer.getFeatureInfo(evt, this.getMap())
 
       this.showGetFeatureInfo(evt.latlng, featureInfo)
     },
