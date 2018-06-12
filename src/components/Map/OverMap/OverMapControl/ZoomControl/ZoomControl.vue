@@ -6,18 +6,16 @@
 </template>
 
 <script>
-import MapObj from '@/store/map'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 import faMinus from '@fortawesome/fontawesome-free-solid/faMinus'
 
-var map = MapObj.getMap()
-
 export default {
   name: 'ZoomControl',
+  inject: ['getMap'],
   data() {
     return {
-      map: MapObj.getMap(),
+      map: this.getMap(),
       zoomInDisabled: false,
       zoomOutDisabled: false
     }

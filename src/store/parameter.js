@@ -1,5 +1,4 @@
 import Data from '@/store/data'
-import DisplayedLayer from '@/store/displayedLayer'
 
 let parameters = []
 let displayedParameter = {}
@@ -25,7 +24,6 @@ export default {
   },
   setDisplayedParameter (parameter) {
     displayedParameter = parameter
-    DisplayedLayer.setDisplayedLayer(displayedParameter.layerUrl, displayedParameter.layerParameters)
   },
   getDisplayedParameter () {
     return displayedParameter

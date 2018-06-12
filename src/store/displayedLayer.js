@@ -1,24 +1,23 @@
 import {
   TileLayer
 } from 'leaflet'
-import MapObj from '@/store/map'
 import axios from 'axios'
 
 let displayedLayer
 
 export default {
   _map: false,
-  setDisplayedLayer (layerUrl, options = {}) {
+  setDisplayedLayer (map, layerUrl, options = {}) {
     // Remove and add to activate the addlayer event
     if (displayedLayer) {
       displayedLayer.remove()
     }
-    displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(MapObj.getMap())
+    displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
   },
-  async getFeatureInfo (evt) {
+  async getFeatureInfo (evt, map) {
     if (displayedLayer) {
-      let point = MapObj.getMap().latLngToContainerPoint(evt.latlng, MapObj.getMap().getZoom())
-      let size = MapObj.getMap().getSize()
+      let point = map.latLngToContainerPoint(evt.latlng, map.getZoom())
+      let size = map.getSize()
 
       let params = {
         request: 'GetFeatureInfo',
@@ -28,7 +27,7 @@ export default {
         transparent: displayedLayer.options.transparent,
         version: displayedLayer.options.version,
         format: displayedLayer.options.format,
-        bbox: MapObj.getMap().getBounds().toBBoxString(),
+        bbox: map.getBounds().toBBoxString(),
         height: size.y,
         width: size.x,
         layers: displayedLayer.options.layers,

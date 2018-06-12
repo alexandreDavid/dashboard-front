@@ -25,7 +25,6 @@
 <script>
 import { Modal } from '@/components/Modal/Modal'
 import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
-import MapObj from '@/store/map'
 import Parameter from '@/store/parameter'
 import VueSlideBar from '@/components/Slider/Slider'
 
@@ -36,6 +35,7 @@ export default {
     ForecastSelection,
     VueSlideBar
   },
+  inject: ['getMap'],
   data() {
     return {
       showModal: false,
@@ -46,7 +46,7 @@ export default {
   mounted() {
     var vm = this
     // On layer displayed change, legend refresh
-    MapObj.getMap().on('layeradd', function () {
+    vm.getMap().on('layeradd', function () {
       vm.displayedParameter = Parameter.getDisplayedParameter()
     })
   },

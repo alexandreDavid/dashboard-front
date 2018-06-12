@@ -43,7 +43,6 @@
 <script>
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import Managing from './OverMapControl/Managing/Managing'
-import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
 import ForecastSelection from './OverMapControl/Managing/ForecastSelection/ForecastSelection'
 
@@ -96,8 +95,9 @@ export default {
       return faUndo
     }
   },
+  inject: ['getMap'],
   async created () {
-    this.hasCurrentLocation = await MapObj.setCurrentLocationLayer()
+    this.hasCurrentLocation = await this.getMap().setCurrentLocationLayer()
   },
   data () {
     return {
@@ -112,7 +112,7 @@ export default {
   mounted() {
     var vm = this
     // On layer displayed change, legend refresh
-    MapObj.getMap().on('layeradd', function () {
+    this.getMap().on('layeradd', function () {
       vm.selectedParameter = Parameter.getDisplayedParameter()
     })
   },
@@ -120,14 +120,14 @@ export default {
     onSearchLocationSelected (newValue) {
       this.searchLocationResult = newValue
       if (newValue) {
-        AreaLayer.setSelectedArea(newValue)
+        AreaLayer.setSelectedArea(newValue, this.getMap())
       }
     },
     zoomToCurrentLocation () {
-      MapObj.zoomToCurrentLocation()
+      this.getMap().zoomToCurrentLocation()
     },
     resetMap () {
-      MapObj.setDefaultMap()
+      this.getMap().setDefaultMap()
     },
     initModal () {
       this.selectedArea = Area.getSelectedArea()

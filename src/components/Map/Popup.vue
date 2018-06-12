@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import MapObj from '@/store/map'
 import DisplayedLayer from '@/store/displayedLayer'
 import {
   Popup
@@ -18,8 +17,9 @@ export default {
       value: false
     }
   },
+  inject: ['getMap'],
   mounted() {
-    MapObj.getMap().on('click', this.getFeatureInfo, this)
+    this.getMap().on('click', this.getFeatureInfo, this)
   },
   methods: {
     async getFeatureInfo (evt) {
@@ -35,7 +35,7 @@ export default {
         })
           .setLatLng(latlng)
           .setContent(this.$el)
-          .openOn(MapObj.getMap())
+          .openOn(this.getMap())
       }
     }
   }

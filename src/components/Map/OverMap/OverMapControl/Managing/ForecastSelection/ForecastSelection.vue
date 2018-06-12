@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import MapObj from '@/store/map'
 import Parameter from '@/store/parameter'
+import DisplayedLayer from '@/store/displayedLayer'
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faCaretDown from '@fortawesome/fontawesome-free-solid/faCaretDown'
@@ -54,6 +54,7 @@ export default {
       isLoaded: false
     }
   },
+  inject: ['getMap'],
   async created() {
     this.parameters = await Parameter.getAllParameters()
     this.parameterGroupings = await Parameter.getAllParameterGroupings()
@@ -83,7 +84,8 @@ export default {
     selectParameter(selectedParameter) {
       this.activeParam = selectedParameter.paramName
       Parameter.setDisplayedParameter(selectedParameter)
-      this.$emit('selectedParameter', selectedParameter);
+      DisplayedLayer.setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
+      this.$emit('selectedParameter', selectedParameter)
     }
   }
 }

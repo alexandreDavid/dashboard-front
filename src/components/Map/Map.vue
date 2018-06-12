@@ -11,11 +11,18 @@ import MapObj from '@/store/map'
 import OverMap from './OverMap/OverMap'
 import Popup from './Popup'
 
+let map
+
 export default {
   name: 'Map',
   components: {
     OverMap,
     Popup
+  },
+  provide: function () {
+    return {
+      getMap: this.getMap
+    }
   },
   data() {
     return {
@@ -23,8 +30,14 @@ export default {
     }
   },
   mounted() {
-    MapObj.init('map-container')
+    map = new MapObj('map-container')
+    map.setDefaultMap()
     this.mapInitialised = true
+  },
+  methods: {
+    getMap () {
+      return map
+    }
   }
 }
 </script>

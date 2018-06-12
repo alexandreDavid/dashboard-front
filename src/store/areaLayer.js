@@ -1,11 +1,10 @@
-import MapObj from '@/store/map'
 import axios from 'axios'
 import { GeoJSON } from 'leaflet'
 
 let areaLayer
 
 export default {
-  async setSelectedArea (area) {
+  async setSelectedArea (area, map) {
     const areaData = await axios.get(
       `${process.env.GEOSERVER_URL}/${area.workspaceName}/ows`, {
         params: {
@@ -17,7 +16,6 @@ export default {
         }
       }
     )
-    MapObj.getMap()
     if (areaLayer) {
       areaLayer.remove()
     }
@@ -26,11 +24,11 @@ export default {
       width: 2,
       color: 'black',
       fillOpacity: 0.0
-    }).addTo(MapObj.getMap())
+    }).addTo(map)
 
-    this.zoomToArea()
+    this.zoomToArea(map)
   },
-  zoomToArea () {
-    MapObj.getMap().fitBounds(areaLayer.getBounds())
+  zoomToArea (map) {
+    map.fitBounds(areaLayer.getBounds())
   }
 }
