@@ -4,7 +4,7 @@
       <div class="row">
         <h4 class="col-12 mt-3 mb-3">Compare Parameter Graphs</h4>
         <div class="col-12 mb-3">
-          <SearchLocation @input="onSearchLocationSelected" :initialLocation="selectedArea && selectedArea.displayName" />
+          <SearchLocation @input="onSearchLocationSelected" />
         </div>
         <div class="col-md-6 mb-2" v-if="selectedArea" v-for="(graph, key) in allGraphs" :key="key">
           <DashboardGraph v-bind:selectedArea="selectedArea" v-bind:allParameters="allParameters"></DashboardGraph>
