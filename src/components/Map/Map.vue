@@ -31,7 +31,6 @@ export default {
   },
   mounted() {
     map = new MapObj('map-container')
-    map.setDefaultMap()
     this.mapInitialised = true
   },
   methods: {

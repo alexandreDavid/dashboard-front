@@ -12,16 +12,13 @@ let defaultParams = {
     }
   }
 }
-export default Map.extend({
+let MapObj = Map.extend({
   options: Object.assign({
     attributionControl: false,
     zoomControl: false
   }, Map.options),
   _baseLayer: false,
   _currentLocationMarker: false,
-  setDefaultParams (params) {
-    Object.assign(defaultParams, params)
-  },
   setDefaultMap () {
     this.setView(defaultParams.view.location, defaultParams.view.zoom)
 
@@ -61,3 +58,13 @@ export default Map.extend({
     this.setView(this._currentLocationMarker.getLatLng())
   }
 })
+
+MapObj.addInitHook(function () {
+  this.setDefaultMap()
+})
+
+MapObj.setDefaultParams = function (params) {
+  Object.assign(defaultParams, params)
+}
+
+export default MapObj
