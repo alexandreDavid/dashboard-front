@@ -6,11 +6,9 @@
         <div class="col-12 mb-3">
           <SearchLocation @input="onSearchLocationSelected" />
         </div>
-        <div class="col-md-6 mb-2" v-if="selectedArea" v-for="(graph, key) in allGraphs" :key="key">
-          <DashboardGraph v-bind:selectedArea="selectedArea" v-bind:allParameters="allParameters"></DashboardGraph>
-        </div>
+        <DashboardWidget v-if="selectedArea" v-for="(widget, key) in allWidgets" :key="key" :widgetKey="key" v-bind:selectedArea="selectedArea" v-bind:allParameters="allParameters"></DashboardWidget>
         <div class="col-md-6 mb-2" v-if="selectedArea">
-          <button type="button" class="btn btn-primary" @click="addGraph()"><font-awesome-icon :icon="iconPlus" /> Add a graph</button>
+          <button type="button" class="btn btn-primary" @click="addWidget()"><font-awesome-icon :icon="iconPlus" /> Add a widget</button>
         </div>
       </div>
     </div>
@@ -19,7 +17,7 @@
 </template>
 
 <script>
-import DashboardGraph from './DashboardGraph'
+import DashboardWidget from './DashboardWidget'
 import Loading from '@/components/Loading/Loading'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import Parameter from '@/store/parameter.js'
@@ -32,7 +30,7 @@ export default {
   components: {
     SearchLocation,
     Loading,
-    DashboardGraph,
+    DashboardWidget,
     FontAwesomeIcon
   },
   data() {
@@ -40,7 +38,7 @@ export default {
       isLoaded: false,
       allParameters: [],
       selectedArea: false,
-      allGraphs: []
+      allWidgets: []
     }
   },
   computed: {
@@ -57,8 +55,8 @@ export default {
     onSearchLocationSelected (newValue) {
       this.selectedArea = newValue
     },
-    addGraph() {
-      this.allGraphs.push({})
+    addWidget() {
+      this.allWidgets.push({})
       // Scroll to the next graph
       let container = document.querySelector("#page-container")
       this.$nextTick(() => {
