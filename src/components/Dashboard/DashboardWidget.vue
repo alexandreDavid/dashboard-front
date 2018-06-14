@@ -1,17 +1,16 @@
 <template>
-  <div class="p-0" v-bind:class="activeSize.class">
-    <div v-bind:class="activeRatio.class">
+  <div class="p-0" v-bind:class="contentObject.size.class">
+    <div v-bind:class="contentObject.ratio.class">
     <div class="ratio-content p-2">
       <div class="card h-100 flex-column">
-        <div class="card-header">
+        <div class="card-header" v-if="contentObject.title || isEditing">
           <div class="d-flex">
             <div class="flex-grow-1">
-              <h5 v-if="!isEditing" class="w-100">{{title}}</h5>
-              <input type="text" v-if="isEditing" v-model="title" class="form-control w-100" id="title" placeholder="title">
+              <h5 v-if="!isEditing" class="w-100">{{contentObject.title}}</h5>
+              <input type="text" v-if="isEditing" v-model="contentObject.title" class="form-control w-100" id="title" placeholder="title">
             </div>
             <div>
-              <button type="button" class="btn btn-light ml-2" v-if="!isEditing" @click="edit()"><font-awesome-icon :icon="iconEdit" /></button>
-              <button type="button" class="btn btn-light ml-2" v-if="isEditing" @click="remove()"><font-awesome-icon :icon="iconRemove" /></button>
+              <button type="button" class="btn btn-light ml-2" v-if="isEditing" @click="removeWidget()"><font-awesome-icon :icon="iconRemove" /></button>
             </div>
           </div>
         </div>
@@ -35,13 +34,13 @@
             </div>
             <div class="form-group">
               <label>Widget</label>
-              <select class="form-control" v-model="selectedWidget">
+              <select class="form-control" v-model="contentObject.widget">
                 <option v-for="widget in widgets" :key="widget.id" v-bind:value="widget">
                   {{ widget.label }}
                 </option>
               </select>
             </div>
-            <div class="form-group" v-if="selectedWidget && selectedWidget.formFields" v-for="formField in selectedWidget.formFields" :key="formField.id">
+            <div class="form-group" v-if="contentObject.widget && contentObject.widget.formFields" v-for="formField in contentObject.widget.formFields" :key="formField.id">
               <label>{{ formField.label }}</label>
               <select class="form-control" v-if="formField.type === 'select'" v-model="formField.value">
                 <option v-for="option in formField.options" :key="option.id" v-bind:value="option">
@@ -49,11 +48,10 @@
                 </option>
               </select>
             </div>
-            <button @click="validEdition()" class="btn btn-primary">Validate</button>
           </div>
           <div v-else>
-            <WidgetGraph v-if="selectedWidget.id === 'graph'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')"></WidgetGraph>
-            <WidgetMap v-if="selectedWidget.id === 'map'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="widgetKey"></WidgetMap>
+            <WidgetGraph v-if="contentObject.widget.id === 'graph'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')"></WidgetGraph>
+            <WidgetMap v-if="contentObject.widget.id === 'map'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="widgetKey"></WidgetMap>
           </div>
         </div>
       </div>
@@ -67,7 +65,6 @@ import WidgetGraph from './Widgets/WidgetGraph'
 import WidgetMap from './Widgets/WidgetMap'
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faEdit from '@fortawesome/fontawesome-free-solid/faEdit'
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
 
 export default {
@@ -81,12 +78,11 @@ export default {
   props: [
     'allParameters',
     'selectedArea',
-    'widgetKey'
+    'contentObject',
+    'widgetKey',
+    'isEditing'
   ],
   computed: {
-    iconEdit() {
-      return faEdit
-    },
     iconRemove() {
       return faTrash
     }
@@ -144,6 +140,11 @@ export default {
         id: '1:2',
         label: '1:2',
         class: 'ratio-10-20'
+      },
+      {
+        id: 'no',
+        label: 'No',
+        class: ''
       }
     ]
     const fieldParameter = {
@@ -165,34 +166,34 @@ export default {
       }
     ]
     return {
-      isEditing: true,
-      title: '',
+      edit: this.isEditing,
       area: this.selectedArea,
-      selectedParameter: this.allParameters[0],
       sizes: sizes,
-      activeSize: sizes[2],
+      activeSize: {},
       ratios: ratios,
-      activeRatio: ratios[0],
-      widgets: widgets,
-      selectedWidget: widgets[0]
+      activeRatio: {},
+      widgets: widgets
     }
+  },
+  created () {
+    this.contentObject.size = this.contentObject.size || this.sizes[2]
+    this.activeSize = this.contentObject.size
+    this.contentObject.ratio = this.contentObject.ratio || this.ratios[0]
+    this.activeRatio = this.contentObject.ratio
+    this.contentObject.widget = this.contentObject.widget || this.widgets[0]
   },
   methods: {
     changeSelectedSize (size) {
       this.activeSize = size
+      this.contentObject.size = size
     },
     changeSelectedRatio (ratio) {
       this.activeRatio = ratio
+      this.contentObject.ratio = ratio
     },
-    edit () {
-      this.isEditing = true
-    },
-    remove () {},
-    validEdition () {
-      this.isEditing = false
-    },
+    removeWidget () {},
     getValueForSelectedWidgetById(id) {
-      return this.selectedWidget.formFields.find(f => f.id === id).value
+      return this.contentObject.widget.formFields.find(f => f.id === id).value
     }
   }
 }
@@ -227,4 +228,3 @@ $ratios: (1: 1, 4:3, 3:2, 8:5, 16:9, 2:1, 10:20);
   }
 }
 </style>
-

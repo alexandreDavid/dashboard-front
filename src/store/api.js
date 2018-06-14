@@ -3,6 +3,9 @@ import Settings from '@/store/settings'
 import MapObj from '@/store/map'
 
 const urlRoot = 'http://localhost:3000'
+let dashboard = {
+  allContents: []
+}
 
 export default {
   async getInitialEnvironmemt () {
@@ -54,5 +57,11 @@ export default {
     } catch (e) {
       return false
     }
+  },
+  setDashboard (dashboard2Save) {
+    dashboard = dashboard2Save
+  },
+  getDashboard () {
+    return dashboard
   }
 }
