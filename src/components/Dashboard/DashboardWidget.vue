@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
               <label>Widget</label>
-              <select class="form-control" v-model="contentObject.widget">
+              <select class="form-control" v-model="activeWidget" @change="changeSelectWidget(activeWidget)">
                 <option v-for="widget in widgets" :key="widget.id" v-bind:value="widget">
                   {{ widget.label }}
                 </option>
@@ -47,11 +47,13 @@
                   {{ option.displayName }}
                 </option>
               </select>
+              <textarea class="form-control" v-if="formField.type === 'textarea'" v-model="formField.value"></textarea>
             </div>
           </div>
           <div v-else>
             <WidgetGraph v-if="contentObject.widget.id === 'graph'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')"></WidgetGraph>
             <WidgetMap v-if="contentObject.widget.id === 'map'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="widgetKey"></WidgetMap>
+            <WidgetTextArea v-if="contentObject.widget.id === 'textarea'" v-bind:textArea="getValueForSelectedWidgetById('text')"></WidgetTextArea>
           </div>
         </div>
       </div>
@@ -63,6 +65,7 @@
 <script>
 import WidgetGraph from './Widgets/WidgetGraph'
 import WidgetMap from './Widgets/WidgetMap'
+import WidgetTextArea from './Widgets/WidgetTextArea'
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
@@ -73,6 +76,7 @@ export default {
     Loading,
     WidgetGraph,
     WidgetMap,
+    WidgetTextArea,
     FontAwesomeIcon
   },
   props: [
@@ -163,6 +167,14 @@ export default {
         id: 'map',
         label: 'Map',
         formFields: [fieldParameter]
+      }, {
+        id: 'textarea',
+        label: 'Text',
+        formFields: [{
+          id: 'text',
+          type: 'textarea',
+          value: ''
+        }]
       }
     ]
     return {
@@ -172,7 +184,8 @@ export default {
       activeSize: {},
       ratios: ratios,
       activeRatio: {},
-      widgets: widgets
+      widgets: widgets,
+      activeWidget: {}
     }
   },
   created () {
@@ -181,6 +194,7 @@ export default {
     this.contentObject.ratio = this.contentObject.ratio || this.ratios[0]
     this.activeRatio = this.contentObject.ratio
     this.contentObject.widget = this.contentObject.widget || this.widgets[0]
+    this.activeWidget = this.contentObject.widget
   },
   methods: {
     changeSelectedSize (size) {
@@ -190,6 +204,9 @@ export default {
     changeSelectedRatio (ratio) {
       this.activeRatio = ratio
       this.contentObject.ratio = ratio
+    },
+    changeSelectWidget(widget) {
+      this.contentObject.widget = widget
     },
     removeWidget () {
       this.$emit('remove')
