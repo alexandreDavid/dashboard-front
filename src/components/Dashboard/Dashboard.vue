@@ -2,8 +2,8 @@
   <div id="dashboard">
     <div v-if="isLoaded" class="container">
       <div class="row">
-        <h4 class="col-12 mt-3 mb-3">Compare Parameter Graphs</h4>
-        <div class="col-12 mb-3">
+        <h4 class="col-12 mt-2 mb-2 p-2">Compare Parameter Graphs</h4>
+        <div class="col-12 mb-2 p-2">
           <SearchLocation @input="onSearchLocationSelected" />
         </div>
         <DashboardWidget v-if="selectedArea" v-for="(widget, key) in allWidgets" :key="key" :widgetKey="key" v-bind:selectedArea="selectedArea" v-bind:allParameters="allParameters"></DashboardWidget>

@@ -1,7 +1,7 @@
 <template>
-  <div class="mb-2" v-bind:class="activeSize.class">
+  <div class="p-0" v-bind:class="activeSize.class">
     <div v-bind:class="activeRatio.class">
-    <div class="ratio-content">
+    <div class="ratio-content p-2">
       <div class="card h-100 flex-column">
         <div class="card-header">
           <div class="d-flex">
@@ -136,6 +136,14 @@ export default {
         id: '16:9',
         label: '16:9',
         class: 'ratio-16-9'
+      }, {
+        id: '2:1',
+        label: '2:1',
+        class: 'ratio-2-1'
+      }, {
+        id: '1:2',
+        label: '1:2',
+        class: 'ratio-10-20'
       }
     ]
     const fieldParameter = {
@@ -211,7 +219,7 @@ export default {
   }
 }
 
-$ratios: (1: 1, 4:3, 3:2, 8:5, 16:9);
+$ratios: (1: 1, 4:3, 3:2, 8:5, 16:9, 2:1, 10:20);
 
 @each $ratioH, $ratioW in $ratios {
   .ratio-#{$ratioH}-#{$ratioW} {
