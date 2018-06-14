@@ -191,7 +191,9 @@ export default {
       this.activeRatio = ratio
       this.contentObject.ratio = ratio
     },
-    removeWidget () {},
+    removeWidget () {
+      this.$emit('remove')
+    },
     getValueForSelectedWidgetById(id) {
       return this.contentObject.widget.formFields.find(f => f.id === id).value
     }
