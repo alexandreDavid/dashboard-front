@@ -27,5 +27,8 @@ export default {
   },
   getDisplayedParameter () {
     return displayedParameter
+  },
+  getParams () {
+    return parameters
   }
 }
