@@ -4,7 +4,7 @@ const cardWidths = [
   {
     id: 'XS',
     label: 'XS',
-    class: 'col-md-4 col-lg-3'
+    class: 'col-6 col-lg-3'
   }, {
     id: 'S',
     label: 'S',
@@ -38,8 +38,6 @@ const cardHeights = [
     class: 'height-large'
   }
 ]
-
-let allParameters = []
 
 export default class Dashboard {
   constructor (title = '', cards = []) {
