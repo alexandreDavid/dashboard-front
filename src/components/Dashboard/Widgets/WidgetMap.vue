@@ -1,7 +1,7 @@
 <template>
   <div :id="mapId" class="map-container-widget">
     <div class="over-map">
-      <div class="row mb-2 justify-content-end over-map-control">
+      <div class="over-map-right over-map-control">
         <img v-bind:src="parameter.legendUrl">
       </div>
     </div>
