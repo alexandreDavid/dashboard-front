@@ -9,8 +9,8 @@
         <div class="col-12 mb-2 p-2">
           <SearchLocation @input="onSearchLocationSelected" />
         </div>
-        <DashboardWidget v-if="selectedArea" v-for="card in dashboard.cards" :key="card.id" v-bind:isEditing="isEditing2" v-bind:cardConfiguration="card" @edit="editCard(card)" v-bind:selectedArea="selectedArea" :allParameters="allParameters"></DashboardWidget>
-        <div class="col-md-6 p-2" v-if="selectedArea && isEditing">
+        <DashboardWidget v-if="selectedArea" v-for="card in dashboard.cards" :key="card.id" v-bind:cardConfiguration="card" @edit="editCard(card)" v-bind:isEditing="isEditing" v-bind:selectedArea="selectedArea" :allParameters="allParameters"></DashboardWidget>
+        <div class="col-md-4 p-2" v-if="selectedArea && isEditing">
           <button type="button" class="btn btn-primary" @click="addCard()"><font-awesome-icon :icon="iconPlus" /> Add a card</button>
           <button type="button" class="btn btn-primary" @click="save()"><font-awesome-icon :icon="iconSave" /> Save</button>
         </div>
