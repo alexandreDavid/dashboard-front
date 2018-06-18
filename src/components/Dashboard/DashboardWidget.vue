@@ -7,12 +7,12 @@
             <h5 class="w-100">{{cardConfiguration.title}} {{cardConfiguration.sizeClass}} {{cardConfiguration.fwfe}}</h5>
           </div>
           <div v-if="isEditing">
-            <button type="button" class="btn btn-light ml-2" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>
+            <button type="button" class="btn btn-light btn-sm ml-2" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>
           </div>
         </div>
       </div>
       <div v-if="!cardConfiguration.title && isEditing " class="position-absolute" style="right: 0; z-index: 1002; ">
-        <button type="button" class="btn btn-light ml-2" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>
+        <button type="button" class="btn btn-light btn-sm" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>
       </div>
       <div class="card-body position-relative">
         <WidgetGraph v-if="cardConfiguration.widget.id === 'graph'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')"></WidgetGraph>
