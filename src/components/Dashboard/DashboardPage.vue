@@ -41,7 +41,7 @@ import faSave from '@fortawesome/fontawesome-free-solid/faSave'
 import DashboardObj from '@/store/dashboard.js'
 
 export default {
-  name: 'Dashboard',
+  name: 'DashboardPage',
   components: {
     SearchLocation,
     Loading,

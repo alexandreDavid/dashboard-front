@@ -1,7 +1,7 @@
 <template>
-  <div id="graph">
-    <div v-if="isLoaded">
-      <LineChart v-bind:chartData="datacollection" :options="options" :height="calculateHeight"></LineChart>
+  <div class="graph-container">
+    <div v-if="isLoaded" class="chart-container">
+      <LineChart v-bind:chartData="datacollection" :options="options"></LineChart>
     </div>
     <Loading v-if="!isLoaded"/>
   </div>
@@ -19,7 +19,7 @@ export default {
     LineChart,
     Loading
   },
-  props: ['area', 'parameter', 'ratio'],
+  props: ['area', 'parameter'],
   data() {
     return {
       chartArea: this.area,
@@ -30,12 +30,6 @@ export default {
       },
       options: {
         scales: {
-          xAxes: [{
-            display: true,
-            scaleLabel: {
-              display: true
-            }
-          }],
           yAxes: [{
             display: true,
             scaleLabel: {
@@ -44,16 +38,6 @@ export default {
           }]
         }
       }
-    }
-  },
-  computed: {
-    calculateHeight() {
-      // Default height
-      let height = 400
-      if (this.ratio) {
-        height = Math.floor(this.ratio * 400)
-      }
-      return height
     }
   },
   async created () {
@@ -125,3 +109,19 @@ export default {
   }
 }
 </script>
+
+<style>
+.graph-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 100%;
+  width: 100%;
+}
+</style>

@@ -30,7 +30,9 @@
       <button type="button" class="btn btn-primary align-bottom shadow" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
       <modal v-if="showModal" @close="showModal = false">
         <h3 slot="header">Graph</h3>
-        <div slot="body"><Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph></div>
+        <div slot="body" class="graph-modal-content">
+          <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph>
+        </div>
       </modal>
       <TimeSlot class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
     </div>
@@ -157,6 +159,10 @@ export default {
     bottom: 0;
     position: absolute;
   }
+}
+
+.graph-modal-content {
+  height: 400px;
 }
 
 </style>

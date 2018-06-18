@@ -1,4 +1,4 @@
-import { Line } from 'vue-chartjs'
+import { Line } from './BaseCharts'
 
 export default {
   extends: Line,
@@ -6,6 +6,7 @@ export default {
   mounted () {
     const defaultOptions = {
       responsive: true,
+      maintainAspectRatio: false,
       title: {
         display: false
       },
@@ -18,12 +19,6 @@ export default {
         intersect: true
       },
       scales: {
-        xAxes: [{
-          display: true,
-          scaleLabel: {
-            display: true
-          }
-        }],
         yAxes: [{
           display: true,
           scaleLabel: {

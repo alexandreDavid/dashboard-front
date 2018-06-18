@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Map from '@/components/Map/Map'
 import Login from '@/components/Login/Login'
-import Dashboard from '@/components/Dashboard/Dashboard'
+import DashboardPage from '@/components/Dashboard/DashboardPage'
 import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
 import Auth from '@/store/authentication'
@@ -23,7 +23,7 @@ export default new Router({
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: Dashboard,
+      component: DashboardPage,
       beforeEnter: checkAuth
     },
     {
