@@ -38,7 +38,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 import faEdit from '@fortawesome/fontawesome-free-solid/faEdit'
 import faSave from '@fortawesome/fontawesome-free-solid/faSave'
-import DashboardObj from '@/store/Dashboard.js'
+import DashboardObj from '@/store/dashboard'
 
 export default {
   name: 'DashboardPage',

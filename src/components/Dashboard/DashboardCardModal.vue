@@ -41,7 +41,7 @@
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
-import Dashboard from '@/store/Dashboard'
+import Dashboard from '@/store/dashboard'
 
 export default {
   name: 'DashboardCardModal',
