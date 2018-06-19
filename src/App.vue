@@ -28,7 +28,7 @@ export default {
       isLoading: true
     }
   },
-  async created() {
+  async created () {
     await Api.getInitialEnvironmemt()
     this.isLoading = false
   }

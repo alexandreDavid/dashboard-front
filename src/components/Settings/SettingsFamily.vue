@@ -22,22 +22,22 @@ import SettingControl from './SettingControl'
 export default {
   name: 'SettingsFamily',
   props: ['settingsFamily'],
-  data() {
+  data () {
     return {
       isCollapsed: false
     }
   },
   components: { FontAwesomeIcon, SettingControl },
   computed: {
-    iconCaretDown() {
+    iconCaretDown () {
       return faCaretDown
     },
-    iconCaretRight() {
+    iconCaretRight () {
       return faCaretRight
     }
   },
   methods: {
-    toggleCollapsation() {
+    toggleCollapsation () {
       this.isCollapsed = !this.isCollapsed
     }
   }

@@ -10,11 +10,11 @@ import SettingsFamily from './SettingsFamily'
 
 export default {
   name: 'Settings',
-  async created() {
+  async created () {
     this.settings = await Api.getSettings()
   },
   components: { SettingsFamily },
-  data() {
+  data () {
     return {
       settings: []
     }

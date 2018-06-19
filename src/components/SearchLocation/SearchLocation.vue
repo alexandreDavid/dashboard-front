@@ -65,7 +65,7 @@ export default {
   //     }
   //   }
   // },
-  data() {
+  data () {
     return {
       isOpen: false,
       results: [],
@@ -76,7 +76,7 @@ export default {
       areas: []
     }
   },
-  async created() {
+  async created () {
     this.areas = await Area.getAllAreas()
     const selectedArea = Area.getSelectedArea()
     if (selectedArea) {
@@ -85,53 +85,53 @@ export default {
   },
 
   methods: {
-    onChange() {
+    onChange () {
       this.isOpen = !!this.search
-      this.$emit('input', false);
+      this.$emit('input', false)
       this.filterResults()
       this.arrowCounter = 0
     },
-    onFocus() {
+    onFocus () {
       this.isOpen = !!this.search
       this.filterResults()
       this.arrowCounter = 0
     },
-    setResult(result) {
+    setResult (result) {
       this.search = result.displayName
       this.isOpen = false
       Area.setSelectedArea(result)
       // Let's warn the parent that a change was made
-      this.$emit('input', result);
+      this.$emit('input', result)
     },
-    onArrowDown(evt) {
+    onArrowDown (evt) {
       if (this.arrowCounter < this.results.length) {
         this.arrowCounter = this.arrowCounter + 1
       }
     },
-    onArrowUp() {
+    onArrowUp () {
       if (this.arrowCounter > 0) {
         this.arrowCounter = this.arrowCounter - 1
       }
     },
-    onEnter() {
+    onEnter () {
       this.setResult(this.results[this.arrowCounter])
       this.arrowCounter = -1
     },
-    handleClickOutside(evt) {
+    handleClickOutside (evt) {
       if (!this.$el.contains(evt.target)) {
         this.isOpen = false
         this.arrowCounter = -1
       }
     },
-    filterResults() {
+    filterResults () {
       // Only 5 results
-      this.results = this.areas.filter(area => area.displayName.toLowerCase().indexOf(this.search.toLowerCase()) > -1).slice(0, 5);
+      this.results = this.areas.filter(area => area.displayName.toLowerCase().indexOf(this.search.toLowerCase()) > -1).slice(0, 5)
     }
   },
-  mounted() {
+  mounted () {
     document.addEventListener('click', this.handleClickOutside)
   },
-  destroyed() {
+  destroyed () {
     document.removeEventListener('click', this.handleClickOutside)
   }
 }

@@ -39,21 +39,21 @@ export default {
     FontAwesomeIcon,
     ProfileAboutSidebar: () => import('./ProfileAboutSidebar')
   },
-  data() {
+  data () {
     let self = this
     return {
       navItems: [
         {
           id: 'dashboard',
           label: 'Dashboard',
-          click() {
+          click () {
             self.goTo(this.id)
           },
           icon: faTachometerAlt
         }, {
           id: 'map',
           label: 'Map',
-          click() {
+          click () {
             self.goTo(this.id)
           },
           icon: faMap
@@ -61,14 +61,14 @@ export default {
           id: 'graph',
           label: 'Graph',
           disabled: true,
-          click() {
+          click () {
             self.goTo(this.id)
           },
           icon: faChartBar
         }, {
           id: 'about',
           label: 'About',
-          click() {
+          click () {
             self.openSideBar(this.id)
           },
           icon: faInfoCircle,
@@ -77,7 +77,7 @@ export default {
         }, {
           id: 'profile',
           label: 'Profile',
-          click() {
+          click () {
             self.openSideBar(this.id)
           },
           icon: faUser,
@@ -95,19 +95,19 @@ export default {
     }
   },
   methods: {
-    goTo(page) {
+    goTo (page) {
       this.$router.push({ name: page })
     },
-    leftNav(navs) {
+    leftNav (navs) {
       return navs.filter(v => !v.right)
     },
-    rightNav: function (navs) {
+    rightNav (navs) {
       return navs.filter(v => v.right)
     },
-    smNav: function (navs) {
+    smNav (navs) {
       return navs.filter(v => !v.hideOnSm)
     },
-    openSideBar(sideBarTab) {
+    openSideBar (sideBarTab) {
       this.sideBarTab = sideBarTab
       this.showSidebar = true
     }

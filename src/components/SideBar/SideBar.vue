@@ -18,22 +18,22 @@
 export default {
   name: 'Sidebar',
   props: {
-    position : {
+    position: {
       type: String,
       default: 'left'
     }
   },
   methods: {
-    handleClickOutside(evt) {
+    handleClickOutside (evt) {
       if (!this.$el.contains(evt.target)) {
         this.$emit('close')
       }
     }
   },
-  mounted() {
+  mounted () {
     document.addEventListener('click', this.handleClickOutside)
   },
-  destroyed() {
+  destroyed () {
     document.removeEventListener('click', this.handleClickOutside)
   }
 }

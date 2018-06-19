@@ -112,7 +112,7 @@ export default {
       areaLayer: false
     }
   },
-  mounted() {
+  mounted () {
     var vm = this
     // On layer displayed change, legend refresh
     this.getMap().on('layeradd', function () {

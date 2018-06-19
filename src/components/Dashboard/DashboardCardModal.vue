@@ -54,11 +54,11 @@ export default {
     'editedCard'
   ],
   computed: {
-    iconRemove() {
+    iconRemove () {
       return faTrash
     }
   },
-  data() {
+  data () {
     const sizes = Dashboard.getCardWidths()
     const containerHeights = Dashboard.getCardHeights()
     return {
@@ -84,7 +84,7 @@ export default {
       this.activeHeight = height
       this.editedCard.heightClass = height.class
     },
-    changeSelectWidget(widget) {
+    changeSelectWidget (widget) {
       this.editedCard.widget = widget
     },
     removeWidget () {

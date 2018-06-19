@@ -11,14 +11,13 @@
 </template>
 
 <script>
-import Api from '@/store/api'
 import Settings from './Settings'
 
 export default {
   name: 'SettingsPage',
   components: { Settings },
   methods: {
-    close() {
+    close () {
       this.$router.replace(this.$route.query.redirect || '/')
     }
   }

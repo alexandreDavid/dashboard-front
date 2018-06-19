@@ -38,7 +38,7 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 import faEdit from '@fortawesome/fontawesome-free-solid/faEdit'
 import faSave from '@fortawesome/fontawesome-free-solid/faSave'
-import DashboardObj from '@/store/dashboard.js'
+import DashboardObj from '@/store/Dashboard.js'
 
 export default {
   name: 'DashboardPage',
@@ -49,7 +49,7 @@ export default {
     DashboardCardModal,
     FontAwesomeIcon
   },
-  data() {
+  data () {
     return {
       isLoaded: false,
       isEditing: false,
@@ -62,13 +62,13 @@ export default {
     }
   },
   computed: {
-    iconPlus() {
+    iconPlus () {
       return faPlus
     },
-    iconEdit() {
+    iconEdit () {
       return faEdit
     },
-    iconSave() {
+    iconSave () {
       return faSave
     }
   },
@@ -83,18 +83,18 @@ export default {
     onSearchLocationSelected (newValue) {
       this.selectedArea = newValue
     },
-    addCard() {
+    addCard () {
       this.editCard(this.dashboard.addCard())
       // Scroll to the next graph
-      let container = document.querySelector("#page-container")
+      let container = document.querySelector('#page-container')
       this.$nextTick(() => {
-        setTimeout(function() {
-          container.scrollBy({ 
+        setTimeout(function () {
+          container.scrollBy({
             top: container.scrollHeight,
-            behavior: 'smooth' 
-          });
-        }, 0);
-      });
+            behavior: 'smooth'
+          })
+        }, 0)
+      })
     },
     editCard (card) {
       this.editedCard = card
@@ -107,8 +107,7 @@ export default {
       this.isEditing2 = false
     },
     removeCard (card) {
-      console.log(this.dashboard.allContents.findIndex(card))
-      this.dashboard.allContents.splice(this.dashboard.allContents.findIndex(card), 1);
+      this.dashboard.allContents.splice(this.dashboard.allContents.findIndex(card), 1)
     },
     edit () {
       this.isEditing = true
@@ -117,6 +116,6 @@ export default {
       Api.setDashboard(this.dashboard)
       this.isEditing = false
     }
-  },
+  }
 }
 </script>

@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import Parameter from '@/store/parameter'
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faCaretDown from '@fortawesome/fontawesome-free-solid/faCaretDown'
@@ -43,25 +42,24 @@ export default {
     'openedGroup',
     'activeParam'
   ],
-  data() {
+  data () {
     return {
       displayedInfo: false
     }
   },
   computed: {
-    iconCaretDown() {
+    iconCaretDown () {
       return faCaretDown
     },
-    iconCaretRight() {
+    iconCaretRight () {
       return faCaretRight
     },
-    iconInfo() {
+    iconInfo () {
       return faInfo
     }
   },
   methods: {
-    displayInfos(parameter) {
-      console.log(parameter)
+    displayInfos (parameter) {
       this.displayedInfo = parameter.paramName
     }
   }

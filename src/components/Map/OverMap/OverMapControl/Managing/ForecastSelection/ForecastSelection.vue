@@ -6,7 +6,7 @@
           <input type="radio" name="options" id="forecastModel.id" autocomplete="off" @click="selectForecastModel(forecastModel)"> {{forecastModel.label}}</label>
       </div> -->
 
-      <ForecastSelectionGroup 
+      <ForecastSelectionGroup
         v-for="parameterGrouping in parameterGroupings"
         :key="parameterGrouping.groupingId"
         :parameterGrouping="parameterGrouping"
@@ -22,11 +22,7 @@
 
 <script>
 import Parameter from '@/store/parameter'
-import DisplayedLayer from '@/store/displayedLayer'
 import Loading from '@/components/Loading/Loading'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faCaretDown from '@fortawesome/fontawesome-free-solid/faCaretDown'
-import faCaretRight from '@fortawesome/fontawesome-free-solid/faCaretRight'
 import ForecastSelectionGroup from './ForecastSelectionGroup'
 
 export default {
@@ -34,7 +30,7 @@ export default {
   components: {
     Loading, ForecastSelectionGroup
   },
-  data() {
+  data () {
     return {
       forecastModels: [
         {
@@ -55,7 +51,7 @@ export default {
     }
   },
   inject: ['getMap', 'getDisplayedLayer'],
-  async created() {
+  async created () {
     this.parameters = await Parameter.getAllParameters()
     this.parameterGroupings = await Parameter.getAllParameterGroupings()
 
@@ -66,22 +62,22 @@ export default {
     this.isLoaded = true
   },
   methods: {
-    filteredParameterByGroup(groupingId) {
+    filteredParameterByGroup (groupingId) {
       return this.parameters.filter(p => p.groupingId === groupingId)
     },
-    clickGroup(groupingId) {
+    clickGroup (groupingId) {
       if (this.openedGroup !== groupingId) {
         this.openedGroup = groupingId
       } else {
         this.openedGroup = false
       }
     },
-    selectForecastModel(selectedForecastModel) {
+    selectForecastModel (selectedForecastModel) {
       for (let forecastModel of this.forecastModels) {
         forecastModel.active = forecastModel.id === selectedForecastModel.id
       }
     },
-    selectParameter(selectedParameter) {
+    selectParameter (selectedParameter) {
       this.activeParam = selectedParameter.paramName
       Parameter.setDisplayedParameter(selectedParameter)
       this.getDisplayedLayer().setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)

@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    changeSelectedValue(id, setting) {
+    changeSelectedValue (id, setting) {
       this.activeKey = setting.key
       Settings.setActiveKeyById(id, setting)
     }

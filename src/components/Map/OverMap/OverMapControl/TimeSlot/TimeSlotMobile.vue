@@ -25,12 +25,11 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faCaretLeft from '@fortawesome/fontawesome-free-solid/faCaretLeft'
 import faCaretRight from '@fortawesome/fontawesome-free-solid/faCaretRight'
 
-const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
 export default {
   name: 'TimeSlotMobile',
-  data() {
-    const daysModel = [{
+  data () {
+    const daysModel = [
+      {
         value: 2,
         label: '2 days',
         times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527782400, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527846400]
@@ -41,7 +40,8 @@ export default {
       }, {
         value: 90,
         label: '90 days'
-      }]
+      }
+    ]
     return {
       daysModel: daysModel,
       activeModel: daysModel[0],
@@ -52,33 +52,32 @@ export default {
   },
   components: { FontAwesomeIcon },
   computed: {
-    iconPrevious() {
+    iconPrevious () {
       return faCaretLeft
     },
-    iconNext() {
+    iconNext () {
       return faCaretRight
     }
   },
   methods: {
-    changeSelectedModel(model) {
+    changeSelectedModel (model) {
       this.activeModel = model
     },
-    previous() {
+    previous () {
       this.isPlaying = true
       this.activePlay()
     },
-    next() {
+    next () {
       this.isPlaying = false
     },
-    goToTime(timeIdx) {
+    goToTime (timeIdx) {
       this.isPlaying = false
       this.currentIndex = timeIdx
     },
     getTimeFormated (date) {
       const d = new Date(date * 1000)
-      return `${d.toDateString()} ${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`
+      return `${d.toDateString()} ${('0' + d.getHours()).slice(-2)}:${('0' + d.getMinutes()).slice(-2)}`
     }
   }
 }
 </script>
-

@@ -17,7 +17,7 @@ export default {
     }
   },
   inject: ['getMap', 'getDisplayedLayer'],
-  mounted() {
+  mounted () {
     this.getMap().on('click', this.getFeatureInfo, this)
   },
   methods: {
@@ -26,7 +26,7 @@ export default {
 
       this.showGetFeatureInfo(evt.latlng, featureInfo)
     },
-    showGetFeatureInfo: function (latlng, features) {
+    showGetFeatureInfo (latlng, features) {
       if (features && features.length) {
         this.value = features[0].properties.GDAL_Band_Number_1
         new Popup({

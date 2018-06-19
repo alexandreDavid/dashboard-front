@@ -42,12 +42,13 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlay from '@fortawesome/fontawesome-free-solid/faPlay'
 import faPause from '@fortawesome/fontawesome-free-solid/faPause'
 
-const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
 export default {
   name: 'TimeSlot',
-  data() {
-    const daysModel = [{
+  data () {
+    const daysModel = [
+      {
         value: 2,
         label: '2 days',
         times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527782400, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527846400]
@@ -58,7 +59,8 @@ export default {
       }, {
         value: 90,
         label: '90 days'
-      }]
+      }
+    ]
     return {
       daysModel: daysModel,
       activeModel: daysModel[0],
@@ -68,37 +70,37 @@ export default {
   },
   components: { FontAwesomeIcon },
   computed: {
-    iconPlay() {
+    iconPlay () {
       return faPlay
     },
-    iconPause() {
+    iconPause () {
       return faPause
     }
   },
   methods: {
-    changeSelectedModel(model) {
+    changeSelectedModel (model) {
       this.activeModel = model
     },
-    play() {
+    play () {
       this.isPlaying = true
       this.activePlay()
     },
-    pause() {
+    pause () {
       this.isPlaying = false
     },
     activePlay () {
       if (this.currentIndex < (this.activeModel.times.length - 2)) {
         this.currentIndex++
-        setTimeout(()=>{
+        setTimeout(() => {
           if (this.isPlaying) {
             this.activePlay()
           }
-        },1000);
+        }, 1000)
       } else {
         this.pause()
       }
     },
-    goToTime(timeIdx) {
+    goToTime (timeIdx) {
       this.isPlaying = false
       this.currentIndex = timeIdx
     },
@@ -107,7 +109,7 @@ export default {
     },
     getDateHour (date) {
       const d = new Date(date * 1000)
-      return `${("0" + d.getHours()).slice(-2)}:${("0" + d.getMinutes()).slice(-2)}`
+      return `${('0' + d.getHours()).slice(-2)}:${('0' + d.getMinutes()).slice(-2)}`
     },
     calculateNowPlacement () {
       let now = Date.now() / 1000
@@ -136,4 +138,3 @@ export default {
   }
 }
 </script>
-

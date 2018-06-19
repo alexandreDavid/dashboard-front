@@ -46,11 +46,11 @@ export default {
     'isEditing'
   ],
   computed: {
-    iconEdit() {
+    iconEdit () {
       return faEdit
     }
   },
-  data() {
+  data () {
     return {
       area: this.selectedArea,
       sizeClass: this.cardConfiguration
@@ -60,7 +60,7 @@ export default {
     editCard () {
       this.$emit('edit')
     },
-    getValueForSelectedWidgetById(id) {
+    getValueForSelectedWidgetById (id) {
       return this.cardConfiguration.widget.formFields.find(f => f.id === id).value
     }
   }

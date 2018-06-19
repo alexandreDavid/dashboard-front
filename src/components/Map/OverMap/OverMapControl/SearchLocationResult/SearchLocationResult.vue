@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
 import Area from '@/store/area'
 import Settings from '@/store/settings'
 
 export default {
   name: 'SearchLocationResult',
   props: ['searchLocationResult'],
-  data() {
+  data () {
     return {
       locationDetails: {},
       isLoading: true,
@@ -50,7 +50,7 @@ export default {
     unitWind () {
       return this.units.find(u => u.id === 'wind-speed').label
     }
-  },
+  }
   // apollo: {
   //   locationDetails: {
   //     // gql query

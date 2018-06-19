@@ -15,7 +15,7 @@ export default {
     FontAwesomeIcon
   },
   computed: {
-    iconSpinner() {
+    iconSpinner () {
       return faSpinner
     }
   }

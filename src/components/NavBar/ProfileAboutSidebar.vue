@@ -39,16 +39,16 @@ export default {
       default: 'profile'
     }
   },
-  data() {
+  data () {
     return {
-      selectedTab: this.tab2Display,
+      selectedTab: this.tab2Display
     }
   },
   methods: {
-    logout() {
+    logout () {
       Authentication.logout()
     },
-    close() {
+    close () {
       this.$emit('close')
     }
   }

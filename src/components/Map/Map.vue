@@ -18,20 +18,20 @@ export default {
     OverMap,
     Popup
   },
-  provide: function () {
+  provide () {
     return {
       getMap: this.getMap,
       getDisplayedLayer: this.getDisplayedLayer
     }
   },
-  data() {
+  data () {
     return {
       map: false,
       mapInitialised: false,
       displayedLayer: false
     }
   },
-  mounted() {
+  mounted () {
     this.map = new MapObj('map-container')
     this.mapInitialised = true
     this.displayedLayer = new DisplayedLayer(this.map)

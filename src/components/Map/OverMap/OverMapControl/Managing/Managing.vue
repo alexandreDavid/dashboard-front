@@ -36,14 +36,14 @@ export default {
     VueSlideBar
   },
   inject: ['getMap'],
-  data() {
+  data () {
     return {
       showModal: false,
       displayedParameter: {},
       value: 50
     }
   },
-  mounted() {
+  mounted () {
     var vm = this
     // On layer displayed change, legend refresh
     vm.getMap().on('layeradd', function () {
@@ -51,7 +51,7 @@ export default {
     })
   },
   methods: {
-    onSelectedParameter() {
+    onSelectedParameter () {
       this.showModal = false
     }
   }

@@ -25,32 +25,33 @@ export default {
     'parameter',
     'widgetKey'
   ],
-  data() {
+  data () {
     return {
       isLoaded: false,
       map: false,
-      displayedLayer: false
+      displayedLayer: false,
+      areaLayer: false
     }
   },
   computed: {
-    mapId() {
+    mapId () {
       return `map-container-widget${this.widgetKey}`
     }
   },
-  provide: function () {
+  provide () {
     return {
       getMap: this.getMap,
       getDisplayedLayer: this.getDisplayedLayer
     }
   },
-  mounted() {
+  mounted () {
     this.map = new MapObj(this.mapId)
-    new AreaLayer(this.map, this.area)
+    this.areaLayer = new AreaLayer(this.map, this.area)
     this.displayedLayer = new DisplayedLayer(this.map, this.parameter.layerUrl, this.parameter.layerParameters)
     this.isLoaded = true
   },
   watch: {
-    parameter(newParam) {
+    parameter (newParam) {
       this.getDisplayedLayer().setDisplayedLayer(this.getMap(), newParam.layerUrl, newParam.layerParameters)
     }
   },
@@ -74,4 +75,3 @@ export default {
   right: 0;
 }
 </style>
-

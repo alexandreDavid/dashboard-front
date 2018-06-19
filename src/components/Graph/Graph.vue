@@ -9,7 +9,6 @@
 
 <script>
 import LineChart from './Charts/LineChart'
-import Chart from 'chart.js'
 import Data from '@/store/data'
 import Loading from '@/components/Loading/Loading'
 
@@ -20,7 +19,7 @@ export default {
     Loading
   },
   props: ['area', 'parameter'],
-  data() {
+  data () {
     return {
       chartArea: this.area,
       isLoaded: false,
@@ -58,31 +57,27 @@ export default {
       this.options.scales.yAxes[0].scaleLabel.labelString = `${this.parameter.displayName} (${data.unit})`
       this.isLoaded = true
     },
-    fillData(data) {
+    fillData (data) {
       const vm = this
 
-      var convertDate = function(date){
-        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        var d = new Date(date);
-        return d.getDate() + " " + monthNames[d.getMonth()] + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2)
+      let convertDate = function (date) {
+        let monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        let d = new Date(date)
+        return d.getDate() + ' ' + monthNames[d.getMonth()] + ' ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2)
       }
 
-      var valueConversion = function(value, unit){
-        if (unit === 0){
-          return parseFloat(value.replace(',','.')).toFixed(2);
-        } else if (unit === 1){
-          return convertTemperatureValue(value);
-        }
+      let valueConversion = function (value, unit) {
+        return parseFloat(value.replace(',', '.')).toFixed(2)
       }
 
       const colors = {
-        red: "rgb(255, 99, 132)",
-        orange: "rgb(255, 159, 64)",
-        yellow: "rgb(255, 205, 86)",
-        green: "rgb(75, 192, 192)",
-        blue: "rgb(54, 162, 235)",
-        grey: "rgb(201, 203, 207)",
-        purple: "rgb(153, 102, 255)"
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        grey: 'rgb(201, 203, 207)',
+        purple: 'rgb(153, 102, 255)'
       }
 
       // Adding every datasets
@@ -99,7 +94,7 @@ export default {
           }
         )
       })
-      Object.entries(data.data).slice(0,12).forEach(([key, value]) => {
+      Object.entries(data.data).slice(0, 12).forEach(([key, value]) => {
         vm.datacollection.labels.push(convertDate(key))
         Object.entries(value).forEach(([key, value]) => {
           vm.datacollection.datasets.find(d => d.label === key).data.push(valueConversion(value, 0))

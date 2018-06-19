@@ -13,7 +13,7 @@ import faMinus from '@fortawesome/fontawesome-free-solid/faMinus'
 export default {
   name: 'ZoomControl',
   inject: ['getMap'],
-  data() {
+  data () {
     return {
       map: this.getMap(),
       zoomInDisabled: false,
@@ -22,29 +22,29 @@ export default {
   },
   components: { FontAwesomeIcon },
   computed: {
-    iconPlus() {
+    iconPlus () {
       return faPlus
     },
-    iconMinus() {
+    iconMinus () {
       return faMinus
     }
   },
-  mounted() {
+  mounted () {
     this._updateDisabled()
     this.map.on('zoomend zoomlevelschange', this._updateDisabled, this)
   },
   methods: {
-    zoomIn(e) {
+    zoomIn (e) {
       if (this.map._zoom < this.map.getMaxZoom()) {
         this.map.zoomIn(this.map.options.zoomDelta * (e.shiftKey ? 3 : 1))
       }
     },
-    zoomOut(e) {
+    zoomOut (e) {
       if (this.map._zoom > this.map.getMinZoom()) {
         this.map.zoomOut(this.map.options.zoomDelta * (e.shiftKey ? 3 : 1))
       }
     },
-    _updateDisabled() {
+    _updateDisabled () {
       this.zoomInDisabled = this.map._zoom === this.map.getMaxZoom()
       this.zoomOutDisabled = this.map._zoom === this.map.getMinZoom()
     }
