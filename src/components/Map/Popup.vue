@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import DisplayedLayer from '@/store/displayedLayer'
 import {
   Popup
 } from 'leaflet'
@@ -17,13 +16,13 @@ export default {
       value: false
     }
   },
-  inject: ['getMap'],
+  inject: ['getMap', 'getDisplayedLayer'],
   mounted() {
     this.getMap().on('click', this.getFeatureInfo, this)
   },
   methods: {
     async getFeatureInfo (evt) {
-      const featureInfo = await DisplayedLayer.getFeatureInfo(evt, this.getMap())
+      const featureInfo = await this.getDisplayedLayer().getFeatureInfo(evt, this.getMap())
 
       this.showGetFeatureInfo(evt.latlng, featureInfo)
     },

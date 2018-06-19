@@ -15,8 +15,6 @@ import AreaLayer from '@/store/areaLayer'
 import DisplayedLayer from '@/store/displayedLayer'
 import Popup from '@/components/Map/Popup'
 
-let map
-
 export default {
   name: 'WidgetMap',
   components: {
@@ -29,7 +27,9 @@ export default {
   ],
   data() {
     return {
-      isLoaded: false
+      isLoaded: false,
+      map: false,
+      displayedLayer: false
     }
   },
   computed: {
@@ -39,18 +39,27 @@ export default {
   },
   provide: function () {
     return {
-      getMap: this.getMap
+      getMap: this.getMap,
+      getDisplayedLayer: this.getDisplayedLayer
     }
   },
   mounted() {
-    map = new MapObj(this.mapId)
-    AreaLayer.setSelectedArea(this.area, map)
-    DisplayedLayer.setDisplayedLayer(map, this.parameter.layerUrl, this.parameter.layerParameters)
+    this.map = new MapObj(this.mapId)
+    AreaLayer.setSelectedArea(this.area, this.map)
+    this.displayedLayer = new DisplayedLayer(this.map, this.parameter.layerUrl, this.parameter.layerParameters)
     this.isLoaded = true
+  },
+  watch: {
+    parameter(newParam) {
+      this.getDisplayedLayer().setDisplayedLayer(this.getMap(), newParam.layerUrl, newParam.layerParameters)
+    }
   },
   methods: {
     getMap () {
-      return map
+      return this.map
+    },
+    getDisplayedLayer () {
+      return this.displayedLayer
     }
   }
 }

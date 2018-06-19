@@ -10,8 +10,7 @@
 import MapObj from '@/store/map'
 import OverMap from './OverMap/OverMap'
 import Popup from './Popup'
-
-let map
+import DisplayedLayer from '@/store/displayedLayer'
 
 export default {
   name: 'Map',
@@ -21,21 +20,28 @@ export default {
   },
   provide: function () {
     return {
-      getMap: this.getMap
+      getMap: this.getMap,
+      getDisplayedLayer: this.getDisplayedLayer
     }
   },
   data() {
     return {
-      mapInitialised: false
+      map: false,
+      mapInitialised: false,
+      displayedLayer: false
     }
   },
   mounted() {
-    map = new MapObj('map-container')
+    this.map = new MapObj('map-container')
     this.mapInitialised = true
+    this.displayedLayer = new DisplayedLayer(this.map)
   },
   methods: {
     getMap () {
-      return map
+      return this.map
+    },
+    getDisplayedLayer () {
+      return this.displayedLayer
     }
   }
 }

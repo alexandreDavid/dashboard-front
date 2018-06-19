@@ -54,7 +54,7 @@ export default {
       isLoaded: false
     }
   },
-  inject: ['getMap'],
+  inject: ['getMap', 'getDisplayedLayer'],
   async created() {
     this.parameters = await Parameter.getAllParameters()
     this.parameterGroupings = await Parameter.getAllParameterGroupings()
@@ -84,7 +84,7 @@ export default {
     selectParameter(selectedParameter) {
       this.activeParam = selectedParameter.paramName
       Parameter.setDisplayedParameter(selectedParameter)
-      DisplayedLayer.setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
+      this.getDisplayedLayer().setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
       this.$emit('selectedParameter', selectedParameter)
     }
   }
