@@ -3,12 +3,11 @@
 </template>
 
 <script>
-import Graph from '@/components/Graph/Graph'
 
 export default {
   name: 'WidgetGraph',
   components: {
-    Graph
+    Graph: () => import('@/components/Graph/Graph')
   },
   props: [
     'area',
