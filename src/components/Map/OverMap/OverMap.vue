@@ -108,7 +108,8 @@ export default {
       showSidebar: false,
       showModal: false,
       selectedArea: {},
-      selectedParameter: {}
+      selectedParameter: {},
+      areaLayer: false
     }
   },
   mounted() {
@@ -117,12 +118,13 @@ export default {
     this.getMap().on('layeradd', function () {
       vm.selectedParameter = Parameter.getDisplayedParameter()
     })
+    this.areaLayer = new AreaLayer(this.getMap())
   },
   methods: {
     onSearchLocationSelected (newValue) {
       this.searchLocationResult = newValue
       if (newValue) {
-        AreaLayer.setSelectedArea(newValue, this.getMap())
+        this.areaLayer.setSelectedArea(newValue)
       }
     },
     zoomToCurrentLocation () {
