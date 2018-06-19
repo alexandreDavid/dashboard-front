@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
       <label>Widget</label>
-      <select class="form-control" v-model="editedCard.widget">
+      <select class="form-control" v-model="activeWidget" @change="changeSelectWidget(activeWidget)">
         <option v-for="widget in widgets" :key="widget.id" v-bind:value="widget">
           {{ widget.label }}
         </option>
@@ -73,6 +73,7 @@ export default {
   mounted () {
     this.activeSize = this.sizes.find((s) => s.class === this.editedCard.widthClass)
     this.activeHeight = this.containerHeights.find((s) => s.class === this.editedCard.heightClass)
+    this.activeWidget = this.widgets.find((w) => w.id === this.editedCard.widget.id)
   },
   methods: {
     changeSelectedSize (size) {
@@ -84,8 +85,7 @@ export default {
       this.editedCard.heightClass = height.class
     },
     changeSelectWidget(widget) {
-      this.activeWidget = widget
-      this.activeHeight.widget = widget
+      this.editedCard.widget = widget
     },
     removeWidget () {
       this.$emit('remove')
