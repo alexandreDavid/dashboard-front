@@ -12,5 +12,18 @@ export const Modal = Vue.component('Modal', {
     hasFooterSlot () {
       return !!this.$slots['footer']
     }
+  },
+  methods: {
+    handleClickOutside (evt) {
+      if (this.$el === evt.target) {
+        this.$emit('close')
+      }
+    }
+  },
+  mounted () {
+    document.addEventListener('click', this.handleClickOutside)
+  },
+  destroyed () {
+    document.removeEventListener('click', this.handleClickOutside)
   }
 })
