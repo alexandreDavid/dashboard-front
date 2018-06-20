@@ -74,7 +74,10 @@ export default class Dashboard {
     return cardHeights
   }
   static getCardWidgets () {
-    let allParameters = Parameter.getParams()
+    let allParameters = Parameter.getParams().map(param => {
+      param.label = param.displayName
+      return param
+    })
     let fieldParameter = {
       id: 'parameter',
       label: 'Parameter',
@@ -83,11 +86,28 @@ export default class Dashboard {
       value: allParameters[0]
     }
 
+    const graphTypes = [
+      {
+        value: 'LineChart',
+        label: 'Line chart'
+      },
+      {
+        value: 'PieChart',
+        label: 'Pie chart'
+      }
+    ]
+
     return [
       {
         id: 'graph',
         label: 'Graph',
-        formFields: [fieldParameter]
+        formFields: [fieldParameter, {
+          id: 'graphType',
+          label: 'Graph type',
+          type: 'select',
+          options: graphTypes,
+          value: graphTypes[0]
+        }]
       }, {
         id: 'map',
         label: 'Map',

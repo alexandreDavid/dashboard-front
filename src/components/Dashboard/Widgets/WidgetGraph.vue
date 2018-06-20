@@ -1,5 +1,5 @@
 <template>
-  <Graph v-if="parameter" v-bind:area="area" v-bind:parameter="parameter"></Graph>
+  <Graph v-if="parameter" v-bind:area="area" v-bind:parameter="parameter" v-bind:graphType="graphType"></Graph>
 </template>
 
 <script>
@@ -11,7 +11,8 @@ export default {
   },
   props: [
     'area',
-    'parameter'
+    'parameter',
+    'graphType'
   ]
 }
 </script>

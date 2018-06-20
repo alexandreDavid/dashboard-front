@@ -1,7 +1,8 @@
 <template>
   <div class="graph-container">
     <div v-if="isLoaded" class="chart-container">
-      <LineChart v-bind:chartData="datacollection" :options="options"></LineChart>
+      <LineChart v-if="graphType === 'LineChart'" v-bind:chartData="datacollection" :options="options"></LineChart>
+      <PieChart v-else-if="graphType === 'PieChart'" v-bind:chartData="datacollection" :options="options"></PieChart>
     </div>
     <Loading v-if="!isLoaded"/>
   </div>
@@ -9,6 +10,7 @@
 
 <script>
 import LineChart from './Charts/LineChart'
+import PieChart from './Charts/PieChart'
 import Data from '@/store/data'
 import Loading from '@/components/Loading/Loading'
 
@@ -16,17 +18,25 @@ export default {
   name: 'Graph',
   components: {
     LineChart,
+    PieChart,
     Loading
   },
-  props: ['area', 'parameter'],
+  props: {
+    area: Object,
+    parameter: Object,
+    graphType: {
+      type: String,
+      default: 'LineChart',
+      validator: function (value) {
+        // The value must match one of these strings
+        return ['LineChart', 'PieChart'].indexOf(value) !== -1
+      }
+    }
+  },
   data () {
     return {
-      chartArea: this.area,
       isLoaded: false,
-      datacollection: {
-        labels: [],
-        datasets: []
-      },
+      datacollection: {},
       options: {
         scales: {
           yAxes: [{
@@ -44,62 +54,17 @@ export default {
   },
   watch: {
     // whenever question changes, this function will run
-    parameter: async function () {
+    async parameter () {
       await this.getData()
     }
   },
   methods: {
     async getData () {
       this.isLoaded = false
-      const data = await Data.getAreaParameterData(this.chartArea, this.parameter)
-      this.fillData(data)
+      this.datacollection = await Data.getAreaParameterData(this.area, this.parameter)
       // axes Y title
-      this.options.scales.yAxes[0].scaleLabel.labelString = `${this.parameter.displayName} (${data.unit})`
+      this.options.scales.yAxes[0].scaleLabel.labelString = `${this.parameter.displayName} (${this.datacollection.unit})`
       this.isLoaded = true
-    },
-    fillData (data) {
-      const vm = this
-
-      let convertDate = function (date) {
-        let monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        let d = new Date(date)
-        return d.getDate() + ' ' + monthNames[d.getMonth()] + ' ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2)
-      }
-
-      let valueConversion = function (value, unit) {
-        return parseFloat(value.replace(',', '.')).toFixed(2)
-      }
-
-      const colors = {
-        red: 'rgb(255, 99, 132)',
-        orange: 'rgb(255, 159, 64)',
-        yellow: 'rgb(255, 205, 86)',
-        green: 'rgb(75, 192, 192)',
-        blue: 'rgb(54, 162, 235)',
-        grey: 'rgb(201, 203, 207)',
-        purple: 'rgb(153, 102, 255)'
-      }
-
-      // Adding every datasets
-      vm.datacollection.datasets = []
-      vm.datacollection.labels = []
-      Object.keys(Object.values(data.data)[0]).forEach((value, key) => {
-        vm.datacollection.datasets.push(
-          {
-            label: value,
-            fill: false,
-            backgroundColor: Object.values(colors)[key],
-            borderColor: Object.values(colors)[key],
-            data: []
-          }
-        )
-      })
-      Object.entries(data.data).slice(0, 12).forEach(([key, value]) => {
-        vm.datacollection.labels.push(convertDate(key))
-        Object.entries(value).forEach(([key, value]) => {
-          vm.datacollection.datasets.find(d => d.label === key).data.push(valueConversion(value, 0))
-        })
-      })
     }
   }
 }

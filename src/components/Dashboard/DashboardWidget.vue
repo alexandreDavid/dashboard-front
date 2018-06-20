@@ -15,7 +15,7 @@
         <button type="button" class="btn btn-light btn-sm" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>
       </div>
       <div class="card-body position-relative">
-        <WidgetGraph v-if="cardConfiguration.widget.id === 'graph'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')"></WidgetGraph>
+        <WidgetGraph v-if="cardConfiguration.widget.id === 'graph'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" v-bind:graphType="getValueForSelectedWidgetById('graphType').value"></WidgetGraph>
         <WidgetMap v-if="cardConfiguration.widget.id === 'map'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="cardConfiguration.id"></WidgetMap>
         <WidgetTextArea v-if="cardConfiguration.widget.id === 'textarea'" v-bind:textArea="getValueForSelectedWidgetById('text')"></WidgetTextArea>
       </div>

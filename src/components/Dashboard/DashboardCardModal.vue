@@ -27,8 +27,8 @@
     <div class="form-group" v-if="editedCard.widget && editedCard.widget.formFields" v-for="formField in editedCard.widget.formFields" :key="formField.id">
       <label>{{ formField.label }}</label>
       <select class="form-control" v-if="formField.type === 'select'" v-model="formField.value">
-        <option v-for="option in formField.options" :key="option.id" v-bind:value="option">
-          {{ option.displayName }}
+        <option v-for="(option, key) in formField.options" :key="key" v-bind:value="option">
+          {{ option.label }}
         </option>
       </select>
       <textarea class="form-control" v-if="formField.type === 'textarea'" v-model="formField.value"></textarea>
