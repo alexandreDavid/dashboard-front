@@ -1,6 +1,6 @@
 <template>
   <div id="dashboard">
-    <div v-if="isLoaded" class="container col-md-9">
+    <div v-if="isLoaded" class="container">
       <div class="row">
         <h4 class="col-12 mt-2 mb-2 p-2">Compare Parameter Graphs
           <button type="button" class="btn btn-light ml-2" v-if="selectedArea &&!isEditing" @click="edit()"><font-awesome-icon :icon="iconEdit" /> Edit</button>
