@@ -14,10 +14,11 @@
       <div v-if="!cardConfiguration.title && isEditing " class="position-absolute" style="right: 0; z-index: 1002; ">
         <button type="button" class="btn btn-light btn-sm" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>
       </div>
-      <div class="card-body position-relative">
+      <div class="card-body position-relative" style="overflow: auto;">
         <WidgetGraph v-if="cardConfiguration.widget.id === 'graph'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" v-bind:graphType="getValueForSelectedWidgetById('graphType').value"></WidgetGraph>
         <WidgetMap v-if="cardConfiguration.widget.id === 'map'" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="cardConfiguration.id"></WidgetMap>
         <WidgetTextArea v-if="cardConfiguration.widget.id === 'textarea'" v-bind:textArea="getValueForSelectedWidgetById('text')"></WidgetTextArea>
+        <WidgetTable v-if="cardConfiguration.widget.id === 'table'"></WidgetTable>
       </div>
     </div>
   </div>
@@ -27,6 +28,7 @@
 import WidgetGraph from './Widgets/WidgetGraph'
 import WidgetMap from './Widgets/WidgetMap'
 import WidgetTextArea from './Widgets/WidgetTextArea'
+import WidgetTable from './Widgets/WidgetTable'
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faEdit from '@fortawesome/fontawesome-free-solid/faEdit'
@@ -38,6 +40,7 @@ export default {
     WidgetGraph,
     WidgetMap,
     WidgetTextArea,
+    WidgetTable,
     FontAwesomeIcon
   },
   props: [

@@ -123,6 +123,9 @@ export default class Dashboard {
           type: 'textarea',
           value: ''
         }]
+      }, {
+        id: 'table',
+        label: 'Table'
       }
     ]
   }
