@@ -67,6 +67,9 @@ export default class Dashboard {
       this.addCard(card)
     }
   }
+  removeCard (card) {
+    this.cards.splice(this.cards.findIndex(c => c.id === card.id), 1)
+  }
   static getCardWidths () {
     return cardWidths
   }

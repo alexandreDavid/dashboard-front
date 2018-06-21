@@ -53,7 +53,6 @@ export default {
     return {
       isLoaded: false,
       isEditing: false,
-      isEditing2: false,
       showCardModal: false,
       allParameters: [],
       selectedArea: false,
@@ -98,16 +97,15 @@ export default {
     },
     editCard (card) {
       this.editedCard = card
-      this.isEditing2 = true
       this.showCardModal = true
     },
     closeEditCardModal () {
       this.dashboard.setCard(this.editedCard)
       this.showCardModal = false
-      this.isEditing2 = false
     },
     removeCard (card) {
-      this.dashboard.allContents.splice(this.dashboard.allContents.findIndex(card), 1)
+      this.dashboard.removeCard(card)
+      this.showCardModal = false
     },
     edit () {
       this.isEditing = true
