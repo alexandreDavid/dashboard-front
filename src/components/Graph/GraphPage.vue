@@ -87,7 +87,7 @@ export default {
         const data = await Data.getAreaParameterData(this.selectedArea, serie.selectedParameter)
         let color = Object.values(ChartUtil.colors)[key]
         let dataset = {
-          label: serie.title,
+          label: serie.title || serie.selectedParameter && serie.selectedParameter.paramDescription,
           fill: false,
           backgroundColor: color,
           borderColor: color,
