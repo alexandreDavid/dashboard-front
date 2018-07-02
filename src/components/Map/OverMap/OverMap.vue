@@ -36,7 +36,7 @@
       </modal>
       <TimeSlot class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
     </div>
-    <div class="over-map-all-width d-block d-sm-none p-2">
+    <div class="over-map-bottom-all-width d-block d-sm-none p-2">
       <TimeSlotMobile v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
     </div>
   </div>
