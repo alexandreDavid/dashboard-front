@@ -7,8 +7,8 @@
           <div class="form-group">
             <SearchLocation @input="onSearchLocationSelected" />
           </div>
-          <graph-serie v-for="(serie, key) in series" :key="key" v-bind:serie="serie" @edited="renderGraph()"></graph-serie>
-          <button type="button" class="btn btn-primary" @click="addSerie()">Add a serie</button>
+          <graph-serie v-for="(serie, key) in series" :key="key" v-bind:serie="serie" @edited="renderGraph()" @remove="removeSerie(key)"></graph-serie>
+          <button type="button" v-if="selectedArea" class="btn btn-primary" @click="addSerie()">Add a serie</button>
         </div>
       </div>
       <div class="position-relative flex-grow-1" v-if="isLoaded">
@@ -68,7 +68,10 @@ export default {
     },
     addSerie () {
       this.series.push({})
-      this.isLoaded = false
+    },
+    removeSerie (key) {
+      this.series.splice(key, 1)
+      this.renderGraph()
     },
     async renderGraph () {
       let vm = this
