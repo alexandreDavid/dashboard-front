@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Map from '@/components/Map/Map'
+import MapPage from '@/components/Map/Map'
 import Login from '@/components/Login/Login'
 import DashboardPage from '@/components/Dashboard/DashboardPage'
 import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
+import GraphPage from '@/components/Graph/GraphPage'
 import Auth from '@/store/authentication'
 
 Vue.use(Router)
@@ -29,7 +30,13 @@ export default new Router({
     {
       path: '/map',
       name: 'map',
-      component: Map,
+      component: MapPage,
+      beforeEnter: checkAuth
+    },
+    {
+      path: '/graph',
+      name: 'graph',
+      component: GraphPage,
       beforeEnter: checkAuth
     },
     {

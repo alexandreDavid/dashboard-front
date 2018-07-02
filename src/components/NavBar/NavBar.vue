@@ -60,7 +60,6 @@ export default {
         }, {
           id: 'graph',
           label: 'Graph',
-          disabled: true,
           click () {
             self.goTo(this.id)
           },
