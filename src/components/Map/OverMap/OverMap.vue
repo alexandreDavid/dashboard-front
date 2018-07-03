@@ -27,7 +27,7 @@
     <div class="over-map-left-bottom d-none d-sm-block">
       <ZoomControl/>
       <button type="button" class="btn btn-primary align-bottom shadow" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
-      <button type="button" class="btn btn-primary align-bottom shadow" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
+      <button type="button" class="btn btn-primary align-bottom shadow open-graph-modal" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
       <modal v-if="showModal" @close="showModal = false">
         <h3 slot="header">Graph</h3>
         <div slot="body" class="graph-modal-content">
