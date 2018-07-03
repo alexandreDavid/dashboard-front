@@ -3,12 +3,12 @@
     <nav class="navbar navbar-light navbar-expand bg-light d-none d-sm-flex">
       <a class="navbar-brand" href="#"><img src="@/assets/logo.png" style="height: 36px;"></a>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" v-for="(navItem, key) in leftNav(navItems)" :key="key" v-bind:class="{active: navItem.id === activeNavItem}">
+        <li class="nav-item" v-for="(navItem, key) in leftNav(navItems)" :key="key" v-bind:class="{active: navItem.id === activeNavItem}" :id="navItem.id">
           <a class="nav-link" href="#" @click="navItem.click()" :class="{disabled: navItem.disabled}"><font-awesome-icon :icon="navItem.icon" /> {{navItem.label}}</a>
         </li>
       </ul>
       <ul class="navbar-nav">
-        <li class="nav-item" v-for="(navItem, key) in rightNav(navItems)" :key="key">
+        <li class="nav-item" v-for="(navItem, key) in rightNav(navItems)" :key="key" :id="navItem.id">
           <a class="nav-link" href="#" @click="navItem.click()"><font-awesome-icon :icon="navItem.icon" /> {{navItem.label}}</a>
         </li>
       </ul>
