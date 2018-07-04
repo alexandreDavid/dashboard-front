@@ -1,5 +1,10 @@
 variables:
   S3_BUCKET_NAME: "platform-static-dfms-front"
+launch tests:
+  image: adexlavid/npmpython:latest
+  script:
+  - npm install
+  - npm run test
 build prod:
   image: adexlavid/npmpython:latest
   script:
