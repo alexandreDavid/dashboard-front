@@ -109,4 +109,25 @@ describe('DashboardWidget.vue', () => {
     wrapper.find('.edit-card').trigger('click')
     expect(wrapper.vm.editCard).toBeCalled()
   })
+
+  it('Calls click delete', () => {
+    const cardConfiguration = {
+      widget: {
+        id: 'textarea',
+        formFields: [{
+          id: 'text',
+          value: ''
+        }]
+      }
+    }
+    const selectedArea = {}
+    const isEditing = true
+    const wrapper = mount(DashboardWidget, {
+      propsData: { cardConfiguration, selectedArea, isEditing }
+    })
+
+    const button = wrapper.find('.edit')
+    button.trigger('click')
+    expect(wrapper.emitted().edit).toBeTruthy()
+  })
 })
