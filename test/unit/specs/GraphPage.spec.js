@@ -20,13 +20,6 @@ describe('GraphPage.vue', () => {
     Area.getSelectedArea.mockReturnValue({})
   })
 
-  // it('should render correct contents', async () => {
-  //   const Constructor = Vue.extend(GraphPage)
-  //   const vm = await new Constructor().$mount()
-  //   vm.$nextTick()
-  //   expect(vm.isLoaded).toBe(true)
-  // })
-
   // Inspect the raw component options
   it('has a created hook', () => {
     expect(typeof GraphPage.created).toBe('function')
