@@ -33,7 +33,7 @@
       </select>
       <textarea class="form-control" v-if="formField.type === 'textarea'" v-model="formField.value"></textarea>
     </div>
-    <button type="button" class="btn btn-danger" @click="$emit('delete')"><font-awesome-icon :icon="iconRemove" /> Delete</button>
+    <button type="button" class="btn btn-danger delete" @click="$emit('delete')"><font-awesome-icon :icon="iconRemove" /> Delete</button>
   </div>
 </template>
 
