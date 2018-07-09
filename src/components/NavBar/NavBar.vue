@@ -8,14 +8,14 @@
         </li>
       </ul>
       <ul class="navbar-nav">
-        <li class="nav-item" v-for="(navItem, key) in rightNav(navItems)" :key="key" :id="navItem.id">
+        <li class="nav-item" v-for="(navItem, key) in rightNav(navItems)" :key="key" :id="'nav-'+ navItem.id">
           <a class="nav-link" href="#" @click="navItem.click()"><font-awesome-icon :icon="navItem.icon" /> {{navItem.label}}</a>
         </li>
       </ul>
     </nav>
     <nav class="navbar navbar-light navbar-expand bg-light d-sm-none shadow-top">
       <ul class="navbar-nav d-flex w-100 text-center">
-        <li class="nav-item flex-fill" v-for="(navItem, key) in smNav(navItems)" :key="key" v-bind:class="{active: navItem.id === activeNavItem}">
+        <li class="nav-item flex-fill" v-for="(navItem, key) in smNav(navItems)" :key="key" v-bind:class="{active: navItem.id === activeNavItem}" :id="'nav-'+ navItem.id">
           <a class="nav-link" href="#" @click="navItem.click()" :class="{disabled: navItem.disabled}"><font-awesome-icon :icon="navItem.icon" /></a>
         </li>
       </ul>
