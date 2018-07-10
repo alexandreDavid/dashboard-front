@@ -45,12 +45,11 @@ export default class Dashboard {
     this.cards = cards
   }
   addCard (card = {}) {
-    card.id = Math.round(Math.random() * 100)
-    let widthClass = Dashboard.getCardWidths()[2].class
-    let heightClass = Dashboard.getCardHeights()[1].class
-    let widget = Dashboard.getCardWidgets()[0]
-    let title = ''
-    card = Object.assign({}, {widthClass, heightClass, widget, title}, card)
+    // get max id plus 1
+    card.id = Math.max(...this.cards.map(c => {
+      return c.id
+    }), 0) + 1
+    card = Object.assign({}, Dashboard.getDefaultCard(), card)
     this.cards.push(card)
     return card
   }
@@ -69,6 +68,13 @@ export default class Dashboard {
   }
   removeCard (card) {
     this.cards.splice(this.cards.findIndex(c => c.id === card.id), 1)
+  }
+  static getDefaultCard () {
+    let widthClass = Dashboard.getCardWidths()[2].class
+    let heightClass = Dashboard.getCardHeights()[1].class
+    let widget = Dashboard.getCardWidgets()[0]
+    let title = ''
+    return {widthClass, heightClass, widget, title}
   }
   static getCardWidths () {
     return cardWidths

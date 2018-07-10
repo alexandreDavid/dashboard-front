@@ -10,7 +10,7 @@ jest.mock('@/store/api', () => ({
   getAreaInfos: jest.fn()
 }))
 
-describe('Settings.vue', () => {
+describe('area.js', () => {
   it('Calls getAllAreas', async () => {
     Data.getStructure.mockReturnValue({districts: [
       {

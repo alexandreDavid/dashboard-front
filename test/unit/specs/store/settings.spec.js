@@ -5,7 +5,7 @@ jest.mock('@/store/api', () => ({
   setSettings: jest.fn()
 }))
 
-describe('Settings.vue', () => {
+describe('Settings.js', () => {
   it('Calls getSettings', () => {
     const initVal = ['test']
     Settings.init(initVal)
