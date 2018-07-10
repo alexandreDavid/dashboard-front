@@ -7,7 +7,7 @@ jest.mock('@/store/authentication', () => ({
   logout: jest.fn()
 }))
 
-describe('DashboardCardModal.vue', () => {
+describe('ProfileAboutSidebar.vue', () => {
   it('Click on nav tab profile', () => {
     const wrapper = mount(ProfileAboutSidebar)
     const button = wrapper.find('#nav-item-profile a')

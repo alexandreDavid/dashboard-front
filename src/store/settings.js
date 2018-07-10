@@ -16,7 +16,8 @@ export default {
     return settings.filter(s => s.family === familyId)
   },
   getActiveKeyById (id) {
-    return this.getSettingById(id).value
+    const activeSetting = this.getSettingById(id)
+    return activeSetting && activeSetting.value
   },
   setActiveKeyById (id, setting) {
     let key = setting.key

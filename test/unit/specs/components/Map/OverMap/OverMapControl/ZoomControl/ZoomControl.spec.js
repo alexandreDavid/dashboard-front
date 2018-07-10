@@ -21,7 +21,7 @@ function getMapMock (curZoom = 5, maxZoom = 10, minZoom = 1) {
   }
 }
 
-describe('DashboardCardModal.vue', () => {
+describe('ZoomControl.vue', () => {
   it('Click on zoomIn', () => {
     const wrapper = mount(ZoomControl, {
       provide: {
