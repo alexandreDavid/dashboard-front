@@ -39,13 +39,7 @@ let MapObj = Map.extend({
         navigator.geolocation.getCurrentPosition(position => {
           that._currentLocationMarker = new CircleMarker(
             [position.coords.latitude, position.coords.longitude],
-            {
-              radius: 5,
-              color: '#FFF',
-              weight: 1,
-              fillColor: '#3388ff',
-              fillOpacity: 1
-            }
+            MapObj.getCurrentPositionMarkerStyle()
           ).addTo(that)
           resolve(true)
         })
@@ -65,6 +59,20 @@ MapObj.addInitHook(function () {
 
 MapObj.setDefaultParams = function (params) {
   Object.assign(defaultParams, params)
+}
+
+MapObj.getDefaultParams = () => {
+  return defaultParams
+}
+
+MapObj.getCurrentPositionMarkerStyle = () => {
+  return {
+    radius: 5,
+    color: '#FFF',
+    weight: 1,
+    fillColor: '#3388ff',
+    fillOpacity: 1
+  }
 }
 
 export default MapObj
