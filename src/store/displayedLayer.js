@@ -42,7 +42,7 @@ export default class {
       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y
 
       const featureInfo = await axios.get(this._displayedLayer._url, {
-        params: params
+        params
       })
 
       return featureInfo.data.features
