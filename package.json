@@ -31,7 +31,8 @@
     "leaflet": "^1.3.1",
     "vue": "^2.5.2",
     "vue-apollo": "^3.0.0-beta.5",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-slide-bar": "^1.1.2"
   },
   "devDependencies": {
     "@vue/server-test-utils": "^1.0.0-beta.20",
