@@ -74,4 +74,13 @@ describe('map.js', () => {
       done()
     })
   })
+
+  it('Change default params', () => {
+    MapObj.setDefaultParams({
+      view: {
+        zoom: 10
+      }
+    })
+    expect(MapObj.getDefaultParams().view.zoom).toBe(10)
+  })
 })
