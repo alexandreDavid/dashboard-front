@@ -1,6 +1,7 @@
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import Dashboard from '@/store/dashboard'
 import { mount } from '@vue/test-utils'
+import Modal from '@/components/Modal/Modal'
 
 describe('DashboardCardModal.vue', () => {
   let wrapper
@@ -63,7 +64,7 @@ describe('DashboardCardModal.vue', () => {
   })
 
   it('Emit event when modal close', () => {
-    // wrapper.find(Modal).vm.$emit('close')
-    // expect(wrapper.emitted().close).toBeTruthy()
+    wrapper.find(Modal).vm.$emit('close')
+    expect(wrapper.emitted().close).toBeTruthy()
   })
 })
