@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { Modal } from '@/components/Modal/Modal'
+import Modal from '@/components/Modal/Modal'
 import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
 import Parameter from '@/store/parameter'
 import VueSlideBar from '@/components/Slider/Slider'

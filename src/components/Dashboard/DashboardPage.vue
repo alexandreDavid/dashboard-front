@@ -10,17 +10,12 @@
           <SearchLocation @input="onSearchLocationSelected" />
         </div>
         <DashboardWidget v-if="selectedArea" v-for="card in dashboard.cards" :key="card.id" v-bind:cardConfiguration="card" @edit="editCard(card)" v-bind:isEditing="isEditing" v-bind:selectedArea="selectedArea" :allParameters="allParameters"></DashboardWidget>
-        <div class="col-md-4 p-2" v-if="isEditing">
+        <div class="col-md-4 p-2" v-if="isEditing && selectedArea">
           <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon :icon="iconPlus" /> Add a card</button>
           <button type="button" class="btn btn-primary" @click="save()"><font-awesome-icon :icon="iconSave" /> Save</button>
         </div>
       </div>
-      <modal v-if="showCardModal" @close="closeEditCardModal()">
-        <div slot="header" class="w-100">
-          <input type="text" v-model="editedCard.title" class="form-control" id="title" placeholder="title">
-        </div>
-        <DashboardCardModal slot="body" :editedCard="editedCard" @delete="removeCard(editedCard)" :allParameters="allParameters"></DashboardCardModal>
-      </modal>
+      <DashboardCardModal v-if="showCardModal" @close="closeEditCardModal()" @delete="removeCard(editedCard)" :editedCard="editedCard" :allParameters="allParameters"></DashboardCardModal>
     </div>
     <Loading v-if="!isLoaded"/>
   </div>

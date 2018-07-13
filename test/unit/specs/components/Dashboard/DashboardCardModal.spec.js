@@ -9,11 +9,16 @@ describe('DashboardCardModal.vue', () => {
     dashboard.addCard()
 
     wrapper = mount(DashboardCardModal, {
-      propsData: { editedCard: dashboard.cards[0] }
+      propsData: {
+        editedCard: dashboard.cards[0],
+        allParameters: []
+      }
     })
   })
+
   it('Calls click delete', () => {
     const button = wrapper.find('.delete')
+
     button.trigger('click')
     expect(wrapper.emitted().delete).toBeTruthy()
   })
@@ -55,5 +60,10 @@ describe('DashboardCardModal.vue', () => {
 
     selectOptions.at(2).setSelected()
     wrapper.vm.activeHeight = dashboardWidgets[2]
+  })
+
+  it('Emit event when modal close', () => {
+    // wrapper.find(Modal).vm.$emit('close')
+    // expect(wrapper.emitted().close).toBeTruthy()
   })
 })

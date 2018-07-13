@@ -3,6 +3,7 @@ import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import Api from '@/store/api'
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
+import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import { shallowMount } from '@vue/test-utils'
 // import flushPromises from 'flush-promises'
 jest.mock('@/store/parameter', () => ({
@@ -15,6 +16,11 @@ jest.mock('@/store/area', () => ({
 jest.mock('@/store/api', () => ({
   setDashboard: jest.fn()
 }))
+
+const mockScrollBy = jest.fn()
+document.querySelector = jest.fn().mockReturnValue({
+  scrollBy: mockScrollBy
+})
 
 describe('DashboardPage.vue', () => {
   beforeEach(() => {
@@ -69,6 +75,29 @@ describe('DashboardPage.vue', () => {
     expect(wrapper.vm.isEditing).toBe(true)
   })
 
+  it('SearchLocation input emit', async () => {
+    const wrapper = shallowMount(DashboardPage)
+    await wrapper.vm.$nextTick()
+    const inputValue = {}
+    wrapper.find(SearchLocation).vm.$emit('input', inputValue)
+    expect(wrapper.vm.selectedArea).toBe(inputValue)
+  })
+
+  it('Close modal when emit @close', async () => {
+    const wrapper = shallowMount(DashboardPage)
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.isLoaded).toBe(true)
+    expect(wrapper.vm.isEditing).toBe(true)
+    expect(wrapper.vm.showCardModal).toBe(false)
+
+    const button = wrapper.find('#add-card')
+    button.trigger('click')
+    expect(wrapper.vm.showCardModal).toBe(true)
+
+    wrapper.find(DashboardCardModal).vm.$emit('close')
+    expect(wrapper.vm.showCardModal).toBe(false)
+  })
+
   it('Remove card when @delete', async () => {
     Area.getSelectedArea.mockReturnValue({})
     const wrapper = shallowMount(DashboardPage)
@@ -83,6 +112,7 @@ describe('DashboardPage.vue', () => {
 
     // then
     expect(wrapper.vm.dashboard.cards.length).toBe(1)
+    expect(mockScrollBy).toBeCalled()
 
     wrapper.find(DashboardCardModal).vm.$emit('delete')
     expect(wrapper.vm.dashboard.cards.length).toBe(0)
