@@ -47,12 +47,14 @@ import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
 import Dashboard from '@/store/dashboard'
+import Modal from '@/components/Modal/Modal'
 
 export default {
   name: 'DashboardCardModal',
   components: {
     Loading,
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    Modal
   },
   props: [
     'allParameters',

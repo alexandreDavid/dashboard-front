@@ -27,11 +27,15 @@
 <script>
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
+import Modal from '@/components/Modal/Modal'
 
 export default {
   name: 'GraphSerie',
   inject: ['getParameters'],
-  components: {FontAwesomeIcon},
+  components: {
+    Modal,
+    FontAwesomeIcon
+  },
   props: {
     serie: {
       type: Object,

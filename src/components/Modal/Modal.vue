@@ -1,4 +1,4 @@
-<script type="text/x-template" id="modal-template">
+<template>
   <transition name="modal">
     <div class="modal-mask">
       <div class="modal-dialog modal-dialog-centered">
@@ -24,4 +24,35 @@
       </div>
     </div>
   </transition>
+</template>
+
+<script>
+
+export default {
+  name: 'Modal2',
+  computed: {
+    hasHeaderSlot () {
+      return !!this.$slots['header']
+    },
+    hasBodySlot () {
+      return !!this.$slots['body']
+    },
+    hasFooterSlot () {
+      return !!this.$slots['footer']
+    }
+  },
+  methods: {
+    handleClickOutside (evt) {
+      if (this.$el === evt.target) {
+        this.$emit('close')
+      }
+    }
+  },
+  mounted () {
+    document.addEventListener('click', this.handleClickOutside)
+  },
+  destroyed () {
+    document.removeEventListener('click', this.handleClickOutside)
+  }
+}
 </script>

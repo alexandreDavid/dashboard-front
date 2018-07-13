@@ -61,6 +61,7 @@ import TimeSlotMobile from './OverMapControl/TimeSlot/TimeSlotMobile'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
 import Loading from '@/components/Loading/Loading'
+import Modal from '@/components/Modal/Modal'
 
 export default {
   name: 'OverMap',
@@ -74,6 +75,7 @@ export default {
     ZoomControl,
     TimeSlot,
     TimeSlotMobile,
+    Modal,
     Graph: () => ({
       component: import('@/components/Graph/Graph'),
       loading: Loading,

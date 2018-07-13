@@ -1,6 +1,7 @@
 @import "../node_modules/leaflet/dist/leaflet.css";
 @import "~bootstrap/scss/bootstrap.scss";
 @import "./components/Map/OverMap/overmap";
+@import "./components/Modal/modal";
 @import "./components/SideBar/sidebar";
 @import "./components/SearchLocation/searchlocation";
 #app {

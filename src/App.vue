@@ -7,20 +7,17 @@
           <router-view v-if="!isLoading"/>
         </div>
       </div>
-      <ModalInit/>
     </div>
   </div>
 </template>
 
 <script>
 import NavBar from './components/NavBar/NavBar'
-import ModalInit from './components/Modal/ModalInit'
 import Api from '@/store/api'
 
 export default {
   name: 'App',
   components: {
-    ModalInit,
     NavBar
   },
   data () {
