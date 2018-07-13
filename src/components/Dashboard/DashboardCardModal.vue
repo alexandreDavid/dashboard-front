@@ -2,7 +2,7 @@
   <div>
     <div class="form-group">
       <label>Size</label>
-      <div class="w-100 btn-group btn-group-sm" role="group">
+      <div class="w-100 btn-group btn-group-sm change-selected-size" role="group">
         <button type="button" @click="changeSelectedSize(size)" class="btn btn-secondary" v-for="size in sizes" :key="size.id" v-bind:class="{active: size.id === activeSize.id}">
           {{size.label}}
         </button>
@@ -10,7 +10,7 @@
     </div>
     <div class="form-group">
       <label>Height</label>
-      <div class="w-100 btn-group btn-group-sm" role="group">
+      <div class="w-100 btn-group btn-group-sm change-selected-height" role="group">
         <button type="button" @click="changeSelectedHeight(height)" class="btn btn-secondary" v-for="height in containerHeights" :key="height.id" v-bind:class="{active: height.id === activeHeight.id}">
           {{height.label}}
         </button>
@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
       <label>Widget</label>
-      <select class="form-control" v-model="activeWidget" @change="changeSelectWidget(activeWidget)">
+      <select class="form-control change-selected-widget" v-model="activeWidget" @change="changeSelectWidget(activeWidget)">
         <option v-for="widget in widgets" :key="widget.id" v-bind:value="widget">
           {{ widget.label }}
         </option>
@@ -59,12 +59,10 @@ export default {
     }
   },
   data () {
-    const sizes = Dashboard.getCardWidths()
-    const containerHeights = Dashboard.getCardHeights()
     return {
-      sizes: sizes,
+      sizes: Dashboard.getCardWidths(),
       activeSize: {},
-      containerHeights: containerHeights,
+      containerHeights: Dashboard.getCardHeights(),
       activeHeight: {},
       widgets: Dashboard.getCardWidgets(),
       activeWidget: {}
@@ -86,9 +84,6 @@ export default {
     },
     changeSelectWidget (widget) {
       this.editedCard.widget = widget
-    },
-    removeWidget () {
-      this.$emit('remove')
     }
   }
 }
