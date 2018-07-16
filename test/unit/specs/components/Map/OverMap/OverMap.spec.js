@@ -8,7 +8,9 @@ import Modal from '@/components/Modal/Modal'
 
 const mockMap = {
   setCurrentLocationLayer: jest.fn().mockResolvedValue(true),
-  on: jest.fn(),
+  on: jest.fn().mockImplementation((evtName, callback) => {
+    mockMap[evtName] = callback
+  }),
   zoomToCurrentLocation: jest.fn(),
   setDefaultMap: jest.fn()
 }
@@ -98,5 +100,10 @@ describe('OverMap.vue', () => {
 
     wrapper.find(Modal).vm.$emit('close')
     expect(wrapper.vm.showModal).toBe(false)
+  })
+
+  it('On layer add', () => {
+    mockMap.layeradd()
+    expect(wrapper.vm.selectedParameter).toBe('getDisplayedParameter')
   })
 })

@@ -2,8 +2,9 @@
   <div id="managing">
     <div class="container">
       <div class="row mb-2 justify-content-end">
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control" v-if="displayedParameter.displayName">{{displayedParameter.displayName}}</a>
-        <a href="#" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control" v-else>Select a data</a>
+        <a href="#" id="forecast-selection-btn" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control">
+          {{ displayedParameter.displayName || 'Select a data' }}
+        </a>
         <modal v-if="showModal" @close="showModal = false" class="over-map-control">
           <h3 slot="header">Select data to display</h3>
           <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
@@ -24,7 +25,7 @@
 
 <script>
 import Modal from '@/components/Modal/Modal'
-import ForecastSelection from './ForecastSelection/ForecastSelection.vue'
+import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
 import Parameter from '@/store/parameter'
 import VueSlideBar from '@/components/Slider/Slider'
 

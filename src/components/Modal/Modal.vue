@@ -29,7 +29,7 @@
 <script>
 
 export default {
-  name: 'Modal2',
+  name: 'Modal',
   computed: {
     hasHeaderSlot () {
       return !!this.$slots['header']
