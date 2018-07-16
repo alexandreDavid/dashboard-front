@@ -45,7 +45,7 @@ describe('WidgetMap.vue', () => {
 
   it('Mount with good data', () => {
     const mapId = 'map-container-widgetwidgetKey'
-    expect(wrapper.find(`#${mapId}`)).toBeDefined()
+    expect(wrapper.find(`#${mapId}`).exists()).toBe(true)
     expect(MapObj).toBeCalledWith(mapId)
     expect(AreaLayer).toBeCalledWith(mockMap, 'area')
     expect(AreaLayer).toBeCalledWith(mockMap, 'area')

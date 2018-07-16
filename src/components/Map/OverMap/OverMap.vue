@@ -5,7 +5,7 @@
       <div class="d-flex flex-nowrap position-relative">
         <div class="p-1 flex-grow-1"><SearchLocation @input="onSearchLocationSelected" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation></div>
         <div class="p-1">
-          <button type="button" class="btn btn-primary align-top" v-bind:class="{shadow: !searchLocationResult}" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
+          <button type="button" id="zoom-current-location" class="btn btn-primary align-top" v-bind:class="{shadow: !searchLocationResult}" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
         </div>
         <div class="p-1 d-block d-sm-none">
           <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top" v-bind:class="{shadow: !searchLocationResult}"><font-awesome-icon :icon="iconMenu" /></button>
@@ -26,7 +26,7 @@
     </div>
     <div class="over-map-left-bottom d-none d-sm-block">
       <ZoomControl/>
-      <button type="button" class="btn btn-primary align-bottom shadow" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
+      <button type="button" id="reset-map" class="btn btn-primary align-bottom shadow" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
       <button type="button" class="btn btn-primary align-bottom shadow open-graph-modal" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
       <modal v-if="showModal" @close="showModal = false">
         <h3 slot="header">Graph</h3>
