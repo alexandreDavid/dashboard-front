@@ -2,15 +2,15 @@
   <div id="time-slot" class="ml-4">
     <div>
       <div class="btn-group btn-group-sm" role="group">
-        <button type="button" @click="changeSelectedModel(model)" class="btn btn-secondary btn-group-sm" v-for="model in daysModel" :key="model.value" v-bind:class="{active: model.value === activeModel.value}">
+        <button type="button" @click="changeSelectedModel(model)" class="change-selected-model btn btn-secondary btn-group-sm" v-for="model in daysModel" :key="model.value" v-bind:class="{active: model.value === activeModel.value}">
           {{model.label}}
         </button>
       </div>
     </div>
     <div class="mb-4 mt-1">
       <div class="d-inline-block align-middle">
-        <button type="button" class="btn btn-secondary btn-sm" @click="play" v-if="!isPlaying"><font-awesome-icon :icon="iconPlay" /></button>
-        <button type="button" class="btn btn-secondary btn-sm" @click="pause" v-if="isPlaying"><font-awesome-icon :icon="iconPause" /></button>
+        <button type="button" id="time-play" class="btn btn-secondary btn-sm" @click="play" v-show="!isPlaying"><font-awesome-icon :icon="iconPlay" /></button>
+        <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon :icon="iconPause" /></button>
       </div>
       <div class="d-inline-block align-middle position-relative ml-2">
         <div class="d-flex">
@@ -47,20 +47,7 @@ const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 export default {
   name: 'TimeSlot',
   data () {
-    const daysModel = [
-      {
-        value: 2,
-        label: '2 days',
-        times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527782400, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527846400]
-      }, {
-        value: 10,
-        label: '10 days',
-        times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527936400]
-      }, {
-        value: 90,
-        label: '90 days'
-      }
-    ]
+    const daysModel = this.getDaysModels()
     return {
       daysModel: daysModel,
       activeModel: daysModel[0],
@@ -80,6 +67,8 @@ export default {
   methods: {
     changeSelectedModel (model) {
       this.activeModel = model
+      this.isPlaying = false
+      this.currentIndex = 0
     },
     play () {
       this.isPlaying = true
@@ -111,16 +100,19 @@ export default {
       const d = new Date(date * 1000)
       return `${('0' + d.getHours()).slice(-2)}:${('0' + d.getMinutes()).slice(-2)}`
     },
+    getTransformValues (idx) {
+      const translateValue = `translateX(${50 * idx}px)`
+      return {
+        transform: translateValue,
+        WebkitTransform: translateValue,
+        msTransform: translateValue
+      }
+    },
     calculateNowPlacement () {
       let now = Date.now() / 1000
       let nowIndex = this.activeModel.times.findIndex(time => now < time)
       if (nowIndex !== -1) {
-        const translateValue = `translateX(${50 * (nowIndex - 1)}px`
-        return {
-          transform: translateValue,
-          WebkitTransform: translateValue,
-          msTransform: translateValue
-        }
+        return this.getTransformValues(nowIndex - 1)
       } else {
         return {
           display: 'none'
@@ -128,12 +120,23 @@ export default {
       }
     },
     calculateCurrentPlacement () {
-      const translateValue = `translateX(${50 * (this.currentIndex)}px`
-      return {
-        transform: translateValue,
-        WebkitTransform: translateValue,
-        msTransform: translateValue
+      return this.getTransformValues(this.currentIndex)
+    },
+    getDaysModels () {
+      return [
+      {
+        value: 2,
+        label: '2 days',
+        times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527782400, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527846400]
+      }, {
+        value: 10,
+        label: '10 days',
+        times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527936400]
+      }, {
+        value: 90,
+        label: '90 days'
       }
+    ]
     }
   }
 }
