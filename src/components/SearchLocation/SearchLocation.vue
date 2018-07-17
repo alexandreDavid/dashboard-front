@@ -6,7 +6,7 @@
         class="form-control"
         placeholder="Search a location"
         @input="onChange"
-        @focus="onFocus"
+        @focus="calculateDisplaying"
         v-model="search"
         @keyup.down="onArrowDown"
         @keyup.up="onArrowUp"
@@ -86,12 +86,10 @@ export default {
 
   methods: {
     onChange () {
-      this.isOpen = !!this.search
       this.$emit('input', false)
-      this.filterResults()
-      this.arrowCounter = 0
+      this.calculateDisplaying()
     },
-    onFocus () {
+    calculateDisplaying () {
       this.isOpen = !!this.search
       this.filterResults()
       this.arrowCounter = 0
@@ -103,8 +101,8 @@ export default {
       // Let's warn the parent that a change was made
       this.$emit('input', result)
     },
-    onArrowDown (evt) {
-      if (this.arrowCounter < this.results.length) {
+    onArrowDown () {
+      if (this.arrowCounter < this.results.length - 1) {
         this.arrowCounter = this.arrowCounter + 1
       }
     },
