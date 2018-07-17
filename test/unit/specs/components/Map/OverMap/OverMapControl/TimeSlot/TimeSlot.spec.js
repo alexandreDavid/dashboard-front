@@ -5,7 +5,7 @@ const currentDaysModel = TimeSlot.methods.getDaysModels()[0]
 
 jest.useFakeTimers()
 
-describe('ZoomControl.vue', () => {
+describe('TimeSlot.vue', () => {
   it('Check current date inside time serie', () => {
     Date.now = jest.genMockFunction().mockReturnValue(currentDaysModel.times[2] * 1000)
     const wrapper = mount(TimeSlot)
