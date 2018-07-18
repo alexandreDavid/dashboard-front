@@ -53,7 +53,7 @@ export default {
       return faTrash
     }
   },
-  created() {
+  created () {
     this.allParameters = this.getParameters()
     this.serie.selectedParameter = this.serie.selectedParameter || this.allParameters[0]
     this.showModal = true

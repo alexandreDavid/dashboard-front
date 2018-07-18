@@ -49,7 +49,7 @@ export default {
       chartData: {}
     }
   },
-  provide() {
+  provide () {
     return {
       getParameters: this.getParameters
     }
@@ -87,7 +87,7 @@ export default {
         const data = await Data.getAreaParameterData(this.selectedArea, serie.selectedParameter)
         let color = Object.values(ChartUtil.colors)[key]
         let dataset = {
-          label: serie.title || serie.selectedParameter && serie.selectedParameter.paramDescription,
+          label: serie.title || (serie.selectedParameter && serie.selectedParameter.paramDescription),
           fill: false,
           backgroundColor: color,
           borderColor: color,
