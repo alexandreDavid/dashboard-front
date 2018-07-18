@@ -31,4 +31,11 @@ describe('SideBar.vue', () => {
     wrapper.vm.handleClickOutside({target: wrapper.vm.$el})
     expect(wrapper.emitted().close).toBeFalsy()
   })
+
+  it('On destroy', () => {
+    document.removeEventListener = jest.fn()
+    const wrapper = mount(SideBar)
+    wrapper.destroy()
+    expect(document.removeEventListener).toHaveBeenCalledTimes(1)
+  })
 })
