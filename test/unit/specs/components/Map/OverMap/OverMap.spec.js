@@ -80,8 +80,8 @@ describe('OverMap.vue', () => {
   })
 
   it('Mounted correctly', () => {
-    expect(mockMap.on).toBeCalled()
     expect(AreaLayer).toBeCalledWith(mockMap)
+    expect(Parameter.getDisplayedParameter).toBeCalled()
   })
 
   it('Click on reset map', () => {
@@ -114,9 +114,10 @@ describe('OverMap.vue', () => {
     expect(wrapper.vm.showModal).toBe(false)
   })
 
-  it('On layer add', () => {
-    mockMap.layeradd()
-    expect(wrapper.vm.selectedParameter).toBe('getDisplayedParameter')
+  it('On select parameter null', () => {
+    mockDisplayedLayer.setDisplayedLayer.mockClear()
+    wrapper.find(Managing).vm.$emit('selectedParameter', false)
+    expect(mockDisplayedLayer.setDisplayedLayer).not.toBeCalled()
   })
 
   it('On select parameter', () => {

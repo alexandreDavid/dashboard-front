@@ -116,11 +116,8 @@ export default {
   },
   mounted () {
     var vm = this
-    // On layer displayed change, legend refresh
-    this.getMap().on('layeradd', function () {
-      vm.selectedParameter = Parameter.getDisplayedParameter()
-    })
     this.areaLayer = new AreaLayer(this.getMap())
+    this.onSelectedParameter(Parameter.getDisplayedParameter())
   },
   methods: {
     onSearchLocationSelected (newValue) {
@@ -141,7 +138,9 @@ export default {
       this.showModal = true
     },
     onSelectedParameter (selectedParameter) {
-      this.getDisplayedLayer().setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
+      if (selectedParameter) {
+        this.getDisplayedLayer().setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
+      }
     }
   }
 }
