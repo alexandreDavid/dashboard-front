@@ -1,6 +1,6 @@
 import NavBar from '@/components/NavBar/NavBar.vue'
 import ProfileAboutSidebar from '@/components/NavBar/ProfileAboutSidebar.vue'
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 
 const localVue = createLocalVue()
@@ -20,7 +20,7 @@ const router = new VueRouter({
 
 function verifyClickGoTo (name) {
   expect(typeof NavBar.data).toBe('function')
-  const wrapper = mount(NavBar, {
+  const wrapper = shallowMount(NavBar, {
     localVue,
     router
   })
@@ -31,7 +31,7 @@ function verifyClickGoTo (name) {
 }
 
 async function verifyClickOpenSideBar (name) {
-  const wrapper = mount(NavBar, {
+  const wrapper = shallowMount(NavBar, {
     localVue,
     router
   })
