@@ -7,13 +7,13 @@
         <font-awesome-icon v-else :icon="iconCaretRight" />
       </div>
     </a>
-    <div class="list-group" v-if="openedGroup === parameterGrouping.groupingId">
+    <div class="list-group" v-show="openedGroup === parameterGrouping.groupingId">
       <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="parameter in parameters" :key="parameter.paramName" @click="onSelectParameter(parameter)" v-bind:class="{ active: parameter.paramName === activeParam }">
         <div class="d-flex w-100 justify-content-between">
           <div class="mb-1">{{parameter.displayName}}</div>
-          <div><font-awesome-icon :icon="iconInfo" v-on:click.stop="displayInfos(parameter)" class="text-secondary" /></div>
+          <div><font-awesome-icon :icon="iconInfo" v-on:click.stop="displayInfos(parameter)" class="display-infos text-secondary" /></div>
         </div>
-        <div v-if="parameter.paramName === displayedInfo">
+        <div v-show="parameter.paramName === displayedInfo" class="displayed-infos">
           <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
           <small v-if="parameter.unit"><br>Unit: {{parameter.unit}}</small>
         </div>
@@ -32,7 +32,8 @@ import faInfo from '@fortawesome/fontawesome-free-solid/faInfoCircle'
 export default {
   name: 'ForecastSelectionGroup',
   components: {
-    Loading, FontAwesomeIcon
+    Loading,
+    FontAwesomeIcon
   },
   props: [
     'parameterGrouping',

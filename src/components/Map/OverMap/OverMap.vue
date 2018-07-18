@@ -14,7 +14,7 @@
             <div class="card">
               <h5 class="card-header">Forecast model parameters</h5>
               <div class="card-body">
-                <ForecastSelection></ForecastSelection>
+                <ForecastSelection @selectedParameter="onSelectedParameter"></ForecastSelection>
               </div>
             </div>
           </SideBar>
@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="over-map-right d-none d-sm-block">
-      <Managing/>
+      <Managing @selectedParameter="onSelectedParameter"></Managing>
     </div>
     <div class="over-map-left-bottom d-none d-sm-block">
       <ZoomControl/>
@@ -99,7 +99,7 @@ export default {
       return faUndo
     }
   },
-  inject: ['getMap'],
+  inject: ['getMap', 'getDisplayedLayer'],
   async created () {
     this.hasCurrentLocation = await this.getMap().setCurrentLocationLayer()
   },
@@ -139,6 +139,9 @@ export default {
       this.selectedArea = Area.getSelectedArea()
       this.selectedParameter = Parameter.getDisplayedParameter()
       this.showModal = true
+    },
+    onSelectedParameter (selectedParameter) {
+      this.getDisplayedLayer().setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
     }
   }
 }

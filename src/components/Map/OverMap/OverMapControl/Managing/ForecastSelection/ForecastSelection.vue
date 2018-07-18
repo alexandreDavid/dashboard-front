@@ -1,11 +1,6 @@
 <template>
   <div id="forecast-selection">
     <div v-if="isLoaded">
-      <!-- <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
-        <label class="btn btn-primary" v-for="forecastModel in forecastModels" :key="forecastModel.id" v-bind:class="{ active: forecastModel.active }">
-          <input type="radio" name="options" id="forecastModel.id" autocomplete="off" @click="selectForecastModel(forecastModel)"> {{forecastModel.label}}</label>
-      </div> -->
-
       <ForecastSelectionGroup
         v-for="parameterGrouping in parameterGroupings"
         :key="parameterGrouping.groupingId"
@@ -28,7 +23,8 @@ import ForecastSelectionGroup from './ForecastSelectionGroup'
 export default {
   name: 'ForecastSelection',
   components: {
-    Loading, ForecastSelectionGroup
+    Loading,
+    ForecastSelectionGroup
   },
   data () {
     return {
@@ -50,7 +46,6 @@ export default {
       isLoaded: false
     }
   },
-  inject: ['getMap', 'getDisplayedLayer'],
   async created () {
     this.parameters = await Parameter.getAllParameters()
     this.parameterGroupings = await Parameter.getAllParameterGroupings()
@@ -72,15 +67,9 @@ export default {
         this.openedGroup = false
       }
     },
-    selectForecastModel (selectedForecastModel) {
-      for (let forecastModel of this.forecastModels) {
-        forecastModel.active = forecastModel.id === selectedForecastModel.id
-      }
-    },
     selectParameter (selectedParameter) {
       this.activeParam = selectedParameter.paramName
       Parameter.setDisplayedParameter(selectedParameter)
-      this.getDisplayedLayer().setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
       this.$emit('selectedParameter', selectedParameter)
     }
   }

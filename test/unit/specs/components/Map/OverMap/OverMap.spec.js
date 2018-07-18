@@ -5,6 +5,7 @@ import AreaLayer from '@/store/areaLayer'
 import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import Modal from '@/components/Modal/Modal'
+import Managing from '@/components/Map/OverMap//OverMapControl/Managing/Managing'
 
 const mockMap = {
   setCurrentLocationLayer: jest.fn().mockResolvedValue(true),
@@ -18,6 +19,15 @@ const mockMap = {
 function getMapMock () {
   return function () {
     return mockMap
+  }
+}
+
+const mockDisplayedLayer = {
+  setDisplayedLayer: jest.fn()
+}
+function getDisplayedLayer () {
+  return function () {
+    return mockDisplayedLayer
   }
 }
 
@@ -42,7 +52,8 @@ describe('OverMap.vue', () => {
   beforeEach(() => {
     wrapper = shallowMount(OverMap, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getDisplayedLayer: getDisplayedLayer()
       }
     })
   })
@@ -60,7 +71,8 @@ describe('OverMap.vue', () => {
     mockMap.setCurrentLocationLayer = jest.fn().mockResolvedValue(true)
     const wrapper = shallowMount(OverMap, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getDisplayedLayer: getDisplayedLayer()
       }
     })
     expect(wrapper.vm.hasCurrentLocation).toBe(false)
@@ -105,5 +117,14 @@ describe('OverMap.vue', () => {
   it('On layer add', () => {
     mockMap.layeradd()
     expect(wrapper.vm.selectedParameter).toBe('getDisplayedParameter')
+  })
+
+  it('On select parameter', () => {
+    const selectedParameter = {
+      layerUrl: 'layerUrl',
+      layerParameters: 'layerParameters'
+    }
+    wrapper.find(Managing).vm.$emit('selectedParameter', selectedParameter)
+    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith(mockMap, selectedParameter.layerUrl, selectedParameter.layerParameters)
   })
 })

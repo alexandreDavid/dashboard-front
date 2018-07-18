@@ -52,8 +52,9 @@ export default {
     })
   },
   methods: {
-    onSelectedParameter () {
+    onSelectedParameter (selectedParameter) {
       this.showModal = false
+      this.$emit('selectedParameter', selectedParameter)
     }
   }
 }
