@@ -11,7 +11,11 @@
         </modal>
       </div>
       <div class="row mb-2 justify-content-end">
-        <a href="#" target="_self" class="badge badge-secondary badge-pill over-map-control">REPORTED: Temperature</a>
+        <a href="#" target="_self" @click="showModalReported = true" class="badge badge-secondary badge-pill over-map-control">REPORTED: Temperature</a>
+        <modal v-if="showModalReported" @close="showModalReported = false" class="over-map-control">
+          <h3 slot="header">Select data to display</h3>
+          <ReportedSelection slot="body" @selectedParameter="onSelectedParameter"></ReportedSelection>
+        </modal>
       </div>
       <div class="row mb-2 justify-content-end over-map-control">
         <img v-bind:src="displayedParameter.legendUrl">
@@ -26,6 +30,7 @@
 <script>
 import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
+import ReportedSelection from '@/components/Map/OverMap/OverMapControl/Managing/ReportedSelection/ReportedSelection'
 import Parameter from '@/store/parameter'
 import VueSlideBar from '@/components/Slider/Slider'
 
@@ -34,12 +39,14 @@ export default {
   components: {
     Modal,
     ForecastSelection,
+    ReportedSelection,
     VueSlideBar
   },
   inject: ['getMap'],
   data () {
     return {
       showModal: false,
+      showModalReported: false,
       displayedParameter: {},
       value: 50
     }
