@@ -86,8 +86,7 @@ export default {
     },
     onSelectParameter (selectedParameter) {
       this.activeParam = selectedParameter.paramName
-      Parameter.setDisplayedParameter(selectedParameter)
-      this.$emit('selectedParameter', selectedParameter)
+      this.$emit('selectedReportedParameter', selectedParameter)
     },
     displayInfos (parameter) {
       this.displayedInfo = parameter.paramName

@@ -14,7 +14,7 @@
         <a href="#" target="_self" @click="showModalReported = true" class="badge badge-secondary badge-pill over-map-control">REPORTED: Temperature</a>
         <modal v-if="showModalReported" @close="showModalReported = false" class="over-map-control">
           <h3 slot="header">Select data to display</h3>
-          <ReportedSelection slot="body" @selectedParameter="onSelectedParameter"></ReportedSelection>
+          <ReportedSelection slot="body" @selectedReportedParameter="onSelectedReportedParameter"></ReportedSelection>
         </modal>
       </div>
       <div class="row mb-2 justify-content-end over-map-control">
@@ -62,6 +62,10 @@ export default {
     onSelectedParameter (selectedParameter) {
       this.showModal = false
       this.$emit('selectedParameter', selectedParameter)
+    },
+    onSelectedReportedParameter (selectedReportedParameter) {
+      this.showModalReported = false
+      this.$emit('selectedReportedParameter', selectedReportedParameter)
     }
   }
 }

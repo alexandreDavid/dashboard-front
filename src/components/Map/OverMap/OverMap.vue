@@ -22,7 +22,7 @@
       </div>
     </div>
     <div class="over-map-right d-none d-sm-block">
-      <Managing @selectedParameter="onSelectedParameter"></Managing>
+      <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
     </div>
     <div class="over-map-left-bottom d-none d-sm-block">
       <ZoomControl/>
@@ -139,8 +139,12 @@ export default {
     },
     onSelectedParameter (selectedParameter) {
       if (selectedParameter) {
+        this.selectedParameter = selectedParameter
         this.getDisplayedLayer().setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
       }
+    },
+    onSelectedReportedParameter (selectedReportedParameter) {
+      this.$emit('selectedReportedLayer', selectedReportedParameter)
     }
   }
 }

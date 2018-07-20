@@ -1,8 +1,9 @@
 <template>
     <div id="map">
       <div id="map-container"></div>
-      <OverMap v-if="mapInitialised"/>
+      <OverMap v-if="mapInitialised" @selectedReportedLayer="onSelectedReportedLayer"/>
       <Popup v-if="mapInitialised"/>
+      <ReportedLayer v-if="mapInitialised" v-bind:selectedReportedLayer="selectedReportedLayer"/>
     </div>
 </template>
 
@@ -11,12 +12,14 @@ import MapObj from '@/store/map'
 import OverMap from './OverMap/OverMap'
 import Popup from './Popup'
 import DisplayedLayer from '@/store/displayedLayer'
+import ReportedLayer from './ReportedLayer/ReportedLayer'
 
 export default {
   name: 'Map',
   components: {
     OverMap,
-    Popup
+    Popup,
+    ReportedLayer
   },
   provide () {
     return {
@@ -28,7 +31,8 @@ export default {
     return {
       map: false,
       mapInitialised: false,
-      displayedLayer: false
+      displayedLayer: false,
+      selectedReportedLayer: false
     }
   },
   mounted () {
@@ -42,6 +46,9 @@ export default {
     },
     getDisplayedLayer () {
       return this.displayedLayer
+    },
+    onSelectedReportedLayer (selectedReportedLayer) {
+      this.selectedReportedLayer = selectedReportedLayer
     }
   }
 }
