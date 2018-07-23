@@ -2,7 +2,8 @@
 module.exports = {
   NODE_ENV: '"production"',
   DATA_URL: '"http://demo.dfms.co.uk/data"',
-  GEOSERVER_URL: '"http://demo.dfms.co.uk/geoserver"',
+  // GEOSERVER_URL: '"http://demo.dfms.co.uk/geoserver"',
+  GEOSERVER_URL: '"http://52.56.209.230:8180/geoserver"',
   AUTH: {
     domain: '"testada.eu.auth0.com"',
     clientID: '"lx8Y6DigIFeBaWZ1qJI5CTnyMT2a1k0N"'
