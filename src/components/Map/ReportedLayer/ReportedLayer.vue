@@ -8,56 +8,6 @@
 import { CircleMarker, DomEvent } from 'leaflet'
 import ReportedDetailsSideBar from '@/components/Map/ReportedLayer/ReportedDetailsSideBar'
 
-const mockStations = [{
-  'station': {
-    'location': {
-      'lat': 0.56302,
-      'lng': 31.39055
-    },
-    'name': 'Lorem Ipsum',
-    'countryCode': 'UK',
-    'elevation': 1349,
-    'variables': [
-      'radiation',
-      'atmosphericpressure'
-    ],
-    'firstMeasurement': '2017-09-07T05:15:00.000Z',
-    'lastMeasurement': '2018-07-11T23:40:00.000Z'
-  },
-  'timeseries': {
-    'radiation': {
-      '2017-09-07T07:00': 87.27,
-      '2017-09-07T08:00': 87.24,
-      '2017-09-07T09:00': 87.16,
-      '2017-09-07T10:00': 87.07
-    }
-  }
-}, {
-  'station': {
-    'location': {
-      'lat': 0.55302,
-      'lng': 31.49055
-    },
-    'name': 'Lorem Ipsum2',
-    'countryCode': 'UK',
-    'elevation': 1349,
-    'variables': [
-      'radiation',
-      'atmosphericpressure'
-    ],
-    'firstMeasurement': '2017-09-07T05:15:00.000Z',
-    'lastMeasurement': '2018-07-11T23:40:00.000Z'
-  },
-  'timeseries': {
-    'radiation': {
-      '2017-09-07T07:00': 87.27,
-      '2017-09-07T08:00': 87.24,
-      '2017-09-07T09:00': 87.16,
-      '2017-09-07T10:00': 87.07
-    }
-  }
-}]
-
 export default {
   name: 'ReportedLayer',
   inject: ['getMap'],
@@ -73,8 +23,11 @@ export default {
       allMarkers: []
     }
   },
+  mounted () {
+    this.setDisplayedReportedLayer(this.selectedReportedLayer)
+  },
   watch: {
-    selectedReportedLayer: function(reportedLayer) {
+    selectedReportedLayer: function (reportedLayer) {
       this.setDisplayedReportedLayer(reportedLayer)
     }
   },
@@ -83,7 +36,8 @@ export default {
       this.allMarkers.forEach(marker => {
         marker.remove()
       })
-      mockStations.forEach(station => {
+      this.allMarkers = []
+      this.mockStations().forEach(station => {
         this.allMarkers.push(this.createMarker(station))
       })
     },
@@ -96,7 +50,7 @@ export default {
           DomEvent.stop(evt)
           // Timeout used to don't call the click outside SideBar function
           setTimeout(function () {
-            vm.showSideBar = true
+            vm.openSideBar()
             vm.reportedDetails = station
           }, 0)
         })
@@ -111,8 +65,62 @@ export default {
         fillOpacity: 1
       }
     },
+    openSideBar () {
+      this.showSideBar = true
+    },
     closeSideBar () {
       this.showSideBar = false
+    },
+    mockStations () {
+      return [{
+        'station': {
+          'location': {
+            'lat': 0.56302,
+            'lng': 31.39055
+          },
+          'name': 'Lorem Ipsum',
+          'countryCode': 'UK',
+          'elevation': 1349,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': 87.27,
+            '2017-09-07T08:00': 87.24,
+            '2017-09-07T09:00': 87.16,
+            '2017-09-07T10:00': 87.07
+          }
+        }
+      }, {
+        'station': {
+          'location': {
+            'lat': 0.55302,
+            'lng': 31.49055
+          },
+          'name': 'Lorem Ipsum2',
+          'countryCode': 'UK',
+          'elevation': 1349,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': 87.27,
+            '2017-09-07T08:00': 87.24,
+            '2017-09-07T09:00': 87.16,
+            '2017-09-07T10:00': 87.07
+          }
+        }
+      }]
     }
   }
 }
