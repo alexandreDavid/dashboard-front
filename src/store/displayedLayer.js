@@ -17,6 +17,11 @@ export default class {
       this._displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
     }
   }
+  setDate (min, max) {
+    this._displayedLayer.setParams({
+      time: `${new Date(min * 1000).toISOString()}/${new Date(max * 1000).toISOString()}`
+    })
+  }
   async getFeatureInfo (evt, map) {
     if (this._displayedLayer) {
       let point = map.latLngToContainerPoint(evt.latlng, map.getZoom())

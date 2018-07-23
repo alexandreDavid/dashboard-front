@@ -5,6 +5,7 @@ import L from 'leaflet'
 let mockTileLayerWMS = {
   addTo: jest.fn().mockReturnThis(),
   remove: jest.fn(),
+  setParams: jest.fn(),
   options: {},
   _url: '_url'
 }
@@ -114,5 +115,11 @@ describe('displayedLayer.js', () => {
       i: 'x',
       j: 'y'
     }})
+  })
+
+  it('Calls setDate', async () => {
+    displayedLayer.setDisplayedLayer(mockMap, 'layerUrl')
+    displayedLayer.setDate(1000000000, 10000000001)
+    expect(mockTileLayerWMS.setParams).toHaveBeenCalled()
   })
 })

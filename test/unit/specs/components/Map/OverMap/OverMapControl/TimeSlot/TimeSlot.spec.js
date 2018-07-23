@@ -3,12 +3,34 @@ import { mount } from '@vue/test-utils'
 
 const currentDaysModel = TimeSlot.methods.getDaysModels()[0]
 
+const mockSetDate = jest.fn()
+function getDisplayedLayer () {
+  return function () {
+    return {
+      setDate: mockSetDate
+    }
+  }
+}
+
 jest.useFakeTimers()
 
 describe('TimeSlot.vue', () => {
+  let wrapper
+  beforeEach(() => {
+    wrapper = mount(TimeSlot, {
+      provide: {
+        getDisplayedLayer: getDisplayedLayer()
+      }
+    })
+  })
+
   it('Check current date inside time serie', () => {
     Date.now = jest.genMockFunction().mockReturnValue(currentDaysModel.times[2] * 1000)
-    const wrapper = mount(TimeSlot)
+    const wrapper = mount(TimeSlot, {
+      provide: {
+        getDisplayedLayer: getDisplayedLayer()
+      }
+    })
     const nowButton = wrapper.find('.now')
     expect(nowButton.isVisible()).toBe(true)
     // This check doesn't work
@@ -18,7 +40,11 @@ describe('TimeSlot.vue', () => {
 
   it('Check current date outside time serie', () => {
     Date.now = jest.genMockFunction().mockReturnValue(10000000000000)
-    const wrapper = mount(TimeSlot)
+    const wrapper = mount(TimeSlot, {
+      provide: {
+        getDisplayedLayer: getDisplayedLayer()
+      }
+    })
     const nowButton = wrapper.find('.now')
     expect(nowButton.isVisible()).toBe(false)
     expect(wrapper.vm.calculateNowPlacement()).toEqual({
@@ -27,7 +53,6 @@ describe('TimeSlot.vue', () => {
   })
 
   it('Change selected model', () => {
-    const wrapper = mount(TimeSlot)
     expect(wrapper.vm.activeModel).toEqual(currentDaysModel)
     const buttons = wrapper.findAll('.change-selected-model')
     expect(buttons.length).toBe(3)
@@ -36,7 +61,6 @@ describe('TimeSlot.vue', () => {
   })
 
   it('Click on play and stop at the end', () => {
-    const wrapper = mount(TimeSlot)
     expect(wrapper.vm.isPlaying).toBe(false)
 
     expect(wrapper.vm.currentIndex).toBe(0)
@@ -55,7 +79,6 @@ describe('TimeSlot.vue', () => {
   })
 
   it('Click on play and click on pause', () => {
-    const wrapper = mount(TimeSlot)
     expect(wrapper.vm.isPlaying).toBe(false)
 
     expect(wrapper.vm.currentIndex).toBe(0)
@@ -97,7 +120,6 @@ describe('TimeSlot.vue', () => {
   })
 
   it('Click on a time', () => {
-    const wrapper = mount(TimeSlot)
     const timeButtons = wrapper.findAll('.time-slot.with-indicator')
     expect(timeButtons.length).toBe(13)
 
