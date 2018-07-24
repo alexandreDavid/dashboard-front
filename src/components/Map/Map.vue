@@ -24,7 +24,8 @@ export default {
   provide () {
     return {
       getMap: this.getMap,
-      getDisplayedLayer: this.getDisplayedLayer
+      getDisplayedLayer: this.getDisplayedLayer,
+      getSelectedReportedLayer: this.getSelectedReportedLayer
     }
   },
   data () {
@@ -46,6 +47,9 @@ export default {
     },
     getDisplayedLayer () {
       return this.displayedLayer
+    },
+    getSelectedReportedLayer () {
+      return this.selectedReportedLayer
     },
     onSelectedReportedLayer (selectedReportedLayer) {
       this.selectedReportedLayer = selectedReportedLayer

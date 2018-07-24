@@ -20,11 +20,14 @@ export default {
   data () {
     return {
       showSideBar: false,
+      reportedLayer: false,
       allMarkers: []
     }
   },
   mounted () {
-    this.setDisplayedReportedLayer(this.selectedReportedLayer)
+    if (this.selectedReportedLayer) {
+      this.setDisplayedReportedLayer(this.selectedReportedLayer)
+    }
   },
   watch: {
     selectedReportedLayer: function (reportedLayer) {
@@ -32,7 +35,11 @@ export default {
     }
   },
   methods: {
+    getDisplayedReportedLayer () {
+      return this.reportedLayer
+    },
     setDisplayedReportedLayer (reportedLayer) {
+      this.reportedLayer = reportedLayer
       this.allMarkers.forEach(marker => {
         marker.remove()
       })
