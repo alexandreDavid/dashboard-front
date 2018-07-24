@@ -79,12 +79,12 @@ export default {
       return [{
         'station': {
           'location': {
-            'lat': 0.56302,
-            'lng': 31.39055
+            'lat': -1.2542,
+            'lng': 29.9919
           },
-          'name': 'Lorem Ipsum',
+          'name': 'Kabale District HQ',
           'countryCode': 'UK',
-          'elevation': 1349,
+          'elevation': 1870,
           'variables': [
             'radiation',
             'atmosphericpressure'
@@ -103,12 +103,36 @@ export default {
       }, {
         'station': {
           'location': {
-            'lat': 0.55302,
-            'lng': 31.49055
+            'lat': 0.18919,
+            'lng': 30.10059
           },
-          'name': 'Lorem Ipsum2',
+          'name': 'Kasese Airfield',
           'countryCode': 'UK',
-          'elevation': 1349,
+          'elevation': 962,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': 87.27,
+            '2017-09-07T08:00': 87.24,
+            '2017-09-07T09:00': 87.16,
+            '2017-09-07T10:00': 87.07
+          }
+        }
+      }, {
+        'station': {
+          'location': {
+            'lat': 2.29519,
+            'lng': 32.92137
+          },
+          'name': 'Lira - Ngetta',
+          'countryCode': 'UK',
+          'elevation': 1096,
           'variables': [
             'radiation',
             'atmosphericpressure'

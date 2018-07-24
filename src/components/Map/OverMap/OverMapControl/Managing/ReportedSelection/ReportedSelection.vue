@@ -57,7 +57,7 @@ export default {
     this.parameters = await Parameter.getAllParameters()
     this.reportedParameters = [{
       paramName: 'paramName',
-      displayName: 'displayname'
+      displayName: 'THAMO'
     }, {
       paramName: 'paramName2',
       displayName: 'displayname2'
