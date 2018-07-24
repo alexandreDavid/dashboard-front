@@ -35,9 +35,6 @@ export default {
     }
   },
   methods: {
-    getDisplayedReportedLayer () {
-      return this.reportedLayer
-    },
     setDisplayedReportedLayer (reportedLayer) {
       this.reportedLayer = reportedLayer
       this.allMarkers.forEach(marker => {

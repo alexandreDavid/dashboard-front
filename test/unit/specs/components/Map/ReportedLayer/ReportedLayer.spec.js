@@ -34,6 +34,8 @@ describe('ReportedLayer.vue', () => {
         getMap: getMapMock()
       }
     })
+    expect(wrapper.vm.allMarkers.length).toBe(0)
+    wrapper.setProps({ selectedReportedLayer: true })
     expect(wrapper.vm.allMarkers.length).toBe(wrapper.vm.mockStations().length)
   })
 
@@ -59,8 +61,12 @@ describe('ReportedLayer.vue', () => {
     const wrapper = shallowMount(ReportedLayer, {
       provide: {
         getMap: getMapMock()
+      },
+      propsData: {
+        selectedReportedLayer: true
       }
     })
+    expect(wrapper.vm.allMarkers.length).toBe(wrapper.vm.mockStations().length)
     const firstMarker = wrapper.vm.allMarkers[0]
     firstMarker.click()
     expect(mockDomEvent.stop).toBeCalled()
