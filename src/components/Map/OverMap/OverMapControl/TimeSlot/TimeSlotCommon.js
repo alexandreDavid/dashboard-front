@@ -21,9 +21,9 @@ export default {
     getDaysModels () {
       let twoDays = []
       // Try to find value to display to be removed for a smart service
-      const now = Math.floor((new Date().getTime() - 2 * 24 * 60 * 60 * 1000) / 1000)
+      const initDate = new Date().setHours(0, 0, 0, 0)
       for (let i = 0; i < 13; i++) {
-        twoDays.push(now + i * 10800)
+        twoDays.push(initDate / 1000 + i * 10800)
       }
       return [
         {
