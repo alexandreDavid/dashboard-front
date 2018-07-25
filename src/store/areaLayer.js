@@ -13,7 +13,7 @@ let AreaLayer = class {
   }
   async setSelectedArea (area) {
     const areaData = await axios.get(
-      `${process.env.GEOSERVER_URL}/${area.workspaceName}/ows`, {
+      `${process.env.GEOSERVER_URL}/boundaries/ows`, {
         params: AreaLayer.getAreaRequestParams(area)
       }
     )
@@ -33,8 +33,9 @@ AreaLayer.getAreaRequestParams = (area) => {
     service: 'WFS',
     version: '1.1.1',
     request: 'GetFeature',
-    typeName: `${area.workspaceName}:${area.paramName}`,
-    outputFormat: 'application/json'
+    typeName: `boundaries:area`,
+    outputFormat: 'application/json',
+    CQL_FILTER: `paramname ilike '${area.paramName}'`
   }
 }
 
