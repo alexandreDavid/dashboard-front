@@ -40,7 +40,7 @@ describe('areaLayer.js', () => {
     const areaLayer = new AreaLayer(mockMap)
     await areaLayer.setSelectedArea(mockArea)
 
-    expect(axios.get).toHaveBeenCalledWith('TEST_GEOSERVER_URL/workspaceName/ows', {
+    expect(axios.get).toHaveBeenCalledWith('TEST_GEOSERVER_URL/boundaries/ows', {
       params: AreaLayer.getAreaRequestParams(mockArea)
     })
     expect(mockGeoJSON.remove).not.toHaveBeenCalled()
@@ -52,7 +52,7 @@ describe('areaLayer.js', () => {
     const areaLayer = new AreaLayer(mockMap, mockArea)
     await areaLayer.setSelectedArea(mockArea)
 
-    expect(axios.get).toHaveBeenCalledWith('TEST_GEOSERVER_URL/workspaceName/ows', {
+    expect(axios.get).toHaveBeenCalledWith('TEST_GEOSERVER_URL/boundaries/ows', {
       params: AreaLayer.getAreaRequestParams(mockArea)
     })
     expect(mockGeoJSON.remove).toBeCalled()
