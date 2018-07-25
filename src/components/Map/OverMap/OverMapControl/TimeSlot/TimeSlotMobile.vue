@@ -1,19 +1,18 @@
 <template>
   <div id="time-slot" class="w-100">
     <div class="d-flex pb-2">
-      <button type="button" class="btn btn-secondary shadow" @click="previous()"><font-awesome-icon :icon="iconPrevious" /></button>
+      <button type="button" id="time-slot-previous" class="btn btn-secondary shadow" @click="previous()"><font-awesome-icon :icon="iconPrevious" /></button>
       <div class="flex-grow-1 pl-2 pr-2">
-        <select v-model="selected" class="form-control w-100 shadow">
-          <option disabled value="">Choose</option>
-          <option v-for="(time, i) in activeModel.times" :key="i" @click="goToTime(i)">{{getTimeFormated(time)}}</option>
+        <select v-model="currentIndex" class="form-control w-100 shadow" @change="goToTime(currentIndex)">
+          <option v-for="(time, i) in activeModel.times" :key="i" v-bind:value="i">{{getTimeFormated(time)}}</option>
         </select>
       </div>
       <div>
-        <button type="button" class="btn btn-secondary shadow" @click="next()"><font-awesome-icon :icon="iconNext" /></button>
+        <button type="button" id="time-slot-next" class="btn btn-secondary shadow" @click="next()"><font-awesome-icon :icon="iconNext" /></button>
       </div>
     </div>
     <div class="btn-group" role="group">
-      <button type="button" @click="changeSelectedModel(model)" class="btn btn-secondary" v-for="model in daysModel" :key="model.value" v-bind:class="{active: model.value === activeModel.value}">
+      <button type="button" @click="changeSelectedModel(model)" class="change-selected-model btn btn-secondary" v-for="model in daysModel" :key="model.value" v-bind:class="{active: model.value === activeModel.value}">
         {{model.label}}
       </button>
     </div>
@@ -24,32 +23,11 @@
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faCaretLeft from '@fortawesome/fontawesome-free-solid/faCaretLeft'
 import faCaretRight from '@fortawesome/fontawesome-free-solid/faCaretRight'
+import TimeSlotCommon from './TimeSlotCommon'
 
 export default {
   name: 'TimeSlotMobile',
-  data () {
-    const daysModel = [
-      {
-        value: 2,
-        label: '2 days',
-        times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527782400, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527846400]
-      }, {
-        value: 10,
-        label: '10 days',
-        times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527936400]
-      }, {
-        value: 90,
-        label: '90 days'
-      }
-    ]
-    return {
-      daysModel: daysModel,
-      activeModel: daysModel[0],
-      isPlaying: false,
-      currentIndex: 0,
-      selected: ''
-    }
-  },
+  mixins: [TimeSlotCommon],
   components: { FontAwesomeIcon },
   computed: {
     iconPrevious () {
@@ -62,17 +40,19 @@ export default {
   methods: {
     changeSelectedModel (model) {
       this.activeModel = model
+      this.currentIndex = 0
     },
     previous () {
-      this.isPlaying = true
-      this.activePlay()
+      if (this.currentIndex > 0) {
+        this.currentIndex--
+        this.goToTime(this.currentIndex)
+      }
     },
     next () {
-      this.isPlaying = false
-    },
-    goToTime (timeIdx) {
-      this.isPlaying = false
-      this.currentIndex = timeIdx
+      if (this.currentIndex < this.activeModel.times.length - 1) {
+        this.currentIndex++
+        this.goToTime(this.currentIndex)
+      }
     },
     getTimeFormated (date) {
       const d = new Date(date * 1000)

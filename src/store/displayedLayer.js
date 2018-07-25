@@ -18,8 +18,10 @@ export default class {
     }
   }
   setDate (min, max) {
+    const minFormatedDate = min && new Date(min * 1000).toISOString()
+    const maxFormatedDate = max && new Date(max * 1000).toISOString()
     this._displayedLayer.setParams({
-      time: `${new Date(min * 1000).toISOString()}/${new Date(max * 1000).toISOString()}`
+      time: `${minFormatedDate}/${maxFormatedDate}`
     })
   }
   async getFeatureInfo (evt, map) {

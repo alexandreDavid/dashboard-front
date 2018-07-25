@@ -1,8 +1,6 @@
 import TimeSlot from '@/components/Map/OverMap/OverMapControl/TimeSlot/TimeSlot'
 import { mount } from '@vue/test-utils'
 
-const currentDaysModel = TimeSlot.methods.getDaysModels()[0]
-
 const mockSetDate = jest.fn()
 function getDisplayedLayer () {
   return function () {
@@ -16,12 +14,14 @@ jest.useFakeTimers()
 
 describe('TimeSlot.vue', () => {
   let wrapper
+  let currentDaysModel
   beforeEach(() => {
     wrapper = mount(TimeSlot, {
       provide: {
         getDisplayedLayer: getDisplayedLayer()
       }
     })
+    currentDaysModel = wrapper.vm.getDaysModels()[0]
   })
 
   it('Check current date inside time serie', () => {
