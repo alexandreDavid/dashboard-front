@@ -37,6 +37,7 @@ export default class {
         transparent: this._displayedLayer.options.transparent,
         version: this._displayedLayer.options.version,
         format: this._displayedLayer.options.format,
+        time: this._displayedLayer.wmsParams.time,
         bbox: map.getBounds().toBBoxString(),
         height: size.y,
         width: size.x,
