@@ -24,19 +24,22 @@
     <div class="over-map-right d-none d-sm-block">
       <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
     </div>
-    <div class="over-map-left-bottom d-none d-sm-block">
-      <ZoomControl/>
-      <button type="button" id="reset-map" class="btn btn-primary align-bottom shadow" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
-      <button type="button" class="btn btn-primary align-bottom shadow open-graph-modal" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
+    <div class="over-map-bottom d-none d-sm-flex align-items-end">
+      <ZoomControl class="flex-shrink-1 mr-1">
+      </ZoomControl>
+      <button type="button" id="reset-map" class="btn btn-primary align-bottom shadow flex-shrink-1 mr-1 ml-1" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
+      <button type="button" class="btn btn-primary align-bottom shadow open-graph-modal flex-shrink-1 mr-1 ml-1" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
       <modal v-if="showModal" @close="showModal = false">
         <h3 slot="header">Graph</h3>
         <div slot="body" class="graph-modal-content">
           <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph>
         </div>
       </modal>
-      <TimeSlot class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
+      <div class="ml-1 w-100">
+        <TimeSlot class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
+      </div>
     </div>
-    <div class="over-map-bottom-all-width d-block d-sm-none p-2">
+    <div class="over-map-bottom d-block d-sm-none p-2">
       <TimeSlotMobile v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
     </div>
   </div>

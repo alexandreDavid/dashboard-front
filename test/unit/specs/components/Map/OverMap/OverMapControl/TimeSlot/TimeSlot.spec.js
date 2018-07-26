@@ -121,7 +121,7 @@ describe('TimeSlot.vue', () => {
 
   it('Click on a time', () => {
     const timeButtons = wrapper.findAll('.time-slot.with-indicator')
-    expect(timeButtons.length).toBe(13)
+    expect(timeButtons.length).toBe(17)
 
     expect(wrapper.vm.currentIndex).toBe(0)
     timeButtons.at(3).trigger('click')

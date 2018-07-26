@@ -37,7 +37,7 @@ describe('TimeSlotMobile.vue', () => {
 
   it('Change with select', () => {
     const timeOptions = wrapper.find('select').findAll('option')
-    expect(timeOptions.length).toBe(13)
+    expect(timeOptions.length).toBe(17)
 
     expect(wrapper.vm.currentIndex).toBe(0)
     timeOptions.at(3).setSelected()
@@ -62,19 +62,19 @@ describe('TimeSlotMobile.vue', () => {
   })
 
   it('Click on next', () => {
-    wrapper.find('select').findAll('option').at(10).setSelected()
-    expect(wrapper.vm.currentIndex).toBe(10)
+    wrapper.find('select').findAll('option').at(14).setSelected()
+    expect(wrapper.vm.currentIndex).toBe(14)
 
     const nextButton = wrapper.find('#time-slot-next')
 
     nextButton.trigger('click')
-    expect(wrapper.vm.currentIndex).toBe(11)
+    expect(wrapper.vm.currentIndex).toBe(15)
 
     nextButton.trigger('click')
-    expect(wrapper.vm.currentIndex).toBe(12)
+    expect(wrapper.vm.currentIndex).toBe(16)
 
     // Can't move after 12
     nextButton.trigger('click')
-    expect(wrapper.vm.currentIndex).toBe(12)
+    expect(wrapper.vm.currentIndex).toBe(16)
   })
 })

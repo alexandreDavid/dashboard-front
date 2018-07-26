@@ -41,19 +41,11 @@
     }
   }
 
-  .over-map-left-bottom {
+  .over-map-bottom {
     padding: 10px;
     left: 0;
     bottom: 0;
-    position: absolute;
-    pointer-events: auto;
-  }
-
-  .over-map-bottom-all-width {
-    padding: 10px;
-    left: 0;
     right: 0;
-    bottom: 0;
     position: absolute;
     pointer-events: auto;
   }
