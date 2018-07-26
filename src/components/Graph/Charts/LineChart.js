@@ -34,8 +34,11 @@ export default {
       let datasets = []
       let labels = []
 
-      let valueConversion = function (value, unit) {
-        return parseFloat(value.replace(',', '.')).toFixed(2)
+      let valueConversion = function (value) {
+        if (isNaN(value)) {
+          value = parseFloat(value.replace(',', '.')).toFixed(2)
+        }
+        return value
       }
 
       // Adding every datasets

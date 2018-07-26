@@ -58,9 +58,6 @@ export default {
     this.reportedParameters = [{
       paramName: 'paramName',
       displayName: 'THAMO'
-    }, {
-      paramName: 'paramName2',
-      displayName: 'displayname2'
     }]
 
     // selection of the current layer
