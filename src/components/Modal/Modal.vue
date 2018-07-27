@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog" role="dialog">
         <div class="modal-content shadow">
 
           <div class="modal-header" v-if="hasHeaderSlot">
