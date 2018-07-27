@@ -4,7 +4,7 @@
       <h4>{{ reportedDetails.station.name }}</h4>
       <div v-for="(timeserie, name) in reportedDetails.timeseries" :key="name">
         <h5>{{name}}</h5>
-        <LineChart :chartData="getGraphData(name, timeserie)" :options="options"></LineChart>
+        <LineChart :chartData="getGraphData(timeserie)" :options="options"></LineChart>
       </div>
     </div>
   </SideBar>
@@ -40,15 +40,9 @@ export default {
     close () {
       this.$emit('close')
     },
-    getGraphData (name, timeserie) {
-      let times = {}
-      for (let key in timeserie) {
-        const val = timeserie[key]
-        times[key] = {}
-        times[key][name] = timeserie[key]
-      }
+    getGraphData (timeserie) {
       return {
-        data: times
+        data: timeserie
       }
     }
   }

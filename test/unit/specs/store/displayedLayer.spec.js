@@ -6,6 +6,9 @@ let mockTileLayerWMS = {
   addTo: jest.fn().mockReturnThis(),
   remove: jest.fn(),
   setParams: jest.fn(),
+  wmsParams: {
+    time: 'time'
+  },
   options: {},
   _url: '_url'
 }
@@ -81,6 +84,7 @@ describe('displayedLayer.js', () => {
       service: 'WMS',
       srs: 'EPSG:4326',
       styles: undefined,
+      time: 'time',
       transparent: undefined,
       version: undefined,
       width: 'getSizeX',
@@ -109,6 +113,7 @@ describe('displayedLayer.js', () => {
       service: 'WMS',
       srs: 'EPSG:4326',
       styles: undefined,
+      time: 'time',
       transparent: undefined,
       version: '1.3.0',
       width: 'getSizeX',
