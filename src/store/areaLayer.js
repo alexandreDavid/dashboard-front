@@ -13,7 +13,7 @@ let AreaLayer = class {
   }
   async setSelectedArea (area) {
     const areaData = await axios.get(
-      `${process.env.GEOSERVER_URL}/boundaries/ows`, {
+      `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
         params: AreaLayer.getAreaRequestParams(area)
       }
     )
