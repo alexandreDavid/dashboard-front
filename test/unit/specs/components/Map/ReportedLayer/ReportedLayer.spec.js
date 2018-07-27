@@ -53,7 +53,7 @@ describe('ReportedLayer.vue', () => {
     wrapper.setProps({
       selectedReportedLayer: {selectedReportedLayer: 2}
     })
-    expect(mockCircleMarker.remove).toHaveBeenCalledTimes(3)
+    expect(mockCircleMarker.remove).toHaveBeenCalledTimes(wrapper.vm.mockStations().length)
     expect(wrapper.vm.allMarkers.length).toBe(wrapper.vm.mockStations().length)
   })
 
@@ -72,7 +72,7 @@ describe('ReportedLayer.vue', () => {
     expect(mockDomEvent.stop).toBeCalled()
     jest.advanceTimersByTime(0)
     expect(wrapper.vm.showSideBar).toBe(true)
-    expect(wrapper.vm.reportedDetails.station).toEqual(wrapper.vm.mockStations()[2].station)
+    expect(wrapper.vm.reportedDetails.station).toEqual(wrapper.vm.mockStations()[8].station)
   })
 
   it('Close sidebar on emit event', () => {

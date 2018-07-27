@@ -124,10 +124,16 @@ export default {
         },
         'timeseries': {
           'radiation': {
-            '2017-09-07T07:00': 87.27,
-            '2017-09-07T08:00': 87.24,
-            '2017-09-07T09:00': 87.16,
-            '2017-09-07T10:00': 87.07
+            '2017-09-07T07:00': {avg: 87.27},
+            '2017-09-07T08:00': {avg: 87.24},
+            '2017-09-07T09:00': {avg: 87.16},
+            '2017-09-07T10:00': {avg: 87.07}
+          },
+          'temperature': {
+            '2017-09-07T07:00': {avg: 300},
+            '2017-09-07T08:00': {avg: 301},
+            '2017-09-07T09:00': {avg: 301.25},
+            '2017-09-07T10:00': {avg: 299.7}
           }
         }
       }, {
@@ -148,10 +154,196 @@ export default {
         },
         'timeseries': {
           'radiation': {
-            '2017-09-07T07:00': 87.27,
-            '2017-09-07T08:00': 87.24,
-            '2017-09-07T09:00': 87.16,
-            '2017-09-07T10:00': 87.07
+            '2017-09-07T07:00': {avg: 87.27},
+            '2017-09-07T08:00': {avg: 87.24},
+            '2017-09-07T09:00': {avg: 87.16},
+            '2017-09-07T10:00': {avg: 87.07}
+          },
+          'temperature': {
+            '2017-09-07T07:00': {avg: 300},
+            '2017-09-07T08:00': {avg: 301},
+            '2017-09-07T09:00': {avg: 301.25},
+            '2017-09-07T10:00': {avg: 299.7}
+          }
+        }
+      }, {
+        'station': {
+          'location': {
+            'lat': 0.56302,
+            'lng': 31.39055
+          },
+          'name': 'Mubende',
+          'countryCode': 'UK',
+          'elevation': 1870,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': {avg: 87.27},
+            '2017-09-07T08:00': {avg: 87.24},
+            '2017-09-07T09:00': {avg: 87.16},
+            '2017-09-07T10:00': {avg: 87.07}
+          },
+          'temperature': {
+            '2017-09-07T07:00': {avg: 300},
+            '2017-09-07T08:00': {avg: 301},
+            '2017-09-07T09:00': {avg: 301.25},
+            '2017-09-07T10:00': {avg: 299.7}
+          }
+        }
+      }, {
+        'station': {
+          'location': {
+            'lat': 1.20684,
+            'lng': 32.73557
+          },
+          'name': 'Kalongo',
+          'countryCode': 'UK',
+          'elevation': 1870,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': {avg: 87.27},
+            '2017-09-07T08:00': {avg: 87.24},
+            '2017-09-07T09:00': {avg: 87.16},
+            '2017-09-07T10:00': {avg: 87.07}
+          },
+          'temperature': {
+            '2017-09-07T07:00': {avg: 300},
+            '2017-09-07T08:00': {avg: 301},
+            '2017-09-07T09:00': {avg: 301.25},
+            '2017-09-07T10:00': {avg: 299.7}
+          }
+        }
+      }, {
+        'station': {
+          'location': {
+            'lat': 1.2102444,
+            'lng': 32.4622806
+          },
+          'name': 'Kazwama Health Center',
+          'countryCode': 'UK',
+          'elevation': 1870,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': {avg: 87.27},
+            '2017-09-07T08:00': {avg: 87.24},
+            '2017-09-07T09:00': {avg: 87.16},
+            '2017-09-07T10:00': {avg: 87.07}
+          },
+          'temperature': {
+            '2017-09-07T07:00': {avg: 300},
+            '2017-09-07T08:00': {avg: 301},
+            '2017-09-07T09:00': {avg: 301.25},
+            '2017-09-07T10:00': {avg: 299.7}
+          }
+        }
+      }, {
+        'station': {
+          'location': {
+            'lat': 2.72595,
+            'lng': 31.39115
+          },
+          'name': 'Wadelai',
+          'countryCode': 'UK',
+          'elevation': 1870,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': {avg: 87.27},
+            '2017-09-07T08:00': {avg: 87.24},
+            '2017-09-07T09:00': {avg: 87.16},
+            '2017-09-07T10:00': {avg: 87.07}
+          },
+          'temperature': {
+            '2017-09-07T07:00': {avg: 300},
+            '2017-09-07T08:00': {avg: 301},
+            '2017-09-07T09:00': {avg: 301.25},
+            '2017-09-07T10:00': {avg: 299.7}
+          }
+        }
+      }, {
+        'station': {
+          'location': {
+            'lat': 0.6978,
+            'lng': 34.17151
+          },
+          'name': 'Tororo',
+          'countryCode': 'UK',
+          'elevation': 1870,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': {avg: 87.27},
+            '2017-09-07T08:00': {avg: 87.24},
+            '2017-09-07T09:00': {avg: 87.16},
+            '2017-09-07T10:00': {avg: 87.07}
+          },
+          'temperature': {
+            '2017-09-07T07:00': {avg: 300},
+            '2017-09-07T08:00': {avg: 301},
+            '2017-09-07T09:00': {avg: 301.25},
+            '2017-09-07T10:00': {avg: 299.7}
+          }
+        }
+      }, {
+        'station': {
+          'location': {
+            'lat': 0.7569194,
+            'lng': 34.0461694
+          },
+          'name': 'Busitema University',
+          'countryCode': 'UK',
+          'elevation': 1870,
+          'variables': [
+            'radiation',
+            'atmosphericpressure'
+          ],
+          'firstMeasurement': '2017-09-07T05:15:00.000Z',
+          'lastMeasurement': '2018-07-11T23:40:00.000Z'
+        },
+        'timeseries': {
+          'radiation': {
+            '2017-09-07T07:00': {avg: 87.27},
+            '2017-09-07T08:00': {avg: 87.24},
+            '2017-09-07T09:00': {avg: 87.16},
+            '2017-09-07T10:00': {avg: 87.07}
+          },
+          'temperature': {
+            '2017-09-07T07:00': {avg: 300},
+            '2017-09-07T08:00': {avg: 301},
+            '2017-09-07T09:00': {avg: 301.25},
+            '2017-09-07T10:00': {avg: 299.7}
           }
         }
       }]
