@@ -118,7 +118,6 @@ export default {
     }
   },
   mounted () {
-    var vm = this
     this.areaLayer = new AreaLayer(this.getMap())
     this.onSelectedParameter(Parameter.getDisplayedParameter())
   },
