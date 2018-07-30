@@ -3,8 +3,8 @@
     <div class="over-map-left">
       <SearchLocationResult v-if="false && searchLocationResult" v-bind:searchLocationResult="searchLocationResult"></SearchLocationResult>
       <div class="d-flex flex-nowrap position-relative">
-        <div class="p-1 flex-grow-1"><SearchLocation @input="onSearchLocationSelected" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation></div>
-        <div class="p-1">
+        <div class="p-1 flex-grow-1 over-map-control"><SearchLocation @input="onSearchLocationSelected" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation></div>
+        <div class="p-1 over-map-control">
           <button type="button" id="zoom-current-location" class="btn btn-primary align-top" v-bind:class="{shadow: !searchLocationResult}" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
         </div>
         <div class="p-1 d-block d-sm-none">
@@ -25,21 +25,21 @@
       <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
     </div>
     <div class="over-map-bottom d-none d-sm-flex align-items-end">
-      <ZoomControl class="flex-shrink-1 mr-1">
+      <ZoomControl class="flex-shrink-1 mr-1 over-map-control">
       </ZoomControl>
-      <button type="button" id="reset-map" class="btn btn-primary align-bottom shadow flex-shrink-1 mr-1 ml-1" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
-      <button type="button" class="btn btn-primary align-bottom shadow open-graph-modal flex-shrink-1 mr-1 ml-1" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
+      <button type="button" id="reset-map" class="btn btn-primary align-bottom shadow flex-shrink-1 mr-1 ml-1 over-map-control" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
+      <button type="button" class="btn btn-primary align-bottom shadow open-graph-modal flex-shrink-1 mr-1 ml-1 over-map-control" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
       <modal v-if="showModal" @close="showModal = false">
         <h3 slot="header">Graph</h3>
         <div slot="body" class="graph-modal-content">
           <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph>
         </div>
       </modal>
-      <div class="ml-1 w-100">
+      <div class="ml-1 w-100 over-map-control">
         <TimeSlot class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
       </div>
     </div>
-    <div class="over-map-bottom d-block d-sm-none p-2">
+    <div class="over-map-bottom d-block d-sm-none p-2 over-map-control">
       <TimeSlotMobile v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
     </div>
   </div>

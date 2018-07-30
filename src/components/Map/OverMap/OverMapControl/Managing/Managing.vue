@@ -5,20 +5,20 @@
         <a href="#" id="forecast-selection-btn" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control">
           {{ displayedParameter.displayName || 'Select a data' }}
         </a>
-        <modal v-if="showModal" @close="showModal = false" class="over-map-control">
+        <modal v-if="showModal" @close="showModal = false">
           <h3 slot="header">Select data to display</h3>
           <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
         </modal>
       </div>
       <div class="row mb-2 justify-content-end">
         <a href="#" target="_self" @click="showModalReported = true" class="badge badge-secondary badge-pill over-map-control">REPORTED: Temperature</a>
-        <modal v-if="showModalReported" @close="showModalReported = false" class="over-map-control">
+        <modal v-if="showModalReported" @close="showModalReported = false">
           <h3 slot="header">Select data to display</h3>
           <ReportedSelection slot="body" @selectedReportedParameter="onSelectedReportedParameter"></ReportedSelection>
         </modal>
       </div>
-      <div class="row mb-2 justify-content-end over-map-control">
-        <img v-bind:src="displayedParameter.legendUrl">
+      <div class="row mb-2 justify-content-end">
+        <img v-bind:src="displayedParameter.legendUrl" class="over-map-control">
       </div>
       <div class="slide-bar-content justify-content-end position-relative m-2" v-if="false">
         <VueSlideBar v-model="value" class="over-map-control"/>
