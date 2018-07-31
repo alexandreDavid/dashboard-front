@@ -11,7 +11,7 @@ export default class {
   _activeUnit = false
   constructor (map, layerUrl, options = {}) {
     this._map = map
-    this.setDisplayedLayer(layerUrl, options)
+    this.setDisplayedLayer(layerUrl)
   }
   setDisplayedLayer (parameter) {
     this._parameter = parameter

@@ -1,6 +1,7 @@
 import Popup from '@/components/Map/Popup'
 import { mount } from '@vue/test-utils'
 import L from 'leaflet'
+import Unit from '@/utils/unit'
 
 const mockPopup = {
   setLatLng: jest.fn().mockReturnThis(),
@@ -9,6 +10,11 @@ const mockPopup = {
 }
 
 L.Popup = jest.fn().mockImplementation(() => mockPopup)
+
+jest.mock('@/utils/unit', () => ({
+  convert: jest.fn().mockReturnValue('convert'),
+  getLabel: jest.fn().mockReturnValue('getLabel')
+}))
 
 const mockMapOn = jest.fn()
 
@@ -20,12 +26,14 @@ function getMapMock () {
   }
 }
 
-const mockGetFeatureInfo = jest.fn()
+const mockDisplayedLayer = {
+  getFeatureInfo: jest.fn(),
+  getUnit: jest.fn(),
+  getDefaultUnit: jest.fn()
+}
 function getDisplayedLayer () {
   return function () {
-    return {
-      getFeatureInfo: mockGetFeatureInfo
-    }
+    return mockDisplayedLayer
   }
 }
 
@@ -41,18 +49,25 @@ describe('Popup.vue', () => {
     expect(wrapper.vm.value).toBe(false)
     expect(mockMapOn).toBeCalled()
     L.Popup.mockClear()
+    Unit.convert.mockClear()
+    mockDisplayedLayer.getUnit.mockClear()
+    mockDisplayedLayer.getDefaultUnit.mockClear()
   })
 
   it('With feature', async () => {
     const mockEvt = {latlng: 'latlng'}
-    mockGetFeatureInfo.mockResolvedValue([{
+    mockDisplayedLayer.getFeatureInfo.mockResolvedValue([{
       properties: {
         GDAL_Band_Number_1: 'mockGetFeatureInfo'
       }
     }])
+    mockDisplayedLayer.getUnit.mockReturnValue('getUnit')
+    mockDisplayedLayer.getDefaultUnit.mockReturnValue('getDefaultUnit')
+
     await wrapper.vm.getFeatureInfo(mockEvt)
-    expect(mockGetFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
-    expect(wrapper.vm.value).toBe('mockGetFeatureInfo')
+    expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
+    expect(Unit.convert).toBeCalledWith('getDefaultUnit', 'getUnit', 'mockGetFeatureInfo')
+    expect(wrapper.vm.value).toBe('convert getLabel')
     expect(L.Popup).toBeCalledWith({
       maxWidth: 800
     })
@@ -63,9 +78,10 @@ describe('Popup.vue', () => {
 
   it('Without feature', async () => {
     const mockEvt = {latlng: 'latlng'}
-    mockGetFeatureInfo.mockResolvedValue([])
+    mockDisplayedLayer.getFeatureInfo.mockResolvedValue([])
     await wrapper.vm.getFeatureInfo(mockEvt)
-    expect(mockGetFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
+    expect(Unit.convert).not.toBeCalled()
+    expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
     expect(wrapper.vm.value).toBe(false)
     expect(L.Popup).not.toBeCalled()
   })

@@ -13,6 +13,12 @@ let mockTileLayerWMS = {
   _url: '_url'
 }
 
+const mockParam = {
+  layerUrl: 'layerUrl',
+  layerParameters: {},
+  unit: 'unit'
+}
+
 L.TileLayer.WMS = jest.fn().mockImplementation(() => mockTileLayerWMS)
 
 jest.mock('axios', () => ({
@@ -30,7 +36,7 @@ const mockMap = {
 describe('displayedLayer.js', () => {
   let displayedLayer
   beforeEach(function () {
-    displayedLayer = new DisplayedLayer()
+    displayedLayer = new DisplayedLayer(mockMap)
     mockTileLayerWMS.remove.mockClear()
     mockMap.getBounds.mockClear()
     mockMap.getSize.mockClear()
@@ -46,17 +52,17 @@ describe('displayedLayer.js', () => {
   })
 
   it('Calls setDisplayedLayer and init displayedLayer', () => {
-    displayedLayer.setDisplayedLayer(mockMap, 'layerUrl')
+    displayedLayer.setDisplayedLayer(mockParam)
     expect(mockTileLayerWMS.remove).not.toHaveBeenCalled()
-    expect(L.TileLayer.WMS).toHaveBeenCalledWith('layerUrl', {})
+    expect(L.TileLayer.WMS).toHaveBeenCalledWith(mockParam.layerUrl, mockParam.layerParameters)
     expect(mockTileLayerWMS.addTo).toHaveBeenCalledWith(mockMap)
   })
 
   it('Calls setDisplayedLayer remove and init displayedLayer', () => {
     displayedLayer._displayedLayer = mockTileLayerWMS
-    displayedLayer.setDisplayedLayer(mockMap, 'layerUrl')
+    displayedLayer.setDisplayedLayer(mockParam)
     expect(mockTileLayerWMS.remove).toHaveBeenCalled()
-    expect(L.TileLayer.WMS).toHaveBeenCalledWith('layerUrl', {})
+    expect(L.TileLayer.WMS).toHaveBeenCalledWith(mockParam.layerUrl, mockParam.layerParameters)
     expect(mockTileLayerWMS.addTo).toHaveBeenCalledWith(mockMap)
   })
 
@@ -66,8 +72,8 @@ describe('displayedLayer.js', () => {
   })
 
   it('Calls getFeatureInfo with params.version !== 1.3.0', async () => {
-    displayedLayer.setDisplayedLayer(mockMap, 'layerUrl')
-    displayedLayer.getFeatureInfo({latlng: 'latlng'}, mockMap)
+    displayedLayer.setDisplayedLayer(mockParam)
+    displayedLayer.getFeatureInfo({latlng: 'latlng'})
     expect(mockMap.getZoom).toHaveBeenCalledTimes(1)
     expect(mockMap.latLngToContainerPoint).toHaveBeenCalledWith('latlng', mockMap.getZoom())
     expect(mockMap.getSize).toHaveBeenCalledTimes(1)
@@ -95,8 +101,8 @@ describe('displayedLayer.js', () => {
 
   it('Calls getFeatureInfo with params.version === 1.3.0', async () => {
     mockTileLayerWMS.addTo.mockReturnValue({...mockTileLayerWMS, options: {version: '1.3.0'}})
-    displayedLayer.setDisplayedLayer(mockMap, 'layerUrl')
-    displayedLayer.getFeatureInfo({latlng: 'latlng'}, mockMap)
+    displayedLayer.setDisplayedLayer(mockParam)
+    displayedLayer.getFeatureInfo({latlng: 'latlng'})
     expect(mockMap.getZoom).toHaveBeenCalled()
     expect(mockMap.latLngToContainerPoint).toHaveBeenCalledWith('latlng', mockMap.getZoom())
     expect(mockMap.getSize).toHaveBeenCalledTimes(1)
@@ -123,8 +129,16 @@ describe('displayedLayer.js', () => {
   })
 
   it('Calls setDate', async () => {
-    displayedLayer.setDisplayedLayer(mockMap, 'layerUrl')
+    displayedLayer.setDisplayedLayer(mockParam)
     displayedLayer.setDate(1000000000, 10000000001)
     expect(mockTileLayerWMS.setParams).toHaveBeenCalled()
+  })
+
+  it('Set units', () => {
+    displayedLayer.setDisplayedLayer(mockParam)
+    expect(displayedLayer.getDefaultUnit()).toBe(mockParam.unit)
+    expect(displayedLayer.getUnit()).toBe(mockParam.unit)
+    displayedLayer.setUnit('newUnit')
+    expect(displayedLayer.getUnit()).toBe('newUnit')
   })
 })

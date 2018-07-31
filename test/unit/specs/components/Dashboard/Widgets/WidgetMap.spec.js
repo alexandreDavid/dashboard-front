@@ -49,7 +49,7 @@ describe('WidgetMap.vue', () => {
     expect(MapObj).toBeCalledWith(mapId)
     expect(AreaLayer).toBeCalledWith(mockMap, 'area')
     expect(AreaLayer).toBeCalledWith(mockMap, 'area')
-    expect(DisplayedLayer).toBeCalledWith(mockMap, 'layerUrl', 'layerParameters')
+    expect(DisplayedLayer).toBeCalledWith(mockMap, wrapper.vm.parameter)
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 
@@ -60,7 +60,7 @@ describe('WidgetMap.vue', () => {
         layerParameters: 'layerParameters2'
       }
     })
-    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith(mockMap, 'layerUrl2', 'layerParameters2')
+    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith(wrapper.vm.parameter)
   })
 
   it('Providers are correct', async () => {
