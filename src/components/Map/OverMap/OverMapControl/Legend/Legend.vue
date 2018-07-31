@@ -68,13 +68,13 @@ export default {
       const r = parseInt(hex.substring(1, 3), 16)
       const g = parseInt(hex.substring(3, 5), 16)
       const b = parseInt(hex.substring(5, 7), 16)
-      return `rgba(${r},${g},${b}, ${opacity})`
+      return `rgba(${r}, ${g}, ${b}, ${opacity})`
     }
   },
   filters: {
     convert: function (value, from, to) {
       if (from !== to) {
-        value = Unit.convert(from, to, value)
+        value = Unit.convert(from, to, value).toFixed(2)
       }
       return value
     }

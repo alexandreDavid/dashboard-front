@@ -12,7 +12,7 @@ const mockPopup = {
 L.Popup = jest.fn().mockImplementation(() => mockPopup)
 
 jest.mock('@/utils/unit', () => ({
-  convert: jest.fn().mockReturnValue('convert'),
+  convert: jest.fn().mockReturnValue(42),
   getLabel: jest.fn().mockReturnValue('getLabel')
 }))
 
@@ -67,7 +67,7 @@ describe('Popup.vue', () => {
     await wrapper.vm.getFeatureInfo(mockEvt)
     expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
     expect(Unit.convert).toBeCalledWith('getDefaultUnit', 'getUnit', 'mockGetFeatureInfo')
-    expect(wrapper.vm.value).toBe('convert getLabel')
+    expect(wrapper.vm.value).toBe('42getLabel')
     expect(L.Popup).toBeCalledWith({
       maxWidth: 800
     })
@@ -80,8 +80,8 @@ describe('Popup.vue', () => {
     const mockEvt = {latlng: 'latlng'}
     mockDisplayedLayer.getFeatureInfo.mockResolvedValue([])
     await wrapper.vm.getFeatureInfo(mockEvt)
-    expect(Unit.convert).not.toBeCalled()
     expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
+    expect(Unit.convert).not.toBeCalled()
     expect(wrapper.vm.value).toBe(false)
     expect(L.Popup).not.toBeCalled()
   })

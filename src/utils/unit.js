@@ -24,21 +24,23 @@ const units = [
   }
 ]
 
+function getUnit (key) {
+  return units.find(u => u.key === key)
+}
+
 export default {
-  getUnit (key) {
-    return units.find(u => u.key === key)
-  },
   getLabel (key) {
-    return this.getUnit(key).label
+    const unit = getUnit(key)
+    return (unit && unit.label) || ''
   },
   getUnitsFamily (family) {
     return units.filter(u => u.family === family).map(({key, label}) => ({key, label}))
   },
   convert (unitInput, unitOutput, val) {
-    const unitConfig = this.getUnit(unitInput)
-    if (unitConfig.conversion && unitConfig.conversion[unitOutput]) {
+    const unitConfig = getUnit(unitInput)
+    if (unitConfig && unitConfig.conversion && unitConfig.conversion[unitOutput]) {
       val = unitConfig.conversion[unitOutput](val)
     }
-    return val.toFixed(2)
+    return val
   }
 }

@@ -38,8 +38,8 @@ export default class {
   getDefaultUnit (unit) {
     return this._defaultUnit
   }
-  getUnit (unit) {
-    return this._activeUnit || this._defaultUnit
+  getUnit () {
+    return this._activeUnit
   }
   async getFeatureInfo (evt) {
     if (this._displayedLayer) {
