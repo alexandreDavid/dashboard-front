@@ -5,16 +5,24 @@ import axios from 'axios'
 
 export default class {
   _displayedLayer = false
+  _parameter = false
+  _map = false
+  _defaultUnit = false
+  _activeUnit = false
   constructor (map, layerUrl, options = {}) {
-    this.setDisplayedLayer(map, layerUrl, options)
+    this._map = map
+    this.setDisplayedLayer(layerUrl, options)
   }
-  setDisplayedLayer (map, layerUrl, options = {}) {
+  setDisplayedLayer (parameter) {
+    this._parameter = parameter
     // Remove and add to activate the addlayer event
     if (this._displayedLayer) {
       this._displayedLayer.remove()
     }
-    if (map && layerUrl) {
-      this._displayedLayer = new TileLayer.WMS(layerUrl, options).addTo(map)
+    if (this._map && this._parameter && this._parameter.layerUrl) {
+      this._displayedLayer = new TileLayer.WMS(this._parameter.layerUrl, this._parameter.layerParameters).addTo(this._map)
+      this._defaultUnit = this._parameter.unit
+      this._activeUnit = this._defaultUnit
     }
   }
   setDate (min, max) {
@@ -24,10 +32,19 @@ export default class {
       time: `${minFormatedDate}/${maxFormatedDate}`
     })
   }
-  async getFeatureInfo (evt, map) {
+  setUnit (unit) {
+    this._activeUnit = unit
+  }
+  getDefaultUnit (unit) {
+    return this._defaultUnit
+  }
+  getUnit (unit) {
+    return this._activeUnit || this._defaultUnit
+  }
+  async getFeatureInfo (evt) {
     if (this._displayedLayer) {
-      let point = map.latLngToContainerPoint(evt.latlng, map.getZoom())
-      let size = map.getSize()
+      let point = this._map.latLngToContainerPoint(evt.latlng, this._map.getZoom())
+      let size = this._map.getSize()
 
       let params = {
         request: 'GetFeatureInfo',
@@ -38,7 +55,7 @@ export default class {
         version: this._displayedLayer.options.version,
         format: this._displayedLayer.options.format,
         time: this._displayedLayer.wmsParams.time,
-        bbox: map.getBounds().toBBoxString(),
+        bbox: this._map.getBounds().toBBoxString(),
         height: size.y,
         width: size.x,
         layers: this._displayedLayer.options.layers,

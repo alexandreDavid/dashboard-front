@@ -142,7 +142,7 @@ export default {
     onSelectedParameter (selectedParameter) {
       if (selectedParameter) {
         this.selectedParameter = selectedParameter
-        this.getDisplayedLayer().setDisplayedLayer(this.getMap(), selectedParameter.layerUrl, selectedParameter.layerParameters)
+        this.getDisplayedLayer().setDisplayedLayer(selectedParameter)
       }
     },
     onSelectedReportedParameter (selectedReportedParameter) {

@@ -47,12 +47,12 @@ export default {
   mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map, this.area)
-    this.displayedLayer = new DisplayedLayer(this.map, this.parameter.layerUrl, this.parameter.layerParameters)
+    this.displayedLayer = new DisplayedLayer(this.map, this.parameter)
     this.isLoaded = true
   },
   watch: {
     parameter (newParam) {
-      this.getDisplayedLayer().setDisplayedLayer(this.getMap(), newParam.layerUrl, newParam.layerParameters)
+      this.getDisplayedLayer().setDisplayedLayer(newParam)
     }
   },
   methods: {

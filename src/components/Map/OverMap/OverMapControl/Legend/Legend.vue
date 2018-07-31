@@ -17,27 +17,17 @@
 </template>
 
 <script>
-import ConvertUnit from '@/utils/convert-unit'
+import Unit from '@/utils/unit'
 
 export default {
   name: 'Legend',
+  inject: ['getDisplayedLayer'],
   data () {
     return {
       defaultUnit: 'K',
       activeUnit: 'K',
       gradientColor: false,
-      availableUnits: [{
-        key: 'C',
-        label: '°C'
-      },
-      {
-        key: 'F',
-        label: '°F'
-      },
-      {
-        key: 'K',
-        label: '°K'
-      }],
+      availableUnits: Unit.getUnitsFamily('temperature'),
       displayedValues: [{
         color: '#2c7bb6',
         opacity: '0.5',
@@ -72,6 +62,7 @@ export default {
   methods: {
     changeActiveUnit (unit) {
       this.activeUnit = unit.key
+      this.getDisplayedLayer().setUnit(this.activeUnit)
     },
     convertHex (hex, opacity) {
       const r = parseInt(hex.substring(1, 3), 16)
@@ -83,7 +74,7 @@ export default {
   filters: {
     convert: function (value, from, to) {
       if (from !== to) {
-        value = ConvertUnit(from, to, value)
+        value = Unit.convert(from, to, value)
       }
       return value
     }

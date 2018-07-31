@@ -35,7 +35,7 @@ AreaLayer.getAreaRequestParams = (area) => {
     request: 'GetFeature',
     typeName: `boundaries:area`,
     outputFormat: 'application/json',
-    CQL_FILTER: `paramname ilike '${area.paramName}'`
+    CQL_FILTER: `name ilike '${area.paramName}'`
   }
 }
 

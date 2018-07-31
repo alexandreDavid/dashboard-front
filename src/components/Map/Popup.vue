@@ -5,9 +5,8 @@
 </template>
 
 <script>
-import {
-  Popup
-} from 'leaflet'
+import { Popup } from 'leaflet'
+import Unit from '@/utils/unit'
 
 export default {
   name: 'Popup',
@@ -28,7 +27,9 @@ export default {
     },
     showGetFeatureInfo (latlng, features) {
       if (features && features.length) {
-        this.value = features[0].properties.GDAL_Band_Number_1
+        const activeUnit = this.getDisplayedLayer().getUnit()
+        const value = Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, features[0].properties.GDAL_Band_Number_1)
+        this.value = `${value} ${Unit.getLabel(activeUnit)}`
         new Popup({
           maxWidth: 800
         })
