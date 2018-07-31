@@ -11,7 +11,12 @@
       <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="parameter in parameters" :key="parameter.paramName" @click="onSelectParameter(parameter)" v-bind:class="{ active: parameter.paramName === activeParam }">
         <div class="d-flex w-100 justify-content-between">
           <div class="mb-1">{{parameter.displayName}}</div>
-          <div><font-awesome-icon :icon="iconInfo" v-on:click.stop="displayInfos(parameter)" class="display-infos text-secondary" /></div>
+          <div class="display-infos text-secondary">
+            <font-awesome-layers class="fa-lg" v-on:click.stop="displayInfos(parameter)">
+              <font-awesome-icon :icon="iconCircle" class="text-white" size="xs" />
+              <font-awesome-icon :icon="iconInfo" />
+            </font-awesome-layers>
+          </div>
         </div>
         <div v-show="parameter.paramName === displayedInfo" class="displayed-infos">
           <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
@@ -24,16 +29,18 @@
 
 <script>
 import Loading from '@/components/Loading/Loading'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 import faCaretDown from '@fortawesome/fontawesome-free-solid/faCaretDown'
 import faCaretRight from '@fortawesome/fontawesome-free-solid/faCaretRight'
+import faCircle from '@fortawesome/fontawesome-free-solid/faCircle'
 import faInfo from '@fortawesome/fontawesome-free-solid/faInfoCircle'
 
 export default {
   name: 'ForecastSelectionGroup',
   components: {
     Loading,
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    FontAwesomeLayers
   },
   props: [
     'parameterGrouping',
@@ -57,6 +64,9 @@ export default {
     },
     iconInfo () {
       return faInfo
+    },
+    iconCircle () {
+      return faCircle
     }
   },
   methods: {
