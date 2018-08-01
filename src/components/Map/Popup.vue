@@ -28,7 +28,7 @@ export default {
     showGetFeatureInfo (latlng, features) {
       if (features && features.length) {
         const activeUnit = this.getDisplayedLayer().getUnit()
-        this.value = Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, features[0].properties.GDAL_Band_Number_1)
+        this.value = Math.round(Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, features[0].properties.GDAL_Band_Number_1))
         const unitLabel = Unit.getLabel(activeUnit)
         if (unitLabel) {
           this.value += unitLabel

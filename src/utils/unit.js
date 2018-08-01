@@ -31,7 +31,7 @@ function getUnit (key) {
 export default {
   getLabel (key) {
     const unit = getUnit(key)
-    return (unit && unit.label) || ''
+    return unit && unit.label
   },
   getUnitsFamily (family) {
     return units.filter(u => u.family === family).map(({key, label}) => ({key, label}))
