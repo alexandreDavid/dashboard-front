@@ -30,7 +30,7 @@
       <button type="button" id="reset-map" class="btn btn-primary align-bottom shadow flex-shrink-1 mr-1 ml-1 over-map-control" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
       <button type="button" class="btn btn-primary align-bottom shadow open-graph-modal flex-shrink-1 mr-1 ml-1 over-map-control" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
       <modal v-if="showModal" @close="showModal = false">
-        <h3 slot="header">Graph</h3>
+        <div slot="header">{{ selectedArea.displayName + ' - ' + selectedParameter.displayName }}</div>
         <div slot="body" class="graph-modal-content">
           <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph>
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <pre>{{ textArea }}</pre>
+  <span>{{ textArea }}</span>
 </template>
 
 <script>

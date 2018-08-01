@@ -30,7 +30,7 @@
       </div>
       <div class="form-group" v-if="editedCard.widget && editedCard.widget.formFields" v-for="formField in editedCard.widget.formFields" :key="formField.id">
         <label>{{ formField.label }}</label>
-        <select class="form-control" v-if="formField.type === 'select'" v-model="formField.value">
+        <select class="form-control" v-if="formField.type === 'select'" v-model="formField.value" @change="formField.onChange && formField.onChange(editedCard)">
           <option v-for="(option, key) in formField.options" :key="key" v-bind:value="option">
             {{ option.label }}
           </option>
@@ -38,6 +38,7 @@
         <textarea class="form-control" v-if="formField.type === 'textarea'" v-model="formField.value"></textarea>
       </div>
       <button type="button" class="btn btn-danger delete" @click="$emit('delete')"><font-awesome-icon :icon="iconRemove" /> Delete</button>
+      <button type="button" class="btn btn-success" @click="$emit('close')"><font-awesome-icon :icon="iconCheck" /> Apply</button>
     </div>
   </modal>
 </template>
@@ -46,6 +47,7 @@
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
+import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import Dashboard from '@/store/dashboard'
 import Modal from '@/components/Modal/Modal'
 
@@ -63,6 +65,9 @@ export default {
   computed: {
     iconRemove () {
       return faTrash
+    },
+    iconCheck () {
+      return faCheck
     }
   },
   data () {

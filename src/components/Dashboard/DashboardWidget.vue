@@ -2,9 +2,9 @@
   <div class="p-0" v-bind:class="cardConfiguration.widthClass">
     <div class="card m-2" v-bind:class="cardConfiguration.heightClass">
       <div class="card-header" v-if="cardConfiguration.title">
-        <div class="d-flex">
+        <div class="d-flex align-items-center">
           <div class="flex-grow-1">
-            <h5 class="w-100">{{cardConfiguration.title}} {{cardConfiguration.sizeClass}} {{cardConfiguration.fwfe}}</h5>
+            <span class="w-100">{{cardConfiguration.title}} {{cardConfiguration.sizeClass}} {{cardConfiguration.fwfe}}</span>
           </div>
           <div v-if="isEditing">
             <button type="button" class="btn btn-light btn-sm ml-2 edit" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>

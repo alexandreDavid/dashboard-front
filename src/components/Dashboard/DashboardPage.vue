@@ -2,7 +2,7 @@
   <div id="dashboard">
     <div v-if="isLoaded" class="container">
       <div class="row">
-        <h4 class="col-12 mt-2 mb-2 p-2">Compare Parameter Graphs
+        <h4 class="col-12 mt-2 mb-2 p-2">Dashboard
           <button type="button" class="btn btn-light ml-2 edit" v-if="selectedArea &&!isEditing" @click="edit()"><font-awesome-icon :icon="iconEdit" /> Edit</button>
           <button type="button" class="btn btn-primary ml-2 save" v-if="selectedArea && isEditing" @click="save()"><font-awesome-icon :icon="iconSave" /> Save</button>
         </h4>

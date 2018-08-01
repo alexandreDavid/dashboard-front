@@ -63,7 +63,7 @@ export default {
       this.isLoaded = false
       this.datacollection = await Data.getAreaParameterData(this.area, this.parameter)
       // axes Y title
-      this.options.scales.yAxes[0].scaleLabel.labelString = `${this.parameter.displayName} (${this.datacollection.unit})`
+      this.options.scales.yAxes[0].scaleLabel.labelString = this.datacollection.unit
       this.isLoaded = true
     }
   }

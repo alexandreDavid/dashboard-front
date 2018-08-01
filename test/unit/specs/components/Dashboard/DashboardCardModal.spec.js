@@ -2,6 +2,20 @@ import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import Dashboard from '@/store/dashboard'
 import { mount } from '@vue/test-utils'
 import Modal from '@/components/Modal/Modal'
+import Parameter from '@/store/parameter'
+
+jest.mock('@/store/parameter', () => ({
+  getParams: jest.fn()
+}))
+Parameter.getParams.mockReturnValue([
+  {
+    id: 1,
+    displayName: 'displayName1'
+  }, {
+    id: 2,
+    displayName: 'displayName1'
+  }
+])
 
 describe('DashboardCardModal.vue', () => {
   let wrapper

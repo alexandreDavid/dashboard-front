@@ -65,6 +65,7 @@ describe('TimeSlot.vue', () => {
 
     expect(wrapper.vm.currentIndex).toBe(0)
     setTimeout.mockClear()
+    expect(setTimeout).toHaveBeenCalledTimes(0)
 
     wrapper.find('#time-play').trigger('click')
     expect(wrapper.vm.isPlaying).toBe(true)
@@ -72,9 +73,9 @@ describe('TimeSlot.vue', () => {
     for (let i = 1; i < currentDaysModel.times.length - 2; i++) {
       expect(setTimeout).toHaveBeenCalledTimes(i)
       expect(wrapper.vm.currentIndex).toBe(i)
-      jest.advanceTimersByTime(1000)
+      jest.advanceTimersByTime(wrapper.vm.activeDateDuration)
     }
-    jest.advanceTimersByTime(1000)
+    jest.advanceTimersByTime(wrapper.vm.activeDateDuration)
     expect(wrapper.vm.isPlaying).toBe(false)
   })
 
@@ -96,7 +97,7 @@ describe('TimeSlot.vue', () => {
     function checkCallTimeout (idx) {
       expect(setTimeout).toHaveBeenCalledTimes(idx)
       expect(wrapper.vm.currentIndex).toBe(idx)
-      jest.advanceTimersByTime(1000)
+      jest.advanceTimersByTime(wrapper.vm.activeDateDuration)
     }
 
     for (let i = 1; i < 5; i++) {

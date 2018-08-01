@@ -13,11 +13,14 @@
         <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon :icon="iconPause" /></button>
       </div>
       <div class="flex-grow-1 d-flex align-middle position-relative ml-3 mr-3">
+        <!-- <div class="time-slot with-indicator" v-for="(time, i) in activeModel.times" :key="i" @click="goToTime(i)" :class="{'flex-fill': true}"> -->
         <div class="time-slot with-indicator" v-for="(time, i) in activeModel.times" :key="i" @click="goToTime(i)" :class="{'flex-fill': i !== (activeModel.times.length - 1)}">
+          <!-- <div class="time-slot-content h-100"> -->
           <div v-if="i !== (activeModel.times.length - 1)" class="time-slot-content h-100">
           </div>
           <small class="time-slot-indicator">
             <div>{{getDateDay(time)}}</div>
+            <div>{{getDate(time)}}</div>
             <div>{{getDateHour(time)}}</div>
           </small>
         </div>
@@ -54,6 +57,11 @@ export default {
       return faPause
     }
   },
+  data () {
+    return {
+      activeDateDuration: 1500
+    }
+  },
   methods: {
     changeSelectedModel (model) {
       this.activeModel = model
@@ -75,10 +83,13 @@ export default {
           if (this.isPlaying) {
             this.activePlay()
           }
-        }, 1000)
+        }, this.activeDateDuration)
       } else {
         this.pause()
       }
+    },
+    getDate (date) {
+      return new Date(date * 1000).getDate()
     },
     getDateDay (date) {
       return dayNames[new Date(date * 1000).getDay()]

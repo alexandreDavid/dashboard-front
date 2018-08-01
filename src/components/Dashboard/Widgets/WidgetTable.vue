@@ -2,29 +2,55 @@
 <table class="table table-sm">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">District</th>
+      <th scope="col">Sub-county</th>
+      <th scope="col">MAIZE</th>
+      <th scope="col">EARLY SORGHUM rainfed</th>
+      <th scope="col">LATE SORGHUM</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
+      <th scope="row">Abim</th>
+      <td>Morulem</td>
+      <td>0.9885</td>
+      <td>1.6110</td>
+      <td>1.8400</td>
     </tr>
     <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <th scope="row">Kaabong</th>
+      <td>Karenga</td>
+      <td>2.2540</td>
+      <td>1.9017</td>
+      <td></td>
     </tr>
     <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <th scope="row">Kaabong</th>
+      <td>Loyoro</td>
+      <td>0.4928</td>
+      <td>1.3866</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">Napak</th>
+      <td>Matany</td>
+      <td>0.45</td>
+      <td>2.0060</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">Napak</th>
+      <td>Ngoleriet</td>
+      <td>0.2842</td>
+      <td>2.3154</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">Napak</th>
+      <td>Lopei</td>
+      <td></td>
+      <td>0.9853</td>
+      <td></td>
     </tr>
   </tbody>
 </table>

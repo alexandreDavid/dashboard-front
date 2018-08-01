@@ -20,6 +20,7 @@ export default {
     },
     getDaysModels () {
       let twoDays = []
+      let sevenDays = []
       // Try to find value to display to be removed for a smart service
       const initDate = new Date()
       initDate.setDate(18)
@@ -28,6 +29,9 @@ export default {
       for (let i = 0; i < 17; i++) {
         twoDays.push(initDate / 1000 + i * 10800)
       }
+      for (let i = 0; i < 29; i++) {
+        sevenDays.push(initDate / 1000 + i * 21600)
+      }
       return [
         {
           value: 2,
@@ -35,8 +39,8 @@ export default {
           times: twoDays
         }, {
           value: 10,
-          label: '10 days',
-          times: [1527717600, 1527728400, 1527739200, 1527750000, 1527760800, 1527771600, 1527793200, 1527804000, 1527814800, 1527825600, 1527836400, 1527936400]
+          label: '7 days',
+          times: sevenDays
         }, {
           value: 90,
           label: '90 days'

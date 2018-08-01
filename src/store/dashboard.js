@@ -73,7 +73,7 @@ export default class Dashboard {
     let widthClass = Dashboard.getCardWidths()[2].class
     let heightClass = Dashboard.getCardHeights()[1].class
     let widget = Dashboard.getCardWidgets()[0]
-    let title = ''
+    let title = Dashboard.getCardWidgets()[0].formFields[0].value.label
     return {widthClass, heightClass, widget, title}
   }
   static getCardWidths () {
@@ -92,7 +92,12 @@ export default class Dashboard {
       label: 'Parameter',
       type: 'select',
       options: allParameters,
-      value: allParameters[0]
+      value: allParameters[0],
+      onChange (card) {
+        if (!card.title || this.options.map(({label}) => label).includes(card.title)) {
+          card.title = this.value.label
+        }
+      }
     }
 
     const graphTypes = [

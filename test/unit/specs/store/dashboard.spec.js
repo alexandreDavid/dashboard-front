@@ -31,16 +31,20 @@ describe('dashboard.js', () => {
     let dashboard = new Dashboard()
 
     // add card
-    expect(dashboard.addCard()).toEqual({ ...Dashboard.getDefaultCard(), id: 1 })
-    expect(dashboard.addCard()).toEqual({ ...Dashboard.getDefaultCard(), id: 2 })
-    expect(dashboard.addCard({id: 2, heightClass: 'heigh-small'})).toEqual({ ...Dashboard.getDefaultCard(), id: 3, heightClass: 'heigh-small' })
+    expect(dashboard.addCard().id).toBe(1)
+    expect(dashboard.addCard().id).toBe(2)
+    const adding3 = dashboard.addCard({id: 2, heightClass: 'heigh-small'})
+    expect(adding3.id).toBe(3)
+    expect(adding3.heightClass).toBe('heigh-small')
 
     // set card
     dashboard.setCard({id: 1, heightClass: 'heigh-small'})
-    expect(dashboard.getCard(1)).toEqual({ ...Dashboard.getDefaultCard(), id: 1, heightClass: 'heigh-small' })
+    const cardSet = dashboard.getCard(1)
+    expect(cardSet.id).toBe(1)
+    expect(cardSet.heightClass).toBe('heigh-small')
     // Create new card if no id
     dashboard.setCard({heightClass: 'heigh-large'})
-    expect(dashboard.getCard(4)).toEqual({ ...Dashboard.getDefaultCard(), id: 4, heightClass: 'heigh-large' })
+    expect(dashboard.getCard(4).heightClass).toBe('heigh-large')
 
     // remove card
     dashboard.removeCard(4)
