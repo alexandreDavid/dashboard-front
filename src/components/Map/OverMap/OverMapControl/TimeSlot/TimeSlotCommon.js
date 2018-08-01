@@ -23,6 +23,7 @@ export default {
       // Try to find value to display to be removed for a smart service
       const initDate = new Date()
       initDate.setDate(18)
+      initDate.setMonth(6)
       initDate.setHours(0, 0, 0, 0)
       for (let i = 0; i < 17; i++) {
         twoDays.push(initDate / 1000 + i * 10800)
