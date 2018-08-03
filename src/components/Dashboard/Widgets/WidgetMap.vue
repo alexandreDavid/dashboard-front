@@ -2,7 +2,8 @@
   <div :id="mapId" class="map-container-widget">
     <div class="over-map">
       <div class="over-map-right over-map-control">
-        <img v-bind:src="parameter.legendUrl">
+        <Legend class="over-map-control" v-if="isLoaded && parameter.interactiveLegend"></Legend>
+        <img v-bind:src="parameter.legendUrl" v-else>
       </div>
     </div>
     <Popup v-if="isLoaded"/>
@@ -14,11 +15,12 @@ import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
 import DisplayedLayer from '@/store/displayedLayer'
 import Popup from '@/components/Map/Popup'
+import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
 export default {
   name: 'WidgetMap',
   components: {
-    Popup
+    Popup, Legend
   },
   props: [
     'area',

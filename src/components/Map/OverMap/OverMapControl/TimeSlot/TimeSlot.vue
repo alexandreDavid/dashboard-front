@@ -1,5 +1,5 @@
 <template>
-  <div id="time-slot" class="pl-4 w-100">
+  <div id="time-slot" class="w-100">
     <div>
       <div class="btn-group btn-group-sm" role="group">
         <button type="button" @click="changeSelectedModel(model)" class="change-selected-model btn btn-secondary btn-group-sm" v-for="model in daysModel" :key="model.value" v-bind:class="{active: model.value === activeModel.value}">

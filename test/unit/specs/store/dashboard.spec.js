@@ -10,14 +10,14 @@ Parameter.getParams.mockReturnValue([
     displayName: 'displayName1'
   }, {
     id: 2,
-    displayName: 'displayName1'
+    displayName: 'displayName2'
   }
 ])
 
 describe('dashboard.js', () => {
   it('Calls constructor, getCards', async () => {
     let dashboard = new Dashboard()
-    expect(dashboard.title).toBeFalsy()
+    expect(dashboard.title).toBe(Dashboard.getDefaultTitle())
     expect(dashboard.cards.length).toBe(0)
 
     const title = 'dashboard2'
@@ -49,5 +49,24 @@ describe('dashboard.js', () => {
     // remove card
     dashboard.removeCard(4)
     expect(dashboard.getCard(4)).toBeFalsy()
+  })
+
+  it('Calles field parameter callback for forecast data', () => {
+    const fieldForecastParameter = Dashboard.getCardWidgets()[0].formFields[0]
+    expect(fieldForecastParameter.value.label).toBe(fieldForecastParameter.options[0].label)
+    let card = {}
+    fieldForecastParameter.onChange(card)
+    expect(card.title).toBe(fieldForecastParameter.value.label)
+
+    fieldForecastParameter.value = fieldForecastParameter.options[1]
+    expect(fieldForecastParameter.value.label).toBe(fieldForecastParameter.options[1].label)
+    fieldForecastParameter.onChange(card)
+    expect(card.title).toBe(fieldForecastParameter.value.label)
+
+    fieldForecastParameter.value = fieldForecastParameter.options[0]
+    card.title = 'title'
+    expect(fieldForecastParameter.value.label).toBe(fieldForecastParameter.options[0].label)
+    fieldForecastParameter.onChange(card)
+    expect(card.title).toBe('title')
   })
 })

@@ -40,7 +40,7 @@ const cardHeights = [
 ]
 
 export default class Dashboard {
-  constructor (title = '', cards = []) {
+  constructor (title = Dashboard.getDefaultTitle(), cards = []) {
     this.title = title
     this.cards = cards
   }
@@ -68,6 +68,9 @@ export default class Dashboard {
   }
   removeCard (card) {
     this.cards.splice(this.cards.findIndex(c => c.id === card.id), 1)
+  }
+  static getDefaultTitle () {
+    return 'Dashboard'
   }
   static getDefaultCard () {
     let widthClass = Dashboard.getCardWidths()[2].class
