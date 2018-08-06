@@ -1,15 +1,22 @@
-import Data from '@/store/data'
-import Api from '@/store/api'
+import axios from 'axios'
 
+const urlRoot = `${process.env.API_URL}/areas`
 let selectedArea
 
 export default {
-  async getAllAreas () {
-    let structure = await Data.getStructure()
-    return structure.districts.map(d => {
-      d.type = 'district'
-      return d
-    })
+  async searchAreas (areaName) {
+    try {
+      const response = await axios.get(
+        `${urlRoot}/search`, {
+          params: {
+            name: areaName
+          }
+        }
+      )
+      return response.data
+    } catch (e) {
+      return []
+    }
   },
   setSelectedArea (area) {
     selectedArea = area
@@ -18,7 +25,17 @@ export default {
     return selectedArea
   },
   async getAreaInfos (area) {
-    const infos = await Api.getAreaInfos(area)
-    return infos
+    try {
+      const response = await axios.get(
+        `${urlRoot}/mock/area.json`, {
+          params: {
+            area: area
+          }
+        }
+      )
+      return response.data
+    } catch (e) {
+      return false
+    }
   }
 }

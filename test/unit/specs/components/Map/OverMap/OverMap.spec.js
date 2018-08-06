@@ -128,4 +128,13 @@ describe('OverMap.vue', () => {
     wrapper.find(Managing).vm.$emit('selectedParameter', selectedParameter)
     expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith(selectedParameter)
   })
+
+  it('On select reported parameter', () => {
+    const selectedReportedParameter = {
+      layerUrl: 'layerUrl',
+      layerParameters: 'layerParameters'
+    }
+    wrapper.find(Managing).vm.$emit('selectedReportedParameter', selectedReportedParameter)
+    expect(wrapper.emitted().selectedReportedLayer).toEqual([[selectedReportedParameter]])
+  })
 })

@@ -3,31 +3,29 @@ import { mount } from '@vue/test-utils'
 import Area from '@/store/area'
 
 jest.mock('@/store/area', () => ({
-  getAllAreas: jest.fn(),
+  searchAreas: jest.fn(),
   getSelectedArea: jest.fn(),
   setSelectedArea: jest.fn()
 }))
 
 const mockAllAreas = [
   {
-    displayName: 'aaa'
+    name: 'aaa'
   }, {
-    displayName: 'aab'
+    name: 'aab'
   }, {
-    displayName: 'aac'
+    name: 'aac'
   }, {
-    displayName: 'aba'
+    name: 'aba'
   }, {
-    displayName: 'abb'
+    name: 'abb'
   }, {
-    displayName: 'abc'
+    name: 'abc'
   }
 ]
 const matchMoreThan5Results = 'a'
 const match4Results = 'ab'
 const matchNoResult = 'abd'
-
-Area.getAllAreas.mockReturnValue(Promise.resolve(mockAllAreas))
 
 describe('SearchLocation.vue', () => {
   let wrapper
@@ -49,32 +47,29 @@ describe('SearchLocation.vue', () => {
     expect(wrapper.findAll('.is-active').length).toBe(1)
   }
 
-  beforeEach(async () => {
+  beforeEach(() => {
     Area.getSelectedArea.mockClear()
     Area.getSelectedArea.mockReturnValue()
     wrapper = mount(SearchLocation)
-    await wrapper.vm.$nextTick()
     inputElem = wrapper.find('input')
   })
 
   it('Create without selected area', () => {
-    expect(Area.getAllAreas).toBeCalled()
-    expect(wrapper.vm.areas).toEqual(mockAllAreas)
+    expect(Area.getSelectedArea).toBeCalled()
+    expect(wrapper.vm.areas).toEqual([])
     expect(wrapper.vm.search).toBe('')
     expect(wrapper.find('input').element.value).toBe('')
   })
 
-  it('Create with selected area', async () => {
+  it('Create with selected area', () => {
     Area.getSelectedArea.mockReturnValue({
-      displayName: 'displayName'
+      name: 'name'
     })
     const wrapper = mount(SearchLocation)
-    expect(Area.getAllAreas).toBeCalled()
-    await wrapper.vm.$nextTick()
-    expect(Area.getAllAreas).toBeCalled()
-    expect(wrapper.vm.areas).toEqual(mockAllAreas)
-    expect(wrapper.vm.search).toBe('displayName')
-    expect(wrapper.find('input').element.value).toBe('displayName')
+    expect(Area.getSelectedArea).toBeCalled()
+    expect(wrapper.vm.areas).toEqual([])
+    expect(wrapper.vm.search).toBe('name')
+    expect(wrapper.find('input').element.value).toBe('name')
   })
 
   it('On change without value', () => {
@@ -84,26 +79,33 @@ describe('SearchLocation.vue', () => {
     expect(wrapper.emitted().input).toBeTruthy()
   })
 
-  it('On change with value no matched', () => {
+  it('On change with value no matched', async () => {
+    Area.searchAreas.mockReturnValue(Promise.resolve([]))
     wrapper.vm.search = matchNoResult
     expect(wrapper.vm.isOpen).toBe(false)
     inputElem.trigger('input')
+    expect(Area.searchAreas).toHaveBeenCalledWith(matchNoResult)
+    await wrapper.vm.$nextTick()
     checkNbResult(0)
   })
 
-  it('On change with value match more than 5 results', () => {
+  it('On change with value match more than 5 results', async () => {
+    Area.searchAreas.mockReturnValue(Promise.resolve(mockAllAreas))
     wrapper.vm.search = matchMoreThan5Results
     expect(wrapper.vm.isOpen).toBe(false)
     inputElem.trigger('input')
+    expect(Area.searchAreas).toHaveBeenCalledWith(matchMoreThan5Results)
+    await wrapper.vm.$nextTick()
     checkNbResult(5)
   })
 
-  it('On change with value match less than 5 results', () => {
+  it('On change with value match less than 5 results', async () => {
+    Area.searchAreas.mockReturnValue(Promise.resolve(mockAllAreas.filter(a => a.name.indexOf(match4Results) !== -1)))
     wrapper.vm.search = match4Results
     expect(wrapper.vm.isOpen).toBe(false)
     inputElem.trigger('input')
-    expect(wrapper.vm.isOpen).toBe(true)
-    expect(wrapper.vm.arrowCounter).toBe(0)
+    expect(Area.searchAreas).toHaveBeenCalledWith(match4Results)
+    await wrapper.vm.$nextTick()
     checkNbResult(4)
   })
 
@@ -113,17 +115,19 @@ describe('SearchLocation.vue', () => {
     expect(wrapper.vm.isOpen).toBe(false)
   })
 
-  function display4Results () {
+  async function display4Results () {
+    Area.searchAreas.mockReturnValue(Promise.resolve(mockAllAreas.filter(a => a.name.indexOf(match4Results) !== -1)))
     wrapper.vm.search = match4Results
     expect(wrapper.vm.isOpen).toBe(false)
     inputElem.trigger('focus')
+    await wrapper.vm.$nextTick()
     checkNbResult(4)
   }
 
   it('On focus with value', display4Results)
 
-  it('On keyup arrow down', () => {
-    display4Results()
+  it('On keyup arrow down', async () => {
+    await display4Results()
     inputElem.trigger('keyup.down')
     checkActiveResult(1)
     inputElem.trigger('keyup.down')
@@ -135,8 +139,8 @@ describe('SearchLocation.vue', () => {
     checkActiveResult(3)
   })
 
-  it('On keyup arrow up', () => {
-    display4Results()
+  it('On keyup arrow up', async () => {
+    await display4Results()
     inputElem.trigger('keyup.down')
     checkActiveResult(1)
     inputElem.trigger('keyup.up')
@@ -146,33 +150,33 @@ describe('SearchLocation.vue', () => {
     checkActiveResult(0)
   })
 
-  it('On keyup enter', () => {
-    display4Results()
+  it('On keyup enter', async () => {
+    await display4Results()
     inputElem.trigger('keyup.down')
     checkActiveResult(1)
     inputElem.trigger('keyup.enter')
-    expect(wrapper.vm.search).toBe(mockAllAreas[3].displayName)
-    expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].displayName)
+    expect(wrapper.vm.search).toBe(mockAllAreas[3].name)
+    expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].name)
   })
 
-  it('On click on result', () => {
-    display4Results()
+  it('On click on result', async () => {
+    await display4Results()
     const autocompleteResult = wrapper.findAll('.autocomplete-result')
     autocompleteResult.at(1).trigger('click')
-    expect(wrapper.vm.search).toBe(mockAllAreas[3].displayName)
-    expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].displayName)
+    expect(wrapper.vm.search).toBe(mockAllAreas[3].name)
+    expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].name)
   })
 
-  it('On click outside', () => {
-    display4Results()
+  it('On click outside', async () => {
+    await display4Results()
     expect(wrapper.vm.isOpen).toBe(true)
     wrapper.vm.handleClickOutside({})
     expect(wrapper.vm.isOpen).toBe(false)
     expect(wrapper.vm.arrowCounter).toBe(-1)
   })
 
-  it('On click inside', () => {
-    display4Results()
+  it('On click inside', async () => {
+    await display4Results()
     expect(wrapper.vm.isOpen).toBe(true)
     wrapper.vm.handleClickOutside({target: wrapper.vm.$el})
     expect(wrapper.vm.isOpen).toBe(true)

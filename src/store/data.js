@@ -23,7 +23,7 @@ export default {
   async getAreaParameterData (area, parameter) {
     try {
       const response = await axios.get(
-        `${urlRoot}/${area.type}/${area.paramName}/${parameter.paramName}`
+        `${urlRoot}/${area.type}/${area.name}/${parameter.paramName}`
       )
       return response.data[parameter.paramName]
     } catch (e) {

@@ -6,7 +6,7 @@
         class="form-control"
         placeholder="Search a location"
         @input="onChange"
-        @focus="calculateDisplaying"
+        @focus="onChange"
         v-model="search"
         @keyup.down="onArrowDown"
         @keyup.up="onArrowUp"
@@ -27,7 +27,7 @@
           @click="setResult(result)"
           class="autocomplete-result"
           :class="{ 'is-active': i === arrowCounter }">
-          {{ result.displayName }}
+          {{ result.name }}
         </li>
       </ul>
     </div>
@@ -35,36 +35,10 @@
 </template>
 
 <script>
-
-// import gql from 'graphql-tag'
 import Area from '@/store/area'
 
 export default {
   name: 'SearchLocation',
-  // apollo: {
-  //   results: {
-  //     // gql query
-  //     query: gql`
-  //       query Movies($name: String!, $limit: Int!) {
-  //         movies(subString: $name, limit: $limit) {
-  //           title
-  //         }
-  //       }
-  //     `,
-  //     // Reactive parameters
-  //     variables() {
-  //       // Use vue reactive properties here
-  //       return {
-  //         name: this.search,
-  //         limit: 5
-  //       }
-  //     },
-  //     loadingKey: 'isLoading',
-  //     update(data) {
-  //       return data.movies;
-  //     }
-  //   }
-  // },
   data () {
     return {
       isOpen: false,
@@ -76,26 +50,31 @@ export default {
       areas: []
     }
   },
-  async created () {
-    this.areas = await Area.getAllAreas()
+  created () {
     const selectedArea = Area.getSelectedArea()
     if (selectedArea) {
-      this.search = selectedArea.displayName
+      this.search = selectedArea.name
     }
   },
 
   methods: {
-    onChange () {
+    async onChange () {
+      console.log('onCHange')
       this.$emit('input', false)
+      this.areas = await Area.searchAreas(this.search)
+      console.log(this.areas)
       this.calculateDisplaying()
     },
     calculateDisplaying () {
+      console.log('isOpen', this.isOpen)
       this.isOpen = !!this.search
-      this.filterResults()
+      console.log('isOpen', this.isOpen)
+      // Only 5 results
+      this.results = this.areas.slice(0, 5)
       this.arrowCounter = 0
     },
     setResult (result) {
-      this.search = result.displayName
+      this.search = result.name
       this.isOpen = false
       Area.setSelectedArea(result)
       // Let's warn the parent that a change was made
@@ -120,10 +99,6 @@ export default {
         this.isOpen = false
         this.arrowCounter = -1
       }
-    },
-    filterResults () {
-      // Only 5 results
-      this.results = this.areas.filter(area => area.displayName.toLowerCase().indexOf(this.search.toLowerCase()) > -1).slice(0, 5)
     }
   },
   mounted () {

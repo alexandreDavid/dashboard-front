@@ -1,35 +1,27 @@
 import Area from '@/store/area'
-import Data from '@/store/data'
-import Api from '@/store/api'
+import Axios from 'axios'
 
-jest.mock('@/store/data', () => ({
-  getStructure: jest.fn()
+jest.mock('axios', () => ({
+  get: jest.fn()
 }))
 
-jest.mock('@/store/api', () => ({
-  getAreaInfos: jest.fn()
-}))
+Object.defineProperty(process, 'env', {
+  value: {API_URL: 'API_URL'}
+})
 
 describe('area.js', () => {
-  it('Calls getAllAreas', async () => {
-    Data.getStructure.mockReturnValue({districts: [
-      {
-        id: 1
-      }, {
-        id: 2
-      }
-    ]})
-    const areas = await Area.getAllAreas()
-    expect(Data.getStructure).toBeCalled()
-    expect(areas).toEqual([
-      {
-        id: 1,
-        type: 'district'
-      }, {
-        id: 2,
-        type: 'district'
-      }
-    ])
+  it('Calls searchAreas and answers', async () => {
+    Axios.get.mockReturnValue({data: true})
+    const areas = await Area.searchAreas('areaName')
+    expect(Axios.get).toBeCalled()
+    expect(areas).toBe(true)
+  })
+
+  it('Calls searchAreas and throw error', async () => {
+    Axios.get.mockRejectedValue(new Error('Async error'))
+    const areas = await Area.searchAreas('areaName')
+    expect(Axios.get).toBeCalled()
+    expect(areas).toEqual([])
   })
 
   it('Calls setSelectedArea, getSelectedArea', () => {
@@ -38,14 +30,17 @@ describe('area.js', () => {
     expect(Area.getSelectedArea()).toEqual(selectedArea)
   })
 
-  it('Calls getAreaInfos', async () => {
-    const areaInfos = {
-      id: 1,
-      info: 'text'
-    }
-    Api.getAreaInfos.mockReturnValue(areaInfos)
+  it('Calls getAreaInfos and answers', async () => {
+    Axios.get.mockReturnValue({data: true})
     const areaInfo = await Area.getAreaInfos(1)
-    expect(Api.getAreaInfos).toBeCalledWith(1)
-    expect(areaInfo).toEqual(areaInfos)
+    expect(Axios.get).toBeCalled()
+    expect(areaInfo).toBe(true)
+  })
+
+  it('Calls getAreaInfos and throw error', async () => {
+    Axios.get.mockRejectedValue(new Error('Async error'))
+    const areas = await Area.getAreaInfos(1)
+    expect(Axios.get).toBeCalled()
+    expect(areas).toBe(false)
   })
 })
