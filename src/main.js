@@ -3,7 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { apolloProvider } from './Apollo'
 import Tracking from './tracking'
 import Authentication from './store/authentication'
 
@@ -21,7 +20,6 @@ if (process.env.AUTH.domain && process.env.AUTH.clientID) {
 new Vue({
   el: '#app',
   router,
-  provide: apolloProvider.provide(),
   components: { App },
   template: '<App/>'
 })

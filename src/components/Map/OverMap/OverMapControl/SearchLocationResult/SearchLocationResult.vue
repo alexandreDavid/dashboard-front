@@ -24,7 +24,6 @@
 </template>
 
 <script>
-// import gql from 'graphql-tag'
 import Area from '@/store/area'
 import Settings from '@/store/settings'
 
@@ -51,33 +50,6 @@ export default {
       return this.units.find(u => u.id === 'wind-speed').label
     }
   }
-  // apollo: {
-  //   locationDetails: {
-  //     // gql query
-  //     query: gql`
-  //       query Movies($name: String!, $limit: Int!) {
-  //         movies(subString: $name, limit: $limit) {
-  //           year,
-  //           plot,
-  //           poster,
-  //           imdbRating,
-  //         }
-  //       }
-  //     `,
-  //     // Reactive parameters
-  //     variables() {
-  //       // Use vue reactive properties here
-  //       return {
-  //         name: this.searchLocationResult,
-  //         limit: 5
-  //       }
-  //     },
-  //     loadingKey: 'isLoading',
-  //     update(data) {
-  //       return data.movies[0];
-  //     }
-  //   }
-  // },
 }
 </script>
 
