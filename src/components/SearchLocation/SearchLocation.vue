@@ -59,16 +59,12 @@ export default {
 
   methods: {
     async onChange () {
-      console.log('onCHange')
       this.$emit('input', false)
       this.areas = await Area.searchAreas(this.search)
-      console.log(this.areas)
       this.calculateDisplaying()
     },
     calculateDisplaying () {
-      console.log('isOpen', this.isOpen)
       this.isOpen = !!this.search
-      console.log('isOpen', this.isOpen)
       // Only 5 results
       this.results = this.areas.slice(0, 5)
       this.arrowCounter = 0
