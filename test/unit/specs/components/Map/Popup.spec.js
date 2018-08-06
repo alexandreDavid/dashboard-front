@@ -54,7 +54,7 @@ describe('Popup.vue', () => {
     mockDisplayedLayer.getDefaultUnit.mockClear()
   })
 
-  it('With feature', async () => {
+  it('With feature and label', async () => {
     const mockEvt = {latlng: 'latlng'}
     mockDisplayedLayer.getFeatureInfo.mockResolvedValue([{
       properties: {
@@ -68,6 +68,29 @@ describe('Popup.vue', () => {
     expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
     expect(Unit.convert).toBeCalledWith('getDefaultUnit', 'getUnit', 'mockGetFeatureInfo')
     expect(wrapper.vm.value).toBe('42getLabel')
+    expect(L.Popup).toBeCalledWith({
+      maxWidth: 800
+    })
+    expect(mockPopup.setLatLng).toBeCalledWith('latlng')
+    expect(mockPopup.setContent).toBeCalled()
+    expect(mockPopup.openOn).toBeCalled()
+  })
+
+  it('With feature and no label', async () => {
+    Unit.getLabel.mockReturnValue('')
+    const mockEvt = {latlng: 'latlng'}
+    mockDisplayedLayer.getFeatureInfo.mockResolvedValue([{
+      properties: {
+        GDAL_Band_Number_1: 'mockGetFeatureInfo'
+      }
+    }])
+    mockDisplayedLayer.getUnit.mockReturnValue('getUnit')
+    mockDisplayedLayer.getDefaultUnit.mockReturnValue('getDefaultUnit')
+
+    await wrapper.vm.getFeatureInfo(mockEvt)
+    expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
+    expect(Unit.convert).toBeCalledWith('getDefaultUnit', 'getUnit', 'mockGetFeatureInfo')
+    expect(wrapper.vm.value).toBe(42)
     expect(L.Popup).toBeCalledWith({
       maxWidth: 800
     })

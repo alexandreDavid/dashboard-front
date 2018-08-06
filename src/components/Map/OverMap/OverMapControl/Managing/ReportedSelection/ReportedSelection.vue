@@ -18,11 +18,8 @@
 </template>
 
 <script>
-import Parameter from '@/store/parameter'
 import Loading from '@/components/Loading/Loading'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faCaretDown from '@fortawesome/fontawesome-free-solid/faCaretDown'
-import faCaretRight from '@fortawesome/fontawesome-free-solid/faCaretRight'
 import faInfo from '@fortawesome/fontawesome-free-solid/faInfoCircle'
 
 export default {
@@ -34,7 +31,6 @@ export default {
   inject: ['getSelectedReportedLayer'],
   data () {
     return {
-      parameters: [],
       parameterGroupings: [],
       activeParam: false,
       openedGroup: false,
@@ -43,22 +39,12 @@ export default {
     }
   },
   computed: {
-    iconCaretDown () {
-      return faCaretDown
-    },
-    iconCaretRight () {
-      return faCaretRight
-    },
     iconInfo () {
       return faInfo
     }
   },
-  async created () {
-    this.parameters = await Parameter.getAllParameters()
-    this.reportedParameters = [{
-      paramName: 'paramName',
-      displayName: 'THAMO'
-    }]
+  created () {
+    this.reportedParameters = this.getParams()
 
     // selection of the current layer
     const displayedReportedLayer = this.getSelectedReportedLayer()
@@ -73,6 +59,12 @@ export default {
     },
     displayInfos (parameter) {
       this.displayedInfo = parameter.paramName
+    },
+    getParams () {
+      return [{
+        paramName: 'paramName',
+        displayName: 'THAMO'
+      }]
     }
   }
 }

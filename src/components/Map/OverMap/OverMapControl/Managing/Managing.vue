@@ -11,7 +11,7 @@
         </modal>
       </div>
       <div class="row mb-2 justify-content-end over-map-control">
-        <a href="#" target="_self" @click="showModalReported = true" class="badge badge-secondary badge-pill over-map-control">REPORTED: Temperature</a>
+        <a href="#" id="reported-selection-btn" target="_self" @click="showModalReported = true" class="badge badge-secondary badge-pill over-map-control">REPORTED: Temperature</a>
         <modal v-if="showModalReported" @close="showModalReported = false">
           <h3 slot="header">Select data to display</h3>
           <ReportedSelection slot="body" @selectedReportedParameter="onSelectedReportedParameter"></ReportedSelection>
