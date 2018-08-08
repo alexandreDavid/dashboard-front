@@ -32,6 +32,7 @@ import faMap from '@fortawesome/fontawesome-free-solid/faMap'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUser from '@fortawesome/fontawesome-free-solid/faUser'
 import faInfoCircle from '@fortawesome/fontawesome-free-solid/faInfoCircle'
+import faHistory from '@fortawesome/fontawesome-free-solid/faHistory'
 
 export default {
   name: 'NavBar',
@@ -64,6 +65,13 @@ export default {
             self.goTo(this.id)
           },
           icon: faChartBar
+        }, {
+          id: 'historical',
+          label: 'Historical',
+          click () {
+            self.goTo(this.id)
+          },
+          icon: faHistory
         }, {
           id: 'about',
           label: 'About',

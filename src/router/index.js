@@ -6,6 +6,7 @@ import DashboardPage from '@/components/Dashboard/DashboardPage'
 import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
 import GraphPage from '@/components/Graph/GraphPage'
+import HistoricalPage from '@/views/HistoricalPage'
 import Auth from '@/store/authentication'
 
 Vue.use(Router)
@@ -37,6 +38,12 @@ export default new Router({
       path: '/graph',
       name: 'graph',
       component: GraphPage,
+      beforeEnter: checkAuth
+    },
+    {
+      path: '/historical',
+      name: 'historical',
+      component: HistoricalPage,
       beforeEnter: checkAuth
     },
     {

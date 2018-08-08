@@ -2,7 +2,7 @@
   <div id="graph-page">
     <div class="container d-flex flex-column h-100">
       <div class="row">
-        <h4 class="mt-2 mb-2 col-12">Graph</h4>
+        <h4 class="my-2 col-12">Graph</h4>
         <div class="position-relative col-12">
           <div class="form-group">
             <SearchLocation @input="onSearchLocationSelected" />
