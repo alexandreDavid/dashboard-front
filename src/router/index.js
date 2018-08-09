@@ -7,6 +7,7 @@ import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
 import GraphPage from '@/components/Graph/GraphPage'
 import HistoricalPage from '@/views/HistoricalPage'
+import FutureClimatePage from '@/views/FutureClimatePage'
 import Auth from '@/store/authentication'
 
 Vue.use(Router)
@@ -44,6 +45,12 @@ export default new Router({
       path: '/historical',
       name: 'historical',
       component: HistoricalPage,
+      beforeEnter: checkAuth
+    },
+    {
+      path: '/future-climate',
+      name: 'future-climate',
+      component: FutureClimatePage,
       beforeEnter: checkAuth
     },
     {

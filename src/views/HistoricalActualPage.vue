@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="btn-group m-2" role="group" aria-label="Basic example">
+    <div class="btn-group m-2" role="group" aria-label="Time period">
       <button type="button" class="btn btn-secondary active">Annual</button>
       <button type="button" class="btn btn-secondary">Seasonal</button>
     </div>
