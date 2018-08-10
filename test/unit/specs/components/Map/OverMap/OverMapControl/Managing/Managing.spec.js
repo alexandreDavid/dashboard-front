@@ -3,7 +3,6 @@ import { mount, shallowMount } from '@vue/test-utils'
 import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
 import ReportedSelection from '@/components/Map/OverMap/OverMapControl/Managing/ReportedSelection/ReportedSelection'
-import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
 const mockMap = {
   on: jest.fn().mockImplementation((evtName, callback) => {
