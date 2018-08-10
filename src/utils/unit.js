@@ -11,7 +11,7 @@ const units = [
   },
   {
     key: 'K',
-    label: '°K',
+    label: 'K',
     family: 'temperature',
     conversion: {
       C (val) {

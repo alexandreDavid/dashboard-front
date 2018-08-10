@@ -1,8 +1,8 @@
 <template>
   <div :id="mapId" class="map-container-widget">
     <div class="over-map">
-      <div class="over-map-right over-map-control">
-        <Legend class="over-map-control shadow" v-if="isLoaded"></Legend>
+      <div class="over-map-bottom over-map-control">
+        <Legend class="over-map-control" v-if="isLoaded" asline="true"></Legend>
       </div>
     </div>
     <Popup v-if="isLoaded"/>
