@@ -16,6 +16,7 @@ jest.mock('@/utils/unit', () => ({
 }))
 
 const mockDisplayedLayer = {
+  _hasInteractiveLegend: true,
   setUnit: jest.fn()
 }
 function getDisplayedLayer () {

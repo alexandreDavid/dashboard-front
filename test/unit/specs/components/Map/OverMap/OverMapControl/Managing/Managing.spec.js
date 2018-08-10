@@ -3,6 +3,7 @@ import { mount, shallowMount } from '@vue/test-utils'
 import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
 import ReportedSelection from '@/components/Map/OverMap/OverMapControl/Managing/ReportedSelection/ReportedSelection'
+import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
 const mockMap = {
   on: jest.fn().mockImplementation((evtName, callback) => {
@@ -49,7 +50,11 @@ describe('Managing.vue', () => {
       provide: {
         getMap: getMapMock()
       },
-      stubs: { ForecastSelection: true }
+      stubs: {
+        ForecastSelection: true,
+        ReportedSelection: true,
+        Legend: true
+      }
     })
     const buttonForecastSelection = wrapper.find('#forecast-selection-btn')
     buttonForecastSelection.trigger('click')
@@ -70,7 +75,11 @@ describe('Managing.vue', () => {
       provide: {
         getMap: getMapMock()
       },
-      stubs: { ReportedSelection: true }
+      stubs: {
+        ForecastSelection: true,
+        ReportedSelection: true,
+        Legend: true
+      }
     })
     const buttonForecastSelection = wrapper.find('#reported-selection-btn')
     buttonForecastSelection.trigger('click')

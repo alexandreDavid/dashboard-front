@@ -2,8 +2,7 @@
   <div :id="mapId" class="map-container-widget">
     <div class="over-map">
       <div class="over-map-right over-map-control">
-        <Legend class="over-map-control" v-if="isLoaded && parameter.interactiveLegend"></Legend>
-        <img v-bind:src="parameter.legendUrl" v-else>
+        <Legend class="over-map-control shadow" v-if="isLoaded"></Legend>
       </div>
     </div>
     <Popup v-if="isLoaded"/>

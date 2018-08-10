@@ -18,8 +18,7 @@
         </modal>
       </div>
       <div class="row mb-2 justify-content-end">
-        <Legend class="over-map-control" v-if="displayedParameter.interactiveLegend"></Legend>
-        <img v-bind:src="displayedParameter.legendUrl" class="over-map-control" v-else>
+        <Legend class="over-map-control shadow"></Legend>
       </div>
       <div class="slide-bar-content justify-content-end position-relative m-2" v-if="false">
         <VueSlideBar v-model="value" class="over-map-control"/>

@@ -1,18 +1,21 @@
 <template>
-  <div id="legend-displaying" class="p-1 shadow">
-    <div class="btn-group btn-group-sm mb-1" role="group" aria-label="unit">
-      <button type="button" @click="changeActiveUnit(unit)" class="btn btn-secondary" v-for="unit in availableUnits" :key="unit.key" v-bind:class="{active: unit.key === activeUnit}">
-        {{unit.label}}
-      </button>
-    </div>
-    <div class="d-flex align-items-stretch">
-      <div class="gradient mr-1" v-bind:style="{ background: gradientColor }"></div>
-      <div class="d-flex flex-column">
-        <div v-for="(displayedValue, key) in displayedValues" :key="key">
-          {{ displayedValue.quantity | convert(defaultUnit, activeUnit) }}
+  <div>
+    <div id="legend-displaying" class="p-1" v-if="getDisplayedLayer()._hasInteractiveLegend">
+      <div class="btn-group btn-group-sm mb-1" role="group" aria-label="unit">
+        <button type="button" @click="changeActiveUnit(unit)" class="btn btn-secondary" v-for="unit in availableUnits" :key="unit.key" v-bind:class="{active: unit.key === activeUnit}">
+          {{unit.label}}
+        </button>
+      </div>
+      <div class="d-flex align-items-stretch">
+        <div class="gradient mr-1" v-bind:style="{ background: gradientColor }"></div>
+        <div class="d-flex flex-column">
+          <div v-for="(displayedValue, key) in displayedValues" :key="key">
+            {{ displayedValue.quantity | convert(defaultUnit, activeUnit) }}
+          </div>
         </div>
       </div>
     </div>
+    <img v-bind:src="getDisplayedLayer()._legendUrl" v-else>
   </div>
 </template>
 
@@ -26,6 +29,8 @@ export default {
     return {
       defaultUnit: 'K',
       activeUnit: 'K',
+      hasInteractiveLegend: false,
+      legendUrl: false,
       gradientColor: false,
       availableUnits: Unit.getUnitsFamily('temperature'),
       displayedValues: [{

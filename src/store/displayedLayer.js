@@ -9,6 +9,8 @@ export default class {
   _map = false
   _defaultUnit = false
   _activeUnit = false
+  _hasInteractiveLegend = false
+  _legendUrl = false
   constructor (map, layerUrl, options = {}) {
     this._map = map
     this.setDisplayedLayer(layerUrl)
@@ -23,6 +25,8 @@ export default class {
       this._displayedLayer = new TileLayer.WMS(this._parameter.layerUrl, this._parameter.layerParameters).addTo(this._map)
       this._defaultUnit = this._parameter.unit
       this._activeUnit = this._defaultUnit
+      this._hasInteractiveLegend = this._parameter.interactiveLegend
+      this._legendUrl = this._parameter.legendUrl
     }
   }
   setDate (min, max) {
