@@ -11,6 +11,9 @@ jest.mock('@/utils/unit', () => ({
     }, {
       key: 'key2',
       label: 'label2'
+    }, {
+      key: 'C',
+      label: 'label3'
     }
   ])
 }))
@@ -38,15 +41,23 @@ describe('Legend.vue', () => {
   })
 
   it('On change active unit', () => {
-    const buttons = wrapper.findAll('.btn')
+    Unit.convert.mockClear()
+    expect(Unit.convert).toHaveBeenCalledTimes(0)
+    const buttons = wrapper.findAll('.btn-group-sm .btn')
     buttons.at(0).trigger('click')
     expect(buttons.at(0).classes()).toContain('active')
-    expect(wrapper.vm.activeUnit).toBe('key1')
+    expect(wrapper.vm.activeUnit).toEqual({
+      key: 'key1',
+      label: 'label1'
+    })
     expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
 
     buttons.at(1).trigger('click')
     expect(buttons.at(1).classes()).toContain('active')
-    expect(wrapper.vm.activeUnit).toBe('key2')
+    expect(wrapper.vm.activeUnit).toEqual({
+      key: 'key2',
+      label: 'label2'
+    })
     expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length * 2)
   })
 })

@@ -17,7 +17,7 @@ describe('unit.js', () => {
       },
       {
         key: 'K',
-        label: '°K'
+        label: 'K'
       }
     ])
   })
