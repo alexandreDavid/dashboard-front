@@ -2,21 +2,24 @@ import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import { mount } from '@vue/test-utils'
 import Unit from '@/utils/unit'
 
+const mockUnits = [
+  {
+    key: 'K',
+    label: 'label1'
+  }, {
+    key: 'F',
+    label: 'label2'
+  }, {
+    key: 'C',
+    label: 'label3'
+  }
+]
+
 jest.mock('@/utils/unit', () => ({
   convert: jest.fn().mockReturnValue(42),
-  getUnitsFamily: jest.fn().mockReturnValue([
-    {
-      key: 'key1',
-      label: 'label1'
-    }, {
-      key: 'key2',
-      label: 'label2'
-    }, {
-      key: 'C',
-      label: 'label3'
-    }
-  ])
+  getUnitsFamily: jest.fn()
 }))
+Unit.getUnitsFamily.mockReturnValue(mockUnits)
 
 const mockDisplayedLayer = {
   _hasInteractiveLegend: true,
@@ -46,18 +49,36 @@ describe('Legend.vue', () => {
     const buttons = wrapper.findAll('.btn-group-sm .btn')
     buttons.at(0).trigger('click')
     expect(buttons.at(0).classes()).toContain('active')
-    expect(wrapper.vm.activeUnit).toEqual({
-      key: 'key1',
-      label: 'label1'
-    })
-    expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[0])
+    expect(Unit.convert).toHaveBeenCalledTimes(0)
 
     buttons.at(1).trigger('click')
     expect(buttons.at(1).classes()).toContain('active')
-    expect(wrapper.vm.activeUnit).toEqual({
-      key: 'key2',
-      label: 'label2'
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[1])
+    expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
+  })
+
+  it('On click on online change unit', () => {
+    Unit.convert.mockClear()
+    expect(Unit.convert).toHaveBeenCalledTimes(0)
+    const wrapper = mount(Legend, {
+      provide: {
+        getDisplayedLayer: getDisplayedLayer
+      },
+      propsData: {
+        asline: true
+      }
     })
-    expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length * 2)
+    expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
+    // Default unit
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[2])
+    const button = wrapper.find('.on-line .btn')
+    button.trigger('click')
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[0])
+    expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
+
+    button.trigger('click')
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[1])
+    expect(Unit.convert).toHaveBeenCalledTimes(2 * wrapper.vm.displayedValues.length)
   })
 })
