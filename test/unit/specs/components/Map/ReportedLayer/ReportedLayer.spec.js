@@ -11,7 +11,8 @@ const mockCircleMarker = {
     return this
   }),
   addTo: jest.fn().mockReturnThis(),
-  remove: jest.fn()
+  remove: jest.fn(),
+  setStyle: jest.fn()
 }
 
 L.CircleMarker = jest.fn().mockImplementation(() => mockCircleMarker)
@@ -104,13 +105,19 @@ describe('ReportedLayer.vue', () => {
     expect(wrapper.vm.reportedDetails.station).toEqual(mockAllObservations[0].station)
   })
 
-  it('Close sidebar on emit event', () => {
+  it('Close sidebar on emit event', async () => {
     const wrapper = shallowMount(ReportedLayer, {
       provide: {
         getMap: getMapMock()
+      },
+      propsData: {
+        selectedReportedLayer: true
       }
     })
-    wrapper.vm.openSideBar()
+    await wrapper.vm.$nextTick()
+    const firstMarker = wrapper.vm.allMarkers[0]
+    firstMarker.click()
+    jest.advanceTimersByTime(0)
     expect(wrapper.vm.showSideBar).toBe(true)
     wrapper.find(ReportedDetailsSideBar).vm.$emit('close')
     expect(wrapper.vm.showSideBar).toBe(false)
