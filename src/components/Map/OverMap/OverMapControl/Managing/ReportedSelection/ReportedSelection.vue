@@ -2,12 +2,12 @@
   <div id="forecast-selection">
     <div v-if="isLoaded">
       <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="reportedParameter in reportedParameters" :key="reportedParameter.paramName" @click="onSelectParameter(reportedParameter)" v-bind:class="{ active: reportedParameter.paramName === activeParam }">
+        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="reportedParameter in reportedParameters" :key="reportedParameter.name" @click="onSelectParameter(reportedParameter)" v-bind:class="{ active: reportedParameter.name === activeParam }">
           <div class="d-flex w-100 justify-content-between">
-            <div class="mb-1">{{reportedParameter.displayName}}</div>
+            <div class="mb-1">{{reportedParameter.label}}</div>
             <div><font-awesome-icon :icon="iconInfo" v-on:click.stop="displayInfos(reportedParameter)" class="display-infos text-secondary" /></div>
           </div>
-          <div v-show="reportedParameter.paramName === displayedInfo" class="displayed-infos">
+          <div v-show="reportedParameter.name === displayedInfo" class="displayed-infos">
             <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
           </div>
         </a>
@@ -48,22 +48,22 @@ export default {
 
     // selection of the current layer
     const displayedReportedLayer = this.getSelectedReportedLayer()
-    this.activeParam = displayedReportedLayer && displayedReportedLayer.paramName
+    this.activeParam = displayedReportedLayer && displayedReportedLayer.name
 
     this.isLoaded = true
   },
   methods: {
     onSelectParameter (selectedParameter) {
-      this.activeParam = selectedParameter.paramName
+      this.activeParam = selectedParameter.name
       this.$emit('selectedReportedParameter', selectedParameter)
     },
     displayInfos (parameter) {
-      this.displayedInfo = parameter.paramName
+      this.displayedInfo = parameter.name
     },
     getParams () {
       return [{
-        paramName: 'paramName',
-        displayName: 'THAMO'
+        label: 'Meteorological stations',
+        name: 'meteorological_station'
       }]
     }
   }

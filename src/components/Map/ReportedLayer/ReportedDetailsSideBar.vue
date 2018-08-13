@@ -1,7 +1,7 @@
 <template>
   <SideBar @close="close()" class="p-2 position-absolute over-map-control">
     <div class="pt-3">
-      <h4>{{ reportedDetails.station.name }}</h4>
+      <h4>{{ reportedDetails.name }}</h4>
       <div v-for="(timeserie, name) in reportedDetails.timeseries" :key="name">
         <h5>{{name}}</h5>
         <LineChart :chartData="getGraphData(timeserie)" :options="options"></LineChart>

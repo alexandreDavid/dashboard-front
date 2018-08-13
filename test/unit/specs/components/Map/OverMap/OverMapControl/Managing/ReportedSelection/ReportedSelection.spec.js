@@ -2,7 +2,7 @@ import ReportedSelection from '@/components/Map/OverMap/OverMapControl/Managing/
 import { mount } from '@vue/test-utils'
 
 const mockSelectedReportedLayer = {
-  paramName: 'paramName'
+  name: 'name'
 }
 
 function getSelectedReportedLayer () {
@@ -31,7 +31,7 @@ describe('ReportedSelection.vue', () => {
     })
     expect(wrapper.vm.reportedParameters.length).toBe(1)
     expect(wrapper.vm.isLoaded).toBe(true)
-    expect(wrapper.vm.activeParam).toBe(mockSelectedReportedLayer.paramName)
+    expect(wrapper.vm.activeParam).toBe(mockSelectedReportedLayer.name)
   })
 
   it('On select a parameter', () => {
@@ -46,8 +46,9 @@ describe('ReportedSelection.vue', () => {
     const firstParam = wrapper.findAll('.list-group-item').at(0)
     firstParam.trigger('click')
 
-    expect(wrapper.vm.activeParam).toBe('paramName')
-    expect(wrapper.emitted().selectedReportedParameter).toEqual([[wrapper.vm.getParams()[0]]])
+    const selectedParam = wrapper.vm.getParams()[0]
+    expect(wrapper.vm.activeParam).toBe(selectedParam.name)
+    expect(wrapper.emitted().selectedReportedParameter).toEqual([[selectedParam]])
     expect(firstParam.classes()).toContain('active')
   })
 
