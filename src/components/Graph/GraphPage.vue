@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="position-relative flex-grow-1" v-if="isLoaded">
-        <advanced-chart v-if="chartData.datasets" v-bind:chartData="chartData"></advanced-chart>
+        <advanced-chart v-if="chartData.datasets" v-bind:chartData="chartData" v-bind:options="chartOptions"></advanced-chart>
       </div>
       <Loading v-else/>
     </div>
@@ -46,7 +46,8 @@ export default {
       parameters: false,
       selectedParameter: false,
       series: [],
-      chartData: {}
+      chartData: {},
+      chartOptions: {}
     }
   },
   provide () {
@@ -79,19 +80,42 @@ export default {
 
       let datasets = []
       let labels = []
+      this.chartOptions = {
+        scales: {
+          yAxes: []
+        }
+      }
+      let yAxisNb = 0
       let valueConversion = function (value, unit) {
         return parseFloat(value.replace(',', '.')).toFixed(2)
       }
 
       await Promise.all(vm.series.map(async (serie, key) => {
         const data = await Data.getAreaParameterData(this.selectedArea, serie.selectedParameter)
+        const unit = serie.selectedParameter.unit
+        let yAxis = this.chartOptions.scales.yAxes.find(y => y.unit === unit)
+        if (!yAxis) {
+          yAxisNb++
+          yAxis = {
+            display: true,
+            unit: unit,
+            scaleLabel: {
+              display: true,
+              labelString: unit
+            },
+            id: `y-axis-${yAxisNb}`,
+            position: (yAxisNb % 2 ? 'left' : 'right')
+          }
+          this.chartOptions.scales.yAxes.push(yAxis)
+        }
         let color = Object.values(ChartUtil.colors)[key]
         let dataset = {
           label: serie.title || (serie.selectedParameter && serie.selectedParameter.paramDescription),
           fill: false,
           backgroundColor: color,
           borderColor: color,
-          data: []
+          data: [],
+          yAxisID: yAxis.id
         }
 
         Object.entries(data.data).slice(0, 12).forEach(([dkey, d]) => {
