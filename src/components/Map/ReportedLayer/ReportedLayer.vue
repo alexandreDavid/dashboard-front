@@ -22,7 +22,8 @@ export default {
     return {
       showSideBar: false,
       reportedLayer: false,
-      allMarkers: []
+      allMarkers: [],
+      selectedMarker: false
     }
   },
   mounted () {
@@ -52,10 +53,12 @@ export default {
       return new CircleMarker([station.lat, station.long], this.getDisplayedReportedLayerStyle())
         .bindTooltip(station.name)
         .on('click', function (evt) {
+          const that = this
           // Stop propagation
           DomEvent.stop(evt)
           // Timeout used to don't call the click outside SideBar function
           setTimeout(function () {
+            vm.selectedMarker = that
             vm.openSideBar()
             vm.reportedDetails = station
           }, 0)
@@ -71,10 +74,21 @@ export default {
         fillOpacity: 1
       }
     },
+    getSelectedReportedLayerStyle () {
+      return {
+        radius: 6,
+        color: '#FFF',
+        weight: 1,
+        fillColor: '#f00',
+        fillOpacity: 1
+      }
+    },
     openSideBar () {
+      this.selectedMarker.setStyle(this.getSelectedReportedLayerStyle())
       this.showSideBar = true
     },
     closeSideBar () {
+      this.selectedMarker.setStyle(this.getDisplayedReportedLayerStyle())
       this.showSideBar = false
     }
   }
