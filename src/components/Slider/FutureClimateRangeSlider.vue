@@ -25,7 +25,7 @@ export default {
     let allData = []
     const firstYear = 1960
     const lastYear = 2090
-    for (let year = firstYear ; year <= lastYear ; year++) {
+    for (let year = firstYear; year <= lastYear; year++) {
       allData.push(year)
     }
     return {
