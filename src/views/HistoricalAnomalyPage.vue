@@ -4,9 +4,6 @@
 </template>
 
 <script>
-import MiniMap from '@/components/Map/MiniMap'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 
 export default {
   name: 'HistoricalAnomalyPage',
