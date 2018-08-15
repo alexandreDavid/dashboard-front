@@ -76,10 +76,10 @@ export default {
     },
     getSelectedReportedLayerStyle () {
       return {
-        radius: 6,
-        color: '#FFF',
-        weight: 1,
-        fillColor: '#f00',
+        radius: 7,
+        color: '#000',
+        weight: 3,
+        fillColor: '#d57',
         fillOpacity: 1
       }
     },
