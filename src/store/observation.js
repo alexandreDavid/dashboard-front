@@ -10,5 +10,13 @@ export default {
     } catch (e) {
       return []
     }
+  },
+  async getObservationTimeSeries (type, id, start, end, variable) {
+    try {
+      const response = await axios.get(`${urlRoot}/${type}/${id}/${start}/${end}?${variable}`)
+      return response.data[variable].timeseries_data
+    } catch (e) {
+      return []
+    }
   }
 }

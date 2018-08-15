@@ -1,22 +1,33 @@
 <template>
   <SideBar @close="close()" class="p-2 position-absolute over-map-control">
-    <div class="pt-3">
-      <h4>{{ reportedDetails.name }}</h4>
-      <div v-for="(timeserie, name) in reportedDetails.timeseries" :key="name">
-        <h5>{{name}}</h5>
-        <LineChart :chartData="getGraphData(timeserie)" :options="options"></LineChart>
+    <div class="d-flex flex-column h-100">
+      <div class="pt-3">
+        <h4>{{ observation.name }}</h4>
+        <ObservationRangeSlider v-if="isDisplayed" class="mb-4 px-3" @change="updateDate" :initDays="[initDayBeforeNowStart, initDayBeforeNowEnd]"></ObservationRangeSlider>
       </div>
+      <div v-if="isLoaded" class="flex-grow-1" style="overflow: auto;">
+        <div v-for="(variable, key) in observation.variables" :key="key">
+          <h5>{{variable}}</h5>
+          <div class="chart-container">
+            <ReportedDetailsGraph :observation="observation" :variable="variable" :options="options" v-bind:date-start="dateStart" v-bind:date-end="dateEnd"></ReportedDetailsGraph>
+          </div>
+        </div>
+      </div>
+      <Loading v-else />
     </div>
   </SideBar>
 </template>
 
 <script>
 import SideBar from '@/components/SideBar/SideBar'
-import LineChart from '@/components/Graph/Charts/LineChart'
+import ReportedDetailsGraph from './ReportedDetailsGraph'
+import Loading from '@/components/Loading/Loading'
+import ObservationRangeSlider from '@/components/Slider/ObservationRangeSlider'
+import vueSlider from 'vue-slider-component'
 
 export default {
   name: 'ReportedDetailsSideBar',
-  components: { SideBar, LineChart },
+  components: { SideBar, ReportedDetailsGraph, Loading, ObservationRangeSlider, vueSlider },
   props: {
     reportedDetails: {
       required: true
@@ -24,6 +35,13 @@ export default {
   },
   data () {
     return {
+      isDisplayed: false,
+      isLoaded: false,
+      initDayBeforeNowStart: 2,
+      initDayBeforeNowEnd: 0,
+      dateStart: false,
+      dateEnd: false,
+      observation: {},
       options: {
         scales: {
           yAxes: [{
@@ -36,14 +54,24 @@ export default {
       }
     }
   },
+  async mounted () {
+    this.observation = this.reportedDetails
+    this.updateDate([this.initDayBeforeNowStart, this.initDayBeforeNowEnd])
+    this.isLoaded = true
+    const vm = this
+    // Wait for the end of the displaying animation
+    setTimeout(() => {
+      vm.isDisplayed = true
+    }, 300)
+  },
   methods: {
     close () {
       this.$emit('close')
     },
-    getGraphData (timeserie) {
-      return {
-        data: timeserie
-      }
+    updateDate (val) {
+      let now = new Date()
+      this.dateStart = new Date(now - (24 * 60 * 60 * 1000) * val[0]).toISOString()
+      this.dateEnd = new Date(now - (24 * 60 * 60 * 1000) * val[1]).toISOString()
     }
   }
 }

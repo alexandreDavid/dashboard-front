@@ -46,6 +46,10 @@ export function generateChart (chartId, chartType) {
             plugins: this.$data._plugins
           }
         )
+      },
+      updateData (data) {
+        this.$data._chart.data = data
+        this.$data._chart.update()
       }
     },
     beforeDestroy () {
