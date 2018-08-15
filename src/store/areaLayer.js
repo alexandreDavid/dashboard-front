@@ -44,7 +44,8 @@ AreaLayer.getAreaLayerStyle = () => {
     weight: 2,
     width: 2,
     color: 'black',
-    fillOpacity: 0.0
+    fillOpacity: 0.0,
+    interactive: false
   }
 }
 
