@@ -14,7 +14,7 @@
           </div>
             <SearchLocation @input="onSearchLocationSelected" class="m-2"></SearchLocation>
         </div>
-        <VueSlideBar class="w-100 px-4"></VueSlideBar>
+        <FutureClimateRangeSlider class="w-100 px-4"></FutureClimateRangeSlider>
       </div>
       <div class="position-relative h-100">
         <div class="container-fluid" style="
@@ -129,7 +129,7 @@ import Parameter from '@/store/parameter'
 import DisplayedLayer from '@/store/displayedLayer'
 import Area from '@/store/area.js'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
-import VueSlideBar from 'vue-slide-bar'
+import FutureClimateRangeSlider from '@/components/Slider/FutureClimateRangeSlider'
 import MiniMap from '@/components/Map/MiniMap'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
@@ -143,7 +143,7 @@ export default {
     HistoricalActualPage,
     HistoricalAnomalyPage,
     Legend,
-    VueSlideBar,
+    FutureClimateRangeSlider,
     MiniMap,
     FontAwesomeIcon
   },
