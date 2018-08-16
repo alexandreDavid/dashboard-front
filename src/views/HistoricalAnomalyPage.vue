@@ -1,14 +1,14 @@
 <template>
   <div style="height: 400px; position: relative;">
-    <Graph v-if="parameter" v-bind:area="area" v-bind:parameter="parameter"></Graph>  </div>
+    <FutureClimateGraph v-if="parameter" v-bind:area="area" v-bind:parameter="parameter"></FutureClimateGraph>  </div>
 </template>
 
 <script>
-
+import FutureClimateGraph from './FutureClimateGraph'
 export default {
   name: 'HistoricalAnomalyPage',
   components: {
-    Graph: () => import('@/components/Graph/Graph')
+    FutureClimateGraph
   },
   props: [
     'area',
