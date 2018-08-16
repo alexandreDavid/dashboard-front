@@ -20,8 +20,8 @@
       <div class="row mb-2 justify-content-end">
         <Legend class="over-map-control shadow"></Legend>
       </div>
-      <div class="slide-bar-content justify-content-end position-relative m-2" v-if="false">
-        <VueSlideBar v-model="value" class="over-map-control"/>
+      <div class="slide-bar-content justify-content-end position-relative m-2">
+        <ElevationSlider v-model="value" class="over-map-control" v-if="false && displayedParameter.interactiveLegend"/>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@ import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
 import ReportedSelection from '@/components/Map/OverMap/OverMapControl/Managing/ReportedSelection/ReportedSelection'
 import Parameter from '@/store/parameter'
-import VueSlideBar from '@/components/Slider/Slider'
+import ElevationSlider from '@/components/Slider/ElevationSlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
 export default {
@@ -41,7 +41,7 @@ export default {
     Modal,
     ForecastSelection,
     ReportedSelection,
-    VueSlideBar,
+    ElevationSlider,
     Legend
   },
   inject: ['getMap'],
