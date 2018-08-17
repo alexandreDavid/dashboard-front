@@ -32,10 +32,9 @@
             </div>
             <div class="card-body position-relative">
               <div id="historical-map-container">
-                <div class="over-map">
-                  <div class="over-map-right over-map-control">
-                    <Legend class="over-map-control" v-if="parameter.interactiveLegend"></Legend>
-                    <img v-bind:src="parameter.legendUrl" v-else>
+                <div class="over-map" v-if="mapIsLoaded">
+                  <div class="over-map-bottom">
+                    <Legend class="over-map-control" asline="true"></Legend>
                   </div>
                 </div>
               </div>
@@ -98,6 +97,7 @@ export default {
   data () {
     return {
       isLoaded: false,
+      mapIsLoaded: false,
       selectedTab: 'actual',
       map: false,
       selectedArea: Area.getSelectedArea(),
@@ -149,7 +149,16 @@ export default {
   mounted () {
     this.map = new MapObj('historical-map-container')
     this.areaLayer = new AreaLayer(this.map)
-    this.displayedLayer = new DisplayedLayer(this.map, this.parameter)
+    this.displayedLayer = new DisplayedLayer(this.map, {
+      layerUrl: 'http://18.130.18.23:8180/geoserver/historical/ows',
+      legendUrl: 'http://18.130.18.23:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=chirps_nv2.0-20051201',
+      layerParameters: {
+        layers: 'historical:MetOffice',
+        format: 'image/png',
+        transparent: true
+      }
+    })
+    this.mapIsLoaded = true
   },
   methods: {
     onSearchLocationSelected (location) {
@@ -159,7 +168,6 @@ export default {
       }
     },
     onSelectVariable (selectedVariable) {
-      console.log(selectedVariable)
       this.activeVariable = selectedVariable.name
     },
     getMap () {
