@@ -7,7 +7,7 @@
         <div class="p-1 over-map-control">
           <button type="button" id="zoom-current-location" class="btn btn-primary align-top" v-bind:class="{shadow: !searchLocationResult}" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
         </div>
-        <div class="p-1 d-block d-sm-none">
+        <div class="p-1 d-block d-sm-none over-map-control">
           <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top" v-bind:class="{shadow: !searchLocationResult}"><font-awesome-icon :icon="iconMenu" /></button>
           <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
             <button @click="$router.push({ name: 'settings' })" class="btn btn-secondary mb-2"><font-awesome-icon :icon="iconSettings" /> Settings</button>
