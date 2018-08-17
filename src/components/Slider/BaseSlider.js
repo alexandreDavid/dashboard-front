@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     onCallback: debounce(function (val) {
-      this.$emit('change', val)
+      this.$emit('input', val)
     }, 100)
   }
 }

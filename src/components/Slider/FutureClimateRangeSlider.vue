@@ -37,6 +37,9 @@ export default {
         show: true,
         tooltip: 'hover',
         piecewise: true,
+        piecewiseStyle: {
+          display: 'none'
+        },
         data: allData,
         style: {
           marginBottom: '30px'
