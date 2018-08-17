@@ -3,7 +3,7 @@
     <div class="d-flex flex-column h-100">
       <div class="pt-3">
         <h4>{{ observation.name }}</h4>
-        <ObservationRangeSlider v-if="isDisplayed" class="mb-4 px-3" @change="updateDate" :initDays="[initDayBeforeNowStart, initDayBeforeNowEnd]"></ObservationRangeSlider>
+        <ObservationRangeSlider v-if="isDisplayed" class="mb-4 px-3" @change="updateDate" v-model="sliderDates"></ObservationRangeSlider>
       </div>
       <div v-if="isLoaded" class="flex-grow-1" style="overflow: auto;">
         <div v-for="(variable, key) in observation.variables" :key="key">
@@ -37,8 +37,7 @@ export default {
     return {
       isDisplayed: false,
       isLoaded: false,
-      initDayBeforeNowStart: 2,
-      initDayBeforeNowEnd: 0,
+      sliderDates: [2, 0],
       dateStart: false,
       dateEnd: false,
       observation: {},
@@ -56,7 +55,7 @@ export default {
   },
   async mounted () {
     this.observation = this.reportedDetails
-    this.updateDate([this.initDayBeforeNowStart, this.initDayBeforeNowEnd])
+    this.updateDate(this.sliderDates)
     this.isLoaded = true
     const vm = this
     // Wait for the end of the displaying animation

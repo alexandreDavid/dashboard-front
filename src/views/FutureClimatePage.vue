@@ -14,7 +14,7 @@
           </div>
             <SearchLocation @input="onSearchLocationSelected" class="m-2"></SearchLocation>
         </div>
-        <FutureClimateRangeSlider class="w-100 px-4"></FutureClimateRangeSlider>
+        <FutureClimateRangeSlider v-model="sliderValue" class="w-100 px-4"></FutureClimateRangeSlider>
       </div>
       <div class="position-relative h-100">
         <div class="container-fluid" style="
@@ -156,6 +156,7 @@ export default {
   data () {
     return {
       isLoaded: false,
+      sliderValue: [2040, 2060],
       selectedTab: 'actual',
       map: false,
       selectedArea: Area.getSelectedArea(),

@@ -1,5 +1,5 @@
 <template>
-  <vue-slider v-bind="config" v-model="value" ref="slider" @callback="onCallback">
+  <vue-slider v-bind="config" v-model="val" ref="slider" @callback="onCallback">
     <template slot="label" slot-scope="{ label, active }">
       <span :class="['vue-slider-piecewise-label', { active }]" v-if="label % 10 === 0">
         {{ label }}
@@ -15,12 +15,12 @@
 
 <script>
 import vueSlider from 'vue-slider-component'
-import { debounce } from 'debounce'
+import BaseSlider from './BaseSlider'
 
 export default {
   name: 'FutureClimateRangeSlider',
+  mixins: [BaseSlider],
   components: { vueSlider },
-  props: ['initDays'],
   data () {
     let allData = []
     const firstYear = 1960
@@ -29,7 +29,6 @@ export default {
       allData.push(year)
     }
     return {
-      value: [],
       config: {
         width: '100%',
         height: 8,
@@ -63,27 +62,6 @@ export default {
         }
       }
     }
-  },
-  mounted () {
-    this.value = [2040, 2060]
-  },
-  methods: {
-    onCallback: debounce(function (val) {
-      this.$emit('change', [val[0], val[1]])
-    }, 100)
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.vue-slider-piecewise-label {
-  &.active {
-    color: var(--primary);
-    font-weight: bold;
-  }
-}
-.vue-slider-tooltip {
-  background-color: var(--primary);
-  border-color: var(--primary);
-}
-</style>

@@ -15,25 +15,12 @@
 
 <script>
 import vueSlider from 'vue-slider-component'
-import { debounce } from 'debounce'
+import BaseSlider from './BaseSlider'
 
 export default {
   name: 'ElevationSlider',
+  mixins: [BaseSlider],
   components: { vueSlider },
-  props: {
-    value: {
-      type: [String, Number, Array, Object],
-      default: 0
-    }
-  },
-  computed: {
-    val: {
-      get () {
-        return this.value
-      },
-      set (val) {}
-    }
-  },
   data () {
     return {
       config: {
@@ -74,24 +61,6 @@ export default {
         }
       }
     }
-  },
-  methods: {
-    onCallback: debounce(function (val) {
-      this.$emit('change', val)
-    }, 100)
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.vue-slider-piecewise-label {
-  &.active {
-    color: var(--primary);
-    font-weight: bold;
-  }
-}
-.vue-slider-tooltip {
-  background-color: var(--primary);
-  border-color: var(--primary);
-}
-</style>

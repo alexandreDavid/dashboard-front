@@ -21,7 +21,7 @@
         <Legend class="over-map-control shadow"></Legend>
       </div>
       <div class="slide-bar-content justify-content-end position-relative m-2">
-        <ElevationSlider v-model="value" class="over-map-control" v-if="false && displayedParameter.interactiveLegend"/>
+        <ElevationSlider v-model="value" class="over-map-control" v-if="displayedParameter.interactiveLegend"/>
       </div>
     </div>
   </div>

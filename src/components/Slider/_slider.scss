@@ -1,0 +1,10 @@
+.vue-slider-piecewise-label {
+  &.active {
+    color: var(--primary);
+    font-weight: bold;
+  }
+}
+.vue-slider-tooltip {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
