@@ -1,15 +1,5 @@
 <template>
   <vue-slider v-bind="config" v-model="val" ref="slider" @callback="onCallback">
-    <template slot="label" slot-scope="{ label, active }">
-      <span :class="['vue-slider-piecewise-label', { active }]" v-if="label % 10 === 0">
-        {{ label }}
-      </span>
-    </template>
-    <template slot="tooltip" slot-scope="tooltip">
-      <div class="vue-slider-tooltip" v-if="tooltip.value">
-        {{ tooltip.value }}
-      </div>
-    </template>
   </vue-slider>
 </template>
 
