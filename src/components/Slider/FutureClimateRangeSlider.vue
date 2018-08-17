@@ -40,25 +40,6 @@ export default {
         data: allData,
         style: {
           marginBottom: '30px'
-        },
-        bgStyle: {
-          backgroundColor: '#fff',
-          boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
-        },
-        sliderStyle: [{
-          backgroundColor: 'var(--primary)'
-        }, {
-          backgroundColor: 'var(--primary)'
-        }],
-        tooltipStyle: [{
-          backgroundColor: '#ccc',
-          borderColor: '#ccc'
-        }, {
-          backgroundColor: '#ccc',
-          borderColor: '#ccc'
-        }],
-        processStyle: {
-          backgroundColor: 'var(--secondary)'
         }
       }
     }

@@ -25,8 +25,8 @@ export default {
     return {
       config: {
         value: 0,
-        width: 4,
-        height: 300,
+        width: 5,
+        height: 200,
         dotSize: 22,
         eventType: 'auto',
         min: 0,
@@ -39,26 +39,7 @@ export default {
         style: {
           display: 'inline-block'
         },
-        direction: 'vertical',
-        bgStyle: {
-          backgroundColor: '#fff',
-          boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
-        },
-        sliderStyle: [{
-          backgroundColor: 'var(--primary)'
-        }, {
-          backgroundColor: 'var(--primary)'
-        }],
-        tooltipStyle: [{
-          backgroundColor: '#ccc',
-          borderColor: '#ccc'
-        }, {
-          backgroundColor: '#ccc',
-          borderColor: '#ccc'
-        }],
-        processStyle: {
-          backgroundColor: 'var(--secondary)'
-        }
+        direction: 'vertical'
       }
     }
   }

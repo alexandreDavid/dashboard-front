@@ -36,25 +36,6 @@ export default {
         data: [20, 18, 16, 14, 12, 10, 9, 8, 7, 6, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.6, 1.2, 1, 0.8, 0.4, 0],
         style: {
           marginBottom: '30px'
-        },
-        bgStyle: {
-          backgroundColor: '#fff',
-          boxShadow: 'inset 0.5px 0.5px 3px 1px rgba(0,0,0,.36)'
-        },
-        sliderStyle: [{
-          backgroundColor: 'var(--primary)'
-        }, {
-          backgroundColor: 'var(--primary)'
-        }],
-        tooltipStyle: [{
-          backgroundColor: '#ccc',
-          borderColor: '#ccc'
-        }, {
-          backgroundColor: '#ccc',
-          borderColor: '#ccc'
-        }],
-        processStyle: {
-          backgroundColor: 'var(--secondary)'
         }
       }
     }
