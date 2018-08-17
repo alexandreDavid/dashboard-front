@@ -5,7 +5,7 @@
         <button type="button" class="btn btn-sm btn-secondary rounded-0" @click="switchUnit()">{{ activeUnit.label}}</button>
         <div class="gradient" v-bind:style="{ background: gradientColor }">
           <div class="d-flex justify-content-between align-items-center h-100 mx-3">
-            <div v-for="(displayedValue, key) in displayedValues" :key="key" class="font-weight-bold">
+            <div v-for="(displayedValue, key) in displayedValues" :key="key">
               {{ displayedValue.quantity | convert(defaultUnit, activeUnit.key) }}
             </div>
           </div>
