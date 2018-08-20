@@ -19,4 +19,22 @@ describe('observation.js', () => {
     expect(Axios.get).toBeCalled()
     expect(observations).toEqual([])
   })
+
+  it('Calls getObservationTimeSeries and answers', async () => {
+    Axios.get.mockReturnValue({data: {
+      variable: {
+        timeseries_data: 'timeseries_data'
+      }
+    }})
+    const observations = await Observation.getObservationTimeSeries('type', 'id', 'start', 'end', 'variable')
+    expect(Axios.get).toBeCalled()
+    expect(observations).toBe('timeseries_data')
+  })
+
+  it('Calls getObservationTimeSeries and throw error', async () => {
+    Axios.get.mockRejectedValue(new Error('Async error'))
+    const observations = await Observation.getObservationTimeSeries('type', 'id', 'start', 'end', 'variable')
+    expect(Axios.get).toBeCalled()
+    expect(observations).toEqual([])
+  })
 })
