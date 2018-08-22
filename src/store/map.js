@@ -1,10 +1,10 @@
 import { Map, TileLayer, CircleMarker } from 'leaflet'
 
 let defaultParams = {
-  view: {
-    location: [1.384226, 32.640962],
-    zoom: 8
-  },
+  bounds: [
+    [4.23136927, 35.00105353],
+    [-1.48153053, 29.57346534]
+  ],
   baseLayer: {
     layerUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
     options: {
@@ -20,7 +20,7 @@ let MapObj = Map.extend({
   _baseLayer: false,
   _currentLocationMarker: false,
   setDefaultMap () {
-    this.setView(defaultParams.view.location, defaultParams.view.zoom)
+    this.fitBounds(defaultParams.bounds)
 
     this.setBaseMapLayer(defaultParams.baseLayer.layerUrl, defaultParams.baseLayer.options)
   },
