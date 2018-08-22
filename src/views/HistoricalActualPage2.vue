@@ -1,0 +1,97 @@
+<template>
+  <div class="d-flex flex-wrap justify-content-center justify-content-md-start">
+    <div class="card h-100 m-2" style="min-height: 200px; min-width: 200px;" v-for="(miniMap, key) in allMiniMaps" :key="key" @click="selectYear(miniMap)" v-bind:class="{active: activeMiniMap === miniMap.title}">
+      <div class="card-header">
+        {{ miniMap.title }}
+      </div>
+      <div class="card-body position-relative">
+        <MiniMap :minimapKey="key" v-bind:parameter="miniMap.param"></MiniMap>
+      </div>
+    </div>
+    <div v-show="displayAddYearsButton" class="card h-100 m-2" @click="displayNextYears" style="min-height: 200px; min-width: 200px; border-style: dashed; border-width: 4px;"><font-awesome-icon :icon="iconPlus" class="fa-3x m-auto" style="opacity: 0.125" /></div>
+  </div>
+</template>
+
+<script>
+import MiniMap from '@/components/Map/MiniMap'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
+
+export default {
+  name: 'HistoricalActualPage',
+  components: {
+    MiniMap,
+    FontAwesomeIcon
+  },
+  computed: {
+    iconPlus () {
+      return faPlus
+    }
+  },
+  props: ['variable', 'period'],
+  data () {
+    return {
+      allMiniMaps: [],
+      variables: [],
+      activeMiniMap: false,
+      lastDisplayedYear: false,
+      displayAddYearsButton: true
+    }
+  },
+  mounted () {
+    this.lastDisplayedYear = this.variable.endDate
+    this.displayNextYears()
+  },
+  methods: {
+    displayNextYears () {
+      for (let i = 0; i < 5; i++) {
+        if (this.lastDisplayedYear >= this.variable.startDate) {
+          this.allMiniMaps.push({
+            title: this.lastDisplayedYear,
+            param: {
+              layerUrl: 'http://18.130.18.23:8180/geoserver/historical/ows',
+              layerParameters: {
+                layers: this.variable.layerName,
+                format: 'image/png',
+                transparent: true,
+                time: this.lastDisplayedYear
+              }
+            }
+          })
+          this.lastDisplayedYear--
+        } else {
+          this.displayAddYearsButton = false
+        }
+      }
+    },
+    selectYear (miniMap) {
+      this.activeMiniMap = miniMap.title
+      this.$emit('change', miniMap.title)
+    }
+  },
+  watch: {
+    variable () {
+      this.allMiniMaps = []
+      this.displayAddYearsButton = true
+      this.lastDisplayedYear = this.variable.endDate
+      this.displayNextYears()
+    },
+    period (period) {
+      this.allMiniMaps.forEach(m => {
+        m.param.layerParameters.time = `${m.title}-${period}`
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.active {
+  border: 1px solid var(--primary);
+
+  .card-header {
+    background-color: var(--primary);
+    color: var(--white);
+  }
+}
+</style>

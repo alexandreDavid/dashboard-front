@@ -48,13 +48,17 @@ export default {
   },
   mounted () {
     this.map = new MapObj(this.mapId)
-    this.areaLayer = new AreaLayer(this.map, this.area)
+    this.areaLayer = new AreaLayer(this.map, {id: 1})
     this.displayedLayer = new DisplayedLayer(this.map, this.parameter)
     this.isLoaded = true
   },
   watch: {
-    parameter (newParam) {
-      this.getDisplayedLayer().setDisplayedLayer(newParam)
+    parameter: {
+      handler (newParam) {
+        this.getDisplayedLayer().setDisplayedLayer(newParam)
+        this.areaLayer.zoomToArea()
+      },
+      deep: true
     }
   },
   methods: {

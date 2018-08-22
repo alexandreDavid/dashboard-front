@@ -6,7 +6,7 @@ import DashboardPage from '@/components/Dashboard/DashboardPage'
 import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
 import GraphPage from '@/components/Graph/GraphPage'
-import HistoricalPage from '@/views/HistoricalPage'
+import HistoricalPage from '@/views/HistoricalPage2'
 import FutureClimatePage from '@/views/FutureClimatePage'
 import Auth from '@/store/authentication'
 
