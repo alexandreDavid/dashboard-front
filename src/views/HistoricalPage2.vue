@@ -15,23 +15,7 @@
             </select>
             <label v-if="activeVariable.type !== 'Daily'" class="m-2" for="period">Month/Season/Annual</label>
             <select v-model="activePeriod" v-if="activeVariable.type !== 'Daily'" class="m-2 custom-select" id="period" name="period">
-              <option value="01">January</option>
-              <option value="02">February</option>
-              <option value="03">March</option>
-              <option value="04">April</option>
-              <option value="05">May</option>
-              <option value="06">June</option>
-              <option value="07">July</option>
-              <option value="08">August</option>
-              <option value="09">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
-              <!-- <option value="16">Winter</option>
-              <option value="13">Spring</option>
-              <option value="14">Summer</option>
-              <option value="15">Autumn</option>
-              <option value="17">Annual</option> -->
+              <option v-for="month in months" :key="month.value" :value="month">{{ month.label }}</option>
             </select>
           </div>
         </div>
@@ -47,7 +31,7 @@
             <h6>Months</h6>
             <div class="mb-1 d-flex flex-wrap">
               <div v-for="(month, key) in months" :key="key" class="p-1" style="min-width: 90px">
-                <button type="button" class="btn btn-secondary w-100" @click="activePeriod = month.value" v-bind:class="{active: activePeriod === month.value}">{{ month.label }}</button>
+                <button type="button" class="btn btn-secondary w-100" @click="activePeriod = month" v-bind:class="{active: activePeriod.value === month.value}">{{ month.shortLabel }}</button>
               </div>
             </div>
             <h6>Seasons</h6>
@@ -67,7 +51,7 @@
         <div class="col-12 mb-3" v-bind:class="{ 'col-md-6 col-lg-8': activeVariable.type !== 'Daily'}">
           <div class="card h-100" style="min-height: 400px">
             <div class="card-header">
-              {{ activeVariable.description }} - {{ activeYear }}
+              {{ activeVariable.description }} - {{(activeVariable.type !== 'Daily') ? `${activePeriod.label} ` : ''}}{{ activeYear }}
             </div>
             <div class="card-body position-relative">
               <div id="historical-map-container"></div>
@@ -83,7 +67,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <HistoricalActualPage v-bind:variable="activeVariable" v-bind:period="activePeriod" @change="changeYear"></HistoricalActualPage>
+          <HistoricalActualPage v-bind:variable="activeVariable" v-bind:period="activePeriod.value" @change="changeYear"></HistoricalActualPage>
         </div>
       </div>
     </div>
@@ -121,6 +105,57 @@ export default {
     }
   },
   data () {
+    const months = [
+      {
+        value: '01',
+        label: 'January',
+        shortLabel: 'Jan'
+      }, {
+        value: '02',
+        label: 'February',
+        shortLabel: 'Feb'
+      }, {
+        value: '03',
+        label: 'March',
+        shortLabel: 'Mar'
+      }, {
+        value: '04',
+        label: 'April',
+        shortLabel: 'Apr'
+      }, {
+        value: '05',
+        label: 'May',
+        shortLabel: 'May'
+      }, {
+        value: '06',
+        label: 'June',
+        shortLabel: 'Jun'
+      }, {
+        value: '07',
+        label: 'July',
+        shortLabel: 'Jul'
+      }, {
+        value: '08',
+        label: 'August',
+        shortLabel: 'Aug'
+      }, {
+        value: '09',
+        label: 'September',
+        shortLabel: 'Sep'
+      }, {
+        value: '10',
+        label: 'October',
+        shortLabel: 'Oct'
+      }, {
+        value: '11',
+        label: 'November',
+        shortLabel: 'Nov'
+      }, {
+        value: '12',
+        label: '>December',
+        shortLabel: 'Dec'
+      }
+    ]
     return {
       isLoaded: false,
       mapIsLoaded: false,
@@ -132,46 +167,8 @@ export default {
       variables: [],
       activeVariable: false,
       activeYear: false,
-      activePeriod: '01',
-      months: [
-        {
-          value: '01',
-          label: 'Jan'
-        }, {
-          value: '02',
-          label: 'Feb'
-        }, {
-          value: '03',
-          label: 'Mar'
-        }, {
-          value: '04',
-          label: 'Apr'
-        }, {
-          value: '05',
-          label: 'May'
-        }, {
-          value: '06',
-          label: 'Jun'
-        }, {
-          value: '07',
-          label: 'Jul'
-        }, {
-          value: '08',
-          label: 'Aug'
-        }, {
-          value: '09',
-          label: 'Sep'
-        }, {
-          value: '10',
-          label: 'Oct'
-        }, {
-          value: '11',
-          label: 'Nov'
-        }, {
-          value: '12',
-          label: 'Dec'
-        }
-      ],
+      activePeriod: months[0],
+      months: months,
       seasons: ['Spring', 'Summer', 'Autumn', 'Winter']
     }
   },
@@ -183,7 +180,7 @@ export default {
       type: 'Daily',
       layerName: 'historical:Rainf_CDD',
       legendName: 'wfdei_CDD',
-      startDate: 1983,
+      startDate: 1984,
       endDate: 2013
     }, {
       name: 'Chirps',
@@ -192,8 +189,17 @@ export default {
       type: 'Monthly',
       layerName: 'historical:monthly_chirps_precip',
       legendName: 'chirps-20180101_1',
-      startDate: 1983,
+      startDate: 1984,
       endDate: 2013
+    }, {
+      name: 'ERAI',
+      label: '2 metres temperature',
+      description: '2 metres temperature',
+      type: 'Monthly',
+      layerName: 'historical:monthly_erai_tmean(2mt)',
+      legendName: 'ERAI_tmean',
+      startDate: 1987,
+      endDate: 2016
     }, {
       name: 'R95',
       label: 'Rainfall on days > 95th percentile',
@@ -201,7 +207,7 @@ export default {
       type: 'Daily',
       layerName: 'historical:Rainf_R95p',
       legendName: 'wfdei_R95p',
-      startDate: 1983,
+      startDate: 1984,
       endDate: 2013
     }, {
       name: 'TX25',
@@ -210,7 +216,7 @@ export default {
       type: 'Daily',
       layerName: 'historical:Tair_TX25',
       legendName: 'wfdei_tx25',
-      startDate: 1983,
+      startDate: 1984,
       endDate: 2012
     }, {
       name: 'TX30',
@@ -219,7 +225,7 @@ export default {
       type: 'Daily',
       layerName: 'historical:Tair_TX30',
       legendName: 'wfdei_tx30',
-      startDate: 1983,
+      startDate: 1984,
       endDate: 2012
     }]
     this.activeVariable = this.variables[0]
@@ -237,7 +243,7 @@ export default {
       this.onSelectVariable(variable)
     },
     activePeriod () {
-      this.onSelectVariable(this.activeVariable)
+      this.onSelectVariable(this.activeVariable, this.activeYear)
     }
   },
   methods: {
@@ -250,7 +256,7 @@ export default {
     onSelectVariable (selectedVariable, year) {
       this.activeYear = year || selectedVariable.endDate
       if (selectedVariable.type !== 'Monthly') {
-        this.activePeriod = '01'
+        this.activePeriod = this.months[0]
       }
       this.displayedLayer.setDisplayedLayer({
         layerUrl: 'http://18.130.18.23:8180/geoserver/historical/ows',
@@ -259,7 +265,7 @@ export default {
           layers: selectedVariable.layerName,
           format: 'image/png',
           transparent: true,
-          time: `${this.activeYear}-${this.activePeriod}`
+          time: `${this.activeYear}-${this.activePeriod.value}`
         }
       })
     },
