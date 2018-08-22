@@ -1,19 +1,18 @@
 <template>
-  <div>
-    <div class="btn-group m-2" role="group" aria-label="Time period">
-      <button type="button" class="btn btn-secondary active">Annual</button>
-      <button type="button" class="btn btn-secondary">Seasonal</button>
-    </div>
-    <div class="d-flex flex-wrap justify-content-center justify-content-md-start">
-      <div class="card h-100 m-2" style="min-height: 165px; min-width: 150px;" v-for="(actualMap, key) in actualMaps" :key="key">
-        <div class="card-header">
-          {{ actualMap.title }}
-        </div>
-        <div class="card-body position-relative">
-          <MiniMap :minimapKey="key"></MiniMap>
-        </div>
+  <div class="d-flex flex-wrap justify-content-center justify-content-md-start">
+    <div class="card h-100 m-2" v-for="(miniMap, key) in allMiniMaps" :key="key" @click="selectYear(miniMap)" v-bind:class="{active: activeMiniMap === miniMap.title}">
+      <div class="card-header">
+        {{ miniMap.title }}
       </div>
-      <div class="card h-100 m-2" style="min-height: 165px; min-width: 150px; border-style: dashed; border-width: 4px;"><font-awesome-icon :icon="iconPlus" class="fa-3x m-auto" style="opacity: 0.125" /></div>
+      <div class="card-body position-relative">
+        <MiniMap :minimapKey="key" v-bind:parameter="miniMap.param"></MiniMap>
+      </div>
+    </div>
+    <div v-show="displayAddYearsButton" class="card h-100 m-2 add-years" @click="displayNextYears">
+      <div class="m-auto text-center">
+        <div class="font-weight-bold">Add next years</div>
+        <font-awesome-icon :icon="iconPlus" class="fa-3x"></font-awesome-icon>
+      </div>
     </div>
   </div>
 </template>
@@ -34,41 +33,84 @@ export default {
       return faPlus
     }
   },
+  props: ['variable', 'period'],
   data () {
     return {
-      isLoaded: false,
-      selectedTab: 'actual',
-      map: false,
+      allMiniMaps: [],
       variables: [],
-      activeVariable: false,
-      displayedInfo: false,
-      actualMaps: [
-        {
-          title: '2015',
-          desc: 'test'
-        }, {
-          title: '2014'
-        }, {
-          title: '2013'
-        }, {
-          title: '2012'
-        }, {
-          title: '2011'
-        }
-      ]
+      activeMiniMap: false,
+      lastDisplayedYear: false,
+      displayAddYearsButton: true
     }
   },
+  mounted () {
+    this.lastDisplayedYear = this.variable.endDate
+    this.displayNextYears()
+  },
   methods: {
-    onSearchLocationSelected (location) {
-      console.log(location)
+    displayNextYears () {
+      for (let i = 0; i < 5; i++) {
+        if (this.lastDisplayedYear >= this.variable.startDate) {
+          this.allMiniMaps.push({
+            title: this.lastDisplayedYear,
+            param: {
+              layerUrl: 'http://18.130.18.23:8180/geoserver/historical/ows',
+              layerParameters: {
+                layers: this.variable.layerName,
+                format: 'image/png',
+                transparent: true,
+                time: this.lastDisplayedYear
+              }
+            }
+          })
+          this.lastDisplayedYear--
+        } else {
+          this.displayAddYearsButton = false
+        }
+      }
     },
-    onSelectVariable (selectedVariable) {
-      console.log(selectedVariable)
-      this.activeVariable = selectedVariable.name
+    selectYear (miniMap) {
+      this.activeMiniMap = miniMap.title
+      this.$emit('change', miniMap.title)
+    }
+  },
+  watch: {
+    variable () {
+      this.allMiniMaps = []
+      this.displayAddYearsButton = true
+      this.lastDisplayedYear = this.variable.endDate
+      this.displayNextYears()
     },
-    displayInfos (value) {
-      this.displayedInfo = value.name
+    period (period) {
+      this.allMiniMaps.forEach(m => {
+        m.param.layerParameters.time = `${m.title}-${period}`
+      })
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.card {
+  min-height: 200px;
+  min-width: 200px;
+  &.active {
+    border: 1px solid var(--primary);
+
+    .card-header {
+      background-color: var(--primary);
+      color: var(--white);
+    }
+  }
+  &.add-years {
+    border-style: dashed;
+    border: 4px dashed var(--dark);
+    opacity: 0.125;
+
+    &:hover {
+      opacity: 0.5;
+      cursor: pointer;
+    }
+  }
+}
+</style>
