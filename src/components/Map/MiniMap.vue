@@ -48,7 +48,7 @@ export default {
   },
   mounted () {
     this.map = new MapObj(this.mapId)
-    this.areaLayer = new AreaLayer(this.map, {id: 1})
+    this.areaLayer = new AreaLayer(this.map, {id: 7552})
     this.displayedLayer = new DisplayedLayer(this.map, this.parameter)
     this.isLoaded = true
   },

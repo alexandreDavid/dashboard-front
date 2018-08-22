@@ -227,7 +227,7 @@ export default {
   },
   mounted () {
     this.map = new MapObj('historical-map-container')
-    this.areaLayer = new AreaLayer(this.map)
+    this.areaLayer = new AreaLayer(this.map, {id: 7552})
     this.displayedLayer = new DisplayedLayer(this.map)
     this.onSelectVariable(this.activeVariable)
     this.mapIsLoaded = true
