@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { GeoJSON } from 'leaflet'
 
+let ugandaArea = false
+
 let AreaLayer = class {
   _areaLayer = false
   _map = false
@@ -12,11 +14,19 @@ let AreaLayer = class {
     }
   }
   async setSelectedArea (area) {
-    const areaData = await axios.get(
-      `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
-        params: AreaLayer.getAreaRequestParams(area)
+    let areaData
+    if (area.id !== 7552 || !ugandaArea) {
+      areaData = await axios.get(
+        `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
+          params: AreaLayer.getAreaRequestParams(area)
+        }
+      )
+      if (area.id === 7552) {
+        ugandaArea = areaData
       }
-    )
+    } else {
+      areaData = ugandaArea
+    }
     if (this._areaLayer) {
       this._areaLayer.remove()
     }

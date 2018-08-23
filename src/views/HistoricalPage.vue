@@ -6,7 +6,7 @@
           <div class="form-inline">
             <label class="m-2" for="region">Region</label>
             <select class="m-2 custom-select" id="region" name="region">
-              <option value="1">Ugunda</option>
+              <option value="1">Uganda</option>
             </select>
             <label class="m-2" for="inlineFormCustomSelectPref">Climate variable</label>
             <select class="m-2 custom-select" v-model="activeVariable" id="inlineFormCustomSelectPref">
@@ -26,23 +26,23 @@
       </div>
       <div class="row">
         <div class="col-md-6 col-lg-4 mb-3" v-if="activeVariable.type !== 'Daily'">
-          <div class="card p-3">
+          <div class="card p-3 h-100">
             <h6>Months</h6>
             <div class="mb-1 d-flex flex-wrap">
-              <div v-for="(month, key) in months" :key="key" class="p-1" style="min-width: 90px">
-                <button type="button" class="btn btn-secondary w-100" @click="activePeriod = month" v-bind:class="{active: activePeriod.value === month.value}">{{ month.shortLabel }}</button>
+              <div v-for="(month, key) in months" :key="key" class="p-1" style="min-width: 80px">
+                <button type="button" class="btn btn-sm btn-secondary w-100" @click="activePeriod = month" v-bind:class="{active: activePeriod.value === month.value}">{{ month.shortLabel }}</button>
               </div>
             </div>
             <h6>Seasons (coming soon)</h6>
             <div class="mb-1 d-flex flex-wrap">
-              <div v-for="(season, key) in seasons" :key="key" class="p-1" style="min-width: 90px">
-                <button type="button" disabled class="btn btn-secondary w-100">{{ season }}</button>
+              <div v-for="(season, key) in seasons" :key="key" class="p-1" style="min-width: 80px">
+                <button type="button" disabled class="btn btn-sm btn-secondary w-100">{{ season }}</button>
               </div>
             </div>
             <h6>Annual (coming soon)</h6>
             <div class="mb-1 d-flex flex-wrap">
-              <div class="p-1" style="min-width: 90px">
-                <button type="button" disabled class="btn btn-secondary w-100">Annual</button>
+              <div class="p-1" style="min-width: 80px">
+                <button type="button" disabled class="btn btn-sm btn-secondary w-100">Annual</button>
               </div>
             </div>
           </div>
@@ -147,7 +147,7 @@ export default {
         shortLabel: 'Nov'
       }, {
         value: '12',
-        label: '>December',
+        label: 'December',
         shortLabel: 'Dec'
       }
     ]

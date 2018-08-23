@@ -103,7 +103,6 @@ export default {
     }
   }
   &.add-years {
-    border-style: dashed;
     border: 4px dashed var(--dark);
     opacity: 0.125;
 

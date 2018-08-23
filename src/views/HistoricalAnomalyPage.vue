@@ -1,6 +1,6 @@
 <template>
   <div style="height: 400px; position: relative;">
-    <FutureClimateGraph v-if="parameter" v-bind:area="area" v-bind:parameter="parameter"></FutureClimateGraph>  </div>
+    <FutureClimateGraph v-bind:area="area" v-bind:parameter="parameter"></FutureClimateGraph>  </div>
 </template>
 
 <script>
