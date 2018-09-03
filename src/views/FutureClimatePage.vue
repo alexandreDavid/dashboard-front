@@ -11,10 +11,10 @@
           <select class="m-2 custom-select" v-model="activeVariable" id="inlineFormCustomSelectPref">
             <option v-for="variable in variables" :key="variable.name" :value="variable">{{ variable.label }}</option>
           </select>
-          <label class="m-2" for="period">Month/Season/Annual</label>
-          <select v-model="activePeriod" class="m-2 custom-select" id="period" name="period">
-            <option v-for="month in months" :key="month.value" :value="month">{{ month.label }}</option>
-            <option v-for="season in seasons" :key="season.value" :value="season">{{ season.label }}</option>
+          <label class="m-2" for="timePeriod">Month/Season/Annual</label>
+          <select v-model="activeTimePeriod" class="m-2 custom-select" id="timePeriod" name="timePeriod">
+            <option v-for="month in months" :key="month.id" :value="month">{{ month.label }}</option>
+            <option v-for="season in seasons" :key="season.id" :value="season">{{ season.label }}</option>
             <option :value="annual">{{ annual.label }}</option>
           </select>
           <div class="btn-group m-2" role="group" aria-label="Basic example">
@@ -25,10 +25,9 @@
             <button type="button" class="btn btn-secondary active">Anomaly</button>
             <button type="button" class="btn btn-secondary" disabled>Model consensus</button>
           </div>
-          <label class="m-2" for="time">Period</label>
-          <select v-model="activeTime" class="m-2 custom-select" id="time" name="time">
-            <option value="2030-2059">2030-2059</option>
-            <option value="2070-2099">2070-2099</option>
+          <label class="m-2" for="period">Period</label>
+          <select v-model="activePeriod" class="m-2 custom-select" id="period" name="period">
+            <option v-for="period in periods" :key="period.id" :value="period">{{ period.label }}</option>
           </select>
         </div>
         <FutureClimateRangeSlider v-model="sliderValue" class="w-100 px-4"></FutureClimateRangeSlider>
@@ -47,25 +46,25 @@
                 <h6>Months</h6>
                 <div class="mb-1 d-flex flex-wrap">
                   <div v-for="(month, key) in months" :key="key" class="p-1" style="min-width: 80px">
-                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activePeriod = month" v-bind:class="{active: activePeriod.value === month.value}">{{ month.shortLabel }}</button>
+                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = month" v-bind:class="{active: activeTimePeriod.value === month.value}">{{ month.shortLabel }}</button>
                   </div>
                 </div>
                 <h6>Seasons</h6>
                 <div class="mb-1 d-flex flex-wrap">
                   <div v-for="(season, key) in seasons" :key="key" class="p-1" style="min-width: 80px">
-                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activePeriod = season" v-bind:class="{active: activePeriod.value === season.value}">{{ season.label }}</button>
+                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = season" v-bind:class="{active: activeTimePeriod.value === season.value}">{{ season.label }}</button>
                   </div>
                 </div>
                 <h6>Annual</h6>
                 <div class="mb-1 d-flex flex-wrap">
                   <div class="p-1" style="min-width: 80px">
-                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activePeriod = annual" v-bind:class="{active: activePeriod.value === annual.value}">{{ annual.label }}</button>
+                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = annual" v-bind:class="{active: activeTimePeriod.value === annual.value}">{{ annual.label }}</button>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-md-8 mb-3">
-              <FutureClimateModels v-bind:variable="activeVariable.name" v-bind:period="activeTime" v-bind:timePeriod="activePeriod"></FutureClimateModels>
+              <FutureClimateModels v-bind:variable="activeVariable" v-bind:period="activePeriod" v-bind:timePeriod="activeTimePeriod"></FutureClimateModels>
             </div>
           </div>
           <div class="row mb-3">
@@ -109,63 +108,101 @@ export default {
   data () {
     const months = [
       {
-        value: 'jan',
+        id: 1,
+        value: '01',
         label: 'January',
-        shortLabel: 'Jan'
+        shortLabel: 'Jan',
+        type: 'months'
       }, {
-        value: 'feb',
+        id: 2,
+        value: '02',
         label: 'February',
-        shortLabel: 'Feb'
+        shortLabel: 'Feb',
+        type: 'months'
       }, {
-        value: 'mar',
+        id: 3,
+        value: '03',
         label: 'March',
-        shortLabel: 'Mar'
+        shortLabel: 'Mar',
+        type: 'months'
       }, {
-        value: 'apr',
+        id: 4,
+        value: '04',
         label: 'April',
-        shortLabel: 'Apr'
+        shortLabel: 'Apr',
+        type: 'months'
       }, {
-        value: 'may',
+        id: 5,
+        value: '05',
         label: 'May',
-        shortLabel: 'May'
+        shortLabel: 'May',
+        type: 'months'
       }, {
-        value: 'jun',
+        id: 6,
+        value: '06',
         label: 'June',
-        shortLabel: 'Jun'
+        shortLabel: 'Jun',
+        type: 'months'
       }, {
-        value: 'jul',
+        id: 7,
+        value: '07',
         label: 'July',
-        shortLabel: 'Jul'
+        shortLabel: 'Jul',
+        type: 'months'
       }, {
-        value: 'aug',
+        id: 8,
+        value: '08',
         label: 'August',
-        shortLabel: 'Aug'
+        shortLabel: 'Aug',
+        type: 'months'
       }, {
-        value: 'sep',
+        id: 9,
+        value: '09',
         label: 'September',
-        shortLabel: 'Sep'
+        shortLabel: 'Sep',
+        type: 'months'
       }, {
-        value: 'oct',
+        id: 10,
+        value: '10',
         label: 'October',
-        shortLabel: 'Oct'
+        shortLabel: 'Oct',
+        type: 'months'
       }, {
-        value: 'nov',
+        id: 11,
+        value: '11',
         label: 'November',
-        shortLabel: 'Nov'
+        shortLabel: 'Nov',
+        type: 'months'
       }, {
-        value: 'dec',
+        id: 12,
+        value: '12',
         label: 'December',
-        shortLabel: 'Dec'
+        shortLabel: 'Dec',
+        type: 'months'
+      }
+    ]
+    let periods = [
+      {
+        id: '2030-2059',
+        label: '2030-2059',
+        min: 2030,
+        max: 2059
+      }, {
+        id: '2070-2099',
+        label: '2070-2099',
+        min: 2070,
+        max: 2099
       }
     ]
     return {
       isLoaded: false,
       sliderValue: [2040, 2060],
-      activePeriod: months[0],
+      activeTimePeriod: months[0],
       months: months,
       variables: [],
       activeVariable: false,
-      activeTime: '2030-2059',
+      periods: periods,
+      activePeriod: periods[0],
       models: [
         {
           title: 'CanESM2'
@@ -181,22 +218,31 @@ export default {
       ],
       seasons: [
         {
-          value: 'MAM',
-          label: 'Spring'
+          id: 13,
+          value: '01',
+          label: 'Spring',
+          type: 'seasons'
         }, {
-          value: 'JJAS',
-          label: 'Summer'
+          id: 14,
+          value: '02',
+          label: 'Summer',
+          type: 'seasons'
         }, {
-          value: 'OND',
-          label: 'Autumn'
+          id: 15,
+          value: '03',
+          label: 'Autumn',
+          type: 'seasons'
         }, {
-          value: 'JF',
-          label: 'Winter'
+          id: 16,
+          value: '04',
+          label: 'Winter',
+          type: 'seasons'
         }
       ],
       annual: {
-        value: 'ann',
-        label: 'Annual'
+        id: 17,
+        label: 'Annual',
+        type: 'annual'
       }
     }
   },
@@ -205,50 +251,12 @@ export default {
       name: 'cdd',
       label: 'Consecutive dry days',
       description: 'Maximum number of consecutive dry days',
-      layerName: 'historical:Rainf_CDD',
-      legendName: 'wfdei_CDD',
-      startDate: 1984,
-      endDate: 2013
+      styleName: 'CCSM4'
     }, {
-    //   name: 'Chirps',
-    //   label: 'Precipitations',
-    //   description: 'Climate Hazards group InfraRed Precipitation with Stations',
-    //   layerName: 'historical:monthly_chirps_precip',
-    //   legendName: 'chirps-20180101_1',
-    //   startDate: 1984,
-    //   endDate: 2013
-    // }, {
-    //   name: 'ERAI',
-    //   label: '2 metres temperature',
-    //   description: '2 metres temperature',
-    //   layerName: 'historical:monthly_erai_tmean(2mt)',
-    //   legendName: 'ERAI_tmean',
-    //   startDate: 1987,
-    //   endDate: 2016
-    // }, {
-    //   name: 'R95',
-    //   label: 'Rainfall on days > 95th percentile',
-    //   description: 'Total amount of rainfall in a year, occurring on days which exceed the 95th percentile of average rainfall',
-    //   layerName: 'historical:Rainf_R95p',
-    //   legendName: 'wfdei_R95p',
-    //   startDate: 1984,
-    //   endDate: 2013
-    // }, {
-    //   name: 'TX25',
-    //   label: 'Days > 25°C',
-    //   description: 'Number of days in a year exceeding 25°C, based on the WFDEI dataset',
-    //   layerName: 'historical:Tair_TX25',
-    //   legendName: 'wfdei_tx25',
-    //   startDate: 1984,
-    //   endDate: 2012
-    // }, {
-      name: 'tx30',
+      name: 'TX30',
       label: 'Days > 30°C',
       description: 'Number of days in a year exceeding 30°C, based on the WFDEI dataset',
-      layerName: 'historical:Tair_TX30',
-      legendName: 'wfdei_tx30',
-      startDate: 1984,
-      endDate: 2012
+      styleName: 'CCSM4_tx30anom'
     }]
     this.activeVariable = this.variables[0]
     this.isLoaded = true
