@@ -1,5 +1,5 @@
 <template>
-    <div id="popup" v-if="value">
+    <div v-if="value">
       {{value}}
     </div>
 </template>
@@ -12,7 +12,8 @@ export default {
   name: 'Popup',
   data () {
     return {
-      value: false
+      value: false,
+      popup: false
     }
   },
   inject: ['getMap', 'getDisplayedLayer'],
@@ -33,7 +34,7 @@ export default {
         if (unitLabel) {
           this.value += unitLabel
         }
-        new Popup({
+        this.popup = new Popup({
           maxWidth: 800
         })
           .setLatLng(latlng)
@@ -41,6 +42,10 @@ export default {
           .openOn(this.getMap())
       }
     }
+  },
+  destroyed () {
+    this.getMap().off('click', this.getFeatureInfo, this)
+    this.getMap().closePopup(this.popup)
   }
 }
 </script>

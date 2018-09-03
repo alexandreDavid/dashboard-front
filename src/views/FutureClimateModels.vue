@@ -18,21 +18,7 @@
             </div>
           </div>
           <div class="card-body position-relative">
-            <MiniMap v-if="!model.maximize" :minimapKey="key" v-bind:parameter="model.param"></MiniMap>
-            <div v-else style="
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;">
-              <div :id="`map-container${model.label}`" class="h-100 w-100"></div>
-              <!-- <Popup /> -->
-              <div class="over-map">
-                <div class="over-map-right over-map-control">
-                  <img v-bind:src="model.legendUrl">
-                </div>
-              </div>
-            </div>
+            <MiniMap :minimapKey="key" v-bind:parameter="model.param" v-bind:interactive="model.maximize"></MiniMap>
           </div>
         </div>
         <div class="card h-100 m-2 add-model" v-if="availableModels.length">
@@ -50,20 +36,15 @@
 </template>
 
 <script>
-import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import MiniMap from '@/components/Map/MiniMap'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 import { faWindowMaximize, faWindowRestore } from '@fortawesome/free-regular-svg-icons'
 import FutureClimateModels from '@/store/futureClimateModels'
-import MapObj from '@/store/map'
-import AreaLayer from '@/store/areaLayer'
-import DisplayedLayer from '@/store/displayedLayer'
 
 export default {
   name: 'FutureClimateModels',
   components: {
-    Legend,
     MiniMap,
     FontAwesomeIcon
   },
@@ -92,40 +73,33 @@ export default {
     this.availableModels.filter(m => m.default).forEach(this.addModel)
   },
   methods: {
-    addModel (model) {
-      this.models.push({
-        label: model.label,
-        name: model.name,
-        maximize: false,
-        param: {
-          layerUrl: `http://18.130.18.23:8180/geoserver/${model.name}/ows`,
-          layerParameters: {
-            layers: `${model.name}:${model.name}_${this.variable}anom_${this.timePeriod.value}_${this.period}`,
-            format: 'image/png',
-            transparent: true
-          }
+    setParam (model) {
+      model.param = {
+        layerUrl: `http://18.130.18.23:8180/geoserver/${model.name}/ows`,
+        layerParameters: {
+          layers: `${model.name}:${model.name}_${this.variable}anom_${this.timePeriod.value}_${this.period}`,
+          format: 'image/png',
+          transparent: true
         },
         legendUrl: `http://18.130.18.23:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=${model.styleName}`
-      })
+      }
+    },
+    addModel (model) {
+      let newModel = {
+        label: model.label,
+        name: model.name,
+        styleName: model.styleName,
+        maximize: false
+      }
+      this.setParam(newModel)
+      this.models.push(newModel)
       const modelIdx = this.availableModels.findIndex(m => m.label === model.label)
       if (modelIdx !== -1) {
         this.availableModels.splice(modelIdx, 1)
       }
     },
     reloadModels () {
-      const savedModels = this.models
-      this.models = []
-      savedModels.forEach(this.addModel)
-      // this.models.forEach(m => {
-      //   m.param = {
-      //     layerUrl: `http://18.130.18.23:8180/geoserver/${m.name}/ows`,
-      //     layerParameters: {
-      //       layers: `${m.name}:${m.name}_${this.variable}anom_${this.timePeriod}_${this.period}`,
-      //       format: 'image/png',
-      //       transparent: true
-      //     }
-      //   }
-      // })
+      this.models.forEach(this.setParam)
     },
     selectModel2Add (model) {
       if (model) {
@@ -135,11 +109,6 @@ export default {
     },
     maximizeModel (model) {
       model.maximize = true
-      this.$nextTick(function () {
-        let map = new MapObj(`map-container${model.label}`)
-        new AreaLayer(map, {id: 7552})
-        new DisplayedLayer(map, model.param)
-      })
     },
     minimizeModel (model) {
       model.maximize = false

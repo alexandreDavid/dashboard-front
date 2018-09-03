@@ -1,12 +1,13 @@
 <template>
-  <div :id="mapId" class="minimap-container">
-    <!-- <div class="over-map">
-      <div class="over-map-right over-map-control">
-        <Legend class="over-map-control" v-if="isLoaded && parameter.interactiveLegend"></Legend>
-        <img v-bind:src="parameter.legendUrl" v-else>
+  <div class="minimap">
+    <div :id="mapId" class="minimap-container">
+      <Popup v-if="interactive"/>
+    </div>
+    <div class="over-map">
+      <div v-if="interactive" class="over-map-right over-map-control">
+        <img v-bind:src="parameter.legendUrl">
       </div>
-    </div> -->
-    <!-- <Popup v-if="isLoaded"/> -->
+    </div>
   </div>
 </template>
 
@@ -25,7 +26,8 @@ export default {
   props: [
     'area',
     'parameter',
-    'minimapKey'
+    'minimapKey',
+    'interactive'
   ],
   data () {
     return {
@@ -59,6 +61,10 @@ export default {
         this.areaLayer.zoomToArea()
       },
       deep: true
+    },
+    interactive (val) {
+      this.map.invalidateSize()
+      this.areaLayer.zoomToArea()
     }
   },
   methods: {
