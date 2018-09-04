@@ -248,7 +248,7 @@ export default {
   },
   async created () {
     this.variables = [{
-      name: 'cdd',
+      name: 'CDD_anom',
       label: 'Consecutive dry days',
       description: 'Maximum number of consecutive dry days',
       styleName: 'CCSM4'
@@ -256,6 +256,11 @@ export default {
       name: 'TX30',
       label: 'Days > 30°C',
       description: 'Number of days in a year exceeding 30°C, based on the WFDEI dataset',
+      styleName: 'CCSM4_tx30anom'
+    }, {
+      name: 'dry_spells',
+      label: 'Dry spells',
+      description: 'Dry spells',
       styleName: 'CCSM4_tx30anom'
     }]
     this.activeVariable = this.variables[0]
