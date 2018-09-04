@@ -3,34 +3,42 @@
     <div v-if="isLoaded" class="d-flex flex-column h-100">
       <div class="shadow py-2 flex-shrink-1 sticky-bar">
         <div class="form-inline">
-          <label class="m-2" for="region">Region</label>
-          <select class="m-2 custom-select" id="region" name="region">
-            <option value="1">Uganda</option>
-          </select>
-          <label class="m-2" for="inlineFormCustomSelectPref">Climate variable</label>
-          <select class="m-2 custom-select" v-model="activeVariable" id="inlineFormCustomSelectPref">
-            <option v-for="variable in variables" :key="variable.name" :value="variable">{{ variable.label }}</option>
-          </select>
-          <label class="m-2" for="timePeriod">Month/Season/Annual</label>
-          <select v-model="activeTimePeriod" class="m-2 custom-select" id="timePeriod" name="timePeriod">
-            <option v-for="month in months" :key="month.id" :value="month">{{ month.label }}</option>
-            <option v-for="season in seasons" :key="season.id" :value="season">{{ season.label }}</option>
-            <option :value="annual">{{ annual.label }}</option>
-          </select>
-          <div class="btn-group m-2" role="group" aria-label="Basic example">
+          <div class="form-group">
+            <label class="m-2" for="region">Region</label>
+            <select class="m-2 custom-select" id="region" name="region">
+              <option value="1">Uganda</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="m-2" for="inlineFormCustomSelectPref">Climate variable</label>
+            <select class="m-2 custom-select" v-model="activeVariable" id="inlineFormCustomSelectPref">
+              <option v-for="variable in variables" :key="variable.name" :value="variable">{{ variable.label }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="m-2" for="timePeriod">Month/Season/Annual</label>
+            <select v-model="activeTimePeriod" class="m-2 custom-select" id="timePeriod" name="timePeriod">
+              <option v-for="month in months" :key="month.id" :value="month">{{ month.label }}</option>
+              <option v-for="season in seasons" :key="season.id" :value="season">{{ season.label }}</option>
+              <option :value="annual">{{ annual.label }}</option>
+            </select>
+          </div>
+          <!-- <div class="btn-group m-2" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-primary active">CMIP5</button>
             <button type="button" class="btn btn-primary" disabled>CORDEX</button>
-          </div>
-          <div class="btn-group m-2" role="group" aria-label="Basic example">
+          </div> -->
+          <!-- <div class="btn-group m-2" role="group" aria-label="Basic example">
             <button type="button" class="btn btn-secondary active">Anomaly</button>
             <button type="button" class="btn btn-secondary" disabled>Model consensus</button>
+          </div> -->
+          <div class="form-group">
+            <label class="m-2" for="period">Period</label>
+            <select v-model="activePeriod" class="m-2 custom-select" id="period" name="period">
+              <option v-for="period in periods" :key="period.id" :value="period">{{ period.label }}</option>
+            </select>
           </div>
-          <label class="m-2" for="period">Period</label>
-          <select v-model="activePeriod" class="m-2 custom-select" id="period" name="period">
-            <option v-for="period in periods" :key="period.id" :value="period">{{ period.label }}</option>
-          </select>
         </div>
-        <FutureClimateRangeSlider v-model="sliderValue" class="w-100 px-4"></FutureClimateRangeSlider>
+        <!-- <FutureClimateRangeSlider v-model="sliderValue" class="w-100 px-4"></FutureClimateRangeSlider> -->
       </div>
       <div class="position-relative h-100">
         <div class="container-fluid" style="
