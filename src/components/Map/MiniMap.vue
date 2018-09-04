@@ -77,6 +77,9 @@ export default {
     getDisplayedLayer () {
       return this.displayedLayer
     }
+  },
+  destroyed () {
+    this.map.remove()
   }
 }
 </script>
