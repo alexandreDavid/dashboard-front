@@ -96,99 +96,19 @@
 import Loading from '@/components/Loading/Loading'
 import FutureClimateModels from '@/views/FutureClimateModels'
 import HistoricalAnomalyPage from '@/views/HistoricalAnomalyPage'
-import SearchLocation from '@/components/SearchLocation/SearchLocation'
+import config from '@/store/futureClimateConfiguration'
 import FutureClimateRangeSlider from '@/components/Slider/FutureClimateRangeSlider'
 
 export default {
   name: 'FutureClimatePage',
   components: {
     Loading,
-    SearchLocation,
     FutureClimateModels,
     HistoricalAnomalyPage,
     FutureClimateRangeSlider
   },
-  provide () {
-    return {
-      getDisplayedLayer: this.getDisplayedLayer
-    }
-  },
   data () {
-    const months = [
-      {
-        id: 1,
-        value: '01',
-        label: 'January',
-        shortLabel: 'Jan',
-        type: 'months'
-      }, {
-        id: 2,
-        value: '02',
-        label: 'February',
-        shortLabel: 'Feb',
-        type: 'months'
-      }, {
-        id: 3,
-        value: '03',
-        label: 'March',
-        shortLabel: 'Mar',
-        type: 'months'
-      }, {
-        id: 4,
-        value: '04',
-        label: 'April',
-        shortLabel: 'Apr',
-        type: 'months'
-      }, {
-        id: 5,
-        value: '05',
-        label: 'May',
-        shortLabel: 'May',
-        type: 'months'
-      }, {
-        id: 6,
-        value: '06',
-        label: 'June',
-        shortLabel: 'Jun',
-        type: 'months'
-      }, {
-        id: 7,
-        value: '07',
-        label: 'July',
-        shortLabel: 'Jul',
-        type: 'months'
-      }, {
-        id: 8,
-        value: '08',
-        label: 'August',
-        shortLabel: 'Aug',
-        type: 'months'
-      }, {
-        id: 9,
-        value: '09',
-        label: 'September',
-        shortLabel: 'Sep',
-        type: 'months'
-      }, {
-        id: 10,
-        value: '10',
-        label: 'October',
-        shortLabel: 'Oct',
-        type: 'months'
-      }, {
-        id: 11,
-        value: '11',
-        label: 'November',
-        shortLabel: 'Nov',
-        type: 'months'
-      }, {
-        id: 12,
-        value: '12',
-        label: 'December',
-        shortLabel: 'Dec',
-        type: 'months'
-      }
-    ]
+    const months = config.getAllMonths()
     let periods = [
       {
         id: '2030-2059',
@@ -211,19 +131,6 @@ export default {
       activeVariable: false,
       periods: periods,
       activePeriod: periods[0],
-      models: [
-        {
-          title: 'CanESM2'
-        }, {
-          title: 'HadGEM2-ES'
-        }, {
-          title: 'MIROC5'
-        }, {
-          title: 'MPI-ESM-LR'
-        }, {
-          title: 'CNRM-CM5'
-        }
-      ],
       seasons: [
         {
           id: 13,
@@ -273,21 +180,6 @@ export default {
     }]
     this.activeVariable = this.variables[0]
     this.isLoaded = true
-  },
-  methods: {
-    onSelectVariable (selectedVariable) {
-      console.log(selectedVariable)
-      this.activeVariable = selectedVariable.name
-    },
-    getDisplayedLayer () {
-      return this.displayedLayer
-    },
-    maximizeModel (index) {
-      this.models[index].maximize = true
-    },
-    minimizeModel (index) {
-      this.models[index].maximize = false
-    }
   }
 }
 </script>

@@ -33,7 +33,14 @@ export default {
       return faPlus
     }
   },
-  props: ['variable', 'period'],
+  props: {
+    variable: {
+      required: true
+    },
+    period: {
+      required: true
+    }
+  },
   data () {
     return {
       allMiniMaps: [],

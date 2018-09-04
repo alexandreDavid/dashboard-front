@@ -40,7 +40,7 @@ import MiniMap from '@/components/Map/MiniMap'
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 import { faWindowMaximize, faWindowRestore } from '@fortawesome/free-regular-svg-icons'
-import FutureClimateModels from '@/store/futureClimateModels'
+import FutureClimateModels from '@/store/futureClimateConfiguration'
 
 export default {
   name: 'FutureClimateModels',
@@ -118,9 +118,7 @@ export default {
     }
   },
   watch: {
-    variable () {
-      this.reloadModels()
-    },
+    variable: 'reloadModels',
     period: 'reloadModels',
     timePeriod: 'reloadModels'
   }
