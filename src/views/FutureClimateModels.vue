@@ -21,15 +21,15 @@
             <MiniMap :minimapKey="key" v-bind:parameter="model.param" v-bind:interactive="model.maximize"></MiniMap>
           </div>
         </div>
-        <div class="card h-100 m-2 add-model" v-if="availableModels.length">
+        <label class="card h-100 m-2 add-model" for="add-model" v-if="availableModels.length">
           <div class="m-auto text-center">
             <div class="font-weight-bold">Add a model</div>
             <font-awesome-icon :icon="iconPlus" class="fa-3x"></font-awesome-icon>
-            <select class="custom-select" v-model="model2Add" @change="selectModel2Add(model2Add)">
+            <select id="add-model" class="custom-select" v-model="model2Add" @change="selectModel2Add(model2Add)">
               <option v-for="(model, key) in availableModels" :key="key" :value="model">{{ model.label }}</option>
             </select>
           </div>
-        </div>
+        </label>
       </div>
     </div>
   </div>
