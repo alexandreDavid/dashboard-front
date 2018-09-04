@@ -53,13 +53,7 @@
               {{ activeVariable.description }} - {{(activeVariable.type !== 'Daily') ? `${activePeriod.label} ` : ''}}{{ activeYear }}
             </div>
             <div class="card-body position-relative">
-              <div id="historical-map-container"></div>
-              <Popup v-if="mapIsLoaded"/>
-              <div class="over-map" v-if="mapIsLoaded">
-                <div class="over-map-right over-map-control">
-                  <img v-bind:src="getDisplayedLayer()._legendUrl">
-                </div>
-              </div>
+              <MiniMap minimapKey="historical-map-container" v-bind:parameter="displayedLayer" interactive="true"></MiniMap>
             </div>
           </div>
         </div>
@@ -76,28 +70,15 @@
 
 <script>
 import Loading from '@/components/Loading/Loading'
-import MapObj from '@/store/map'
 import HistoricalActualPage from '@/views/HistoricalActualPage'
-import AreaLayer from '@/store/areaLayer'
-import Parameter from '@/store/parameter'
-import DisplayedLayer from '@/store/displayedLayer'
-import Area from '@/store/area.js'
-import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
-import Popup from '@/components/Map/Popup'
+import MiniMap from '@/components/Map/MiniMap'
 
 export default {
   name: 'HistoricalPage',
   components: {
     Loading,
     HistoricalActualPage,
-    Legend,
-    Popup
-  },
-  provide () {
-    return {
-      getMap: this.getMap,
-      getDisplayedLayer: this.getDisplayedLayer
-    }
+    MiniMap
   },
   data () {
     const months = [
@@ -153,12 +134,8 @@ export default {
     ]
     return {
       isLoaded: false,
-      mapIsLoaded: false,
       selectedTab: 'actual',
-      map: false,
-      selectedArea: Area.getSelectedArea(),
-      parameter: Parameter.getDisplayedParameter(),
-      areaLayer: false,
+      displayedLayer: false,
       variables: [],
       activeVariable: false,
       activeYear: false,
@@ -227,11 +204,7 @@ export default {
     this.isLoaded = true
   },
   mounted () {
-    this.map = new MapObj('historical-map-container')
-    this.areaLayer = new AreaLayer(this.map, {id: 7552})
-    this.displayedLayer = new DisplayedLayer(this.map)
     this.onSelectVariable(this.activeVariable)
-    this.mapIsLoaded = true
   },
   watch: {
     activeVariable (variable) {
@@ -242,18 +215,12 @@ export default {
     }
   },
   methods: {
-    onSearchLocationSelected (location) {
-      this.selectedArea = location
-      if (location) {
-        this.areaLayer.setSelectedArea(location)
-      }
-    },
     onSelectVariable (selectedVariable, year) {
       this.activeYear = year || selectedVariable.endDate
       if (selectedVariable.type !== 'Monthly') {
         this.activePeriod = this.months[0]
       }
-      this.displayedLayer.setDisplayedLayer({
+      this.displayedLayer = {
         layerUrl: 'http://18.130.18.23:8180/geoserver/historical/ows',
         legendUrl: `http://18.130.18.23:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=${selectedVariable.legendName}`,
         layerParameters: {
@@ -262,16 +229,10 @@ export default {
           transparent: true,
           time: `${this.activeYear}-${this.activePeriod.value}`
         }
-      })
+      }
     },
     changeYear (year) {
       this.onSelectVariable(this.activeVariable, year)
-    },
-    getMap () {
-      return this.map
-    },
-    getDisplayedLayer () {
-      return this.displayedLayer
     }
   }
 }

@@ -46,6 +46,7 @@ export default {
   mounted () {
     this.lastDisplayedYear = this.variable.endDate
     this.displayNextYears()
+    this.activeMiniMap = this.allMiniMaps[0].title
   },
   methods: {
     displayNextYears () {

@@ -1,7 +1,7 @@
 <template>
   <div class="minimap">
     <div :id="mapId" class="minimap-container">
-      <Popup v-if="interactive"/>
+      <Popup v-if="interactive && isLoaded"/>
     </div>
     <div class="over-map">
       <div v-if="interactive" class="over-map-right over-map-control">
@@ -58,7 +58,10 @@ export default {
     parameter: {
       handler (newParam) {
         this.getDisplayedLayer().setDisplayedLayer(newParam)
-        this.areaLayer.zoomToArea()
+        if (this.areaLayer.isReady()) {
+          this.map.invalidateSize()
+          this.areaLayer.zoomToArea()
+        }
       },
       deep: true
     },

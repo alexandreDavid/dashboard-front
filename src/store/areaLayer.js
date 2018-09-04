@@ -6,6 +6,7 @@ let ugandaArea = false
 let AreaLayer = class {
   _areaLayer = false
   _map = false
+  _isReady = false
 
   constructor (map, area) {
     this._map = map
@@ -32,9 +33,13 @@ let AreaLayer = class {
     }
     this._areaLayer = new GeoJSON(areaData.data, AreaLayer.getAreaLayerStyle()).addTo(this._map)
     this.zoomToArea()
+    this._isReady = true
   }
   zoomToArea () {
     this._map.fitBounds(this._areaLayer.getBounds())
+  }
+  isReady () {
+    return this._isReady
   }
 }
 
