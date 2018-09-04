@@ -81,6 +81,7 @@ export default {
       this.displayAddYearsButton = true
       this.lastDisplayedYear = this.variable.endDate
       this.displayNextYears()
+      this.activeMiniMap = this.allMiniMaps[0].title
     },
     period (period) {
       this.allMiniMaps.forEach(m => {
