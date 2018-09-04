@@ -46,19 +46,19 @@
                 <h6>Months</h6>
                 <div class="mb-1 d-flex flex-wrap">
                   <div v-for="(month, key) in months" :key="key" class="p-1" style="min-width: 80px">
-                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = month" v-bind:class="{active: activeTimePeriod.value === month.value}">{{ month.shortLabel }}</button>
+                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = month" v-bind:class="{active: activeTimePeriod.id === month.id}">{{ month.shortLabel }}</button>
                   </div>
                 </div>
                 <h6>Seasons</h6>
                 <div class="mb-1 d-flex flex-wrap">
                   <div v-for="(season, key) in seasons" :key="key" class="p-1" style="min-width: 80px">
-                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = season" v-bind:class="{active: activeTimePeriod.value === season.value}">{{ season.label }}</button>
+                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = season" v-bind:class="{active: activeTimePeriod.id === season.id}">{{ season.label }}</button>
                   </div>
                 </div>
                 <h6>Annual</h6>
                 <div class="mb-1 d-flex flex-wrap">
                   <div class="p-1" style="min-width: 80px">
-                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = annual" v-bind:class="{active: activeTimePeriod.value === annual.value}">{{ annual.label }}</button>
+                    <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = annual" v-bind:class="{active: activeTimePeriod.id === annual.id}">{{ annual.label }}</button>
                   </div>
                 </div>
               </div>
