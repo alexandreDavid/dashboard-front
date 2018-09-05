@@ -16,13 +16,15 @@ jest.mock('@/utils/unit', () => ({
   getLabel: jest.fn().mockReturnValue('getLabel')
 }))
 
-const mockMapOn = jest.fn()
+const mockMap = {
+  on: jest.fn(),
+  off: jest.fn(),
+  closePopup: jest.fn()
+}
 
 function getMapMock () {
   return function () {
-    return {
-      on: mockMapOn
-    }
+    return mockMap
   }
 }
 
@@ -47,7 +49,7 @@ describe('Popup.vue', () => {
       }
     })
     expect(wrapper.vm.value).toBe(false)
-    expect(mockMapOn).toBeCalled()
+    expect(mockMap.on).toBeCalled()
     L.Popup.mockClear()
     Unit.convert.mockClear()
     mockDisplayedLayer.getUnit.mockClear()
@@ -107,5 +109,12 @@ describe('Popup.vue', () => {
     expect(Unit.convert).not.toBeCalled()
     expect(wrapper.vm.value).toBe(false)
     expect(L.Popup).not.toBeCalled()
+  })
+
+  it('On destroy', () => {
+    wrapper.destroy()
+    expect(mockMap.off).toHaveBeenCalledTimes(1)
+    expect(mockMap.closePopup).toHaveBeenCalledTimes(1)
+    expect(mockMap.closePopup).toHaveBeenCalledWith(wrapper.vm.popup)
   })
 })
