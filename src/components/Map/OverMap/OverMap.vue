@@ -9,15 +9,6 @@
         </div>
         <div class="p-1 d-block d-sm-none over-map-control">
           <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top" v-bind:class="{shadow: !searchLocationResult}"><font-awesome-icon :icon="iconMenu" /></button>
-          <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
-            <button @click="$router.push({ name: 'settings' })" class="btn btn-secondary mb-2"><font-awesome-icon :icon="iconSettings" /> Settings</button>
-            <div class="card">
-              <h5 class="card-header">Forecast model parameters</h5>
-              <div class="card-body">
-                <ForecastSelection @selectedParameter="onSelectedParameter"></ForecastSelection>
-              </div>
-            </div>
-          </SideBar>
         </div>
       </div>
     </div>
@@ -43,6 +34,15 @@
       <TimeSlotMobile class="p-2" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
       <Legend class="over-map-control" asline="true"></Legend>
     </div>
+    <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
+      <button @click="$router.push({ name: 'settings' })" class="btn btn-secondary mb-2"><font-awesome-icon :icon="iconSettings" /> Settings</button>
+      <div class="card">
+        <h5 class="card-header">Forecast model parameters</h5>
+        <div class="card-body">
+          <ForecastSelection @selectedParameter="onSelectedParameter"></ForecastSelection>
+        </div>
+      </div>
+    </SideBar>
   </div>
 </template>
 
