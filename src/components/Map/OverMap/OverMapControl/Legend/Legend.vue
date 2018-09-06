@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <img v-bind:src="getDisplayedLayer()._legendUrl" v-else>
+    <img v-bind:src="getDisplayedLayer()._legendUrl" v-else-if="!asline">
   </div>
 </template>
 

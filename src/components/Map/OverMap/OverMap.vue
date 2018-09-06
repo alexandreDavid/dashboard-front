@@ -39,8 +39,9 @@
         <TimeSlot class="d-inline-block align-bottom pl-4" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
       </div>
     </div>
-    <div class="over-map-bottom d-block d-sm-none p-2 over-map-control">
-      <TimeSlotMobile v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
+    <div class="over-map-bottom d-block d-sm-none p-0 over-map-control">
+      <TimeSlotMobile class="p-2" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
+      <Legend class="over-map-control" asline="true"></Legend>
     </div>
   </div>
 </template>
@@ -65,6 +66,7 @@ import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
 import Loading from '@/components/Loading/Loading'
 import Modal from '@/components/Modal/Modal'
+import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
 export default {
   name: 'OverMap',
@@ -79,6 +81,7 @@ export default {
     TimeSlot,
     TimeSlotMobile,
     Modal,
+    Legend,
     Graph: () => ({
       component: import('@/components/Graph/Graph'),
       loading: Loading,
