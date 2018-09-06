@@ -2,6 +2,8 @@ import {
   TileLayer
 } from 'leaflet'
 import axios from 'axios'
+import Unit from '@/utils/unit'
+import UserConfiguration from '@/store/userConfiguration'
 
 export default class {
   _displayedLayer = false
@@ -24,7 +26,7 @@ export default class {
     if (this._map && this._parameter && this._parameter.layerUrl) {
       this._displayedLayer = new TileLayer.WMS(this._parameter.layerUrl, this._parameter.layerParameters).addTo(this._map)
       this._defaultUnit = this._parameter.unit
-      this._activeUnit = this._defaultUnit
+      this._activeUnit = UserConfiguration.getUnitByFamily(Unit.getFamilyUnit(this._defaultUnit)) || this._defaultUnit
       this._hasInteractiveLegend = this._parameter.interactiveLegend
       this._legendUrl = this._parameter.legendUrl
     }

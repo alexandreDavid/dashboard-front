@@ -36,6 +36,10 @@ export default {
   getUnitsFamily (family) {
     return units.filter(u => u.family === family).map(({key, label}) => ({key, label}))
   },
+  getFamilyUnit (key) {
+    const unit = getUnit(key)
+    return unit && unit.family
+  },
   convert (unitInput, unitOutput, val) {
     const unitConfig = getUnit(unitInput)
     if (unitConfig && unitConfig.conversion && unitConfig.conversion[unitOutput]) {

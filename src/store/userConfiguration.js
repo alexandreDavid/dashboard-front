@@ -988,6 +988,9 @@ let configuration = {
     type: 'district',
     name: 'Abim',
     id: 5
+  },
+  units: {
+    temperature: 'C'
   }
 }
 
@@ -997,5 +1000,8 @@ export default {
   },
   getArea () {
     return configuration.area
+  },
+  getUnitByFamily (family) {
+    return configuration.units[family]
   }
 }

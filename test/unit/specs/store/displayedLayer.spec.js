@@ -1,6 +1,8 @@
 import DisplayedLayer from '@/store/displayedLayer'
 import axios from 'axios'
 import L from 'leaflet'
+import Unit from '@/utils/unit'
+import UserConfiguration from '@/store/userConfiguration'
 
 let mockTileLayerWMS = {
   addTo: jest.fn().mockReturnThis(),
@@ -33,6 +35,13 @@ const mockMap = {
   toBBoxString: jest.fn().mockReturnValue('toBBoxString')
 }
 
+jest.mock('@/utils/unit', () => ({
+  getFamilyUnit: jest.fn()
+}))
+jest.mock('@/store/userConfiguration', () => ({
+  getUnitByFamily: jest.fn()
+}))
+
 describe('displayedLayer.js', () => {
   let displayedLayer
   beforeEach(function () {
@@ -43,6 +52,8 @@ describe('displayedLayer.js', () => {
     mockMap.getZoom.mockClear()
     mockMap.latLngToContainerPoint.mockClear()
     mockMap.toBBoxString.mockClear()
+    Unit.getFamilyUnit.mockClear()
+    UserConfiguration.getUnitByFamily.mockClear()
   })
   it('Calls setDisplayedLayer and do nothing', () => {
     displayedLayer.setDisplayedLayer()
@@ -135,9 +146,11 @@ describe('displayedLayer.js', () => {
   })
 
   it('Set units', () => {
+    Unit.getFamilyUnit.mockReturnValue('getFamilyUnit')
+    UserConfiguration.getUnitByFamily.mockReturnValue('getUnitByFamily')
     displayedLayer.setDisplayedLayer(mockParam)
     expect(displayedLayer.getDefaultUnit()).toBe(mockParam.unit)
-    expect(displayedLayer.getUnit()).toBe(mockParam.unit)
+    expect(displayedLayer.getUnit()).toBe('getUnitByFamily')
     displayedLayer.setUnit('newUnit')
     expect(displayedLayer.getUnit()).toBe('newUnit')
   })
