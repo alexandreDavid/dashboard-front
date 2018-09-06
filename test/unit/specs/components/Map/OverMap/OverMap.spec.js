@@ -80,7 +80,7 @@ describe('OverMap.vue', () => {
   })
 
   it('Mounted correctly', () => {
-    expect(AreaLayer).toBeCalledWith(mockMap)
+    expect(AreaLayer).toBeCalledWith(mockMap, 'getSelectedArea')
     expect(Parameter.getDisplayedParameter).toBeCalled()
   })
 
