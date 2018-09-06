@@ -53,6 +53,7 @@ export default {
     this.areaLayer = new AreaLayer(this.map, {id: 7552})
     this.displayedLayer = new DisplayedLayer(this.map, this.parameter)
     this.isLoaded = true
+    this.toggleMapHandlers(this.interactive)
   },
   watch: {
     parameter: {
@@ -68,9 +69,16 @@ export default {
     interactive (val) {
       this.map.invalidateSize()
       this.areaLayer.zoomToArea()
+      this.toggleMapHandlers(val)
     }
   },
   methods: {
+    toggleMapHandlers (toggle) {
+      const handlers = ['boxZoom', 'doubleClickZoom', 'dragging', 'keyboard', 'scrollWheelZoom', 'tap', 'touchZoom']
+      handlers.forEach(h => {
+        this.map[h] && this.map[h][toggle ? 'enable' : 'disable']()
+      })
+    },
     getMap () {
       return this.map
     },

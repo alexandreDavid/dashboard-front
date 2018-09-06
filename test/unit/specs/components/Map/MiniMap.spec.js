@@ -6,7 +6,11 @@ import DisplayedLayer from '@/store/displayedLayer.js'
 
 const mockMap = {
   invalidateSize: jest.fn(),
-  remove: jest.fn()
+  remove: jest.fn(),
+  boxZoom: {
+    enable: jest.fn(),
+    disable: jest.fn()
+  }
 }
 jest.mock('@/store/map.js', () => {
   return jest.fn().mockImplementation(() => {
@@ -55,6 +59,7 @@ describe('Map.vue', () => {
     expect(MapObj).toBeCalledWith('minimap-container-minimapKey')
     expect(AreaLayer).toBeCalledWith(mockMap, {id: 7552})
     expect(DisplayedLayer).toBeCalledWith(mockMap, 'parameter')
+    expect(mockMap.boxZoom.disable).toHaveBeenCalledTimes(1)
   })
 
   it('Providers are correct', async () => {
@@ -66,6 +71,7 @@ describe('Map.vue', () => {
     wrapper.setProps({interactive: true})
     expect(mockMap.invalidateSize).toHaveBeenCalledTimes(1)
     expect(mockAreaLayer.zoomToArea).toHaveBeenCalledTimes(1)
+    expect(mockMap.boxZoom.enable).toHaveBeenCalledTimes(1)
   })
 
   it('on parameter prop changes and areaLayer not ready', () => {
