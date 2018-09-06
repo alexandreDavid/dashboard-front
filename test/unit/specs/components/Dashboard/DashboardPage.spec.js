@@ -2,10 +2,11 @@ import DashboardPage from '@/components/Dashboard/DashboardPage.vue'
 import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import Api from '@/store/api'
+import UserConfiguration from '@/store/userConfiguration'
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import { shallowMount } from '@vue/test-utils'
-// import flushPromises from 'flush-promises'
+
 jest.mock('@/store/parameter', () => ({
   getAllParameters: jest.fn(),
   getParams: jest.fn()
@@ -15,6 +16,10 @@ jest.mock('@/store/area', () => ({
 }))
 jest.mock('@/store/api', () => ({
   setDashboard: jest.fn()
+}))
+
+jest.mock('@/store/userConfiguration', () => ({
+  getDashboardConfiguration: jest.fn()
 }))
 
 const mockScrollBy = jest.fn()
@@ -31,6 +36,7 @@ describe('DashboardPage.vue', () => {
     Area.getSelectedArea.mockClear()
     Area.getSelectedArea.mockReturnValue({})
     Api.setDashboard.mockClear()
+    UserConfiguration.getDashboardConfiguration.mockReturnValue({title: 'title', cards: []})
   })
 
   it('has a created hook', () => {
@@ -40,6 +46,7 @@ describe('DashboardPage.vue', () => {
   it('correctly sets the values when created', async () => {
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
+    expect(UserConfiguration.getDashboardConfiguration).toHaveBeenCalledTimes(1)
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 
@@ -48,6 +55,8 @@ describe('DashboardPage.vue', () => {
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.isLoaded).toBe(true)
+
+    wrapper.find('.edit').trigger('click')
     expect(wrapper.vm.isEditing).toBe(true)
 
     const button = wrapper.find('#add-card')
@@ -64,15 +73,14 @@ describe('DashboardPage.vue', () => {
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.isLoaded).toBe(true)
+
+    const buttonEdit = wrapper.find('.edit')
+    buttonEdit.trigger('click')
     expect(wrapper.vm.isEditing).toBe(true)
 
     const buttonSave = wrapper.find('.save')
     buttonSave.trigger('click')
     expect(wrapper.vm.isEditing).toBe(false)
-
-    const buttonEdit = wrapper.find('.edit')
-    buttonEdit.trigger('click')
-    expect(wrapper.vm.isEditing).toBe(true)
   })
 
   it('SearchLocation input emit', async () => {
@@ -87,6 +95,7 @@ describe('DashboardPage.vue', () => {
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.isLoaded).toBe(true)
+    wrapper.find('.edit').trigger('click')
     expect(wrapper.vm.isEditing).toBe(true)
     expect(wrapper.vm.showCardModal).toBe(false)
 
@@ -103,6 +112,7 @@ describe('DashboardPage.vue', () => {
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.isLoaded).toBe(true)
+    wrapper.find('.edit').trigger('click')
     expect(wrapper.vm.isEditing).toBe(true)
 
     const button = wrapper.find('#add-card')

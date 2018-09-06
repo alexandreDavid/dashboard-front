@@ -40,6 +40,7 @@ import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 import faEdit from '@fortawesome/fontawesome-free-solid/faEdit'
 import faSave from '@fortawesome/fontawesome-free-solid/faSave'
 import DashboardObj from '@/store/dashboard'
+import UserConfiguration from '@/store/userConfiguration'
 
 export default {
   name: 'DashboardPage',
@@ -75,8 +76,9 @@ export default {
   async created () {
     this.allParameters = await Parameter.getAllParameters()
     this.selectedArea = Area.getSelectedArea()
-    this.isEditing = true
-    this.dashboard = new DashboardObj()
+    // this.isEditing = true
+    const savedDashboard = UserConfiguration.getDashboardConfiguration()
+    this.dashboard = new DashboardObj(savedDashboard.title, savedDashboard.cards)
     this.isLoaded = true
   },
   methods: {

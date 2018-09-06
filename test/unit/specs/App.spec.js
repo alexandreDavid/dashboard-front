@@ -3,12 +3,25 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 
 import Api from '@/store/api'
+import Area from '@/store/area'
+import UserConfiguration from '@/store/userConfiguration'
 
 jest.mock('@/store/api', () => ({
   getInitialEnvironmemt: jest.fn()
 }))
 
+jest.mock('@/store/area', () => ({
+  setSelectedArea: jest.fn()
+}))
+
+jest.mock('@/store/userConfiguration', () => ({
+  getArea: jest.fn()
+}))
+
 Api.getInitialEnvironmemt.mockReturnValue(Promise.resolve())
+
+const mockArea = 'mockArea'
+UserConfiguration.getArea.mockReturnValue(mockArea)
 
 const localVue = createLocalVue()
 localVue.use(VueRouter)
@@ -33,6 +46,9 @@ describe('App.vue', () => {
     })
     expect(wrapper.vm.isLoading).toBe(true)
     await wrapper.vm.$nextTick()
+    expect(Api.getInitialEnvironmemt).toHaveBeenCalledTimes(1)
+    expect(UserConfiguration.getArea).toHaveBeenCalledTimes(1)
+    expect(Area.setSelectedArea).toHaveBeenCalledWith(mockArea)
     expect(wrapper.vm.isLoading).toBe(false)
   })
 })
