@@ -194,6 +194,6 @@ export default {
 }
 
 .sticky-bar {
-  z-index: 1020;
+  z-index: 1019;
 }
 </style>
