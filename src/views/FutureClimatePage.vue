@@ -176,7 +176,7 @@ export default {
       name: 'dry_spells',
       label: 'Dry spells',
       description: 'Dry spells',
-      styleName: 'CCSM4_tx30anom'
+      styleName: 'CCSM4_dsanom'
     }]
     this.activeVariable = this.variables[0]
     this.isLoaded = true
