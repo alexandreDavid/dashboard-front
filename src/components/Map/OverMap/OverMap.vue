@@ -118,7 +118,7 @@ export default {
     }
   },
   mounted () {
-    this.areaLayer = new AreaLayer(this.getMap())
+    this.areaLayer = new AreaLayer(this.getMap(), Area.getSelectedArea())
     this.onSelectedParameter(Parameter.getDisplayedParameter())
   },
   methods: {
