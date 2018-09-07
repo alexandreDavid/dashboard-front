@@ -20,14 +20,19 @@
 
 <script>
 import SideBar from '@/components/SideBar/SideBar'
-import ReportedDetailsGraph from './ReportedDetailsGraph'
 import Loading from '@/components/Loading/Loading'
 import ObservationRangeSlider from '@/components/Slider/ObservationRangeSlider'
 import vueSlider from 'vue-slider-component'
 
 export default {
   name: 'ReportedDetailsSideBar',
-  components: { SideBar, ReportedDetailsGraph, Loading, ObservationRangeSlider, vueSlider },
+  components: {
+    SideBar,
+    ReportedDetailsGraph: () => import('./ReportedDetailsGraph'),
+    Loading,
+    ObservationRangeSlider,
+    vueSlider
+  },
   props: {
     reportedDetails: {
       required: true

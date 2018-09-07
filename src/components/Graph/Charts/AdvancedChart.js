@@ -1,4 +1,5 @@
-import { Line, ChartUtil } from './BaseCharts'
+import { Line } from './BaseCharts'
+import ChartUtil from '@/utils/chart'
 
 export default {
   extends: Line,

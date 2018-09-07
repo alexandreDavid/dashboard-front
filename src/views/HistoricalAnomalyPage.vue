@@ -4,11 +4,12 @@
 </template>
 
 <script>
-import FutureClimateGraph from './FutureClimateGraph'
 export default {
   name: 'HistoricalAnomalyPage',
   components: {
-    FutureClimateGraph
+    FutureClimateGraph: () => ({
+      component: import('./FutureClimateGraph')
+    })
   },
   props: [
     'area',

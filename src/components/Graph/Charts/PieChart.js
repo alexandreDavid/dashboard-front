@@ -1,4 +1,5 @@
-import { Pie, ChartUtil } from './BaseCharts'
+import { Pie } from './BaseCharts'
+import ChartUtil from '@/utils/chart'
 
 export default {
   extends: Pie,

@@ -1,4 +1,5 @@
-import { Bar, ChartUtil } from '@/components/Graph/Charts/BaseCharts'
+import { Bar } from '@/components/Graph/Charts/BaseCharts'
+import ChartUtil from '@/utils/chart'
 
 export default {
   extends: Bar,

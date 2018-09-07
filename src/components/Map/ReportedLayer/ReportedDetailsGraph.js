@@ -1,4 +1,5 @@
-import { Line, ChartUtil } from '@/components/Graph/Charts/BaseCharts'
+import { Line } from '@/components/Graph/Charts/BaseCharts'
+import ChartUtil from '@/utils/chart'
 import Observation from '@/store/observation'
 
 export default {

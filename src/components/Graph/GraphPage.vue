@@ -26,8 +26,7 @@ import Area from '@/store/area.js'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import GraphSerie from './GraphSerie'
 import Data from '@/store/data'
-import AdvancedChart from './Charts/AdvancedChart'
-import { ChartUtil } from './Charts/BaseCharts'
+import ChartUtil from '@/utils/chart'
 
 export default {
   name: 'GraphPage',
@@ -36,7 +35,7 @@ export default {
     Loading,
     SearchLocation,
     GraphSerie,
-    AdvancedChart
+    AdvancedChart: () => import('./Charts/AdvancedChart')
   },
   data () {
     return {
