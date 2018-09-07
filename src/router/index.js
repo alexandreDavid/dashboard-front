@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MapPage from '@/components/Map/Map'
-import Login from '@/components/Login/Login'
 import DashboardPage from '@/components/Dashboard/DashboardPage'
 import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
@@ -58,11 +57,6 @@ export default new Router({
       name: 'settings',
       component: SettingsPage,
       beforeEnter: checkAuth
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login
     },
     {
       path: '/error',

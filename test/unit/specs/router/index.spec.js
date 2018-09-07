@@ -10,7 +10,7 @@ jest.mock('@/store/authentication', () => ({
 
 describe('router.js', () => {
   it('Calls init', () => {
-    expect(Router.options.routes.length).toBe(9)
+    expect(Router.options.routes.length).toBe(8)
   })
 
   it('checkAuth without authentication', () => {
