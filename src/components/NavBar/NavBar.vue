@@ -29,7 +29,7 @@
 import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faTachometerAlt from '@fortawesome/fontawesome-free-solid/faTachometerAlt'
 import faMap from '@fortawesome/fontawesome-free-solid/faMap'
-import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
+// import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUser from '@fortawesome/fontawesome-free-solid/faUser'
 import faInfoCircle from '@fortawesome/fontawesome-free-solid/faInfoCircle'
 import faHistory from '@fortawesome/fontawesome-free-solid/faHistory'
@@ -59,13 +59,13 @@ export default {
             self.goTo(this.id)
           },
           icon: faMap
-        }, {
-          id: 'graph',
-          label: 'Graph',
-          click () {
-            self.goTo(this.id)
-          },
-          icon: faChartBar
+        // }, {
+        //   id: 'graph',
+        //   label: 'Graph',
+        //   click () {
+        //     self.goTo(this.id)
+        //   },
+        //   icon: faChartBar
         }, {
           id: 'historical',
           label: 'Historical',

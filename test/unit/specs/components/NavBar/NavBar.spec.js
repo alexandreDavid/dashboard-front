@@ -55,9 +55,9 @@ describe('DashboardCardModal.vue', () => {
     verifyClickGoTo('map')
   })
 
-  it('Click on graph', () => {
-    verifyClickGoTo('graph')
-  })
+  // it('Click on graph', () => {
+  //   verifyClickGoTo('graph')
+  // })
 
   it('Click on profile and toggle sidebar', async () => {
     await verifyClickOpenSideBar('profile')
