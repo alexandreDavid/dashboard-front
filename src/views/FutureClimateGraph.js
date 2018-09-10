@@ -64,18 +64,13 @@ export default {
         label: '(increase)',
         stack: 'Stack 0',
         backgroundColor: ChartUtil.colors.blue,
-        // borderColor: 'blue',
-        // borderWidth: 2,
         data: this.randomValues(1)
       })
 
       datasets.push({
         label: '(decrease) 10th to 90th percentile range 2040 - 2060',
         stack: 'Stack 0',
-        // backgroundColor: 'rgba(255, 0, 0, 0.1)',
         backgroundColor: ChartUtil.colors.red,
-        // borderColor: 'red',
-        // borderWidth: 2,
         data: this.randomValues(-1)
       })
 
@@ -85,8 +80,6 @@ export default {
           label: model,
           fill: false,
           borderWidth: 2,
-          backgroundColor: 'grey',
-          borderColor: 'grey',
           data: this.randomValues(),
           type: 'line'
         })
