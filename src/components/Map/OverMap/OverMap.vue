@@ -72,7 +72,6 @@ export default {
   name: 'OverMap',
   components: {
     SearchLocation,
-    SearchLocationResult: () => import('./OverMapControl/SearchLocationResult/SearchLocationResult'),
     Managing,
     FontAwesomeIcon,
     SideBar: () => import('@/components/SideBar/SideBar'),
