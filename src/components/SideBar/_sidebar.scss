@@ -5,8 +5,8 @@
   background: var(--white);
   transition: all 0.3s;
 
-  .dismiss {
-    position: absolute;
+  &.static {
+    transition: none;
   }
 
   &.left {
@@ -16,12 +16,6 @@
     min-width: 500px;
     max-width: 500px;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
-
-    .dismiss {
-      /* top right corner of the sidebar */
-      top: 10px;
-      right: 10px;
-    }
   }
 
   &.right {
@@ -32,10 +26,8 @@
     max-width: 350px;
     box-shadow: -3px 3px 3px rgba(0, 0, 0, 0.2);
 
-    .dismiss {
-      /* top left corner of the sidebar */
-      top: 10px;
-      left: 10px;
+    .dismiss .close {
+      float: left;
     }
   }
 
@@ -45,21 +37,20 @@
     width: 100vh;
     min-height: 250px;
     max-height: 250px;
-
-    .dismiss {
-      /* top left corner of the sidebar */
-      top: 10px;
-      left: 10px;
-    }
   }
 
   .sidebar-container {
     position: absolute;
     overflow-y: auto;
-    top: 40px;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
+  }
+
+  &.w-md {
+    min-width: 300px;
+    max-width: 300px;
   }
 }
 
