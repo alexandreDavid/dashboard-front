@@ -1,6 +1,26 @@
 import Api from '@/store/api'
 
-let settings = []
+let settings = [
+  {
+    'id': 'temperature',
+    'value': 'C',
+    'label': '°C',
+    'family': 'weather'
+  }, {
+    'id': 'wind-speed',
+    'value': 'km/h',
+    'label': 'km/h',
+    'family': 'weather'
+  }, {
+    'id': 'flood-warning',
+    'value': true,
+    'family': 'alerts'
+  }, {
+    'id': 'storm-warnings',
+    'value': false,
+    'family': 'alerts'
+  }
+]
 
 export default {
   init (initSettings) {

@@ -25,14 +25,107 @@ export default {
     }
   },
   async getSettings () {
-    try {
-      const response = await axios.get(
-        `${urlRoot}/mock/settings.json`
-      )
-      return response.data
-    } catch (e) {
-      return false
-    }
+    return [
+      {
+        'id': 'weather',
+        'label': 'Weather Units',
+        'order': 1,
+        'settingsList': [
+          {
+            'id': 'temperature',
+            'label': 'Temperature units',
+            'order': 1,
+            'values': [
+              {
+                'key': 'C',
+                'label': '°C'
+              },
+              {
+                'key': 'F',
+                'label': '°F'
+              },
+              {
+                'key': 'K',
+                'label': '°K'
+              }
+            ]
+          },
+          {
+            'id': 'wind-speed',
+            'label': 'Wind speed',
+            'order': 2,
+            'values': [
+              {
+                'key': 'kt',
+                'label': 'kt'
+              },
+              {
+                'key': 'btf',
+                'label': 'btf'
+              },
+              {
+                'key': 'm/s',
+                'label': 'm/s'
+              },
+              {
+                'key': 'mph',
+                'label': 'mph'
+              },
+              {
+                'key': 'km/h',
+                'label': 'km/h'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        'id': 'alerts',
+        'label': 'Alerts/Notifications',
+        'order': 2,
+        'settingsList': [
+          {
+            'id': 'flood-warning',
+            'label': 'Flood warnings',
+            'order': 1,
+            'values': [
+              {
+                'key': true,
+                'label': 'ON'
+              },
+              {
+                'key': false,
+                'label': 'OFF'
+              }
+            ]
+          },
+          {
+            'id': 'storm-warnings',
+            'label': 'Storm warnings',
+            'order': 2,
+            'values': [
+              {
+                'key': true,
+                'label': 'ON'
+              },
+              {
+                'key': false,
+                'label': 'OFF'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+
+    // try {
+    //   const response = await axios.get(
+    //     `${urlRoot}/mock/settings.json`
+    //   )
+    //   return response.data
+    // } catch (e) {
+    //   return false
+    // }
   },
   async setSettings (settings) {
     try {
