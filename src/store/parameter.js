@@ -1,7 +1,7 @@
 import Data from '@/store/data'
 
 let parameters = []
-let displayedParameter = {}
+let displayedParameter = false
 
 export default {
   async getAllParameters () {

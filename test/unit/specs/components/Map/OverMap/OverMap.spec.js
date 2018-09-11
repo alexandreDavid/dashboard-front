@@ -114,27 +114,27 @@ describe('OverMap.vue', () => {
     expect(wrapper.vm.showModal).toBe(false)
   })
 
-  it('On select parameter null', () => {
-    mockDisplayedLayer.setDisplayedLayer.mockClear()
-    wrapper.find(Managing).vm.$emit('selectedParameter', false)
-    expect(mockDisplayedLayer.setDisplayedLayer).not.toBeCalled()
-  })
+  // it('On select parameter null', () => {
+  //   mockDisplayedLayer.setDisplayedLayer.mockClear()
+  //   wrapper.find(Managing).vm.$emit('selectedParameter', false)
+  //   expect(mockDisplayedLayer.setDisplayedLayer).not.toBeCalled()
+  // })
 
-  it('On select parameter', () => {
-    const selectedParameter = {
-      layerUrl: 'layerUrl',
-      layerParameters: 'layerParameters'
-    }
-    wrapper.find(Managing).vm.$emit('selectedParameter', selectedParameter)
-    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith(selectedParameter)
-  })
+  // it('On select parameter', () => {
+  //   const selectedParameter = {
+  //     layerUrl: 'layerUrl',
+  //     layerParameters: 'layerParameters'
+  //   }
+  //   wrapper.find(Managing).vm.$emit('selectedParameter', selectedParameter)
+  //   expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith(selectedParameter)
+  // })
 
-  it('On select reported parameter', () => {
-    const selectedReportedParameter = {
-      layerUrl: 'layerUrl',
-      layerParameters: 'layerParameters'
-    }
-    wrapper.find(Managing).vm.$emit('selectedReportedParameter', selectedReportedParameter)
-    expect(wrapper.emitted().selectedReportedLayer).toEqual([[selectedReportedParameter]])
-  })
+  // it('On select reported parameter', () => {
+  //   const selectedReportedParameter = {
+  //     layerUrl: 'layerUrl',
+  //     layerParameters: 'layerParameters'
+  //   }
+  //   wrapper.find(Managing).vm.$emit('selectedReportedParameter', selectedReportedParameter)
+  //   expect(wrapper.emitted().selectedReportedLayer).toEqual([[selectedReportedParameter]])
+  // })
 })
