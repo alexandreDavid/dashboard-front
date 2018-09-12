@@ -5,11 +5,13 @@
       <h3 slot="header">Select data to display</h3>
       <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
     </modal>
+    <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="selectedParameter" @close="showModalGraph = false"></GraphModal>
     <div class="card shadow my-3 over-map-control" style="width: 250px;">
       <div class="card-body p-2">
         <h6>
           {{ displayedParameter.displayName }}
         </h6>
+        <button type="button" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon :icon="iconGraph" /> Open graph</button>
         <Legend class="pl-2"></Legend>
       </div>
     </div>
@@ -40,6 +42,10 @@ import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/
 import Parameter from '@/store/parameter'
 import ElevationSlider from '@/components/Slider/ElevationSlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
+import Area from '@/store/area'
+import GraphModal from '@/components/Graph/GraphModal'
 
 export default {
   name: 'Managing',
@@ -47,16 +53,20 @@ export default {
     Modal,
     ForecastSelection,
     ElevationSlider,
-    Legend
+    Legend,
+    FontAwesomeIcon,
+    GraphModal
   },
   inject: ['getMap', 'getDisplayedLayer'],
   data () {
     return {
       showModal: false,
+      showModalGraph: false,
       showModalReported: false,
       displayedParameter: {},
       displayMeteoStations: true,
       displaySelectedLayer: true,
+      selectedArea: false,
       value: 50
     }
   },
@@ -67,6 +77,11 @@ export default {
       displayedParameter = allParams[0]
     }
     this.onSelectedParameter(displayedParameter)
+  },
+  computed: {
+    iconGraph () {
+      return faChartBar
+    }
   },
   mounted () {
     var vm = this
@@ -91,6 +106,11 @@ export default {
         label: 'Meteorological stations',
         name: 'meteorological_station'
       } : false))
+    },
+    initModal () {
+      this.selectedArea = Area.getSelectedArea()
+      this.selectedParameter = Parameter.getDisplayedParameter()
+      this.showModalGraph = true
     }
   },
   watch: {

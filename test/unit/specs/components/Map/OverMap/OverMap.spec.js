@@ -102,17 +102,17 @@ describe('OverMap.vue', () => {
     expect(wrapper.vm.searchLocationResult).toBeUndefined()
   })
 
-  it('Toggle graph modal', () => {
-    wrapper.find('.open-graph-modal').trigger('click')
-    expect(Area.getSelectedArea).toBeCalled()
-    expect(Parameter.getDisplayedParameter).toBeCalled()
-    expect(wrapper.vm.selectedArea).toBe('getSelectedArea')
-    expect(wrapper.vm.selectedParameter).toBe('getDisplayedParameter')
-    expect(wrapper.vm.showModal).toBe(true)
+  // it('Toggle graph modal', () => {
+  //   wrapper.find('.open-graph-modal').trigger('click')
+  //   expect(Area.getSelectedArea).toBeCalled()
+  //   expect(Parameter.getDisplayedParameter).toBeCalled()
+  //   expect(wrapper.vm.selectedArea).toBe('getSelectedArea')
+  //   expect(wrapper.vm.selectedParameter).toBe('getDisplayedParameter')
+  //   expect(wrapper.vm.showModal).toBe(true)
 
-    wrapper.find(Modal).vm.$emit('close')
-    expect(wrapper.vm.showModal).toBe(false)
-  })
+  //   wrapper.find(Modal).vm.$emit('close')
+  //   expect(wrapper.vm.showModal).toBe(false)
+  // })
 
   // it('On select parameter null', () => {
   //   mockDisplayedLayer.setDisplayedLayer.mockClear()

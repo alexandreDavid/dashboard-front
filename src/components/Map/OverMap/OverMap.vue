@@ -5,7 +5,6 @@
       <Legend class="over-map-control" asline="true"></Legend>
     </div>
     <div class="over-map-left">
-      <SearchLocationResult v-if="false && searchLocationResult" v-bind:searchLocationResult="searchLocationResult"></SearchLocationResult>
       <div class="d-flex flex-nowrap position-relative">
         <div class="p-1 flex-grow-1 over-map-control"><SearchLocation @input="onSearchLocationSelected" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation></div>
         <div class="p-1 over-map-control">
@@ -32,13 +31,6 @@
       <ZoomControl class="flex-shrink-1 mr-1 over-map-control">
       </ZoomControl>
       <button type="button" id="reset-map" class="btn btn-primary align-bottom shadow flex-shrink-1 mr-1 ml-1 over-map-control" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
-      <button type="button" class="btn btn-primary align-bottom shadow open-graph-modal flex-shrink-1 mr-1 ml-1 over-map-control" @click="initModal()"><font-awesome-icon :icon="iconGraph" /></button>
-      <modal v-if="showModal" @close="showModal = false">
-        <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.displayName }}</div>
-        <div slot="body" class="graph-modal-content">
-          <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph>
-        </div>
-      </modal>
       <div class="ml-1 w-100 over-map-control">
         <TimeSlot class="d-inline-block align-bottom pl-4" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
       </div>
@@ -62,10 +54,7 @@ import Area from '@/store/area'
 import ZoomControl from './OverMapControl/ZoomControl/ZoomControl'
 import TimeSlot from './OverMapControl/TimeSlot/TimeSlot'
 import TimeSlotMobile from './OverMapControl/TimeSlot/TimeSlotMobile'
-import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
-import Loading from '@/components/Loading/Loading'
-import Modal from '@/components/Modal/Modal'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
 export default {
@@ -79,13 +68,7 @@ export default {
     ZoomControl,
     TimeSlot,
     TimeSlotMobile,
-    Modal,
-    Legend,
-    Graph: () => ({
-      component: import('@/components/Graph/Graph'),
-      loading: Loading,
-      delay: 0
-    })
+    Legend
   },
   computed: {
     iconLocate () {
@@ -96,9 +79,6 @@ export default {
     },
     iconSettings () {
       return faCog
-    },
-    iconGraph () {
-      return faChartBar
     },
     iconUndo () {
       return faUndo
@@ -113,7 +93,6 @@ export default {
       searchLocationResult: '',
       hasCurrentLocation: false,
       showSidebar: false,
-      showModal: false,
       selectedArea: {},
       selectedParameter: {},
       areaLayer: false
@@ -135,11 +114,6 @@ export default {
     },
     resetMap () {
       this.getMap().setDefaultMap()
-    },
-    initModal () {
-      this.selectedArea = Area.getSelectedArea()
-      this.selectedParameter = Parameter.getDisplayedParameter()
-      this.showModal = true
     },
     onSelectedParameter (selectedParameter) {
       if (selectedParameter) {
@@ -173,10 +147,6 @@ export default {
     bottom: 0;
     position: absolute;
   }
-}
-
-.graph-modal-content {
-  height: 400px;
 }
 
 </style>
