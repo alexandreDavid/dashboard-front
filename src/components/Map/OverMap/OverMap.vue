@@ -25,9 +25,9 @@
         </div>
       </div>
     </div>
-    <!-- <div class="over-map-right d-none d-sm-block">
+    <div class="over-map-right d-none d-sm-block">
       <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
-    </div> -->
+    </div>
     <div class="over-map-bottom d-none d-sm-flex align-items-end">
       <ZoomControl class="flex-shrink-1 mr-1 over-map-control">
       </ZoomControl>

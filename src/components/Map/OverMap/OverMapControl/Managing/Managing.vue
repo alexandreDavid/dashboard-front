@@ -1,28 +1,35 @@
 <template>
   <div id="managing">
-    <div class="container">
-      <div class="row mb-2 justify-content-end">
-        <a href="#" id="forecast-selection-btn" target="_self" @click="showModal = true" class="badge badge-primary badge-pill shadow over-map-control">
-          {{ displayedParameter.displayName || 'Select a data' }}
-        </a>
-        <modal v-if="showModal" @close="showModal = false">
-          <h3 slot="header">Select data to display</h3>
-          <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
-        </modal>
+    <button id="forecast-selection-btn" @click="showModal = true" class="btn btn-primary shadow over-map-control position-relative">Display available layers</button>
+    <modal v-if="showModal" @close="showModal = false">
+      <h3 slot="header">Select data to display</h3>
+      <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
+    </modal>
+    <div class="card shadow my-3 over-map-control" style="width: 250px;">
+      <div class="card-body p-2">
+        <h6>
+          {{ displayedParameter.displayName }}
+        </h6>
+        <Legend class="pl-2"></Legend>
       </div>
-      <div class="row mb-2 justify-content-end over-map-control">
-        <a href="#" id="reported-selection-btn" target="_self" @click="showModalReported = true" class="badge badge-secondary badge-pill over-map-control">REPORTED: Temperature</a>
-        <modal v-if="showModalReported" @close="showModalReported = false">
-          <h3 slot="header">Select data to display</h3>
-          <ReportedSelection slot="body" @selectedReportedParameter="onSelectedReportedParameter"></ReportedSelection>
-        </modal>
+    </div>
+    <div class="card shadow my-3 over-map-control">
+      <div class="card-body p-2">
+        <h6>
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="meteo-stations" v-model="displayMeteoStations">
+            <label class="form-check-label" for="meteo-stations">Meteorological stations</label>
+          </div>
+        </h6>
+        <div class="pl-2">
+          <svg width="10" height="10">
+            <circle cx="5" cy="5" r="5" stroke="#FFF" stroke-opacity="1" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="#d57" fill-opacity="1" fill-rule="evenodd" d="M57,860a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0 "></circle>
+          </svg>
+        </div>
       </div>
-      <div class="row mb-2 justify-content-end">
-        <Legend class="over-map-control shadow"></Legend>
-      </div>
-      <div class="slide-bar-content justify-content-end position-relative m-2">
-        <ElevationSlider v-model="value" class="over-map-control" v-if="displayedParameter.interactiveLegend"/>
-      </div>
+    </div>
+    <div class="slide-bar-content justify-content-end position-relative m-2">
+      <ElevationSlider v-model="value" class="over-map-control" v-if="displayedParameter.interactiveLegend"/>
     </div>
   </div>
 </template>
@@ -30,7 +37,6 @@
 <script>
 import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
-import ReportedSelection from '@/components/Map/OverMap/OverMapControl/Managing/ReportedSelection/ReportedSelection'
 import Parameter from '@/store/parameter'
 import ElevationSlider from '@/components/Slider/ElevationSlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
@@ -40,18 +46,27 @@ export default {
   components: {
     Modal,
     ForecastSelection,
-    ReportedSelection,
     ElevationSlider,
     Legend
   },
-  inject: ['getMap'],
+  inject: ['getMap', 'getDisplayedLayer'],
   data () {
     return {
       showModal: false,
       showModalReported: false,
       displayedParameter: {},
+      displayMeteoStations: true,
+      displaySelectedLayer: true,
       value: 50
     }
+  },
+  async created () {
+    let displayedParameter = Parameter.getDisplayedParameter()
+    if (!displayedParameter) {
+      const allParams = await Parameter.getAllParameters()
+      displayedParameter = allParams[0]
+    }
+    this.onSelectedParameter(displayedParameter)
   },
   mounted () {
     var vm = this
@@ -59,16 +74,27 @@ export default {
     vm.getMap().on('layeradd', function () {
       vm.displayedParameter = Parameter.getDisplayedParameter()
     })
+    this.toggleMeteorologicalStations(this.displayMeteoStations)
   },
   methods: {
     onSelectedParameter (selectedParameter) {
       this.showModal = false
+      if (selectedParameter) {
+        this.displayedParameter = selectedParameter
+        Parameter.setDisplayedParameter(selectedParameter)
+        this.getDisplayedLayer().setDisplayedLayer(selectedParameter)
+      }
       this.$emit('selectedParameter', selectedParameter)
     },
-    onSelectedReportedParameter (selectedReportedParameter) {
-      this.showModalReported = false
-      this.$emit('selectedReportedParameter', selectedReportedParameter)
+    toggleMeteorologicalStations (val) {
+      this.$emit('selectedReportedParameter', (val ? {
+        label: 'Meteorological stations',
+        name: 'meteorological_station'
+      } : false))
     }
+  },
+  watch: {
+    displayMeteoStations: 'toggleMeteorologicalStations'
   }
 }
 </script>

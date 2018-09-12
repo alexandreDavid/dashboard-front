@@ -5,7 +5,7 @@ import AreaLayer from '@/store/areaLayer'
 import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import Modal from '@/components/Modal/Modal'
-import Managing from '@/components/Map/OverMap//OverMapControl/Managing/Managing'
+// import Managing from '@/components/Map/OverMap//OverMapControl/Managing/Managing'
 
 const mockMap = {
   setCurrentLocationLayer: jest.fn().mockResolvedValue(true),

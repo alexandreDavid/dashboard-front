@@ -2,7 +2,7 @@ import Managing from '@/components/Map/OverMap/OverMapControl/Managing/Managing'
 import { mount, shallowMount } from '@vue/test-utils'
 import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
-import ReportedSelection from '@/components/Map/OverMap/OverMapControl/Managing/ReportedSelection/ReportedSelection'
+import Parameter from '@/store/parameter'
 
 const mockMap = {
   on: jest.fn().mockImplementation((evtName, callback) => {
@@ -16,8 +16,18 @@ function getMapMock () {
   }
 }
 
+const mockDisplayedLayer = {
+  setDisplayedLayer: jest.fn()
+}
+function getDisplayedLayer () {
+  return function () {
+    return mockDisplayedLayer
+  }
+}
+
 jest.mock('@/store/parameter', () => ({
-  getDisplayedParameter: jest.fn().mockReturnValue('getDisplayedParameter')
+  getDisplayedParameter: jest.fn().mockReturnValue('getDisplayedParameter'),
+  setDisplayedParameter: jest.fn()
 }))
 
 describe('Managing.vue', () => {
@@ -25,7 +35,8 @@ describe('Managing.vue', () => {
   beforeEach(() => {
     wrapper = shallowMount(Managing, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getDisplayedLayer: getDisplayedLayer()
       }
     })
   })
@@ -47,7 +58,8 @@ describe('Managing.vue', () => {
   it('Choose ForecastSelection', () => {
     const wrapper = mount(Managing, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getDisplayedLayer: getDisplayedLayer()
       },
       stubs: {
         ForecastSelection: true,
@@ -61,7 +73,8 @@ describe('Managing.vue', () => {
 
     wrapper.find(ForecastSelection).vm.$emit('selectedParameter', 'selectedParameter')
     expect(wrapper.vm.showModal).toBe(false)
-    expect(wrapper.emitted().selectedParameter).toEqual([['selectedParameter']])
+    expect(Parameter.setDisplayedParameter).toBeCalledWith('selectedParameter')
+    expect(wrapper.emitted().selectedParameter).toEqual([['getDisplayedParameter'], ['selectedParameter']])
   })
 
   it('On layer add', () => {
@@ -69,23 +82,23 @@ describe('Managing.vue', () => {
     expect(wrapper.vm.displayedParameter).toBe('getDisplayedParameter')
   })
 
-  it('Choose ReportedSelection', () => {
-    const wrapper = mount(Managing, {
-      provide: {
-        getMap: getMapMock()
-      },
-      stubs: {
-        ForecastSelection: true,
-        ReportedSelection: true,
-        Legend: true
-      }
-    })
-    const buttonForecastSelection = wrapper.find('#reported-selection-btn')
-    buttonForecastSelection.trigger('click')
-    expect(wrapper.vm.showModalReported).toBe(true)
+  // it('Choose ReportedSelection', () => {
+  //   const wrapper = mount(Managing, {
+  //     provide: {
+  //       getMap: getMapMock()
+  //     },
+  //     stubs: {
+  //       ForecastSelection: true,
+  //       ReportedSelection: true,
+  //       Legend: true
+  //     }
+  //   })
+  //   const buttonForecastSelection = wrapper.find('#reported-selection-btn')
+  //   buttonForecastSelection.trigger('click')
+  //   expect(wrapper.vm.showModalReported).toBe(true)
 
-    wrapper.find(ReportedSelection).vm.$emit('selectedReportedParameter', 'selectedReportedParameter')
-    expect(wrapper.vm.showModalReported).toBe(false)
-    expect(wrapper.emitted().selectedReportedParameter).toEqual([['selectedReportedParameter']])
-  })
+  //   wrapper.find(ReportedSelection).vm.$emit('selectedReportedParameter', 'selectedReportedParameter')
+  //   expect(wrapper.vm.showModalReported).toBe(false)
+  //   expect(wrapper.emitted().selectedReportedParameter).toEqual([['selectedReportedParameter']])
+  // })
 })
