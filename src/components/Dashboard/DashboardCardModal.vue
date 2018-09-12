@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Widget</label>
+        <label>Presentation format</label>
         <select class="form-control change-selected-widget" v-model="activeWidget" @change="changeSelectWidget(activeWidget)">
           <option v-for="widget in widgets" :key="widget.id" v-bind:value="widget">
             {{ widget.label }}

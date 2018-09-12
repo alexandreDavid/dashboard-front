@@ -92,7 +92,7 @@ export default class Dashboard {
     })
     let fieldParameter = {
       id: 'parameter',
-      label: 'Parameter',
+      label: 'Data to display',
       type: 'select',
       options: allParameters,
       value: allParameters[0],

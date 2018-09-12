@@ -15,6 +15,12 @@
         <div class="col-12 mb-2 p-2">
           <SearchLocation @input="onSearchLocationSelected" />
         </div>
+        <div class="alert alert-info col-12" role="alert" v-if="!selectedArea">
+          Select a location to display the dashboard
+        </div>
+        <div class="alert alert-info col-12" role="alert" v-if="isEditing && selectedArea">
+          Click on <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon :icon="iconPlus" /> Add a card</button> to add a new card
+        </div>
         <DashboardWidget v-if="selectedArea" v-for="card in dashboard.cards" :key="card.id" v-bind:cardConfiguration="card" @edit="editCard(card)" v-bind:isEditing="isEditing" v-bind:selectedArea="selectedArea" :allParameters="allParameters"></DashboardWidget>
         <div class="col-md-4 p-2" v-if="isEditing && selectedArea">
           <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon :icon="iconPlus" /> Add a card</button>

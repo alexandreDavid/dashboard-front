@@ -4,7 +4,7 @@
       <div class="card-header" v-if="cardConfiguration.title">
         <div class="d-flex align-items-center">
           <div class="flex-grow-1">
-            <span class="w-100">{{cardConfiguration.title}} {{cardConfiguration.sizeClass}} {{cardConfiguration.fwfe}}</span>
+            <span class="w-100">{{cardConfiguration.title}}</span>
           </div>
           <div v-if="isEditing">
             <button type="button" class="btn btn-light btn-sm ml-2 edit" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>
