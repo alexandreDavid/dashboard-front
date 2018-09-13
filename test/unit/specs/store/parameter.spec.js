@@ -33,10 +33,8 @@ describe('parameter.js', () => {
   it('Calls getAllParameters getParams', async () => {
     const params = await Parameter.getAllParameters()
     expect(Data.getStructure).toBeCalled()
-    expect(params).toEqual([
-      Parameter.getParameterInfos(param1),
-      Parameter.getParameterInfos(param3)
-    ])
+    expect(params[0]).toEqual(Parameter.getParameterInfos(param1))
+    expect(params[1]).toEqual(Parameter.getParameterInfos(param3))
     expect(params).toBe(Parameter.getParams())
   })
 
