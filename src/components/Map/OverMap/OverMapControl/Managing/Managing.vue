@@ -6,7 +6,7 @@
       <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
     </modal>
     <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="selectedParameter" @close="showModalGraph = false"></GraphModal>
-    <div class="card shadow my-3 over-map-control" style="width: 250px;">
+    <div class="card shadow my-3 over-map-control" style="min-width: 250px;">
       <div class="card-body p-2">
         <h6>
           {{ displayedParameter.displayName }}
