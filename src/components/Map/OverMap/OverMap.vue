@@ -6,7 +6,10 @@
     </div>
     <div class="over-map-left">
       <div class="d-flex flex-nowrap position-relative">
-        <div class="p-1 flex-grow-1 over-map-control"><SearchLocation @input="onSearchLocationSelected" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation></div>
+        <SearchLocationMapHelper v-if="displaySearchHelper" @select="updateSearchLocation" @close="displaySearchHelper = false"></SearchLocationMapHelper>
+        <div class="p-1 flex-grow-1 over-map-control">
+          <SearchLocation @input="onSearchLocationSelected" v-model="searchLocationValue" @openMap="displaySearchHelper = true" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation>
+        </div>
         <div class="p-1 over-map-control">
           <button type="button" id="zoom-current-location" class="btn btn-primary align-top" v-bind:class="{shadow: !searchLocationResult}" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
         </div>
@@ -34,6 +37,7 @@
 
 <script>
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
+import SearchLocationMapHelper from '@/components/SearchLocation/SearchLocationMapHelper'
 import Managing from './OverMapControl/Managing/Managing'
 import AreaLayer from '@/store/areaLayer'
 
@@ -53,6 +57,7 @@ export default {
   name: 'OverMap',
   components: {
     SearchLocation,
+    SearchLocationMapHelper,
     Managing,
     FontAwesomeIcon,
     SideBar: () => import('@/components/SideBar/SideBar'),
@@ -81,9 +86,11 @@ export default {
       searchLocationResult: '',
       hasCurrentLocation: false,
       showSidebar: false,
+      displaySearchHelper: false,
       selectedArea: {},
       selectedParameter: {},
-      areaLayer: false
+      areaLayer: false,
+      searchLocationValue: false
     }
   },
   mounted () {
@@ -91,6 +98,10 @@ export default {
     this.onSelectedParameter(Parameter.getDisplayedParameter())
   },
   methods: {
+    updateSearchLocation (feature) {
+      Area.setSelectedArea(feature)
+      this.searchLocationValue = feature
+    },
     onSearchLocationSelected (newValue) {
       this.searchLocationResult = newValue
       if (newValue) {

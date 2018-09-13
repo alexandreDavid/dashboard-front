@@ -29,6 +29,11 @@
           :class="{ 'is-active': i === arrowCounter }">
           {{ result.name }}
         </li>
+        <li
+          @click="openMap()"
+          class="autocomplete-result">
+          <button type="button" class="btn btn-secondary">Open the map selector</button>
+        </li>
       </ul>
     </div>
   </div>
@@ -39,6 +44,7 @@ import Area from '@/store/area'
 
 export default {
   name: 'SearchLocation',
+  props: ['value'],
   data () {
     return {
       isOpen: false,
@@ -56,7 +62,14 @@ export default {
       this.search = selectedArea.name
     }
   },
-
+  watch: {
+    value (val, oldVal) {
+      if (val) {
+        this.search = val.name
+        this.setResult(val)
+      }
+    }
+  },
   methods: {
     async onChange () {
       this.$emit('input', false)
@@ -70,7 +83,6 @@ export default {
       this.arrowCounter = 0
     },
     setResult (result) {
-      this.search = result.name
       this.isOpen = false
       Area.setSelectedArea(result)
       // Let's warn the parent that a change was made
@@ -95,6 +107,10 @@ export default {
         this.isOpen = false
         this.arrowCounter = -1
       }
+    },
+    openMap () {
+      this.isOpen = false
+      this.$emit('openMap')
     }
   },
   mounted () {
