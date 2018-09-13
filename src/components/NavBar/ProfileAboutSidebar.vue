@@ -10,6 +10,7 @@
     </ul>
     <div class="tab-content pt-3">
       <div role="tabpanel" class="tab-pane fade" v-bind:class="{'active show': selectedTab === 'profile'}" id="profile">
+        <h5>Settings</h5>
         <Settings/>
         <button @click="logout()" id="user-logout" class="btn btn-secondary">Logout</button>
       </div>
