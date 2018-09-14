@@ -1,9 +1,9 @@
 <template>
   <div id="search-location">
-    <div class="autocomplete">
+    <div class="autocomplete position-relative w-100">
       <input
         type="text"
-        class="form-control"
+        class="form-control w-100"
         placeholder="Search a location"
         @input="onChange"
         @focus="onChange"
@@ -12,9 +12,8 @@
         @keyup.up="onArrowUp"
         @keyup.enter="onEnter">
       <ul
-        id="autocomplete-results"
         v-show="isOpen"
-        class="autocomplete-results shadow">
+        class="list-group shadow">
         <li
           class="loading"
           v-if="isLoading">
@@ -25,14 +24,16 @@
           v-for="(result, i) in results"
           :key="i"
           @click="setResult(result)"
-          class="autocomplete-result"
-          :class="{ 'is-active': i === arrowCounter }">
+          class="list-group-item list-group-item-action"
+          :class="{ 'active': i === arrowCounter }">
           {{ result.name }}
         </li>
         <li
           @click="openMap()"
-          class="autocomplete-result">
-          <button type="button" class="btn btn-secondary">Open the map selector</button>
+          class="list-group-item list-group-item-action">
+          <!-- <button type="button" class="btn btn-secondary">Open the map selector</button> -->
+          <!-- <a>Open the map selector</a> -->
+          <a href="#" class="link">Open the map selector</a>
         </li>
       </ul>
     </div>
