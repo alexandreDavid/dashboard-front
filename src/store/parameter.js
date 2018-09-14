@@ -5,8 +5,68 @@ let displayedParameter = false
 
 export default {
   async getAllParameters () {
-    let structure = await Data.getStructure()
-    parameters = structure.parameters.filter(p => p.isActive).map(this.getParameterInfos)
+    // let structure = await Data.getStructure()
+    // parameters = structure.parameters.filter(p => p.isActive).map(this.getParameterInfos)
+
+    parameters = [
+      {
+        displayName: 'Air pressure at sea level',
+        groupingId: 0,
+        paramDescription: 'Air pressure at sea level',
+        paramName: 'air_pressure_at_sea_level',
+        workspaceName: 'twoDaysForecast',
+        unit: 'Pa',
+        hasTimeFrame: true
+      }, {
+        displayName: 'Air temperature',
+        groupingId: 0,
+        paramDescription: 'Air temperature',
+        paramName: 'air_temperature',
+        workspaceName: 'twoDaysForecast',
+        unit: 'K',
+        hasTimeFrame: true
+      }, {
+        displayName: 'Relative humidity',
+        groupingId: 0,
+        paramDescription: 'Relative humidity',
+        paramName: 'relative_humidity',
+        workspaceName: 'twoDaysForecast',
+        unit: '%',
+        hasTimeFrame: true
+      }, {
+        displayName: 'Stratiform rainfall rate 0',
+        groupingId: 0,
+        paramDescription: 'Stratiform rainfall rate 0',
+        paramName: 'stratiform_rainfall_rate_0',
+        workspaceName: 'twoDaysForecast',
+        unit: 'Kg/m^2*s',
+        hasTimeFrame: true
+      }, {
+        displayName: 'Surface downwelling longwave flux',
+        groupingId: 0,
+        paramDescription: 'Surface downwelling longwave flux',
+        paramName: 'surface_downwelling_longwave_flux',
+        workspaceName: 'twoDaysForecast',
+        unit: 'W/m^2',
+        hasTimeFrame: true
+      }, {
+        displayName: 'Surface temperature',
+        groupingId: 0,
+        paramDescription: 'Surface temperature',
+        paramName: 'surface_temperature',
+        workspaceName: 'twoDaysForecast',
+        unit: 'K',
+        hasTimeFrame: true
+      }, {
+        displayName: 'TOA outgoing longwave flux',
+        groupingId: 0,
+        paramDescription: 'TOA outgoing longwave flux',
+        paramName: 'toa_outgoing_longwave_flux',
+        workspaceName: 'twoDaysForecast',
+        unit: 'W/m^2',
+        hasTimeFrame: true
+      }
+    ].map(this.getParameterInfos)
     parameters.push(this.getParameterInfos({
       displayName: 'OUT BASEFLOW',
       groupingId: 1,
@@ -14,7 +74,7 @@ export default {
       paramName: 'OUT_BASEFLOW',
       workspaceName: 'hidrology',
       unit: 'NO_UNIT_SPECIFIED',
-      hasTimeFrame: false
+      hasTimeFrame: true
     }))
     parameters.push(this.getParameterInfos({
       displayName: 'OUT EVAP',
@@ -23,7 +83,7 @@ export default {
       paramName: 'OUT_EVAP',
       workspaceName: 'hidrology',
       unit: 'NO_UNIT_SPECIFIED',
-      hasTimeFrame: false
+      hasTimeFrame: true
     }))
     parameters.push(this.getParameterInfos({
       displayName: 'OUT RUNOFF',
@@ -32,7 +92,7 @@ export default {
       paramName: 'OUT_RUNOFF',
       workspaceName: 'hidrology',
       unit: 'NO_UNIT_SPECIFIED',
-      hasTimeFrame: false
+      hasTimeFrame: true
     }))
     return parameters
   },
@@ -44,17 +104,6 @@ export default {
       transparent: true
     }
     p.legendUrl = `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=${p.workspaceName}:${p.paramName}&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;`
-    if (p.paramName === 'air_temperature') {
-      p.layerUrl = 'http://18.130.18.23:8180/geoserver/wms'
-      p.layerUrl = `http://35.178.87.6/proxy/geoserver/metoffice/wms`
-      p.layerParameters.layers = `metoffice:${p.paramName}`
-      p.interactiveLegend = true
-      p.legendUrl = `http://35.178.87.6/proxy/geoserver/metoffice/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=${p.workspaceName}:${p.paramName}&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;`
-    }
-    if (p.groupingId === 1) {
-      p.layerUrl = `http://35.178.87.6/proxy/geoserver/wms`
-      p.legendUrl = `http://35.178.87.6/proxy/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=${p.workspaceName}:${p.paramName}&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;`
-    }
     return p
   },
   async getAllParameterGroupings () {

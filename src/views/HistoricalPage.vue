@@ -119,8 +119,8 @@ export default {
         this.activePeriod = this.months[0]
       }
       this.displayedLayer = {
-        layerUrl: 'http://18.130.18.23:8180/geoserver/historical/ows',
-        legendUrl: `http://18.130.18.23:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=${selectedVariable.legendName}`,
+        layerUrl: `${process.env.GEOSERVER_URL}/wms`,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=${selectedVariable.legendName}`,
         layerParameters: {
           layers: selectedVariable.layerName,
           format: 'image/png',

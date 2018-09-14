@@ -62,7 +62,7 @@ export default {
           this.allMiniMaps.push({
             title: this.lastDisplayedYear,
             param: {
-              layerUrl: 'http://18.130.18.23:8180/geoserver/historical/ows',
+              layerUrl: `${process.env.GEOSERVER_URL}/wms`,
               layerParameters: {
                 layers: this.variable.layerName,
                 format: 'image/png',

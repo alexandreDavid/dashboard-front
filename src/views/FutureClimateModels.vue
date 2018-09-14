@@ -75,13 +75,13 @@ export default {
   methods: {
     setParam (model) {
       model.param = {
-        layerUrl: `http://18.130.18.23:8180/geoserver/${model.name}/wms`,
+        layerUrl: `${process.env.GEOSERVER_URL}/wms`,
         layerParameters: {
           layers: `${model.name}:${this.variable.name}_${this.timePeriod.type}_${this.period.id}`,
           format: 'image/png',
           transparent: true
         },
-        legendUrl: `http://18.130.18.23:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=${this.variable.styleName}`
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=${this.variable.styleName}`
       }
       if (this.timePeriod.value) {
         model.param.layerParameters.time = `${this.period.min}-${this.timePeriod.value}`
