@@ -56,18 +56,19 @@ describe('SearchLocation.vue', () => {
   })
 
   it('Create without selected area', () => {
-    expect(Area.getSelectedArea).toBeCalled()
     expect(wrapper.vm.areas).toEqual([])
     expect(wrapper.vm.search).toBe('')
     expect(wrapper.find('input').element.value).toBe('')
   })
 
   it('Create with selected area', () => {
-    Area.getSelectedArea.mockReturnValue({
-      name: 'name'
+    const wrapper = mount(SearchLocation, {
+      propsData: {
+        value: {
+          name: 'name'
+        }
+      }
     })
-    const wrapper = mount(SearchLocation)
-    expect(Area.getSelectedArea).toBeCalled()
     expect(wrapper.vm.areas).toEqual([])
     expect(wrapper.vm.search).toBe('name')
     expect(wrapper.find('input').element.value).toBe('name')
@@ -151,22 +152,24 @@ describe('SearchLocation.vue', () => {
     checkActiveResult(0)
   })
 
-  // it('On keyup enter', async () => {
-  //   await display4Results()
-  //   inputElem.trigger('keyup.down')
-  //   checkActiveResult(1)
-  //   inputElem.trigger('keyup.enter')
-  //   expect(wrapper.vm.search).toBe(mockAllAreas[3].name)
-  //   expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].name)
-  // })
+  it('On keyup enter', async () => {
+    await display4Results()
+    inputElem.trigger('keyup.down')
+    checkActiveResult(1)
+    inputElem.trigger('keyup.enter')
+    expect(wrapper.emitted().input).toEqual([[mockAllAreas[3]]])
+    expect(wrapper.vm.search).toBe(mockAllAreas[3].name)
+    expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].name)
+  })
 
-  // it('On click on result', async () => {
-  //   await display4Results()
-  //   const autocompleteResult = wrapper.findAll('.autocomplete-result')
-  //   autocompleteResult.at(1).trigger('click')
-  //   expect(wrapper.vm.search).toBe(mockAllAreas[3].name)
-  //   expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].name)
-  // })
+  it('On click on result', async () => {
+    await display4Results()
+    const autocompleteResult = wrapper.findAll('li')
+    autocompleteResult.at(1).trigger('click')
+    expect(wrapper.emitted().input).toEqual([[mockAllAreas[3]]])
+    expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].name)
+    expect(wrapper.vm.search).toBe(mockAllAreas[3].name)
+  })
 
   it('On click outside', async () => {
     await display4Results()
@@ -181,6 +184,69 @@ describe('SearchLocation.vue', () => {
     expect(wrapper.vm.isOpen).toBe(true)
     wrapper.vm.handleClickOutside({target: wrapper.vm.$el})
     expect(wrapper.vm.isOpen).toBe(true)
+  })
+
+  it('On openMap link', async () => {
+    await display4Results()
+    expect(wrapper.vm.isOpen).toBe(true)
+    wrapper.find('.open-map').trigger('click')
+    expect(wrapper.vm.isOpen).toBe(false)
+    expect(wrapper.emitted().openMap).toBeTruthy()
+  })
+
+  it('On change value from parent', async () => {
+    Area.getSelectedArea.mockReturnValue({
+      name: 'name'
+    })
+    const wrapper = mount(SearchLocation, {
+      propsData: {
+        value: {
+          name: 'name'
+        }
+      }
+    })
+
+    expect(wrapper.vm.search).toBe('name')
+    expect(wrapper.find('input').element.value).toBe('name')
+
+    wrapper.setProps({
+      value: {
+        name: 'name2'
+      }
+    })
+
+    expect(wrapper.vm.search).toBe('name2')
+    expect(wrapper.find('input').element.value).toBe('name2')
+  })
+
+  it('On delete value from parent', async () => {
+    Area.getSelectedArea.mockReturnValue({
+      name: 'name'
+    })
+    const wrapper = mount(SearchLocation, {
+      propsData: {
+        value: {
+          name: 'name'
+        }
+      }
+    })
+    expect(wrapper.vm.search).toBe('name')
+    expect(wrapper.find('input').element.value).toBe('name')
+
+    wrapper.setProps({
+      value: false
+    })
+
+    expect(wrapper.vm.search).toBe('name')
+    expect(wrapper.find('input').element.value).toBe('name')
+  })
+
+  it('On click outside and reinit value', async () => {
+    await display4Results()
+    wrapper.vm.prevValue = {name: 'prevValue'}
+    expect(wrapper.vm.search).toBe(match4Results)
+    wrapper.vm.handleClickOutside({})
+    expect(wrapper.vm.search).toBe('prevValue')
   })
 
   it('On destroy', () => {

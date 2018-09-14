@@ -13,7 +13,7 @@
           </div>
         </h4>
         <div class="col-12 mb-2 p-2">
-          <SearchLocation @input="onSearchLocationSelected" v-model="selectedArea" @openMap="displaySearchHelper = true" />
+          <SearchLocation v-model="selectedArea" @openMap="displaySearchHelper = true" />
           <SearchLocationMapHelper v-if="displaySearchHelper" @select="updateSearchLocation" @close="displaySearchHelper = false"></SearchLocationMapHelper>
         </div>
         <div class="alert alert-info col-12" role="alert" v-if="!selectedArea">
@@ -87,7 +87,6 @@ export default {
   async created () {
     this.allParameters = await Parameter.getAllParameters()
     this.selectedArea = Area.getSelectedArea()
-    // this.isEditing = true
     const savedDashboard = UserConfiguration.getDashboardConfiguration()
     this.dashboard = new DashboardObj(savedDashboard.title, savedDashboard.cards)
     this.isLoaded = true
@@ -96,9 +95,6 @@ export default {
     updateSearchLocation (feature) {
       Area.setSelectedArea(feature)
       this.selectedArea = feature
-    },
-    onSearchLocationSelected (newValue) {
-      this.selectedArea = newValue
     },
     addCard () {
       this.editCard(this.dashboard.addCard())

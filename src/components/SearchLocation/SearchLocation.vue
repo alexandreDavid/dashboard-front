@@ -32,7 +32,7 @@
         </li>
         <li
           @click="openMap()"
-          class="list-group-item list-group-item-action">
+          class="list-group-item list-group-item-action open-map">
           <a href="#" class="link">Open the map selector</a>
         </li>
       </ul>
@@ -59,15 +59,13 @@ export default {
     }
   },
   created () {
-    const selectedArea = Area.getSelectedArea()
-    if (selectedArea) {
-      this.search = selectedArea.name
+    if (this.value) {
+      this.search = this.value.name
     }
   },
   watch: {
     value (val, oldVal) {
       if (val) {
-        this.search = val.name
         this.setResult(val)
       }
     }
@@ -92,6 +90,7 @@ export default {
       this.isOpen = false
       Area.setSelectedArea(result)
       this.prevValue = result
+      this.search = result.name
       // Let's warn the parent that a change was made
       this.$emit('input', result)
     },

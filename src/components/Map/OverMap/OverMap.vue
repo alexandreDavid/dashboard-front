@@ -102,7 +102,6 @@ export default {
       this.selectedArea = feature
     },
     onSearchLocationSelected (newValue) {
-      this.selectedArea = newValue
       if (newValue) {
         this.areaLayer.setSelectedArea(newValue)
       }
