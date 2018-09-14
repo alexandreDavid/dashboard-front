@@ -6,14 +6,16 @@
         class="form-control w-100"
         placeholder="Search a location"
         @input="onChange"
-        @focus="onChange"
+        @focus="onFocus"
         v-model="search"
         @keyup.down="onArrowDown"
         @keyup.up="onArrowUp"
         @keyup.enter="onEnter">
       <ul
         v-show="isOpen"
-        class="list-group shadow">
+        class="list-group shadow position-absolute w-100" style="
+    z-index: 1000;
+">
         <li
           class="loading"
           v-if="isLoading">
@@ -31,8 +33,6 @@
         <li
           @click="openMap()"
           class="list-group-item list-group-item-action">
-          <!-- <button type="button" class="btn btn-secondary">Open the map selector</button> -->
-          <!-- <a>Open the map selector</a> -->
           <a href="#" class="link">Open the map selector</a>
         </li>
       </ul>
@@ -51,6 +51,7 @@ export default {
       isOpen: false,
       results: [],
       search: '',
+      prevValue: false,
       isLoading: false,
       arrowCounter: 0,
       movies: [],
@@ -73,19 +74,24 @@ export default {
   },
   methods: {
     async onChange () {
-      this.$emit('input', false)
-      this.areas = await Area.searchAreas(this.search)
-      this.calculateDisplaying()
+      this.isOpen = true
+      if (this.search) {
+        const areas = await Area.searchAreas(this.search)
+        // Only 5 results
+        this.results = areas.slice(0, 5)
+        this.arrowCounter = 0
+      } else {
+        this.results = []
+      }
     },
-    calculateDisplaying () {
-      this.isOpen = !!this.search
-      // Only 5 results
-      this.results = this.areas.slice(0, 5)
-      this.arrowCounter = 0
+    onFocus () {
+      this.prevValue = this.value
+      this.onChange()
     },
     setResult (result) {
       this.isOpen = false
       Area.setSelectedArea(result)
+      this.prevValue = result
       // Let's warn the parent that a change was made
       this.$emit('input', result)
     },
@@ -103,14 +109,18 @@ export default {
       this.setResult(this.results[this.arrowCounter])
       this.arrowCounter = -1
     },
+    returnToInitialeStatement () {
+      this.isOpen = false
+      this.arrowCounter = -1
+      this.search = this.prevValue && this.prevValue.name
+    },
     handleClickOutside (evt) {
       if (!this.$el.contains(evt.target)) {
-        this.isOpen = false
-        this.arrowCounter = -1
+        this.returnToInitialeStatement()
       }
     },
     openMap () {
-      this.isOpen = false
+      this.returnToInitialeStatement()
       this.$emit('openMap')
     }
   },

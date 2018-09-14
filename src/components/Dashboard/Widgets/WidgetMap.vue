@@ -56,6 +56,9 @@ export default {
   watch: {
     parameter (newParam) {
       this.getDisplayedLayer().setDisplayedLayer(newParam)
+    },
+    area (newArea) {
+      this.areaLayer.setSelectedArea(newArea)
     }
   },
   methods: {

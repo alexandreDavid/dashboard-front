@@ -56,7 +56,8 @@ export default {
     // whenever question changes, this function will run
     async parameter () {
       await this.getData()
-    }
+    },
+    area: 'getData'
   },
   methods: {
     async getData () {

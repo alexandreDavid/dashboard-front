@@ -13,7 +13,7 @@
           </div>
         </h4>
         <div class="col-12 mb-2 p-2">
-          <SearchLocation @input="onSearchLocationSelected" v-model="searchLocationValue" @openMap="displaySearchHelper = true" />
+          <SearchLocation @input="onSearchLocationSelected" v-model="selectedArea" @openMap="displaySearchHelper = true" />
           <SearchLocationMapHelper v-if="displaySearchHelper" @select="updateSearchLocation" @close="displaySearchHelper = false"></SearchLocationMapHelper>
         </div>
         <div class="alert alert-info col-12" role="alert" v-if="!selectedArea">
@@ -67,7 +67,7 @@ export default {
       showCardModal: false,
       allParameters: [],
       selectedArea: false,
-      searchLocationValue: false,
+      // searchLocationValue: false,
       displaySearchHelper: false,
       dashboard: {},
       editedCard: {}
@@ -95,7 +95,7 @@ export default {
   methods: {
     updateSearchLocation (feature) {
       Area.setSelectedArea(feature)
-      this.searchLocationValue = feature
+      this.selectedArea = feature
     },
     onSearchLocationSelected (newValue) {
       this.selectedArea = newValue

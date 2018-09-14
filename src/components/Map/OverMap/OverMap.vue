@@ -8,13 +8,13 @@
       <div class="d-flex flex-nowrap position-relative">
         <SearchLocationMapHelper v-if="displaySearchHelper" @select="updateSearchLocation" @close="displaySearchHelper = false"></SearchLocationMapHelper>
         <div class="p-1 flex-grow-1 over-map-control">
-          <SearchLocation @input="onSearchLocationSelected" v-model="searchLocationValue" @openMap="displaySearchHelper = true" v-bind:class="{shadow: !searchLocationResult}"></SearchLocation>
+          <SearchLocation @input="onSearchLocationSelected" v-model="selectedArea" @openMap="displaySearchHelper = true" class="shadow"></SearchLocation>
         </div>
         <div class="p-1 over-map-control">
-          <button type="button" id="zoom-current-location" class="btn btn-primary align-top" v-bind:class="{shadow: !searchLocationResult}" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
+          <button type="button" id="zoom-current-location" class="btn btn-primary align-top shadow" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon :icon="iconLocate" /></button>
         </div>
         <div class="p-1 d-block d-sm-none over-map-control">
-          <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top" v-bind:class="{shadow: !searchLocationResult}"><font-awesome-icon :icon="iconMenu" /></button>
+          <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon :icon="iconMenu" /></button>
           <SideBar v-if="showSidebar" @close="showSidebar = false" position="right" class="p-2">
             <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
           </SideBar>
@@ -83,27 +83,26 @@ export default {
   },
   data () {
     return {
-      searchLocationResult: '',
       hasCurrentLocation: false,
       showSidebar: false,
       displaySearchHelper: false,
-      selectedArea: {},
+      selectedArea: false,
       selectedParameter: {},
-      areaLayer: false,
-      searchLocationValue: false
+      areaLayer: false
     }
   },
   mounted () {
-    this.areaLayer = new AreaLayer(this.getMap(), Area.getSelectedArea())
+    this.selectedArea = Area.getSelectedArea()
+    this.areaLayer = new AreaLayer(this.getMap(), this.selectedArea)
     this.onSelectedParameter(Parameter.getDisplayedParameter())
   },
   methods: {
     updateSearchLocation (feature) {
       Area.setSelectedArea(feature)
-      this.searchLocationValue = feature
+      this.selectedArea = feature
     },
     onSearchLocationSelected (newValue) {
-      this.searchLocationResult = newValue
+      this.selectedArea = newValue
       if (newValue) {
         this.areaLayer.setSelectedArea(newValue)
       }

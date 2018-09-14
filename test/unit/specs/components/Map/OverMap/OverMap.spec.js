@@ -93,7 +93,7 @@ describe('OverMap.vue', () => {
   it('Display SearchLocationResult with result', () => {
     const locationFound = 'SearchLocationResult'
     wrapper.find(SearchLocation).vm.$emit('input', locationFound)
-    expect(wrapper.vm.searchLocationResult).toBe(locationFound)
+    expect(wrapper.vm.selectedArea).toBe(locationFound)
     expect(mockAreaLayer.setSelectedArea).toBeCalledWith(locationFound)
   })
 

@@ -15,8 +15,8 @@
         <button type="button" class="btn btn-light btn-sm edit-card edit" @click="editCard()"><font-awesome-icon :icon="iconEdit" /></button>
       </div>
       <div class="card-body position-relative" style="overflow: auto;">
-        <WidgetGraph v-if="cardConfiguration.widget.id === 'graph'" class="widget-graph" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" v-bind:graphType="getValueForSelectedWidgetById('graphType').value"></WidgetGraph>
-        <WidgetMap v-if="cardConfiguration.widget.id === 'map'" class="widget-map" v-bind:area="area" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="cardConfiguration.id"></WidgetMap>
+        <WidgetGraph v-if="cardConfiguration.widget.id === 'graph'" class="widget-graph" v-bind:area="selectedArea" v-bind:parameter="getValueForSelectedWidgetById('parameter')" v-bind:graphType="getValueForSelectedWidgetById('graphType').value"></WidgetGraph>
+        <WidgetMap v-if="cardConfiguration.widget.id === 'map'" class="widget-map" v-bind:area="selectedArea" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="cardConfiguration.id"></WidgetMap>
         <WidgetTextArea v-if="cardConfiguration.widget.id === 'textarea'" class="widget-textarea" v-bind:textArea="getValueForSelectedWidgetById('text')"></WidgetTextArea>
         <WidgetTable v-if="cardConfiguration.widget.id === 'table'" class="widget-table"></WidgetTable>
       </div>
@@ -48,12 +48,6 @@ export default {
   computed: {
     iconEdit () {
       return faEdit
-    }
-  },
-  data () {
-    return {
-      area: this.selectedArea,
-      sizeClass: this.cardConfiguration
     }
   },
   methods: {

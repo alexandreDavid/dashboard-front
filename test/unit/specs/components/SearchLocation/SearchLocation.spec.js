@@ -35,7 +35,8 @@ describe('SearchLocation.vue', () => {
     expect(wrapper.vm.isOpen).toBe(true)
     expect(wrapper.vm.arrowCounter).toBe(0)
     const autocompleteResult = wrapper.findAll('li')
-    expect(autocompleteResult.length).toBe(nb)
+    // For the map opening
+    expect(autocompleteResult.length).toBe(nb + 1)
     if (nb) {
       checkActiveResult(0)
     }
@@ -75,19 +76,19 @@ describe('SearchLocation.vue', () => {
   it('On change without value', () => {
     inputElem.trigger('input')
     expect(wrapper.vm.search).toBe('')
-    expect(wrapper.vm.isOpen).toBe(false)
-    expect(wrapper.emitted().input).toBeTruthy()
+    expect(wrapper.vm.isOpen).toBe(true)
+    expect(wrapper.emitted().input).toBeFalsy()
   })
 
-  // it('On change with value no matched', async () => {
-  //   Area.searchAreas.mockReturnValue(Promise.resolve([]))
-  //   wrapper.vm.search = matchNoResult
-  //   expect(wrapper.vm.isOpen).toBe(false)
-  //   inputElem.trigger('input')
-  //   expect(Area.searchAreas).toHaveBeenCalledWith(matchNoResult)
-  //   await wrapper.vm.$nextTick()
-  //   checkNbResult(1)
-  // })
+  it('On change with value no matched', async () => {
+    Area.searchAreas.mockReturnValue(Promise.resolve([]))
+    wrapper.vm.search = matchNoResult
+    expect(wrapper.vm.isOpen).toBe(false)
+    inputElem.trigger('input')
+    expect(Area.searchAreas).toHaveBeenCalledWith(matchNoResult)
+    await wrapper.vm.$nextTick()
+    checkNbResult(0)
+  })
 
   it('On change with value match more than 5 results', async () => {
     Area.searchAreas.mockReturnValue(Promise.resolve(mockAllAreas))
@@ -96,7 +97,7 @@ describe('SearchLocation.vue', () => {
     inputElem.trigger('input')
     expect(Area.searchAreas).toHaveBeenCalledWith(matchMoreThan5Results)
     await wrapper.vm.$nextTick()
-    checkNbResult(6)
+    checkNbResult(5)
   })
 
   it('On change with value match less than 5 results', async () => {
@@ -106,13 +107,13 @@ describe('SearchLocation.vue', () => {
     inputElem.trigger('input')
     expect(Area.searchAreas).toHaveBeenCalledWith(match4Results)
     await wrapper.vm.$nextTick()
-    checkNbResult(5)
+    checkNbResult(4)
   })
 
   it('On focus without value', () => {
     inputElem.trigger('focus')
     expect(wrapper.vm.search).toBe('')
-    expect(wrapper.vm.isOpen).toBe(false)
+    expect(wrapper.vm.isOpen).toBe(true)
   })
 
   async function display4Results () {
@@ -121,7 +122,7 @@ describe('SearchLocation.vue', () => {
     expect(wrapper.vm.isOpen).toBe(false)
     inputElem.trigger('focus')
     await wrapper.vm.$nextTick()
-    checkNbResult(5)
+    checkNbResult(4)
   }
 
   it('On focus with value', display4Results)
