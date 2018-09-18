@@ -16,7 +16,7 @@ const variables = [
     type: 'Monthly',
     layerName: 'chirps_precip',
     workspaceName: 'historical',
-    legendName: 'chirps-20180101_1',
+    legendName: 'chirps_precip_months',
     startDate: 1984,
     endDate: 2013
   }, {

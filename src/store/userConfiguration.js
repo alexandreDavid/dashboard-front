@@ -25,7 +25,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level',
             'label': 'Air pressure at sea level'
           }, {
             'displayName': 'Air temperature',
@@ -41,7 +41,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature',
             'label': 'Air temperature'
           }, {
             'displayName': 'Relative humidity',
@@ -57,7 +57,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity',
             'label': 'Relative humidity'
           }, {
             'displayName': 'Stratiform rainfall rate 0',
@@ -73,7 +73,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0',
             'label': 'Stratiform rainfall rate 0'
           }, {
             'displayName': 'Surface downwelling longwave flux',
@@ -89,7 +89,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux',
             'label': 'Surface downwelling longwave flux'
           }, {
             'displayName': 'Surface temperature',
@@ -105,7 +105,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature',
             'label': 'Surface temperature'
           }, {
             'displayName': 'TOA outgoing longwave flux',
@@ -121,7 +121,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux',
             'label': 'TOA outgoing longwave flux'
           }, {
             'displayName': 'OUT BASEFLOW',
@@ -137,7 +137,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW',
             'label': 'OUT BASEFLOW'
           }, {
             'displayName': 'OUT EVAP',
@@ -153,7 +153,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP',
             'label': 'OUT EVAP'
           }, {
             'displayName': 'OUT RUNOFF',
@@ -169,7 +169,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF',
             'label': 'OUT RUNOFF'
           }],
           'value': {
@@ -186,7 +186,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level',
             'label': 'Air pressure at sea level'
           },
           'onChange': {
@@ -238,7 +238,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level',
             'label': 'Air pressure at sea level'
           }, {
             'displayName': 'Air temperature',
@@ -254,7 +254,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature',
             'label': 'Air temperature'
           }, {
             'displayName': 'Relative humidity',
@@ -270,7 +270,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity',
             'label': 'Relative humidity'
           }, {
             'displayName': 'Stratiform rainfall rate 0',
@@ -286,7 +286,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0',
             'label': 'Stratiform rainfall rate 0'
           }, {
             'displayName': 'Surface downwelling longwave flux',
@@ -302,7 +302,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux',
             'label': 'Surface downwelling longwave flux'
           }, {
             'displayName': 'Surface temperature',
@@ -318,7 +318,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature',
             'label': 'Surface temperature'
           }, {
             'displayName': 'TOA outgoing longwave flux',
@@ -334,7 +334,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux',
             'label': 'TOA outgoing longwave flux'
           }, {
             'displayName': 'OUT BASEFLOW',
@@ -350,7 +350,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW',
             'label': 'OUT BASEFLOW'
           }, {
             'displayName': 'OUT EVAP',
@@ -366,7 +366,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP',
             'label': 'OUT EVAP'
           }, {
             'displayName': 'OUT RUNOFF',
@@ -382,7 +382,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF',
             'label': 'OUT RUNOFF'
           }],
           'value': {
@@ -399,7 +399,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level',
             'label': 'Air pressure at sea level'
           },
           'onChange': {
@@ -436,7 +436,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level',
             'label': 'Air pressure at sea level'
           }, {
             'displayName': 'Air temperature',
@@ -452,7 +452,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature',
             'label': 'Air temperature'
           }, {
             'displayName': 'Relative humidity',
@@ -468,7 +468,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity',
             'label': 'Relative humidity'
           }, {
             'displayName': 'Stratiform rainfall rate 0',
@@ -484,7 +484,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0',
             'label': 'Stratiform rainfall rate 0'
           }, {
             'displayName': 'Surface downwelling longwave flux',
@@ -500,7 +500,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux',
             'label': 'Surface downwelling longwave flux'
           }, {
             'displayName': 'Surface temperature',
@@ -516,7 +516,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature',
             'label': 'Surface temperature'
           }, {
             'displayName': 'TOA outgoing longwave flux',
@@ -532,7 +532,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux',
             'label': 'TOA outgoing longwave flux'
           }, {
             'displayName': 'OUT BASEFLOW',
@@ -548,7 +548,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW',
             'label': 'OUT BASEFLOW'
           }, {
             'displayName': 'OUT EVAP',
@@ -564,7 +564,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP',
             'label': 'OUT EVAP'
           }, {
             'displayName': 'OUT RUNOFF',
@@ -580,7 +580,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF',
             'label': 'OUT RUNOFF'
           }],
           'value': {
@@ -597,7 +597,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature',
             'label': 'Air temperature'
           },
           'onChange': {
@@ -649,7 +649,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level',
             'label': 'Air pressure at sea level'
           }, {
             'displayName': 'Air temperature',
@@ -665,7 +665,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature',
             'label': 'Air temperature'
           }, {
             'displayName': 'Relative humidity',
@@ -681,7 +681,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity',
             'label': 'Relative humidity'
           }, {
             'displayName': 'Stratiform rainfall rate 0',
@@ -697,7 +697,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0',
             'label': 'Stratiform rainfall rate 0'
           }, {
             'displayName': 'Surface downwelling longwave flux',
@@ -713,7 +713,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux',
             'label': 'Surface downwelling longwave flux'
           }, {
             'displayName': 'Surface temperature',
@@ -729,7 +729,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature',
             'label': 'Surface temperature'
           }, {
             'displayName': 'TOA outgoing longwave flux',
@@ -745,7 +745,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux',
             'label': 'TOA outgoing longwave flux'
           }, {
             'displayName': 'OUT BASEFLOW',
@@ -761,7 +761,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW',
             'label': 'OUT BASEFLOW'
           }, {
             'displayName': 'OUT EVAP',
@@ -777,7 +777,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP',
             'label': 'OUT EVAP'
           }, {
             'displayName': 'OUT RUNOFF',
@@ -793,7 +793,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF',
             'label': 'OUT RUNOFF'
           }],
           'value': {
@@ -810,7 +810,7 @@ let configuration = {
               'format': 'image/png',
               'transparent': true
             },
-            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature&legend_options=fontName:Roboto%20Light;fontAntiAliasing:true;fontColor:0x333132;fontSize:10;bgColor:0xFFFFFF;dpi:180;&format_options=layout:legend;',
+            'legendUrl': 'http://35.178.230.72:8180/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature',
             'label': 'Air temperature'
           },
           'onChange': {
