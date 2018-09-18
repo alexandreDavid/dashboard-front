@@ -4,8 +4,8 @@
       <Popup v-if="isLoaded"/>
     </div>
     <div class="over-map">
-      <div class="over-map-bottom over-map-control">
-        <Legend class="over-map-control" v-if="isLoaded" asline="true"></Legend>
+      <div class="over-map-right over-map-control">
+        <Legend class="over-map-control" v-if="isLoaded"></Legend>
       </div>
     </div>
   </div>
