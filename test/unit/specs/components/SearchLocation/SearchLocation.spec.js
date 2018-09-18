@@ -36,7 +36,7 @@ describe('SearchLocation.vue', () => {
     expect(wrapper.vm.arrowCounter).toBe(0)
     const autocompleteResult = wrapper.findAll('li')
     // For the map opening
-    expect(autocompleteResult.length).toBe(nb + 1)
+    expect(autocompleteResult.length).toBe(nb)
     if (nb) {
       checkActiveResult(0)
     }
@@ -184,14 +184,6 @@ describe('SearchLocation.vue', () => {
     expect(wrapper.vm.isOpen).toBe(true)
     wrapper.vm.handleClickOutside({target: wrapper.vm.$el})
     expect(wrapper.vm.isOpen).toBe(true)
-  })
-
-  it('On openMap link', async () => {
-    await display4Results()
-    expect(wrapper.vm.isOpen).toBe(true)
-    wrapper.find('.open-map').trigger('click')
-    expect(wrapper.vm.isOpen).toBe(false)
-    expect(wrapper.emitted().openMap).toBeTruthy()
   })
 
   it('On change value from parent', async () => {

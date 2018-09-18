@@ -14,7 +14,6 @@
         </h4>
         <div class="col-12 mb-2 p-2">
           <SearchLocation v-model="selectedArea" @openMap="displaySearchHelper = true" />
-          <SearchLocationMapHelper v-if="displaySearchHelper" @select="updateSearchLocation" @close="displaySearchHelper = false"></SearchLocationMapHelper>
         </div>
         <div class="alert alert-info col-12" role="alert" v-if="!selectedArea">
           Select a location to display the dashboard
@@ -39,7 +38,6 @@ import DashboardWidget from './DashboardWidget'
 import DashboardCardModal from './DashboardCardModal'
 import Loading from '@/components/Loading/Loading'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
-import SearchLocationMapHelper from '@/components/SearchLocation/SearchLocationMapHelper'
 import Parameter from '@/store/parameter.js'
 import Area from '@/store/area.js'
 import Api from '@/store/api.js'
@@ -54,7 +52,6 @@ export default {
   name: 'DashboardPage',
   components: {
     SearchLocation,
-    SearchLocationMapHelper,
     Loading,
     DashboardWidget,
     DashboardCardModal,

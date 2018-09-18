@@ -6,7 +6,6 @@
     </div>
     <div class="over-map-left">
       <div class="d-flex flex-nowrap position-relative">
-        <SearchLocationMapHelper v-if="displaySearchHelper" @select="updateSearchLocation" @close="displaySearchHelper = false"></SearchLocationMapHelper>
         <div class="p-1 flex-grow-1 over-map-control">
           <SearchLocation @input="onSearchLocationSelected" v-model="selectedArea" @openMap="displaySearchHelper = true" class="shadow"></SearchLocation>
         </div>
@@ -37,7 +36,6 @@
 
 <script>
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
-import SearchLocationMapHelper from '@/components/SearchLocation/SearchLocationMapHelper'
 import Managing from './OverMapControl/Managing/Managing'
 import AreaLayer from '@/store/areaLayer'
 
@@ -57,7 +55,6 @@ export default {
   name: 'OverMap',
   components: {
     SearchLocation,
-    SearchLocationMapHelper,
     Managing,
     FontAwesomeIcon,
     SideBar: () => import('@/components/SideBar/SideBar'),

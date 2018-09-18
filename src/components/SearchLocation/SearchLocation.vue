@@ -30,11 +30,6 @@
           :class="{ 'active': i === arrowCounter }">
           {{ result.name }}
         </li>
-        <li
-          @click="openMap()"
-          class="list-group-item list-group-item-action open-map">
-          <a href="#" class="link">Open the map selector</a>
-        </li>
       </ul>
     </div>
   </div>
@@ -117,10 +112,6 @@ export default {
       if (!this.$el.contains(evt.target)) {
         this.returnToInitialeStatement()
       }
-    },
-    openMap () {
-      this.returnToInitialeStatement()
-      this.$emit('openMap')
     }
   },
   mounted () {
