@@ -11,8 +11,9 @@ const mockGeoJSON = {
 L.GeoJSON = jest.fn().mockImplementation(() => mockGeoJSON)
 
 jest.mock('axios', () => ({
-  get: jest.fn().mockReturnValue(Promise.resolve({ data: 'mockAxiosData' }))
+  get: jest.fn()
 }))
+axios.get.mockReturnValue(Promise.resolve({ data: 'mockAxiosData' }))
 
 const mockMap = {
   fitBounds: jest.fn()
@@ -45,6 +46,7 @@ describe('areaLayer.js', () => {
     // })
     expect(mockGeoJSON.remove).not.toHaveBeenCalled()
     expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getSubAreaLayerStyle())
     expect(mockGeoJSON.addTo).toHaveBeenCalledWith(mockMap)
   })
 
@@ -57,7 +59,24 @@ describe('areaLayer.js', () => {
     // })
     expect(mockGeoJSON.remove).toBeCalled()
     expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getSubAreaLayerStyle())
     expect(mockGeoJSON.addTo).toHaveBeenCalledWith(mockMap)
+  })
+  it('Calls setSelectedArea with areaLayer Uganda', async () => {
+    const mockArea = {
+      workspaceName: 'workspaceName',
+      paramName: 'paramName',
+      id: 7552
+    }
+    const areaLayer = new AreaLayer(mockMap)
+    await areaLayer.setSelectedArea(mockArea)
+    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getSubAreaLayerStyle())
+
+    axios.get.mockClear()
+    await areaLayer.setSelectedArea(mockArea)
+    expect(mockGeoJSON.remove).toBeCalled()
+    expect(axios.get).not.toBeCalled()
   })
 
   it('Calls zoomToArea', async () => {
@@ -67,5 +86,12 @@ describe('areaLayer.js', () => {
     expect(areaLayer._areaLayer).toEqual(mockGeoJSON)
     expect(mockGeoJSON.getBounds).toHaveBeenCalled()
     expect(mockMap.fitBounds).toHaveBeenCalledWith('mockGetBounds')
+  })
+
+  it('Calls isReady', async () => {
+    const areaLayer = new AreaLayer(mockMap)
+    expect(areaLayer.isReady()).toBe(false)
+    await areaLayer.setSelectedArea(mockArea)
+    expect(areaLayer.isReady()).toBe(true)
   })
 })
