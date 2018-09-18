@@ -4,7 +4,7 @@ import { shallowMount } from '@vue/test-utils'
 
 jest.mock('@/store/historicalConfiguration', () => ({
   getAllVariables: jest.fn(),
-  getAllMonths: jest.fn()
+  getAllTimePeriods: jest.fn()
 }))
 
 const mockVariables = [
@@ -16,23 +16,24 @@ const mockVariables = [
 ]
 config.getAllVariables.mockReturnValue(mockVariables)
 
-const mockMonths = [
+const mockTimePeriods = [
   {
-    value: 'month1'
+    value: 'month1',
+    type: 'month'
   }, {
     value: 'month2'
   }
 ]
-config.getAllMonths.mockReturnValue(mockMonths)
+config.getAllTimePeriods.mockReturnValue(mockTimePeriods)
 
 describe('HistoricalPage.vue', () => {
   it('on create', () => {
     let wrapper = shallowMount(HistoricalPage)
     expect(config.getAllVariables).toHaveBeenCalled()
-    expect(config.getAllMonths).toHaveBeenCalled()
+    expect(config.getAllTimePeriods).toHaveBeenCalled()
     expect(wrapper.vm.variables).toEqual(mockVariables)
     expect(wrapper.vm.activeVariable).toEqual(mockVariables[0])
-    expect(wrapper.vm.months).toEqual(mockMonths)
+    expect(wrapper.vm.timePeriods).toEqual(mockTimePeriods)
   })
 
   it('on change year', () => {
@@ -40,12 +41,13 @@ describe('HistoricalPage.vue', () => {
     wrapper.vm.activeVariable = {
       type: 'Monthly',
       legendName: 'legendName',
-      layerName: 'layerName'
+      layerName: 'layerName',
+      workspaceName: 'workspaceName'
     }
     wrapper.vm.changeYear(1989)
     expect(wrapper.vm.activeYear).toBe(1989)
-    expect(wrapper.vm.activePeriod).toEqual(mockMonths[0])
-    expect(wrapper.vm.displayedLayer.layerParameters.layers).toEqual('layerName')
+    expect(wrapper.vm.activePeriod).toEqual(mockTimePeriods[0])
+    expect(wrapper.vm.displayedLayer.layerParameters.layers).toEqual('workspaceName:monthly_layerName')
     expect(wrapper.vm.displayedLayer.layerParameters.time).toEqual('1989-month1')
   })
 })

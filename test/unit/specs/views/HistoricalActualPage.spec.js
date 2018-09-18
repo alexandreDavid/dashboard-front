@@ -78,8 +78,8 @@ describe('HistoricalActualPage.vue', () => {
         layerParameters: {}
       }
     }]
-    wrapper.setProps({period: 'april'})
-    expect(wrapper.vm.allMiniMaps[0].param.layerParameters.time).toBe('title1-april')
-    expect(wrapper.vm.allMiniMaps[1].param.layerParameters.time).toBe('title2-april')
+    wrapper.setProps({period: {value: 1}})
+    expect(wrapper.vm.allMiniMaps[0].param.layerParameters.time).toBe('title1-1')
+    expect(wrapper.vm.allMiniMaps[1].param.layerParameters.time).toBe('title2-1')
   })
 })

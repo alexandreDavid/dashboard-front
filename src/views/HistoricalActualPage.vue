@@ -64,7 +64,7 @@ export default {
             param: {
               layerUrl: `${process.env.GEOSERVER_URL}/wms`,
               layerParameters: {
-                layers: this.variable.layerName,
+                layers: this.variable.layer,
                 format: 'image/png',
                 transparent: true,
                 time: this.lastDisplayedYear
@@ -90,9 +90,16 @@ export default {
       this.displayNextYears()
       this.activeMiniMap = this.allMiniMaps[0].title
     },
-    period (period) {
+    period (period, oldPeriod) {
       this.allMiniMaps.forEach(m => {
-        m.param.layerParameters.time = `${m.title}-${period}`
+        if (period.value < 13) {
+          m.param.layerParameters.time = `${m.title}-${period.value}`
+        } else {
+          m.param.layerParameters.time = `${m.title}`
+        }
+        if (period.type !== oldPeriod.type || period.type !== 'month') {
+          m.param.layerParameters.layers = this.variable.layer
+        }
       })
     }
   }

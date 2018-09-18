@@ -14,7 +14,7 @@
             </select>
             <label v-if="activeVariable.type !== 'Daily'" class="m-2" for="period">Month/Season/Annual</label>
             <select v-model="activePeriod" v-if="activeVariable.type !== 'Daily'" class="m-2 custom-select" id="period" name="period">
-              <option v-for="month in months" :key="month.value" :value="month">{{ month.label }}</option>
+              <option v-for="timePeriod in timePeriods" :key="timePeriod.value" :value="timePeriod">{{ timePeriod.label }}</option>
             </select>
           </div>
         </div>
@@ -29,20 +29,20 @@
           <div class="card p-3 h-100">
             <h6>Months</h6>
             <div class="mb-1 d-flex flex-wrap">
-              <div v-for="(month, key) in months" :key="key" class="p-1" style="min-width: 80px">
+              <div v-for="(month, key) in timePeriodTypeFilter(timePeriods, 'month')" :key="key" class="p-1" style="min-width: 80px">
                 <button type="button" class="btn btn-sm btn-secondary w-100" @click="activePeriod = month" v-bind:class="{active: activePeriod.value === month.value}">{{ month.shortLabel }}</button>
               </div>
             </div>
-            <h6>Seasons (coming soon)</h6>
+            <h6>Seasons</h6>
             <div class="mb-1 d-flex flex-wrap">
-              <div v-for="(season, key) in seasons" :key="key" class="p-1" style="min-width: 80px">
-                <button type="button" disabled class="btn btn-sm btn-secondary w-100">{{ season }}</button>
+              <div v-for="(season, key) in timePeriodTypeFilter(timePeriods, 'season')" :key="key" class="p-1" style="min-width: 80px">
+                <button type="button" class="btn btn-sm btn-secondary w-100" @click="activePeriod = season" v-bind:class="{active: activePeriod.value === season.value}">{{ season.shortLabel }}</button>
               </div>
             </div>
-            <h6>Annual (coming soon)</h6>
+            <h6>Annual</h6>
             <div class="mb-1 d-flex flex-wrap">
-              <div class="p-1" style="min-width: 80px">
-                <button type="button" disabled class="btn btn-sm btn-secondary w-100">Annual</button>
+              <div v-for="(annual, key) in timePeriodTypeFilter(timePeriods, 'annual')" :key="key" class="p-1" style="min-width: 80px">
+                <button type="button" class="btn btn-sm btn-secondary w-100" @click="activePeriod = annual" v-bind:class="{active: activePeriod.value === annual.value}">{{ annual.shortLabel }}</button>
               </div>
             </div>
           </div>
@@ -60,7 +60,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <HistoricalActualPage v-bind:variable="activeVariable" v-bind:period="activePeriod.value" @change="changeYear"></HistoricalActualPage>
+          <HistoricalActualPage v-bind:variable="activeVariable" v-bind:period="activePeriod" @change="changeYear"></HistoricalActualPage>
         </div>
       </div>
     </div>
@@ -90,19 +90,18 @@ export default {
       activeVariable: false,
       activeYear: false,
       activePeriod: false,
-      months: [],
-      seasons: ['Spring', 'Summer', 'Autumn', 'Winter']
+      timePeriods: []
     }
   },
   async created () {
     this.variables = config.getAllVariables()
     this.activeVariable = this.variables[0]
-    this.months = config.getAllMonths()
-    this.activePeriod = this.months[0]
-    this.isLoaded = true
+    this.timePeriods = config.getAllTimePeriods()
+    this.activePeriod = this.timePeriods[0]
   },
   mounted () {
     this.onSelectVariable(this.activeVariable)
+    this.isLoaded = true
   },
   watch: {
     activeVariable (variable) {
@@ -115,22 +114,40 @@ export default {
   methods: {
     onSelectVariable (selectedVariable, year) {
       this.activeYear = year || selectedVariable.endDate
+      let time
+
       if (selectedVariable.type !== 'Monthly') {
-        this.activePeriod = this.months[0]
+        this.activePeriod = this.timePeriods[0]
+        time = `${this.activeYear}-${this.activePeriod.value}`
+        selectedVariable.layer = `${selectedVariable.workspaceName}:${selectedVariable.layerName}`
+      } else {
+        if (this.activePeriod.type === 'month') {
+          selectedVariable.layer = `${selectedVariable.workspaceName}:monthly_${selectedVariable.layerName}`
+          time = `${this.activeYear}-${this.activePeriod.value}`
+        } else if (this.activePeriod.type === 'season') {
+          selectedVariable.layer = `${selectedVariable.workspaceName}:${selectedVariable.layerName}_${this.activePeriod.label.toLowerCase()}`
+          time = this.activeYear
+        } else {
+          selectedVariable.layer = `${selectedVariable.workspaceName}:annual_${selectedVariable.layerName}`
+          time = this.activeYear
+        }
       }
       this.displayedLayer = {
         layerUrl: `${process.env.GEOSERVER_URL}/wms`,
         legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=${selectedVariable.legendName}`,
         layerParameters: {
-          layers: selectedVariable.layerName,
+          layers: selectedVariable.layer,
           format: 'image/png',
           transparent: true,
-          time: `${this.activeYear}-${this.activePeriod.value}`
+          time
         }
       }
     },
     changeYear (year) {
       this.onSelectVariable(this.activeVariable, year)
+    },
+    timePeriodTypeFilter: function (timePeriods, type) {
+      return timePeriods.filter(t => t.type === type)
     }
   }
 }
