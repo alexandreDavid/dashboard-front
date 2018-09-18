@@ -16,6 +16,7 @@ export default {
         paramName: 'air_pressure_at_sea_level',
         workspaceName: 'twoDaysForecast',
         unit: 'Pa',
+        hasGraph: true,
         hasTimeFrame: true
       }, {
         displayName: 'Air temperature',
@@ -24,6 +25,7 @@ export default {
         paramName: 'air_temperature',
         workspaceName: 'twoDaysForecast',
         unit: 'K',
+        hasGraph: true,
         hasTimeFrame: true
       }, {
         displayName: 'Relative humidity',
@@ -32,6 +34,7 @@ export default {
         paramName: 'relative_humidity',
         workspaceName: 'twoDaysForecast',
         unit: '%',
+        hasGraph: true,
         hasTimeFrame: true
       }, {
         displayName: 'Stratiform rainfall rate 0',
@@ -40,6 +43,7 @@ export default {
         paramName: 'stratiform_rainfall_rate_0',
         workspaceName: 'twoDaysForecast',
         unit: 'Kg/m^2*s',
+        hasGraph: true,
         hasTimeFrame: true
       }, {
         displayName: 'Surface downwelling longwave flux',
@@ -48,6 +52,7 @@ export default {
         paramName: 'surface_downwelling_longwave_flux',
         workspaceName: 'twoDaysForecast',
         unit: 'W/m^2',
+        hasGraph: true,
         hasTimeFrame: true
       }, {
         displayName: 'Surface temperature',
@@ -56,6 +61,7 @@ export default {
         paramName: 'surface_temperature',
         workspaceName: 'twoDaysForecast',
         unit: 'K',
+        hasGraph: true,
         hasTimeFrame: true
       }, {
         displayName: 'TOA outgoing longwave flux',
@@ -64,6 +70,7 @@ export default {
         paramName: 'toa_outgoing_longwave_flux',
         workspaceName: 'twoDaysForecast',
         unit: 'W/m^2',
+        hasGraph: true,
         hasTimeFrame: true
       }, {
         displayName: 'OUT BASEFLOW',
@@ -72,6 +79,7 @@ export default {
         paramName: 'OUT_BASEFLOW',
         workspaceName: 'hidrology',
         unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
         hasTimeFrame: true
       }, {
         displayName: 'OUT EVAP',
@@ -80,6 +88,7 @@ export default {
         paramName: 'OUT_EVAP',
         workspaceName: 'hidrology',
         unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
         hasTimeFrame: true
       }, {
         displayName: 'OUT RUNOFF',
@@ -88,6 +97,7 @@ export default {
         paramName: 'OUT_RUNOFF',
         workspaceName: 'hidrology',
         unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
         hasTimeFrame: true
       }, {
         displayName: 'NDVI',
@@ -96,6 +106,7 @@ export default {
         paramName: 'ndvi',
         workspaceName: 'env_sys',
         unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
         hasTimeFrame: false
       }, {
         displayName: 'BAI',
@@ -104,6 +115,7 @@ export default {
         paramName: 'bai',
         workspaceName: 'env_sys',
         unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
         hasTimeFrame: false
       }, {
         displayName: 'Land surface temperature',
@@ -112,6 +124,7 @@ export default {
         paramName: 'land_surface_temperature',
         workspaceName: 'pixalytics',
         unit: 'K',
+        hasGraph: false,
         hasTimeFrame: false
       }, {
         displayName: 'Soil moisture content',
@@ -120,6 +133,7 @@ export default {
         paramName: 'soil_moisture_content',
         workspaceName: 'pixalytics',
         unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
         hasTimeFrame: false
       }
     ].map(this.getParameterInfos)
