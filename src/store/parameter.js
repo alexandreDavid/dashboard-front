@@ -90,6 +90,22 @@ export default {
         unit: 'NO_UNIT_SPECIFIED',
         hasTimeFrame: true
       }, {
+        displayName: 'NDVI',
+        groupingId: 2,
+        paramDescription: 'NDVI',
+        paramName: 'ndvi',
+        workspaceName: 'env_sys',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasTimeFrame: false
+      }, {
+        displayName: 'BAI',
+        groupingId: 2,
+        paramDescription: 'BAI',
+        paramName: 'bai',
+        workspaceName: 'env_sys',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasTimeFrame: false
+      }, {
         displayName: 'Land surface temperature',
         groupingId: 2,
         paramDescription: 'Land surface temperature',
