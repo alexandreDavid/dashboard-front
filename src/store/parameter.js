@@ -65,35 +65,48 @@ export default {
         workspaceName: 'twoDaysForecast',
         unit: 'W/m^2',
         hasTimeFrame: true
+      }, {
+        displayName: 'OUT BASEFLOW',
+        groupingId: 1,
+        paramDescription: 'OUT_BASEFLOW',
+        paramName: 'OUT_BASEFLOW',
+        workspaceName: 'hidrology',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasTimeFrame: true
+      }, {
+        displayName: 'OUT EVAP',
+        groupingId: 1,
+        paramDescription: 'OUT_EVAP',
+        paramName: 'OUT_EVAP',
+        workspaceName: 'hidrology',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasTimeFrame: true
+      }, {
+        displayName: 'OUT RUNOFF',
+        groupingId: 1,
+        paramDescription: 'OUT_RUNOFF',
+        paramName: 'OUT_RUNOFF',
+        workspaceName: 'hidrology',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasTimeFrame: true
+      }, {
+        displayName: 'Land surface temperature',
+        groupingId: 2,
+        paramDescription: 'Land surface temperature',
+        paramName: 'land_surface_temperature',
+        workspaceName: 'pixalytics',
+        unit: 'K',
+        hasTimeFrame: false
+      }, {
+        displayName: 'Soil moisture content',
+        groupingId: 2,
+        paramDescription: 'Soil moisture content',
+        paramName: 'soil_moisture_content',
+        workspaceName: 'pixalytics',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasTimeFrame: false
       }
     ].map(this.getParameterInfos)
-    parameters.push(this.getParameterInfos({
-      displayName: 'OUT BASEFLOW',
-      groupingId: 1,
-      paramDescription: 'OUT_BASEFLOW',
-      paramName: 'OUT_BASEFLOW',
-      workspaceName: 'hidrology',
-      unit: 'NO_UNIT_SPECIFIED',
-      hasTimeFrame: true
-    }))
-    parameters.push(this.getParameterInfos({
-      displayName: 'OUT EVAP',
-      groupingId: 1,
-      paramDescription: 'OUT_EVAP',
-      paramName: 'OUT_EVAP',
-      workspaceName: 'hidrology',
-      unit: 'NO_UNIT_SPECIFIED',
-      hasTimeFrame: true
-    }))
-    parameters.push(this.getParameterInfos({
-      displayName: 'OUT RUNOFF',
-      groupingId: 1,
-      paramDescription: 'OUT_RUNOFF',
-      paramName: 'OUT_RUNOFF',
-      workspaceName: 'hidrology',
-      unit: 'NO_UNIT_SPECIFIED',
-      hasTimeFrame: true
-    }))
     return parameters
   },
   getParameterInfos (p) {

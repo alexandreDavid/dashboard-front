@@ -16,7 +16,7 @@ let parametersFromStructure = [
     isActive: true
   }
 ]
-let [param1, , param3] = parametersFromStructure
+// let [param1, , param3] = parametersFromStructure
 
 jest.mock('@/store/data', () => ({
   getStructure: jest.fn()
