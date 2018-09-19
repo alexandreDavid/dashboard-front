@@ -3,6 +3,7 @@ import { mount, shallowMount } from '@vue/test-utils'
 import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
 import Parameter from '@/store/parameter'
+import GraphModal from '@/components/Graph/GraphModal'
 
 const mockMap = {
   on: jest.fn().mockImplementation((evtName, callback) => {
@@ -26,9 +27,19 @@ function getDisplayedLayer () {
 }
 
 jest.mock('@/store/parameter', () => ({
-  getDisplayedParameter: jest.fn().mockReturnValue('getDisplayedParameter'),
+  getDisplayedParameter: jest.fn(),
   setDisplayedParameter: jest.fn()
 }))
+
+jest.mock('@/store/area', () => ({
+  getSelectedArea: jest.fn().mockReturnValue('getSelectedArea')
+}))
+
+const mockGetDisplayedLayer = {
+  displayName: 'displayName',
+  hasGraph: true
+}
+Parameter.getDisplayedParameter.mockReturnValue(mockGetDisplayedLayer)
 
 describe('Managing.vue', () => {
   let wrapper
@@ -74,31 +85,21 @@ describe('Managing.vue', () => {
     wrapper.find(ForecastSelection).vm.$emit('selectedParameter', 'selectedParameter')
     expect(wrapper.vm.showModal).toBe(false)
     expect(Parameter.setDisplayedParameter).toBeCalledWith('selectedParameter')
-    expect(wrapper.emitted().selectedParameter).toEqual([['getDisplayedParameter'], ['selectedParameter']])
+    expect(wrapper.emitted().selectedParameter).toEqual([[mockGetDisplayedLayer], ['selectedParameter']])
   })
 
   it('On layer add', () => {
     mockMap.layeradd()
-    expect(wrapper.vm.displayedParameter).toBe('getDisplayedParameter')
+    expect(wrapper.vm.displayedParameter).toBe(mockGetDisplayedLayer)
   })
 
-  // it('Choose ReportedSelection', () => {
-  //   const wrapper = mount(Managing, {
-  //     provide: {
-  //       getMap: getMapMock()
-  //     },
-  //     stubs: {
-  //       ForecastSelection: true,
-  //       ReportedSelection: true,
-  //       Legend: true
-  //     }
-  //   })
-  //   const buttonForecastSelection = wrapper.find('#reported-selection-btn')
-  //   buttonForecastSelection.trigger('click')
-  //   expect(wrapper.vm.showModalReported).toBe(true)
+  it('On open graph modal', () => {
+    wrapper.find('#open-graph-modal').trigger('click')
+    expect(wrapper.vm.showModalGraph).toBe(true)
+    expect(wrapper.vm.selectedArea).toBe('getSelectedArea')
+    expect(wrapper.vm.selectedParameter).toBe(mockGetDisplayedLayer)
 
-  //   wrapper.find(ReportedSelection).vm.$emit('selectedReportedParameter', 'selectedReportedParameter')
-  //   expect(wrapper.vm.showModalReported).toBe(false)
-  //   expect(wrapper.emitted().selectedReportedParameter).toEqual([['selectedReportedParameter']])
-  // })
+    wrapper.find(GraphModal).vm.$emit('close')
+    expect(wrapper.vm.showModalGraph).toBe(false)
+  })
 })

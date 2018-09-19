@@ -94,10 +94,6 @@ export default {
     this.onSelectedParameter(Parameter.getDisplayedParameter())
   },
   methods: {
-    updateSearchLocation (feature) {
-      Area.setSelectedArea(feature)
-      this.selectedArea = feature
-    },
     onSearchLocationSelected (newValue) {
       if (newValue) {
         this.areaLayer.setSelectedArea(newValue)

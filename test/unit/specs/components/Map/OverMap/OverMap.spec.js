@@ -3,9 +3,9 @@ import { shallowMount } from '@vue/test-utils'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import AreaLayer from '@/store/areaLayer'
 import Parameter from '@/store/parameter'
-import Area from '@/store/area'
-import Modal from '@/components/Modal/Modal'
-// import Managing from '@/components/Map/OverMap//OverMapControl/Managing/Managing'
+// import Area from '@/store/area'
+// import Modal from '@/components/Modal/Modal'
+import Managing from '@/components/Map/OverMap//OverMapControl/Managing/Managing'
 
 const mockMap = {
   setCurrentLocationLayer: jest.fn().mockResolvedValue(true),
@@ -129,12 +129,12 @@ describe('OverMap.vue', () => {
   //   expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith(selectedParameter)
   // })
 
-  // it('On select reported parameter', () => {
-  //   const selectedReportedParameter = {
-  //     layerUrl: 'layerUrl',
-  //     layerParameters: 'layerParameters'
-  //   }
-  //   wrapper.find(Managing).vm.$emit('selectedReportedParameter', selectedReportedParameter)
-  //   expect(wrapper.emitted().selectedReportedLayer).toEqual([[selectedReportedParameter]])
-  // })
+  it('On select reported parameter', () => {
+    const selectedReportedParameter = {
+      layerUrl: 'layerUrl',
+      layerParameters: 'layerParameters'
+    }
+    wrapper.find(Managing).vm.$emit('selectedReportedParameter', selectedReportedParameter)
+    expect(wrapper.emitted().selectedReportedLayer).toEqual([[selectedReportedParameter]])
+  })
 })
