@@ -13,7 +13,6 @@
 
 <script>
 import MapObj from '@/store/map'
-import AreaLayer from '@/store/areaLayer'
 import DisplayedLayer from '@/store/displayedLayer'
 import Popup from '@/components/Map/Popup'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
@@ -27,14 +26,14 @@ export default {
     'area',
     'parameter',
     'minimapKey',
-    'interactive'
+    'interactive',
+    'areaLayer'
   ],
   data () {
     return {
       isLoaded: false,
       map: false,
-      displayedLayer: false,
-      areaLayer: false
+      displayedLayer: false
     }
   },
   computed: {
@@ -50,7 +49,7 @@ export default {
   },
   mounted () {
     this.map = new MapObj(this.mapId)
-    this.areaLayer = new AreaLayer(this.map, {id: 7552})
+    this.areaLayer.addTo(this.map)
     this.displayedLayer = new DisplayedLayer(this.map, this.parameter)
     this.isLoaded = true
     this.toggleMapHandlers(this.interactive)
@@ -61,14 +60,14 @@ export default {
         this.getDisplayedLayer().setDisplayedLayer(newParam)
         if (this.areaLayer.isReady()) {
           this.map.invalidateSize()
-          this.areaLayer.zoomToArea()
+          this.areaLayer.zoomTo(this.map)
         }
       },
       deep: true
     },
     interactive (val) {
       this.map.invalidateSize()
-      this.areaLayer.zoomToArea()
+      this.areaLayer.zoomTo(this.map)
       this.toggleMapHandlers(val)
     }
   },
@@ -88,6 +87,8 @@ export default {
   },
   destroyed () {
     this.map.remove()
+    delete this.map
+    delete this.displayedLayer
   }
 }
 </script>

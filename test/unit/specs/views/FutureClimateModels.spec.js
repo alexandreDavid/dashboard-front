@@ -1,6 +1,16 @@
 import FutureClimateModels from '@/views/FutureClimateModels'
 import config from '@/store/futureClimateConfiguration'
 import { shallowMount } from '@vue/test-utils'
+import AreaLayer from '@/store/areaLayer'
+
+const mockAreaLayer = {
+  setSelectedArea: jest.fn()
+}
+jest.mock('@/store/areaLayer', () => {
+  return jest.fn().mockImplementation(() => {
+    return mockAreaLayer
+  })
+})
 
 jest.mock('@/store/futureClimateConfiguration', () => ({
   getAllModelsByType: jest.fn()
@@ -36,6 +46,8 @@ describe('FutureClimateModels.vue', () => {
     expect(config.getAllModelsByType).toHaveBeenCalled()
     expect(wrapper.vm.availableModels.length).toBe(1)
     expect(wrapper.vm.models.length).toBe(1)
+    expect(AreaLayer).toBeCalled()
+    expect(mockAreaLayer.setSelectedArea).toBeCalledWith({id: 7552})
   })
 
   it('on variable change', () => {

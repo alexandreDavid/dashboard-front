@@ -4,7 +4,7 @@
       Models
     </div>
     <div class="card-body position-relative">
-      <div class="d-flex flex-wrap justify-content-center justify-content-md-start">
+      <div class="d-flex flex-wrap justify-content-center justify-content-md-start" v-if="isLoaded">
         <div class="card h-100 m-2 model-card" v-for="(model, key) in models" :key="key" v-bind:class="{maximize: model.maximize}">
           <div class="card-header">
             <div class="d-flex align-items-center">
@@ -18,7 +18,7 @@
             </div>
           </div>
           <div class="card-body position-relative">
-            <MiniMap :minimapKey="key" v-bind:parameter="model.param" v-bind:interactive="model.maximize"></MiniMap>
+            <MiniMap :minimapKey="key" v-bind:parameter="model.param" v-bind:interactive="model.maximize"  v-bind:areaLayer="areaLayer"></MiniMap>
           </div>
         </div>
         <label class="card h-100 m-2 add-model" for="add-model" v-if="availableModels.length">
@@ -31,6 +31,7 @@
           </div>
         </label>
       </div>
+      <Loading v-else/>
     </div>
   </div>
 </template>
@@ -41,12 +42,15 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 import { faWindowMaximize, faWindowRestore } from '@fortawesome/free-regular-svg-icons'
 import FutureClimateModels from '@/store/futureClimateConfiguration'
+import AreaLayer from '@/store/areaLayer'
+import Loading from '@/components/Loading/Loading'
 
 export default {
   name: 'FutureClimateModels',
   components: {
     MiniMap,
-    FontAwesomeIcon
+    FontAwesomeIcon,
+    Loading
   },
   props: ['variable', 'period', 'timePeriod'],
   data () {
@@ -54,7 +58,9 @@ export default {
       model2Add: false,
       availableModels: [],
       models: [],
-      miniMap: []
+      miniMap: [],
+      areaLayer: false,
+      isLoaded: false
     }
   },
   computed: {
@@ -68,9 +74,12 @@ export default {
       return faWindowRestore
     }
   },
-  mounted () {
+  async mounted () {
     this.availableModels = FutureClimateModels.getAllModelsByType('CMIP5')
     this.availableModels.filter(m => m.default).forEach(this.addModel)
+    this.areaLayer = new AreaLayer()
+    await this.areaLayer.setSelectedArea({id: 7552})
+    this.isLoaded = true
   },
   methods: {
     setParam (model) {

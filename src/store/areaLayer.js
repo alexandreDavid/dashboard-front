@@ -34,8 +34,11 @@ let AreaLayer = class {
     if (this._areaLayer) {
       this._areaLayer.remove()
     }
-    this._areaLayer = new GeoJSON(areaData.data, AreaLayer.getAreaLayerStyle()).addTo(this._map)
-    this.zoomToArea()
+    this._areaLayer = new GeoJSON(areaData.data, AreaLayer.getAreaLayerStyle())
+    if (this._map) {
+      this._areaLayer.addTo(this._map)
+      this.zoomToArea()
+    }
     this._isReady = true
   }
   async setSubAreas (area) {
@@ -62,13 +65,23 @@ let AreaLayer = class {
     if (this._subAreasLayer) {
       this._subAreasLayer.remove()
     }
-    this._subAreasLayer = new GeoJSON(areaData.data, AreaLayer.getSubAreaLayerStyle()).addTo(this._map)
+    this._subAreasLayer = new GeoJSON(areaData.data, AreaLayer.getSubAreaLayerStyle())
+    if (this._map) {
+      this._subAreasLayer.addTo(this._map)
+    }
   }
   zoomToArea () {
     this._map.fitBounds(this._areaLayer.getBounds())
   }
   isReady () {
     return this._isReady
+  }
+  addTo (map) {
+    this._areaLayer.addTo(map)
+    this._subAreasLayer.addTo(map)
+  }
+  zoomTo (map) {
+    map.fitBounds(this._areaLayer.getBounds())
   }
 }
 

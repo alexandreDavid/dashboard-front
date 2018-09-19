@@ -53,14 +53,14 @@
               {{ activeVariable.description }} - {{(activeVariable.type !== 'Daily') ? `${activePeriod.label} ` : ''}}{{ activeYear }}
             </div>
             <div class="card-body position-relative">
-              <MiniMap minimapKey="historical-map-container" v-bind:parameter="displayedLayer" interactive="true"></MiniMap>
+              <MiniMap minimapKey="historical-map-container" v-bind:parameter="displayedLayer" v-bind:areaLayer="areaLayer" interactive="true"></MiniMap>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          <HistoricalActualPage v-bind:variable="activeVariable" v-bind:period="activePeriod" @change="changeYear"></HistoricalActualPage>
+          <HistoricalActualPage v-bind:variable="activeVariable" v-bind:period="activePeriod" v-bind:areaLayer="areaLayer" @change="changeYear"></HistoricalActualPage>
         </div>
       </div>
     </div>
@@ -73,6 +73,7 @@ import Loading from '@/components/Loading/Loading'
 import HistoricalActualPage from '@/views/HistoricalActualPage'
 import MiniMap from '@/components/Map/MiniMap'
 import config from '@/store/historicalConfiguration'
+import AreaLayer from '@/store/areaLayer'
 
 export default {
   name: 'HistoricalPage',
@@ -90,6 +91,7 @@ export default {
       activeVariable: false,
       activeYear: false,
       activePeriod: false,
+      areaLayer: false,
       timePeriods: []
     }
   },
@@ -99,8 +101,10 @@ export default {
     this.timePeriods = config.getAllTimePeriods()
     this.activePeriod = this.timePeriods[0]
   },
-  mounted () {
+  async mounted () {
     this.onSelectVariable(this.activeVariable)
+    this.areaLayer = new AreaLayer()
+    await this.areaLayer.setSelectedArea({id: 7552})
     this.isLoaded = true
   },
   watch: {
@@ -149,6 +153,9 @@ export default {
     timePeriodTypeFilter: function (timePeriods, type) {
       return timePeriods.filter(t => t.type === type)
     }
+  },
+  destroyed () {
+    delete this.areaLayer
   }
 }
 </script>

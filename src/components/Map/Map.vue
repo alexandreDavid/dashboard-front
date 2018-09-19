@@ -54,6 +54,11 @@ export default {
     onSelectedReportedLayer (selectedReportedLayer) {
       this.selectedReportedLayer = selectedReportedLayer
     }
+  },
+  destroyed () {
+    this.map.remove()
+    delete this.map
+    delete this.displayedLayer
   }
 }
 </script>

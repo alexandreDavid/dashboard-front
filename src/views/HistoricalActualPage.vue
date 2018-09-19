@@ -5,7 +5,7 @@
         {{ miniMap.title }}
       </div>
       <div class="card-body position-relative">
-        <MiniMap :minimapKey="key" v-bind:parameter="miniMap.param"></MiniMap>
+        <MiniMap :minimapKey="key" v-bind:parameter="miniMap.param" v-bind:areaLayer="areaLayer"></MiniMap>
       </div>
     </div>
     <div v-show="displayAddYearsButton" class="card h-100 m-2 add-years" @click="displayNextYears">
@@ -38,6 +38,9 @@ export default {
       required: true
     },
     period: {
+      required: true
+    },
+    areaLayer: {
       required: true
     }
   },
