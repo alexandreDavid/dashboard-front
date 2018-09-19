@@ -95,7 +95,7 @@ export default {
       timePeriods: []
     }
   },
-  async created () {
+  created () {
     this.variables = config.getAllVariables()
     this.activeVariable = this.variables[0]
     this.timePeriods = config.getAllTimePeriods()
