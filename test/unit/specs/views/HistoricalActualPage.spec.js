@@ -2,33 +2,28 @@ import HistoricalActualPage from '@/views/HistoricalActualPage'
 import { shallowMount } from '@vue/test-utils'
 
 describe('HistoricalActualPage.vue', () => {
-  it('on create', () => {
-    let wrapper = shallowMount(HistoricalActualPage, {
+  let wrapper
+  beforeEach(() => {
+    wrapper = shallowMount(HistoricalActualPage, {
       propsData: {
         variable: {
           startDate: 2010,
           endDate: 2018,
           layerName: 'layerName'
         },
-        period: 'period'
+        period: 'period',
+        areaLayer: {}
       }
     })
+  })
+
+  it('on create', () => {
     expect(wrapper.vm.lastDisplayedYear).toBe(2013)
     expect(wrapper.vm.allMiniMaps.length).toBe(5)
     expect(wrapper.vm.activeMiniMap).toBe(2018)
   })
 
   it('on select year', () => {
-    let wrapper = shallowMount(HistoricalActualPage, {
-      propsData: {
-        variable: {
-          startDate: 2010,
-          endDate: 2018,
-          layerName: 'layerName'
-        },
-        period: 'period'
-      }
-    })
     expect(wrapper.vm.activeMiniMap).toEqual(2018)
     wrapper.vm.selectYear({title: 2015})
     expect(wrapper.vm.activeMiniMap).toBe(2015)
@@ -36,16 +31,6 @@ describe('HistoricalActualPage.vue', () => {
   })
 
   it('on variable change', () => {
-    let wrapper = shallowMount(HistoricalActualPage, {
-      propsData: {
-        variable: {
-          startDate: 2010,
-          endDate: 2018,
-          layerName: 'layerName'
-        },
-        period: 'period'
-      }
-    })
     wrapper.setProps({variable: {
       startDate: 2010,
       endDate: 2012,
@@ -57,16 +42,6 @@ describe('HistoricalActualPage.vue', () => {
   })
 
   it('on period change', () => {
-    let wrapper = shallowMount(HistoricalActualPage, {
-      propsData: {
-        variable: {
-          startDate: 2010,
-          endDate: 2018,
-          layerName: 'layerName'
-        },
-        period: 'period'
-      }
-    })
     wrapper.vm.allMiniMaps = [{
       title: 'title1',
       param: {

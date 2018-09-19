@@ -4,6 +4,7 @@ import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
 import Parameter from '@/store/parameter'
 import GraphModal from '@/components/Graph/GraphModal'
+import Area from '@/store/area'
 
 const mockMap = {
   on: jest.fn().mockImplementation((evtName, callback) => {
@@ -31,9 +32,11 @@ jest.mock('@/store/parameter', () => ({
   setDisplayedParameter: jest.fn()
 }))
 
+const mockGetSelectedArea = {getSelectedArea: 'getSelectedArea'}
 jest.mock('@/store/area', () => ({
-  getSelectedArea: jest.fn().mockReturnValue('getSelectedArea')
+  getSelectedArea: jest.fn()
 }))
+Area.getSelectedArea.mockReturnValue(mockGetSelectedArea)
 
 const mockGetDisplayedLayer = {
   displayName: 'displayName',
@@ -96,7 +99,7 @@ describe('Managing.vue', () => {
   it('On open graph modal', () => {
     wrapper.find('#open-graph-modal').trigger('click')
     expect(wrapper.vm.showModalGraph).toBe(true)
-    expect(wrapper.vm.selectedArea).toBe('getSelectedArea')
+    expect(wrapper.vm.selectedArea).toBe(mockGetSelectedArea)
     expect(wrapper.vm.selectedParameter).toBe(mockGetDisplayedLayer)
 
     wrapper.find(GraphModal).vm.$emit('close')

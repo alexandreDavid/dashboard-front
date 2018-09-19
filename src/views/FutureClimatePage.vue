@@ -82,7 +82,9 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <HistoricalAnomalyPage></HistoricalAnomalyPage>
+              <div id="future-climate-graph-container">
+                <FutureClimateGraph></FutureClimateGraph>
+              </div>
             </div>
           </div>
         </div>
@@ -95,7 +97,6 @@
 <script>
 import Loading from '@/components/Loading/Loading'
 import FutureClimateModels from '@/views/FutureClimateModels'
-import HistoricalAnomalyPage from '@/views/HistoricalAnomalyPage'
 import config from '@/store/futureClimateConfiguration'
 import FutureClimateRangeSlider from '@/components/Slider/FutureClimateRangeSlider'
 
@@ -104,8 +105,10 @@ export default {
   components: {
     Loading,
     FutureClimateModels,
-    HistoricalAnomalyPage,
-    FutureClimateRangeSlider
+    FutureClimateRangeSlider,
+    FutureClimateGraph: () => ({
+      component: import('./FutureClimateGraph')
+    })
   },
   data () {
     const months = config.getAllMonths()
@@ -195,5 +198,10 @@ export default {
 
 .sticky-bar {
   z-index: 1019;
+}
+
+#future-climate-graph-container {
+  height: 400px;
+  position: relative;
 }
 </style>
