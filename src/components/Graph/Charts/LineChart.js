@@ -1,5 +1,6 @@
 import { Line } from './BaseCharts'
 import ChartUtil from '@/utils/chart'
+import Unit from '@/utils/unit'
 
 export default {
   extends: Line,
@@ -39,7 +40,7 @@ export default {
         if (isNaN(value)) {
           value = parseFloat(value.replace(',', '.')).toFixed(2)
         }
-        return value
+        return Unit.convert(data.unit, data.activeUnit, value)
       }
 
       // Adding every datasets
@@ -55,10 +56,10 @@ export default {
           }
         )
       })
-      Object.entries(data.data).slice(0, 12).forEach(([key, value]) => {
+      Object.entries(data.data).forEach(([key, value]) => {
         labels.push(ChartUtil.convertDate(key))
         Object.entries(value).forEach(([key, value]) => {
-          datasets.find(d => d.label === key).data.push(valueConversion(value, 0))
+          datasets.find(d => d.label === key).data.push(valueConversion(value))
         })
       })
 

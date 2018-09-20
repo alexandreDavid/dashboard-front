@@ -13,6 +13,8 @@ import LineChart from './Charts/LineChart'
 import PieChart from './Charts/PieChart'
 import Data from '@/store/data'
 import Loading from '@/components/Loading/Loading'
+import Unit from '@/utils/unit'
+import Settings from '@/store/settings'
 
 export default {
   name: 'Graph',
@@ -57,14 +59,22 @@ export default {
     async parameter () {
       await this.getData()
     },
-    area: 'getData'
+    area: 'getData',
+    activeUnits: {
+      handler (val) {
+        console.log(val)
+      },
+      deep: true
+    }
   },
   methods: {
     async getData () {
       this.isLoaded = false
       this.datacollection = await Data.getAreaParameterData(this.area, this.parameter)
+      // Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, Object.values(features[0].properties)[0]))
+      this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.datacollection.unit))
       // axes Y title
-      this.options.scales.yAxes[0].scaleLabel.labelString = this.datacollection.unit
+      this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit || this.datacollection.unit)
       this.isLoaded = true
     }
   }
