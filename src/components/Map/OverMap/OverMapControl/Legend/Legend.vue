@@ -2,18 +2,18 @@
   <div>
     <div class="legend-displaying" v-if="getDisplayedLayer()._hasInteractiveLegend">
       <div v-if="asline" class="on-line position-relative d-flex border rounded-left rounded-right">
-        <button type="button" class="btn btn-sm btn-secondary rounded-0" @click="switchUnit()">{{ activeUnit.label}}</button>
+        <button type="button" class="btn btn-sm btn-secondary rounded-0" @click="switchUnit()">{{ activeUnit}}</button>
         <div class="gradient" v-bind:style="{ background: gradientColor }">
           <div class="d-flex justify-content-between align-items-center h-100 mx-3">
             <div v-for="(displayedValue, key) in displayedValues" :key="key">
-              {{ displayedValue.quantity | convert(defaultUnit, activeUnit.key) }}
+              {{ displayedValue.quantity | convert(defaultUnit, activeUnit) }}
             </div>
           </div>
         </div>
       </div>
       <div v-else class="p-1">
         <div class="btn-group btn-group-sm mb-1" role="group" aria-label="unit">
-          <button type="button" @click="changeActiveUnit(unit)" class="btn btn-secondary" v-for="unit in availableUnits" :key="unit.key" v-bind:class="{active: unit.key === activeUnit.key}">
+          <button type="button" @click="changeActiveUnit(unit.key)" class="btn btn-secondary" v-for="unit in availableUnits" :key="unit.key" v-bind:class="{active: unit.key === activeUnit}">
             {{unit.label}}
           </button>
         </div>
@@ -21,7 +21,7 @@
           <div class="gradient mr-1" v-bind:style="{ background: gradientColor }"></div>
           <div class="d-flex flex-column">
             <div v-for="(displayedValue, key) in displayedValues" :key="key">
-              {{ displayedValue.quantity | convert(defaultUnit, activeUnit.key) }}
+              {{ displayedValue.quantity | convert(defaultUnit, activeUnit) }}
             </div>
           </div>
         </div>
@@ -33,6 +33,7 @@
 
 <script>
 import Unit from '@/utils/unit'
+import Settings from '@/store/settings'
 
 export default {
   name: 'Legend',
@@ -44,7 +45,7 @@ export default {
     let availableUnits = Unit.getUnitsFamily('temperature')
     return {
       defaultUnit: 'K',
-      activeUnit: availableUnits.find(u => u.key === 'C'),
+      activeUnit: Settings.activeSettings['temperature'],
       hasInteractiveLegend: false,
       legendUrl: false,
       gradientColor: false,
@@ -74,7 +75,8 @@ export default {
         opacity: '0.5',
         quantity: 301.3,
         label: '301.3'
-      }]
+      }],
+      activeUnits: Settings.activeSettings
     }
   },
   mounted () {
@@ -82,16 +84,16 @@ export default {
   },
   methods: {
     switchUnit () {
-      let curIndex = this.availableUnits.findIndex(u => u.key === this.activeUnit.key)
+      let curIndex = this.availableUnits.findIndex(u => u.key === this.activeUnit)
       curIndex++
       if (curIndex === this.availableUnits.length) {
         curIndex = 0
       }
-      this.changeActiveUnit(this.availableUnits[curIndex])
+      this.changeActiveUnit(this.availableUnits[curIndex].key)
     },
     changeActiveUnit (unit) {
       this.$set(this, 'activeUnit', unit)
-      this.getDisplayedLayer().setUnit(this.activeUnit.key)
+      this.getDisplayedLayer().setUnit(this.activeUnit)
     },
     convertHex (hex, opacity) {
       const r = parseInt(hex.substring(1, 3), 16)
@@ -107,6 +109,14 @@ export default {
       }
       return value
     }
+  },
+  watch: {
+    activeUnits: {
+      handler (val) {
+        this.changeActiveUnit(val['temperature'])
+      },
+      deep: true
+    }
   }
 }
 </script>
@@ -114,7 +124,7 @@ export default {
 <style lang="scss" scoped>
 
 .legend-displaying {
-  background: white;
+  background: var(--white);
   position: relative;
   height: 100%;
 

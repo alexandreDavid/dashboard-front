@@ -15,6 +15,12 @@ const mockUnits = [
   }
 ]
 
+jest.mock('@/store/settings', () => ({
+  activeSettings: {
+    temperature: 'C'
+  }
+}))
+
 jest.mock('@/utils/unit', () => ({
   convert: jest.fn().mockReturnValue(42),
   getUnitsFamily: jest.fn()
@@ -49,12 +55,12 @@ describe('Legend.vue', () => {
     const buttons = wrapper.findAll('.btn-group-sm .btn')
     buttons.at(0).trigger('click')
     expect(buttons.at(0).classes()).toContain('active')
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[0])
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[0].key)
     expect(Unit.convert).toHaveBeenCalledTimes(0)
 
     buttons.at(1).trigger('click')
     expect(buttons.at(1).classes()).toContain('active')
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[1])
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[1].key)
     expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
   })
 
@@ -71,14 +77,14 @@ describe('Legend.vue', () => {
     })
     expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
     // Default unit
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[2])
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[2].key)
     const button = wrapper.find('.on-line .btn')
     button.trigger('click')
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[0])
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[0].key)
     expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
 
     button.trigger('click')
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[1])
+    expect(wrapper.vm.activeUnit).toEqual(mockUnits[1].key)
     expect(Unit.convert).toHaveBeenCalledTimes(2 * wrapper.vm.displayedValues.length)
   })
 })

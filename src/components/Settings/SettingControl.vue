@@ -17,13 +17,13 @@ export default {
   props: ['setting'],
   data () {
     return {
-      activeKey: Settings.getActiveKeyById(this.setting.id)
+      activeKey: Settings.activeSettings[this.setting.id]
     }
   },
   methods: {
     changeSelectedValue (id, setting) {
       this.activeKey = setting.key
-      Settings.setActiveKeyById(id, setting)
+      Settings.setActiveKeyById(id, setting.key)
     }
   }
 }

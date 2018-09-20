@@ -17,7 +17,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -33,7 +33,7 @@ let configuration = {
             'paramDescription': 'Air temperature',
             'paramName': 'air_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -49,7 +49,7 @@ let configuration = {
             'paramDescription': 'Relative humidity',
             'paramName': 'relative_humidity',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': '%',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -97,7 +97,7 @@ let configuration = {
             'paramDescription': 'Surface temperature',
             'paramName': 'surface_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -178,7 +178,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -230,7 +230,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -246,7 +246,7 @@ let configuration = {
             'paramDescription': 'Air temperature',
             'paramName': 'air_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -262,7 +262,7 @@ let configuration = {
             'paramDescription': 'Relative humidity',
             'paramName': 'relative_humidity',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': '%',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -310,7 +310,7 @@ let configuration = {
             'paramDescription': 'Surface temperature',
             'paramName': 'surface_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -391,7 +391,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -428,7 +428,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -444,7 +444,7 @@ let configuration = {
             'paramDescription': 'Air temperature',
             'paramName': 'air_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -460,7 +460,7 @@ let configuration = {
             'paramDescription': 'Relative humidity',
             'paramName': 'relative_humidity',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': '%',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -508,7 +508,7 @@ let configuration = {
             'paramDescription': 'Surface temperature',
             'paramName': 'surface_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -589,7 +589,7 @@ let configuration = {
             'paramDescription': 'Air temperature',
             'paramName': 'air_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -641,7 +641,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -657,7 +657,7 @@ let configuration = {
             'paramDescription': 'Air temperature',
             'paramName': 'air_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -673,7 +673,7 @@ let configuration = {
             'paramDescription': 'Relative humidity',
             'paramName': 'relative_humidity',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': '%',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -721,7 +721,7 @@ let configuration = {
             'paramDescription': 'Surface temperature',
             'paramName': 'surface_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -802,7 +802,7 @@ let configuration = {
             'paramDescription': 'Air temperature',
             'paramName': 'air_temperature',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'NO_UNIT_SPECIFIED',
+            'unit': 'K',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -830,8 +830,11 @@ let configuration = {
     name: 'Abim',
     id: 5
   },
-  units: {
-    temperature: 'C'
+  activeSettings: {
+    temperature: 'C',
+    windSpeed: 'mph',
+    floodWarning: false,
+    stormWarning: false
   }
 }
 
@@ -842,7 +845,10 @@ export default {
   getArea () {
     return configuration.area
   },
-  getUnitByFamily (family) {
-    return configuration.units[family]
+  getActiveSettings () {
+    return configuration.activeSettings
+  },
+  setActiveSettings (activeSettings) {
+    configuration.activeSettings = activeSettings
   }
 }

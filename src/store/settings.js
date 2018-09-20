@@ -1,4 +1,5 @@
 import Api from '@/store/api'
+import UserConfiguration from '@/store/userConfiguration'
 
 let settings = [
   {
@@ -23,26 +24,25 @@ let settings = [
 ]
 
 export default {
-  init (initSettings) {
-    settings = initSettings
+  activeSettings: {},
+  async init () {
+    settings = await Api.getSettings()
+    this.activeSettings = UserConfiguration.getActiveSettings()
   },
-  getSettings () {
+  getAllSettings () {
     return settings
   },
   getSettingById (id) {
     return settings.find(s => s.id === id)
   },
-  getSettingsFamily (familyId) {
-    return settings.filter(s => s.family === familyId)
+  getSettingsType (type) {
+    return settings.filter(s => s.type === type)
   },
   getActiveKeyById (id) {
-    const activeSetting = this.getSettingById(id)
-    return activeSetting && activeSetting.value
+    return this.activeSettings[id]
   },
-  setActiveKeyById (id, setting) {
-    let key = setting.key
-    let label = setting.label
-    Object.assign(this.getSettingById(id), { key, label })
-    Api.setSettings(settings)
+  setActiveKeyById (id, value) {
+    this.activeSettings[id] = value
+    UserConfiguration.setActiveSettings(this.activeSettings)
   }
 }

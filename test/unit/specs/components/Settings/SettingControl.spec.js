@@ -3,11 +3,10 @@ import { shallowMount } from '@vue/test-utils'
 import Settings from '@/store/settings'
 
 jest.mock('@/store/settings', () => ({
-  getActiveKeyById: jest.fn(),
   setActiveKeyById: jest.fn()
 }))
 
-Settings.getActiveKeyById.mockReturnValue(1)
+Settings.activeSettings = {1: 1}
 
 const setting = {
   id: 1,
@@ -30,7 +29,6 @@ describe('SettingControl.vue', () => {
         setting
       }
     })
-    expect(Settings.getActiveKeyById).toBeCalledWith(1)
     expect(wrapper.find('.card-title').text()).toBe('label')
     const buttons = wrapper.findAll('.btn')
     expect(buttons.length).toBe(2)
@@ -48,10 +46,7 @@ describe('SettingControl.vue', () => {
     expect(buttons.at(1).classes()).not.toContain('active')
 
     buttons.at(1).trigger('click')
-    expect(Settings.setActiveKeyById).toBeCalledWith(1, {
-      key: 2,
-      label: 'label2'
-    })
+    expect(Settings.setActiveKeyById).toBeCalledWith(1, 2)
     expect(buttons.at(0).classes()).not.toContain('active')
     expect(buttons.at(1).classes()).toContain('active')
   })

@@ -150,7 +150,7 @@ describe('displayedLayer.js', () => {
     UserConfiguration.getUnitByFamily.mockReturnValue('getUnitByFamily')
     displayedLayer.setDisplayedLayer(mockParam)
     expect(displayedLayer.getDefaultUnit()).toBe(mockParam.unit)
-    expect(displayedLayer.getUnit()).toBe('getUnitByFamily')
+    expect(displayedLayer.getUnit()).toBe('unit')
     displayedLayer.setUnit('newUnit')
     expect(displayedLayer.getUnit()).toBe('newUnit')
   })

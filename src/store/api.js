@@ -27,92 +27,82 @@ export default {
   async getSettings () {
     return [
       {
-        'id': 'weather',
-        'label': 'Weather Units',
+        'id': 'temperature',
+        'label': 'Temperature units',
+        'type': 'unit',
         'order': 1,
-        'settingsList': [
+        'values': [
           {
-            'id': 'temperature',
-            'label': 'Temperature units',
-            'order': 1,
-            'values': [
-              {
-                'key': 'C',
-                'label': '°C'
-              },
-              {
-                'key': 'F',
-                'label': '°F'
-              },
-              {
-                'key': 'K',
-                'label': '°K'
-              }
-            ]
+            'key': 'C',
+            'label': '°C'
           },
           {
-            'id': 'wind-speed',
-            'label': 'Wind speed',
-            'order': 2,
-            'values': [
-              {
-                'key': 'kt',
-                'label': 'kt'
-              },
-              {
-                'key': 'btf',
-                'label': 'btf'
-              },
-              {
-                'key': 'm/s',
-                'label': 'm/s'
-              },
-              {
-                'key': 'mph',
-                'label': 'mph'
-              },
-              {
-                'key': 'km/h',
-                'label': 'km/h'
-              }
-            ]
+            'key': 'F',
+            'label': '°F'
+          },
+          {
+            'key': 'K',
+            'label': '°K'
           }
         ]
       },
       {
-        'id': 'alerts',
-        'label': 'Alerts/Notifications',
+        'id': 'windSpeed',
+        'label': 'Wind speed',
+        'type': 'unit',
         'order': 2,
-        'settingsList': [
+        'values': [
           {
-            'id': 'flood-warning',
-            'label': 'Flood warnings',
-            'order': 1,
-            'values': [
-              {
-                'key': true,
-                'label': 'ON'
-              },
-              {
-                'key': false,
-                'label': 'OFF'
-              }
-            ]
+            'key': 'kt',
+            'label': 'kt'
           },
           {
-            'id': 'storm-warnings',
-            'label': 'Storm warnings',
-            'order': 2,
-            'values': [
-              {
-                'key': true,
-                'label': 'ON'
-              },
-              {
-                'key': false,
-                'label': 'OFF'
-              }
-            ]
+            'key': 'btf',
+            'label': 'btf'
+          },
+          {
+            'key': 'm/s',
+            'label': 'm/s'
+          },
+          {
+            'key': 'mph',
+            'label': 'mph'
+          },
+          {
+            'key': 'km/h',
+            'label': 'km/h'
+          }
+        ]
+      },
+      {
+        'id': 'floodWarning',
+        'label': 'Flood warnings',
+        'type': 'alert',
+        'order': 1,
+        'values': [
+          {
+            'key': true,
+            'label': 'ON'
+          },
+          {
+            'key': false,
+            'label': 'OFF'
+          }
+        ]
+      },
+      {
+        'id': 'stormWarning',
+        'label': 'Storm warnings',
+        'type': 'alert',
+        'order': 2,
+        'values': [
+          {
+            'key': true,
+            'label': 'ON'
+          },
+          {
+            'key': false,
+            'label': 'OFF'
           }
         ]
       }
@@ -127,16 +117,16 @@ export default {
     //   return false
     // }
   },
-  async setSettings (settings) {
-    try {
-      const response = await axios.post(
-        `${urlRoot}/settings`, settings
-      )
-      return response.data
-    } catch (e) {
-      return false
-    }
-  },
+  // async setSettings (settings) {
+  //   try {
+  //     const response = await axios.post(
+  //       `${urlRoot}/settings`, settings
+  //     )
+  //     return response.data
+  //   } catch (e) {
+  //     return false
+  //   }
+  // },
   setDashboard (dashboard2Save) {
     dashboard = dashboard2Save
   },
