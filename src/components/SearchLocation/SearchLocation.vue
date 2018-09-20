@@ -13,9 +13,7 @@
         @keyup.enter="onEnter">
       <ul
         v-show="isOpen"
-        class="list-group shadow position-absolute w-100" style="
-    z-index: 1000;
-">
+        class="list-group shadow position-absolute w-100" style="z-index: 1060;">
         <li
           class="loading"
           v-if="isLoading">
@@ -80,6 +78,7 @@ export default {
     onFocus () {
       this.prevValue = this.value
       this.onChange()
+      document.addEventListener('click', this.handleClickOutside)
     },
     setResult (result) {
       this.isOpen = false
@@ -111,11 +110,9 @@ export default {
     handleClickOutside (evt) {
       if (!this.$el.contains(evt.target)) {
         this.returnToInitialeStatement()
+        document.removeEventListener('click', this.handleClickOutside)
       }
     }
-  },
-  mounted () {
-    document.addEventListener('click', this.handleClickOutside)
   },
   destroyed () {
     document.removeEventListener('click', this.handleClickOutside)
