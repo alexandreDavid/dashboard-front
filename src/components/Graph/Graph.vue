@@ -51,7 +51,7 @@ export default {
       },
       familyUnit: false,
       activeUnits: Settings.activeSettings
-      }
+    }
   },
   async created () {
     await this.getData()

@@ -91,6 +91,21 @@ export default {
         ]
       },
       {
+        'id': 'pressure',
+        'label': 'Pressure',
+        'type': 'unit',
+        'values': [
+          {
+            'key': 'Pa',
+            'label': 'Pa'
+          },
+          {
+            'key': 'hPa',
+            'label': 'hPa'
+          }
+        ]
+      },
+      {
         'id': 'stormWarning',
         'label': 'Storm warnings',
         'type': 'alert',

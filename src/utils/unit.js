@@ -21,6 +21,16 @@ const units = [
         return (((val - 273.15) * 9 / 5) + 32)
       }
     }
+  },
+  {
+    key: 'Pa',
+    label: 'Pa',
+    family: 'pressure',
+    conversion: {
+      hPa (val) {
+        return (val / 100)
+      }
+    }
   }
 ]
 

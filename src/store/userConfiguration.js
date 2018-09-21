@@ -833,6 +833,7 @@ let configuration = {
   activeSettings: {
     temperature: 'C',
     windSpeed: 'mph',
+    pressure: 'Pa',
     floodWarning: false,
     stormWarning: false
   }
