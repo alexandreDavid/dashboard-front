@@ -48,8 +48,10 @@ export default {
             }
           }]
         }
+      },
+      familyUnit: false,
+      activeUnits: Settings.activeSettings
       }
-    }
   },
   async created () {
     await this.getData()
@@ -62,7 +64,9 @@ export default {
     area: 'getData',
     activeUnits: {
       handler (val) {
-        console.log(val)
+        if (!this.familyUnit || val[this.familyUnit] !== this.datacollection.activeUnit) {
+          this.getData()
+        }
       },
       deep: true
     }
@@ -71,7 +75,7 @@ export default {
     async getData () {
       this.isLoaded = false
       this.datacollection = await Data.getAreaParameterData(this.area, this.parameter)
-      // Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, Object.values(features[0].properties)[0]))
+      this.familyUnit = Unit.getFamilyUnit(this.datacollection.unit)
       this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.datacollection.unit))
       // axes Y title
       this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit || this.datacollection.unit)
