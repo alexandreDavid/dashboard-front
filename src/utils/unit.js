@@ -1,5 +1,11 @@
 const units = [
   {
+    key: 'NO_UNIT_SPECIFIED',
+    label: ' ',
+    family: '',
+    precision: 0
+  },
+  {
     key: 'C',
     label: '°C',
     family: 'temperature'
@@ -13,6 +19,7 @@ const units = [
     key: 'K',
     label: 'K',
     family: 'temperature',
+    precision: 0,
     conversion: {
       C (val) {
         return (val - 273.15)
@@ -26,6 +33,7 @@ const units = [
     key: 'Pa',
     label: 'Pa',
     family: 'pressure',
+    precision: 0,
     conversion: {
       hPa (val) {
         return (val / 100)
@@ -36,6 +44,7 @@ const units = [
     key: 'Kg/m2/s',
     label: 'Kg/m2/s',
     family: 'rain',
+    precision: 7,
     conversion: {
       mm (val) {
         return (val * 86400)
@@ -44,6 +53,16 @@ const units = [
         return (val * 86400 * 0.0393701)
       }
     }
+  },
+  {
+    key: 'mm',
+    label: 'mm',
+    family: 'rain'
+  },
+  {
+    key: 'in',
+    label: 'in',
+    family: 'rain'
   }
 ]
 
@@ -65,8 +84,11 @@ export default {
   },
   convert (unitInput, unitOutput, val) {
     const unitConfig = getUnit(unitInput)
-    if (unitConfig && unitConfig.conversion && unitConfig.conversion[unitOutput]) {
-      val = unitConfig.conversion[unitOutput](val)
+    if (unitConfig) {
+      if (unitConfig.conversion && unitConfig.conversion[unitOutput]) {
+        val = unitConfig.conversion[unitOutput](val)
+      }
+      val = Math.round(val * Math.pow(10, unitConfig.precision)) / Math.pow(10, unitConfig.precision)
     }
     return val
   }

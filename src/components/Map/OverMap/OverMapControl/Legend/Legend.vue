@@ -42,10 +42,12 @@ export default {
     'asline'
   ],
   data () {
-    let availableUnits = Unit.getUnitsFamily('temperature')
+    const unitFamily = Unit.getFamilyUnit(this.getDisplayedLayer().getUnit())
+    let availableUnits = Unit.getUnitsFamily(unitFamily)
     return {
       defaultUnit: 'K',
-      activeUnit: Settings.activeSettings['temperature'],
+      unitFamily: unitFamily,
+      activeUnit: Settings.activeSettings[unitFamily],
       hasInteractiveLegend: false,
       legendUrl: false,
       gradientColor: false,
@@ -92,6 +94,7 @@ export default {
       this.changeActiveUnit(this.availableUnits[curIndex].key)
     },
     changeActiveUnit (unit) {
+      console.log(unit)
       this.$set(this, 'activeUnit', unit)
       this.getDisplayedLayer().setUnit(this.activeUnit)
     },
@@ -113,7 +116,8 @@ export default {
   watch: {
     activeUnits: {
       handler (val) {
-        this.changeActiveUnit(val['temperature'])
+        console.log('this.activeUnit', this.activeUnit)
+        this.changeActiveUnit(val[this.unitFamily])
       },
       deep: true
     }

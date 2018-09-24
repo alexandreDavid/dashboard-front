@@ -834,7 +834,7 @@ let configuration = {
     temperature: 'C',
     windSpeed: 'mph',
     pressure: 'Pa',
-    rain: 'mm',
+    rain: 'Kg/m2/s',
     floodWarning: false,
     stormWarning: false
   }
