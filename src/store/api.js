@@ -42,7 +42,7 @@ export default {
           },
           {
             'key': 'K',
-            'label': '°K'
+            'label': 'K'
           }
         ]
       },
