@@ -17,7 +17,7 @@ const units = [
   },
   {
     key: 'K',
-    label: 'K',
+    label: ' K',
     family: 'temperature',
     precision: 0,
     conversion: {
@@ -31,7 +31,7 @@ const units = [
   },
   {
     key: 'Pa',
-    label: 'Pa',
+    label: ' Pa',
     family: 'pressure',
     precision: 0,
     conversion: {
@@ -42,27 +42,39 @@ const units = [
   },
   {
     key: 'Kg/m2/s',
-    label: 'Kg/m2/s',
-    family: 'rain',
+    label: ' Kg/m2/s',
+    family: 'precipitations',
     precision: 7,
     conversion: {
-      mm (val) {
+      'mm/day' (val) {
         return (val * 86400)
       },
-      in (val) {
+      'in/day' (val) {
         return (val * 86400 * 0.0393701)
       }
     }
   },
   {
-    key: 'mm',
-    label: 'mm',
-    family: 'rain'
+    key: 'mm/day',
+    label: ' mm/day',
+    family: 'precipitations'
   },
   {
-    key: 'in',
-    label: 'in',
-    family: 'rain'
+    key: 'in/day',
+    label: ' in/day',
+    family: 'precipitations'
+  },
+  {
+    key: 'mm',
+    label: ' mm',
+    family: 'hydrology',
+    precision: 7
+  },
+  {
+    key: 'Kg/m2',
+    label: ' Kg/m2',
+    family: 'moisture',
+    precision: 7
   }
 ]
 
@@ -82,13 +94,16 @@ export default {
     const unit = getUnit(key)
     return unit && unit.family
   },
-  convert (unitInput, unitOutput, val) {
+  convert (unitInput, unitOutput, val, displayWithExp) {
     const unitConfig = getUnit(unitInput)
     if (unitConfig) {
       if (unitConfig.conversion && unitConfig.conversion[unitOutput]) {
         val = unitConfig.conversion[unitOutput](val)
       }
       val = Math.round(val * Math.pow(10, unitConfig.precision)) / Math.pow(10, unitConfig.precision)
+    }
+    if (displayWithExp && val && (val < 0.1 || val > 10000)) {
+      val = Number.parseFloat(val).toExponential()
     }
     return val
   }

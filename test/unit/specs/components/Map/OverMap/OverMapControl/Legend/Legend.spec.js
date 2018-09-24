@@ -17,20 +17,25 @@ const mockUnits = [
 
 jest.mock('@/store/settings', () => ({
   activeSettings: {
-    temperature: 'C'
+    getFamilyUnit: 'C'
   }
 }))
 
 jest.mock('@/utils/unit', () => ({
   convert: jest.fn().mockReturnValue(42),
-  getUnitsFamily: jest.fn()
+  getUnitsFamily: jest.fn(),
+  getFamilyUnit: jest.fn()
 }))
 Unit.getUnitsFamily.mockReturnValue(mockUnits)
+Unit.getFamilyUnit.mockReturnValue('getFamilyUnit')
 
 const mockDisplayedLayer = {
   _hasInteractiveLegend: true,
+  getUnit: jest.fn(),
   setUnit: jest.fn()
 }
+mockDisplayedLayer.getUnit.mockReturnValue('K')
+
 function getDisplayedLayer () {
   return mockDisplayedLayer
 }

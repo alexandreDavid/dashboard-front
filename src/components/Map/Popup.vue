@@ -29,7 +29,7 @@ export default {
     showGetFeatureInfo (latlng, features) {
       if (features && features.length) {
         const activeUnit = this.getDisplayedLayer().getUnit()
-        this.value = Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, Object.values(features[0].properties)[0])
+        this.value = Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, Object.values(features[0].properties)[0], true)
         const unitLabel = Unit.getLabel(activeUnit)
         if (unitLabel) {
           this.value += unitLabel

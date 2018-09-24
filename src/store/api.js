@@ -75,8 +75,8 @@ export default {
         ]
       },
       {
-        'id': 'rain',
-        'label': 'Rain',
+        'id': 'precipitations',
+        'label': 'precipitations',
         'type': 'unit',
         'values': [
           {
@@ -84,12 +84,12 @@ export default {
             'label': 'Kg/m2/s'
           },
           {
-            'key': 'mm',
-            'label': 'mm'
+            'key': 'mm/day',
+            'label': 'mm/day'
           },
           {
-            'key': 'in',
-            'label': 'in'
+            'key': 'in/day',
+            'label': 'in/day'
           }
         ]
       },

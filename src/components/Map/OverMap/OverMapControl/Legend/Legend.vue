@@ -94,7 +94,6 @@ export default {
       this.changeActiveUnit(this.availableUnits[curIndex].key)
     },
     changeActiveUnit (unit) {
-      console.log(unit)
       this.$set(this, 'activeUnit', unit)
       this.getDisplayedLayer().setUnit(this.activeUnit)
     },
@@ -116,7 +115,6 @@ export default {
   watch: {
     activeUnits: {
       handler (val) {
-        console.log('this.activeUnit', this.activeUnit)
         this.changeActiveUnit(val[this.unitFamily])
       },
       deep: true
