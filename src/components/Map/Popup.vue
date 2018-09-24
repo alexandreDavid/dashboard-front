@@ -1,5 +1,5 @@
 <template>
-    <div v-if="value">
+    <div v-if="false">
       {{value}}
     </div>
 </template>
