@@ -75,6 +75,25 @@ export default {
         ]
       },
       {
+        'id': 'rain',
+        'label': 'Rain',
+        'type': 'unit',
+        'values': [
+          {
+            'key': 'Kg/m2/s',
+            'label': 'Kg/m2/s'
+          },
+          {
+            'key': 'mm',
+            'label': 'mm'
+          },
+          {
+            'key': 'in',
+            'label': 'in'
+          }
+        ]
+      },
+      {
         'id': 'floodWarning',
         'label': 'Flood warnings',
         'type': 'alert',

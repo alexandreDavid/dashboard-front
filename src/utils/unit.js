@@ -31,6 +31,19 @@ const units = [
         return (val / 100)
       }
     }
+  },
+  {
+    key: 'Kg/m2/s',
+    label: 'Kg/m2/s',
+    family: 'rain',
+    conversion: {
+      mm (val) {
+        return (val * 86400)
+      },
+      in (val) {
+        return (val * 86400 * 0.0393701)
+      }
+    }
   }
 ]
 

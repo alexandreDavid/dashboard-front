@@ -37,12 +37,12 @@ export default {
         hasGraph: true,
         hasTimeFrame: true
       }, {
-        displayName: 'Stratiform rainfall rate 0',
+        displayName: 'Total precipitation rate',
         groupingId: 0,
         paramDescription: 'Stratiform rainfall rate 0',
         paramName: 'stratiform_rainfall_rate_0',
         workspaceName: 'twoDaysForecast',
-        unit: 'Kg/m^2*s',
+        unit: 'Kg/m2/s',
         hasGraph: true,
         hasTimeFrame: true
       }, {
@@ -51,11 +51,11 @@ export default {
         paramDescription: 'Surface downwelling longwave flux',
         paramName: 'surface_downwelling_longwave_flux',
         workspaceName: 'twoDaysForecast',
-        unit: 'W/m^2',
+        unit: 'W/m2',
         hasGraph: true,
         hasTimeFrame: true
       }, {
-        displayName: 'Surface temperature',
+        displayName: 'Surface atmospheric temperature',
         groupingId: 0,
         paramDescription: 'Surface temperature',
         paramName: 'surface_temperature',
@@ -69,34 +69,34 @@ export default {
         paramDescription: 'TOA outgoing longwave flux',
         paramName: 'toa_outgoing_longwave_flux',
         workspaceName: 'twoDaysForecast',
-        unit: 'W/m^2',
+        unit: 'W/m2',
         hasGraph: true,
         hasTimeFrame: true
       }, {
-        displayName: 'OUT BASEFLOW',
+        displayName: 'Baseflow',
         groupingId: 1,
         paramDescription: 'OUT_BASEFLOW',
         paramName: 'OUT_BASEFLOW',
         workspaceName: 'hidrology',
-        unit: 'NO_UNIT_SPECIFIED',
+        unit: 'mm',
         hasGraph: false,
         hasTimeFrame: true
       }, {
-        displayName: 'OUT EVAP',
+        displayName: 'Evapotranspiration',
         groupingId: 1,
         paramDescription: 'OUT_EVAP',
         paramName: 'OUT_EVAP',
         workspaceName: 'hidrology',
-        unit: 'NO_UNIT_SPECIFIED',
+        unit: 'mm',
         hasGraph: false,
         hasTimeFrame: true
       }, {
-        displayName: 'OUT RUNOFF',
+        displayName: 'Surface runoff',
         groupingId: 1,
         paramDescription: 'OUT_RUNOFF',
         paramName: 'OUT_RUNOFF',
         workspaceName: 'hidrology',
-        unit: 'NO_UNIT_SPECIFIED',
+        unit: 'mm',
         hasGraph: false,
         hasTimeFrame: true
       }, {
@@ -129,10 +129,10 @@ export default {
       }, {
         displayName: 'Soil moisture content',
         groupingId: 2,
-        paramDescription: 'Soil moisture content',
+        paramDescription: 'Vertical integral from the surface down to the bottom of the soil model',
         paramName: 'soil_moisture_content',
         workspaceName: 'pixalytics',
-        unit: 'NO_UNIT_SPECIFIED',
+        unit: 'Kg/m2',
         hasGraph: false,
         hasTimeFrame: false
       }
