@@ -1,7 +1,7 @@
 const units = [
   {
     key: 'NO_UNIT_SPECIFIED',
-    label: ' ',
+    label: '',
     family: '',
     precision: 0
   },
@@ -85,7 +85,7 @@ function getUnit (key) {
 export default {
   getLabel (key) {
     const unit = getUnit(key)
-    return (unit && unit.label) || key
+    return unit ? unit.label : key
   },
   getUnitsFamily (family) {
     return units.filter(u => u.family === family).map(({key, label}) => ({key, label}))
