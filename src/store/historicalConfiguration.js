@@ -10,36 +10,6 @@ const variables = [
     startDate: 1984,
     endDate: 2013
   }, {
-    name: 'Chirps',
-    label: 'Precipitations',
-    description: 'Climate Hazards group InfraRed Precipitation with Stations',
-    type: 'Monthly',
-    layerName: 'chirps_precip',
-    workspaceName: 'historical',
-    legendName: 'chirps_precip_months',
-    startDate: 1984,
-    endDate: 2013
-  }, {
-    name: 'ERAI',
-    label: '2 metres temperature',
-    description: '2 metres temperature',
-    type: 'Monthly',
-    layerName: 'erai_tmean(2mt)',
-    workspaceName: 'historical',
-    legendName: 'ERAI_tmean',
-    startDate: 1987,
-    endDate: 2016
-  }, {
-    name: 'R95',
-    label: 'Rainfall on days > 95th percentile',
-    description: 'Total amount of rainfall in a year, occurring on days which exceed the 95th percentile of average rainfall',
-    type: 'Daily',
-    layerName: 'Rainf_R95p',
-    workspaceName: 'historical',
-    legendName: 'wfdei_R95p',
-    startDate: 1984,
-    endDate: 2013
-  }, {
     name: 'TX25',
     label: 'Days > 25°C',
     description: 'Number of days in a year exceeding 25°C, based on the WFDEI dataset',
@@ -59,6 +29,81 @@ const variables = [
     legendName: 'wfdei_tx30',
     startDate: 1984,
     endDate: 2012
+  }, {
+    name: 'GHCN_tmean',
+    label: 'Monthly mean of surface temperature (GHCN)',
+    description: 'Monthly mean of surface temperature (GHCN)',
+    type: 'Monthly',
+    layerName: 'ghcn_tmean(2mt)',
+    workspaceName: 'historical',
+    legendName: 'ERAI_tmean',
+    startDate: 1987,
+    endDate: 2016,
+    disabled: true
+  }, {
+    name: 'GPCC_pr',
+    label: 'Monthly total of precipitation (GPCC)',
+    description: 'Monthly total of precipitation (GPCC)',
+    type: 'Monthly',
+    layerName: 'gpcc_precip',
+    workspaceName: 'historical',
+    legendName: 'chirps_precip_months',
+    startDate: 1984,
+    endDate: 2013,
+    disabled: true
+  }, {
+    name: 'CRU_tmean',
+    label: 'Near-surface temperature (CRU)',
+    description: 'Near-surface temperature (CRU)',
+    type: 'Monthly',
+    layerName: 'cru_tmean(2mt)',
+    workspaceName: 'historical',
+    legendName: 'ERAI_tmean',
+    startDate: 1987,
+    endDate: 2016,
+    disabled: true
+  }, {
+    name: 'CHIRPS_pr',
+    label: 'Precipitations (CHIRPS)',
+    description: 'Climate Hazards group InfraRed Precipitation with Stations',
+    type: 'Monthly',
+    layerName: 'chirps_precip',
+    workspaceName: 'historical',
+    legendName: 'chirps_precip_months',
+    startDate: 1984,
+    endDate: 2013
+  }, {
+    name: 'R95',
+    label: 'Rainfall on days > 95th percentile',
+    description: 'Total amount of rainfall in a year, occurring on days which exceed the 95th percentile of average rainfall',
+    type: 'Daily',
+    layerName: 'Rainf_R95p',
+    workspaceName: 'historical',
+    legendName: 'wfdei_R95p',
+    startDate: 1984,
+    endDate: 2013
+  }, {
+    name: 'ERAI_pr',
+    label: 'Total precipitation (ERAI)',
+    description: 'Total precipitation (ERAI)',
+    type: 'Monthly',
+    layerName: 'erai_precip',
+    workspaceName: 'historical',
+    legendName: 'chirps_precip_months',
+    startDate: 1984,
+    endDate: 2013,
+    disabled: true
+  }, {
+    name: 'ERAI_tmean',
+    label: '2 metres temperature (ERAI)',
+    description: '2 metres temperature (ERAI)',
+    type: 'Monthly',
+    layerName: 'erai_tmean(2mt)',
+    workspaceName: 'historical',
+    legendName: 'ERAI_tmean',
+    startDate: 1987,
+    endDate: 2016,
+    disabled: true
   }
 ]
 

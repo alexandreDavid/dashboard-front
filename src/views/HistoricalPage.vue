@@ -10,7 +10,7 @@
             </select>
             <label class="m-2" for="inlineFormCustomSelectPref">Climate variable</label>
             <select class="m-2 custom-select" v-model="activeVariable" id="inlineFormCustomSelectPref">
-              <option v-for="variable in variables" :key="variable.name" :value="variable">{{ variable.label }}</option>
+              <option v-for="variable in variables" :key="variable.name" :value="variable" :disabled="variable.disabled">{{ variable.label }}</option>
             </select>
             <label v-if="activeVariable.type !== 'Daily'" class="m-2" for="period">Month/Season/Annual</label>
             <select v-model="activePeriod" v-if="activeVariable.type !== 'Daily'" class="m-2 custom-select" id="period" name="period">
