@@ -30,7 +30,7 @@ export default {
       if (features && features.length) {
         const activeUnit = this.getDisplayedLayer().getUnit()
         this.value = Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, Object.values(features[0].properties)[0], true)
-        const unitLabel = Unit.getLabel(activeUnit)
+        const unitLabel = Unit.getLabel(activeUnit) || ''
         this.popup = new Popup({
           maxWidth: 800
         })
