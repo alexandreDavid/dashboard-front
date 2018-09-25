@@ -102,8 +102,7 @@ const variables = [
     workspaceName: 'historical',
     legendName: 'ERAI_tmean',
     startDate: 1987,
-    endDate: 2016,
-    disabled: true
+    endDate: 2016
   }
 ]
 
