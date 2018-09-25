@@ -17,7 +17,7 @@ const units = [
   },
   {
     key: 'K',
-    label: ' K',
+    label: 'K',
     family: 'temperature',
     precision: 0,
     conversion: {
@@ -31,7 +31,7 @@ const units = [
   },
   {
     key: 'Pa',
-    label: ' Pa',
+    label: 'Pa',
     family: 'pressure',
     precision: 0,
     conversion: {
@@ -56,23 +56,23 @@ const units = [
   },
   {
     key: 'mm/day',
-    label: ' mm/day',
+    label: 'mm/day',
     family: 'precipitations'
   },
   {
     key: 'in/day',
-    label: ' in/day',
+    label: 'in/day',
     family: 'precipitations'
   },
   {
     key: 'mm',
-    label: ' mm',
+    label: 'mm',
     family: 'hydrology',
     precision: 7
   },
   {
     key: 'Kg/m2',
-    label: ' Kg/m2',
+    label: 'Kg/m2',
     family: 'moisture',
     precision: 7
   }

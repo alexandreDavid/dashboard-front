@@ -69,12 +69,12 @@ describe('Popup.vue', () => {
     await wrapper.vm.getFeatureInfo(mockEvt)
     expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
     expect(Unit.convert).toBeCalledWith('getDefaultUnit', 'getUnit', 'mockGetFeatureInfo', true)
-    expect(wrapper.vm.value).toBe('42getLabel')
+    expect(wrapper.vm.value).toBe(42)
     expect(L.Popup).toBeCalledWith({
       maxWidth: 800
     })
     expect(mockPopup.setLatLng).toBeCalledWith('latlng')
-    expect(mockPopup.setContent).toBeCalled()
+    expect(mockPopup.setContent).toBeCalledWith('<p>42 getLabel</p>')
     expect(mockPopup.openOn).toBeCalled()
   })
 

@@ -5,6 +5,7 @@ import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/
 import Parameter from '@/store/parameter'
 import GraphModal from '@/components/Graph/GraphModal'
 import Area from '@/store/area'
+import Unit from '@/utils/unit'
 
 const mockMap = {
   on: jest.fn().mockImplementation((evtName, callback) => {
@@ -19,7 +20,8 @@ function getMapMock () {
 }
 
 const mockDisplayedLayer = {
-  setDisplayedLayer: jest.fn()
+  setDisplayedLayer: jest.fn(),
+  getUnit: jest.fn()
 }
 function getDisplayedLayer () {
   return function () {
@@ -43,6 +45,16 @@ const mockGetDisplayedLayer = {
   hasGraph: true
 }
 Parameter.getDisplayedParameter.mockReturnValue(mockGetDisplayedLayer)
+
+jest.mock('@/store/settings', () => ({
+  activeSettings: {
+    getFamilyUnit: 'C'
+  }
+}))
+
+jest.mock('@/utils/unit', () => ({
+  getLabel: jest.fn()
+}))
 
 describe('Managing.vue', () => {
   let wrapper
@@ -88,6 +100,8 @@ describe('Managing.vue', () => {
     wrapper.find(ForecastSelection).vm.$emit('selectedParameter', 'selectedParameter')
     expect(wrapper.vm.showModal).toBe(false)
     expect(Parameter.setDisplayedParameter).toBeCalledWith('selectedParameter')
+    expect(mockDisplayedLayer.getUnit).toBeCalled()
+    expect(Unit.getLabel).toBeCalled()
     expect(wrapper.emitted().selectedParameter).toEqual([[mockGetDisplayedLayer], ['selectedParameter']])
   })
 

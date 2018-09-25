@@ -9,7 +9,7 @@
     <div class="card shadow my-3 over-map-control" style="min-width: 250px;">
       <div class="card-body p-2">
         <h6>
-          {{ displayedParameter.displayName }}
+          {{ displayedParameter.displayName }} ({{ activeUnit }})
         </h6>
         <button v-if="displayedParameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon :icon="iconGraph" /> Open graph</button>
         <Legend class="pl-2"></Legend>
@@ -46,6 +46,8 @@ import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
 import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import Area from '@/store/area'
 import GraphModal from '@/components/Graph/GraphModal'
+import Unit from '@/utils/unit'
+import Settings from '@/store/settings'
 
 export default {
   name: 'Managing',
@@ -67,7 +69,9 @@ export default {
       displayMeteoStations: true,
       displaySelectedLayer: true,
       selectedArea: false,
-      value: 50
+      value: 50,
+      activeUnits: Settings.activeSettings,
+      activeUnit: false
     }
   },
   async created () {
@@ -98,6 +102,7 @@ export default {
         this.displayedParameter = selectedParameter
         Parameter.setDisplayedParameter(selectedParameter)
         this.getDisplayedLayer().setDisplayedLayer(selectedParameter)
+        this.changeActiveUnit(this.getDisplayedLayer().getUnit())
       }
       this.$emit('selectedParameter', selectedParameter)
     },
@@ -111,10 +116,19 @@ export default {
       this.selectedArea = Area.getSelectedArea()
       this.selectedParameter = Parameter.getDisplayedParameter()
       this.showModalGraph = true
+    },
+    changeActiveUnit (unit) {
+      this.activeUnit = Unit.getLabel(unit)
     }
   },
   watch: {
-    displayMeteoStations: 'toggleMeteorologicalStations'
+    displayMeteoStations: 'toggleMeteorologicalStations',
+    activeUnits: {
+      handler (val) {
+        this.changeActiveUnit(val[Unit.getFamilyUnit(this.displayedParameter.unit)])
+      },
+      deep: true
+    }
   }
 }
 </script>

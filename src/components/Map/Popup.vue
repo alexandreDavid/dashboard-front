@@ -31,14 +31,11 @@ export default {
         const activeUnit = this.getDisplayedLayer().getUnit()
         this.value = Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, Object.values(features[0].properties)[0], true)
         const unitLabel = Unit.getLabel(activeUnit)
-        if (unitLabel) {
-          this.value += unitLabel
-        }
         this.popup = new Popup({
           maxWidth: 800
         })
           .setLatLng(latlng)
-          .setContent(`<p>${this.value}</p>`)
+          .setContent(`<p>${this.value} ${unitLabel}</p>`)
           .openOn(this.getMap())
       }
     }
