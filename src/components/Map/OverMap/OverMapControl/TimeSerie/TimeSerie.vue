@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     onChange (value) {
-      this.getDisplayedLayer().setDate(value.startTime, value.endTime)
+      this.getDisplayedLayer().setDate(value)
     },
     changeSelectedModel (model) {
       this.activeModel = model

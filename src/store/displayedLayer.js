@@ -31,12 +31,19 @@ export default class {
       this._legendUrl = this._parameter.legendUrl
     }
   }
-  setDate (min, max) {
-    const minFormatedDate = min && new Date(min * 1000).toISOString()
-    const maxFormatedDate = max && new Date(max * 1000).toISOString()
-    this._displayedLayer.setParams({
-      time: `${minFormatedDate}/${maxFormatedDate}`
-    })
+  setDate (time) {
+    if (time && time.startTime) {
+      const startFormatedDate = time.startTime && new Date(time.startTime * 1000).toISOString()
+      const endFormatedDate = time.endTime && new Date(time.endTime * 1000).toISOString()
+      this._displayedLayer.setParams({
+        time: `${startFormatedDate}/${endFormatedDate}`
+      })
+    } else {
+      const date = time && new Date(time * 1000).toISOString()
+      this._displayedLayer.setParams({
+        time: date
+      })
+    }
   }
   setUnit (unit) {
     this._activeUnit = unit
