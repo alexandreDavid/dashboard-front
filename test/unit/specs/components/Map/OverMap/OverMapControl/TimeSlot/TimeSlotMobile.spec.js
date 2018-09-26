@@ -1,4 +1,4 @@
-import TimeSlotMobile from '@/components/Map/OverMap/OverMapControl/TimeSlot/TimeSlotMobile'
+import TimeSlotMobile from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSlotMobile'
 import { mount } from '@vue/test-utils'
 
 const mockSetDate = jest.fn()
@@ -10,34 +10,37 @@ function getDisplayedLayer () {
   }
 }
 
+const mockTimes = [
+  {startTime: 0, endTime: 1},
+  {startTime: 1, endTime: 2},
+  {startTime: 2, endTime: 3},
+  {startTime: 3, endTime: 4},
+  {startTime: 4, endTime: 5}
+]
+
 jest.useFakeTimers()
 
 describe('TimeSlotMobile.vue', () => {
   let wrapper
-  let currentDaysModel
   beforeEach(() => {
     wrapper = mount(TimeSlotMobile, {
       provide: {
         getDisplayedLayer: getDisplayedLayer()
+      },
+      propsData: {
+        model: {
+          value: 2,
+          label: '2 days',
+          times: mockTimes,
+          type: 'interval'
+        }
       }
     })
-    currentDaysModel = wrapper.vm.getDaysModels()[0]
-  })
-
-  it('Change selected model', () => {
-    expect(wrapper.vm.activeModel).toEqual(currentDaysModel)
-    const buttons = wrapper.findAll('.change-selected-model')
-    expect(buttons.length).toBe(3)
-    wrapper.vm.currentIndex = 2
-    expect(wrapper.vm.currentIndex).toBe(2)
-    buttons.at(1).trigger('click')
-    expect(wrapper.vm.activeModel).toEqual(wrapper.vm.getDaysModels()[1])
-    expect(wrapper.vm.currentIndex).toBe(0)
   })
 
   it('Change with select', () => {
     const timeOptions = wrapper.find('select').findAll('option')
-    expect(timeOptions.length).toBe(17)
+    expect(timeOptions.length).toBe(5)
 
     expect(wrapper.vm.currentIndex).toBe(0)
     timeOptions.at(3).setSelected()
@@ -62,19 +65,20 @@ describe('TimeSlotMobile.vue', () => {
   })
 
   it('Click on next', () => {
-    wrapper.find('select').findAll('option').at(14).setSelected()
-    expect(wrapper.vm.currentIndex).toBe(14)
+    let idx = mockTimes.length - 3
+    wrapper.find('select').findAll('option').at(idx).setSelected()
+    expect(wrapper.vm.currentIndex).toBe(idx)
 
     const nextButton = wrapper.find('#time-slot-next')
 
     nextButton.trigger('click')
-    expect(wrapper.vm.currentIndex).toBe(15)
+    expect(wrapper.vm.currentIndex).toBe(idx + 1)
 
     nextButton.trigger('click')
-    expect(wrapper.vm.currentIndex).toBe(16)
+    expect(wrapper.vm.currentIndex).toBe(idx + 2)
 
     // Can't move after 12
     nextButton.trigger('click')
-    expect(wrapper.vm.currentIndex).toBe(16)
+    expect(wrapper.vm.currentIndex).toBe(idx + 2)
   })
 })

@@ -1,27 +1,24 @@
 <template>
   <div id="time-slot" class="w-100">
-    <div>
-      <div class="btn-group btn-group-sm" role="group">
-        <button type="button" @click="changeSelectedModel(model)" class="change-selected-model btn btn-secondary btn-group-sm" v-for="model in daysModel" :key="model.value" v-bind:class="{active: model.value === activeModel.value}">
-          {{model.label}}
-        </button>
-      </div>
-    </div>
-    <div class="mb-4 mt-1 d-flex">
+    <div class="mb-4 d-flex">
       <div class="align-middle">
         <button type="button" id="time-play" class="btn btn-secondary btn-sm" @click="play" v-show="!isPlaying"><font-awesome-icon :icon="iconPlay" /></button>
         <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon :icon="iconPause" /></button>
       </div>
       <div class="flex-grow-1 d-flex align-middle position-relative ml-3 mr-3">
-        <!-- <div class="time-slot with-indicator" v-for="(time, i) in activeModel.times" :key="i" @click="goToTime(i)" :class="{'flex-fill': true}"> -->
-        <div class="time-slot with-indicator" v-for="(time, i) in activeModel.times" :key="i" @click="goToTime(i)" :class="{'flex-fill': i !== (activeModel.times.length - 1)}">
-          <!-- <div class="time-slot-content h-100"> -->
-          <div v-if="i !== (activeModel.times.length - 1)" class="time-slot-content h-100">
-          </div>
+        <div class="time-slot with-indicator flex-fill" v-for="(time, i) in model.times" :key="i" @click="goToTime(i)">
+          <div class="time-slot-content h-100"></div>
           <small class="time-slot-indicator">
-            <div>{{getDateDay(time)}}</div>
-            <div>{{getDate(time)}}</div>
-            <div>{{getDateHour(time)}}</div>
+            <div>{{getDateDay(time.startTime)}}</div>
+            <div>{{getDate(time.startTime)}}</div>
+            <div>{{getDateHour(time.startTime)}}</div>
+          </small>
+        </div>
+        <div class="time-slot with-indicator">
+          <small class="time-slot-indicator">
+            <div>{{getDateDay(model.times[model.times.length - 1].endTime)}}</div>
+            <div>{{getDate(model.times[model.times.length - 1].endTime)}}</div>
+            <div>{{getDateHour(model.times[model.times.length - 1].endTime)}}</div>
           </small>
         </div>
         <div class="time-slot position-absolute current-time" :style="calculateCurrentPlacement()">
@@ -43,8 +40,6 @@ import faPlay from '@fortawesome/fontawesome-free-solid/faPlay'
 import faPause from '@fortawesome/fontawesome-free-solid/faPause'
 import TimeSlotCommon from './TimeSlotCommon'
 
-const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
 export default {
   name: 'TimeSlot',
   mixins: [TimeSlotCommon],
@@ -63,11 +58,6 @@ export default {
     }
   },
   methods: {
-    changeSelectedModel (model) {
-      this.activeModel = model
-      this.isPlaying = false
-      this.currentIndex = 0
-    },
     play () {
       this.isPlaying = true
       this.activePlay()
@@ -76,7 +66,7 @@ export default {
       this.isPlaying = false
     },
     activePlay () {
-      if (this.currentIndex < (this.activeModel.times.length - 2)) {
+      if (this.currentIndex < (this.model.times.length - 1)) {
         this.currentIndex++
         this.afterSelect()
         setTimeout(() => {
@@ -88,28 +78,18 @@ export default {
         this.pause()
       }
     },
-    getDate (date) {
-      return new Date(date * 1000).getDate()
-    },
-    getDateDay (date) {
-      return dayNames[new Date(date * 1000).getDay()]
-    },
-    getDateHour (date) {
-      const d = new Date(date * 1000)
-      return `${('0' + d.getHours()).slice(-2)}:${('0' + d.getMinutes()).slice(-2)}`
-    },
     getTransformValues (idx) {
       const translateValue = `translateX(${100 * idx}%)`
       return {
         transform: translateValue,
         WebkitTransform: translateValue,
         msTransform: translateValue,
-        width: `${100 / (this.activeModel.times.length - 1)}%`
+        width: `${100 / (this.model.times.length - 1)}%`
       }
     },
     calculateNowPlacement () {
       let now = Date.now() / 1000
-      let nowIndex = this.activeModel.times.findIndex(time => now < time)
+      let nowIndex = this.model.times.findIndex(time => now < time.startTime)
       if (nowIndex !== -1) {
         return this.getTransformValues(nowIndex - 1)
       } else {

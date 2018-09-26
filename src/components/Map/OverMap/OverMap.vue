@@ -1,8 +1,12 @@
 <template>
   <div class="over-map">
-    <div class="over-map-bottom d-block d-sm-none p-0 over-map-control">
-      <TimeSlotMobile class="p-2" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
-      <Legend class="over-map-control" asline="true"></Legend>
+    <div class="over-map-bottom d-flex align-items-end">
+      <ZoomControl class="flex-shrink-1 d-none d-sm-inline-flex mr-1 over-map-control">
+      </ZoomControl>
+      <button type="button" id="reset-map" class="btn btn-primary align-bottom d-none d-sm-block shadow flex-shrink-1 mr-4 ml-1 over-map-control" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
+      <div class="mx-1 w-100 over-map-control">
+        <TimeSerie class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
+      </div>
     </div>
     <div class="over-map-left">
       <div class="d-flex flex-nowrap position-relative">
@@ -23,14 +27,6 @@
     <div class="over-map-right d-none d-sm-block">
       <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
     </div>
-    <div class="over-map-bottom d-none d-sm-flex align-items-end">
-      <ZoomControl class="flex-shrink-1 mr-1 over-map-control">
-      </ZoomControl>
-      <button type="button" id="reset-map" class="btn btn-primary align-bottom shadow flex-shrink-1 mr-1 ml-1 over-map-control" @click="resetMap"><font-awesome-icon :icon="iconUndo" /></button>
-      <div class="ml-1 w-100 over-map-control">
-        <TimeSlot class="d-inline-block align-bottom pl-4" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -46,8 +42,7 @@ import faBars from '@fortawesome/fontawesome-free-solid/faBars'
 import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import ZoomControl from './OverMapControl/ZoomControl/ZoomControl'
-import TimeSlot from './OverMapControl/TimeSlot/TimeSlot'
-import TimeSlotMobile from './OverMapControl/TimeSlot/TimeSlotMobile'
+import TimeSerie from './OverMapControl/TimeSerie/TimeSerie'
 import faUndo from '@fortawesome/fontawesome-free-solid/faUndo'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
@@ -59,8 +54,7 @@ export default {
     FontAwesomeIcon,
     SideBar: () => import('@/components/SideBar/SideBar'),
     ZoomControl,
-    TimeSlot,
-    TimeSlotMobile,
+    TimeSerie,
     Legend
   },
   computed: {
@@ -106,10 +100,12 @@ export default {
       this.getMap().setDefaultMap()
     },
     onSelectedParameter (selectedParameter) {
-      if (selectedParameter) {
-        this.selectedParameter = selectedParameter
-        this.getDisplayedLayer().setDisplayedLayer(selectedParameter)
-      }
+      this.selectedParameter = false
+      let vm = this
+      this.$nextTick(function () {
+        vm.selectedParameter = selectedParameter
+        vm.getDisplayedLayer().setDisplayedLayer(selectedParameter)
+      })
     },
     onSelectedReportedParameter (selectedReportedParameter) {
       this.$emit('selectedReportedLayer', selectedReportedParameter)

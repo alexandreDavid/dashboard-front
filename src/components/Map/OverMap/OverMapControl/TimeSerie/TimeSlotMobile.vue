@@ -1,15 +1,10 @@
 <template>
   <div id="time-slot" class="w-100">
-    <div class="btn-group pb-2" role="group">
-      <button type="button" @click="changeSelectedModel(model)" class="change-selected-model btn btn-secondary" v-for="model in daysModel" :key="model.value" v-bind:class="{active: model.value === activeModel.value}">
-        {{model.label}}
-      </button>
-    </div>
     <div class="d-flex">
       <button type="button" id="time-slot-previous" class="btn btn-secondary shadow" @click="previous()"><font-awesome-icon :icon="iconPrevious" /></button>
       <div class="flex-grow-1 pl-2 pr-2">
         <select v-model="currentIndex" class="form-control w-100 shadow" @change="goToTime(currentIndex)">
-          <option v-for="(time, i) in activeModel.times" :key="i" v-bind:value="i">{{getTimeFormated(time)}}</option>
+          <option v-for="(time, i) in model.times" :key="i" v-bind:value="i">{{getTimeFormated(time)}}</option>
         </select>
       </div>
       <div>
@@ -38,10 +33,6 @@ export default {
     }
   },
   methods: {
-    changeSelectedModel (model) {
-      this.activeModel = model
-      this.currentIndex = 0
-    },
     previous () {
       if (this.currentIndex > 0) {
         this.currentIndex--
@@ -49,14 +40,22 @@ export default {
       }
     },
     next () {
-      if (this.currentIndex < this.activeModel.times.length - 1) {
+      if (this.currentIndex < this.model.times.length - 1) {
         this.currentIndex++
         this.goToTime(this.currentIndex)
       }
     },
-    getTimeFormated (date) {
-      const d = new Date(date * 1000)
-      return `${d.toDateString()} ${('0' + d.getHours()).slice(-2)}:${('0' + d.getMinutes()).slice(-2)}`
+    getTimeFormated (time) {
+      let formatedDate
+      if (this.model.type === 'interval') {
+        const startDate = new Date(time.startTime * 1000)
+        const endDate = new Date(time.endTime * 1000)
+        formatedDate = `${startDate.toDateString()} ${('0' + startDate.getHours()).slice(-2)}:${('0' + startDate.getMinutes()).slice(-2)} - ${('0' + endDate.getHours()).slice(-2)}:${('0' + endDate.getMinutes()).slice(-2)}`
+      } else {
+        const date = new Date(time * 1000)
+        formatedDate = date.toDateString()
+      }
+      return formatedDate
     }
   }
 }

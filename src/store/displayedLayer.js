@@ -47,6 +47,9 @@ export default class {
   getUnit () {
     return this._activeUnit
   }
+  getTimeModels () {
+    return this._parameter.timeModels
+  }
   async getFeatureInfo (evt) {
     if (this._displayedLayer) {
       let point = this._map.latLngToContainerPoint(evt.latlng, this._map.getZoom())

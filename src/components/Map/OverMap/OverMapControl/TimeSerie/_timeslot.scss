@@ -24,8 +24,8 @@
   &.now {
     pointer-events: none;
     .now-content {
-      border: 1px solid var(--red);
-      color: var(--red);
+      border: 1px solid var(--white);
+      color: var(--white);
       &:after {
         content: "NOW";
         font-size: $small-font-size;
