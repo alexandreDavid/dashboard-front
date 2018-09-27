@@ -26,15 +26,21 @@
             <MiniMap :minimapKey="key" v-bind:parameter="model.param" v-bind:interactive="model.maximize"  v-bind:areaLayer="areaLayer"></MiniMap>
           </div>
         </div>
-        <label class="card h-100 m-2 add-model" for="add-model" v-if="availableModels.length">
-          <div class="m-auto text-center">
-            <div class="font-weight-bold">Add a model</div>
-            <font-awesome-icon :icon="iconPlus" class="fa-3x"></font-awesome-icon>
-            <select id="add-model" class="custom-select" v-model="model2Add" @change="selectModel2Add(model2Add)">
-              <option v-for="(model, key) in availableModels" :key="key" :value="model">{{ model.label }}</option>
-            </select>
-          </div>
-        </label>
+        <div class="m-2">
+          <button type="button" class="btn btn-primary" id="add-card" @click="openModelModal()"><font-awesome-icon :icon="iconPlus" /> Add a model</button>
+          <modal v-if="displayModelModal === true" @close="displayModelModal = false">
+            <div slot="body" class="graph-modal-content">
+              <div class="form-group">
+                <label for="add-model">Select a model to add</label>
+                <select id="add-model" class="custom-select" v-model="model2Add">
+                  <option v-for="(model, key) in availableModels" :key="key" :value="model">{{ model.label }}</option>
+                </select>
+              </div>
+              <button type="button" class="btn btn-secondary" @click="displayModelModal = false">Cancel</button>
+              <button type="button" class="btn btn-primary" v-bind:disabled="!model2Add" @click="selectModel2Add(model2Add)">Apply</button>
+            </div>
+          </modal>
+        </div>
       </div>
       <Loading v-else/>
     </div>
@@ -49,13 +55,15 @@ import { faWindowMaximize, faWindowRestore } from '@fortawesome/free-regular-svg
 import FutureClimateModels from '@/store/futureClimateConfiguration'
 import AreaLayer from '@/store/areaLayer'
 import Loading from '@/components/Loading/Loading'
+import Modal from '@/components/Modal/Modal'
 
 export default {
   name: 'FutureClimateModels',
   components: {
     MiniMap,
     FontAwesomeIcon,
-    Loading
+    Loading,
+    Modal
   },
   props: ['variable', 'period', 'timePeriod'],
   data () {
@@ -67,7 +75,8 @@ export default {
       models: [],
       miniMap: [],
       areaLayer: false,
-      isLoaded: false
+      isLoaded: false,
+      displayModelModal: false
     }
   },
   computed: {
@@ -109,7 +118,12 @@ export default {
         model.param.layerParameters.time = `${this.period.min}-${this.timePeriod.value}`
       }
     },
+    openModelModal () {
+      this.model2Add = false
+      this.displayModelModal = true
+    },
     addModel (model) {
+      this.displayModelModal = false
       let newModel = {
         label: model.label,
         name: model.name,
