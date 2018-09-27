@@ -7,12 +7,172 @@ const allModels = [
     default: true
   }, {
     type: 'CMIP5',
-    label: 'CCSM4 (bis)',
+    label: 'ACCESS1-0',
     name: 'CCSM4',
     styleName: 'CCSM4_tx30anom'
   }, {
     type: 'CMIP5',
-    label: 'CCSM4 (ter)',
+    label: 'ACCESS1-3',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'BNU-ESM',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'CESM1-CAM5',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'CMCC-CESM',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'CMCC-CMS',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'CanESM2',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'GFDL-CM3',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'GFDL-ESM2G',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'GFDL-ESM2M',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'HadGEM2-CC',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'HadGEM2-ES',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'IPSL-CM5A-LR',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'IPSL-CM5A-MR',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'IPSL-CM5B-LR',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'MPI-ESM-LR',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'NorESM1-M',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'bcc-csm1-1-m',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'bcc-csm1-1',
+    name: 'CCSM4'
+  }, {
+    type: 'CMIP5',
+    label: 'inmcm4',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'CLMcom_CNRM-CERFACS-CNRM-CM5',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'CLMcom_ICHEC-EC-EARTH',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'CLMcom_MOHC-HadGEM2-ES',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'CLMcom_MPI-M-MPI-ESM-LR',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'DMI_NCC-NorESM1-M',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'GERICS_IPSL-IPSL-CM5A-LR',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'GERICS_MIROC-MIROC5',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'GERICS_MOHC-HadGEM2-ES',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'KNMI_ICHEC-EC-EARTH',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'KNMI_MOHC-HadGEM2-ES',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'MPI-CSC_ICHEC-EC-EARTH',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'MPI-CSC_MPI-M-MPI-ESM-LR',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_CCCma-CanESM2',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_CNRM-CERFACS-CNRM-CM5',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_CSIRO-QCCCE-CSIRO-Mk3-6-0',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_ICHEC-EC-EARTH',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_IPSL-IPSL-CM5A-MR',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_MIROC-MIROC5',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_MOHC-HadGEM2-ES',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_MPI-M-MPI-ESM-LR',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_NCC-NorESM1-M',
+    name: 'CCSM4'
+  }, {
+    type: 'CORDEX',
+    label: 'SMHI_NOAA-GFDL-GFDL-ESM2M',
     name: 'CCSM4'
   }
 ]
@@ -93,11 +253,25 @@ const months = [
   }
 ]
 
+const modelTypes = [
+  {
+    value: 'CMIP5',
+    label: 'CMIP5'
+  },
+  {
+    value: 'CORDEX',
+    label: 'CORDEX'
+  }
+]
+
 export default {
   getAllModelsByType (type) {
     return allModels.filter(m => m.type === type)
   },
   getAllMonths () {
     return months
+  },
+  getAllModelTypes () {
+    return modelTypes
   }
 }

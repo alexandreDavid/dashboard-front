@@ -4,6 +4,11 @@
       Models
     </div>
     <div class="card-body position-relative">
+      <div class="btn-group ml-2 mb-2" role="group" aria-label="unit">
+        <button type="button" @click="selectModelType(modelType)" class="btn btn-primary" v-for="modelType in modelTypes" :key="modelType.value" v-bind:class="{active: modelType === selectedModelType}">
+          {{modelType.label}}
+        </button>
+      </div>
       <div class="d-flex flex-wrap justify-content-center justify-content-md-start" v-if="isLoaded">
         <div class="card h-100 m-2 model-card" v-for="(model, key) in models" :key="key" v-bind:class="{maximize: model.maximize}">
           <div class="card-header">
@@ -56,6 +61,8 @@ export default {
   data () {
     return {
       model2Add: false,
+      modelTypes: false,
+      selectedModelType: false,
       availableModels: [],
       models: [],
       miniMap: [],
@@ -75,13 +82,19 @@ export default {
     }
   },
   async mounted () {
-    this.availableModels = FutureClimateModels.getAllModelsByType('CMIP5')
-    this.availableModels.filter(m => m.default).forEach(this.addModel)
+    this.modelTypes = FutureClimateModels.getAllModelTypes()
+    this.selectModelType(this.modelTypes[0])
     this.areaLayer = new AreaLayer()
     await this.areaLayer.setSelectedArea({id: 7552})
     this.isLoaded = true
   },
   methods: {
+    selectModelType (type) {
+      this.selectedModelType = type
+      this.models = []
+      this.availableModels = FutureClimateModels.getAllModelsByType(type.value)
+      this.availableModels.filter(m => m.default).forEach(this.addModel)
+    },
     setParam (model) {
       model.param = {
         layerUrl: `${process.env.GEOSERVER_URL}/wms`,
