@@ -13,8 +13,21 @@ jest.mock('@/store/areaLayer', () => {
 })
 
 jest.mock('@/store/futureClimateConfiguration', () => ({
-  getAllModelsByType: jest.fn()
+  getAllModelsByType: jest.fn(),
+  getAllModelTypes: jest.fn()
 }))
+
+const mockModelTypes = [
+  {
+    value: 'modelType1',
+    label: 'modelType1'
+  }, {
+    value: 'modelType2',
+    label: 'modelType2'
+  }
+]
+
+config.getAllModelTypes.mockReturnValue(mockModelTypes)
 
 const mockModels = [
   {
@@ -43,7 +56,8 @@ describe('FutureClimateModels.vue', () => {
         }
       }
     })
-    expect(config.getAllModelsByType).toHaveBeenCalled()
+    expect(config.getAllModelTypes).toHaveBeenCalled()
+    expect(config.getAllModelsByType).toHaveBeenCalledWith(mockModelTypes[0].value)
     expect(wrapper.vm.availableModels.length).toBe(1)
     expect(wrapper.vm.models.length).toBe(1)
     expect(AreaLayer).toBeCalled()
