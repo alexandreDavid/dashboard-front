@@ -54,42 +54,42 @@ describe('Legend.vue', () => {
     expect(wrapper.vm.gradientColor).toBe('linear-gradient(rgba(44, 123, 182, 0.5), rgba(171, 217, 233, 0.5), rgba(255, 255, 191, 0.5), rgba(253, 174, 97, 0.5), rgba(215, 25, 28, 0.5))')
   })
 
-  it('On change active unit', () => {
-    Unit.convert.mockClear()
-    expect(Unit.convert).toHaveBeenCalledTimes(0)
-    const buttons = wrapper.findAll('.btn-group-sm .btn')
-    buttons.at(0).trigger('click')
-    expect(buttons.at(0).classes()).toContain('active')
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[0].key)
-    expect(Unit.convert).toHaveBeenCalledTimes(0)
+  // it('On change active unit', () => {
+  //   Unit.convert.mockClear()
+  //   expect(Unit.convert).toHaveBeenCalledTimes(0)
+  //   const buttons = wrapper.findAll('.btn-group-sm .btn')
+  //   buttons.at(0).trigger('click')
+  //   expect(buttons.at(0).classes()).toContain('active')
+  //   expect(wrapper.vm.activeUnit).toEqual(mockUnits[0].key)
+  //   expect(Unit.convert).toHaveBeenCalledTimes(0)
 
-    buttons.at(1).trigger('click')
-    expect(buttons.at(1).classes()).toContain('active')
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[1].key)
-    expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
-  })
+  //   buttons.at(1).trigger('click')
+  //   expect(buttons.at(1).classes()).toContain('active')
+  //   expect(wrapper.vm.activeUnit).toEqual(mockUnits[1].key)
+  //   expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
+  // })
 
-  it('On click on online change unit', () => {
-    Unit.convert.mockClear()
-    expect(Unit.convert).toHaveBeenCalledTimes(0)
-    const wrapper = mount(Legend, {
-      provide: {
-        getDisplayedLayer: getDisplayedLayer
-      },
-      propsData: {
-        asline: true
-      }
-    })
-    expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
-    // Default unit
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[2].key)
-    const button = wrapper.find('.on-line .btn')
-    button.trigger('click')
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[0].key)
-    expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
+  // it('On click on online change unit', () => {
+  //   Unit.convert.mockClear()
+  //   expect(Unit.convert).toHaveBeenCalledTimes(0)
+  //   const wrapper = mount(Legend, {
+  //     provide: {
+  //       getDisplayedLayer: getDisplayedLayer
+  //     },
+  //     propsData: {
+  //       asline: true
+  //     }
+  //   })
+  //   expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
+  //   // Default unit
+  //   expect(wrapper.vm.activeUnit).toEqual(mockUnits[2].key)
+  //   const button = wrapper.find('.on-line .btn')
+  //   button.trigger('click')
+  //   expect(wrapper.vm.activeUnit).toEqual(mockUnits[0].key)
+  //   expect(Unit.convert).toHaveBeenCalledTimes(wrapper.vm.displayedValues.length)
 
-    button.trigger('click')
-    expect(wrapper.vm.activeUnit).toEqual(mockUnits[1].key)
-    expect(Unit.convert).toHaveBeenCalledTimes(2 * wrapper.vm.displayedValues.length)
-  })
+  //   button.trigger('click')
+  //   expect(wrapper.vm.activeUnit).toEqual(mockUnits[1].key)
+  //   expect(Unit.convert).toHaveBeenCalledTimes(2 * wrapper.vm.displayedValues.length)
+  // })
 })

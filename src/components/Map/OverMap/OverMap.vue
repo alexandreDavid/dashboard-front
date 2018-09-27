@@ -104,7 +104,6 @@ export default {
       let vm = this
       this.$nextTick(function () {
         vm.selectedParameter = selectedParameter
-        vm.getDisplayedLayer().setDisplayedLayer(selectedParameter)
       })
     },
     onSelectedReportedParameter (selectedReportedParameter) {

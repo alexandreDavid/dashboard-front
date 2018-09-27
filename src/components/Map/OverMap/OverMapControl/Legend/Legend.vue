@@ -12,11 +12,11 @@
         </div>
       </div>
       <div v-else class="p-1">
-        <div class="btn-group btn-group-sm mb-1" role="group" aria-label="unit">
+        <!-- <div class="btn-group btn-group-sm mb-1" role="group" aria-label="unit">
           <button type="button" @click="changeActiveUnit(unit.key)" class="btn btn-secondary" v-for="unit in availableUnits" :key="unit.key" v-bind:class="{active: unit.key === activeUnit}">
             {{unit.label}}
           </button>
-        </div>
+        </div> -->
         <div class="d-flex align-items-stretch">
           <div class="gradient mr-1" v-bind:style="{ background: gradientColor }"></div>
           <div class="d-flex flex-column">
@@ -39,19 +39,16 @@ export default {
   name: 'Legend',
   inject: ['getDisplayedLayer'],
   props: [
-    'asline'
+    'asline', 'layer'
   ],
   data () {
-    const unitFamily = Unit.getFamilyUnit(this.getDisplayedLayer().getUnit())
-    let availableUnits = Unit.getUnitsFamily(unitFamily)
     return {
       defaultUnit: 'K',
-      unitFamily: unitFamily,
-      activeUnit: Settings.activeSettings[unitFamily],
+      unitFamily: false,
+      activeUnit: false,
       hasInteractiveLegend: false,
       legendUrl: false,
       gradientColor: false,
-      availableUnits: availableUnits,
       displayedValues: [{
         color: '#2c7bb6',
         opacity: '0.5',
@@ -81,21 +78,16 @@ export default {
       activeUnits: Settings.activeSettings
     }
   },
+  created () {
+    this.unitFamily = Unit.getFamilyUnit(this.getDisplayedLayer().getUnit())
+    this.activeUnit = Settings.activeSettings[this.unitFamily]
+  },
   mounted () {
     this.gradientColor = `linear-gradient(${this.asline ? 'to right,' : ''}${this.displayedValues.map(d => this.convertHex(d.color, d.opacity)).join(', ')})`
   },
   methods: {
-    switchUnit () {
-      let curIndex = this.availableUnits.findIndex(u => u.key === this.activeUnit)
-      curIndex++
-      if (curIndex === this.availableUnits.length) {
-        curIndex = 0
-      }
-      this.changeActiveUnit(this.availableUnits[curIndex].key)
-    },
     changeActiveUnit (unit) {
       this.$set(this, 'activeUnit', unit)
-      this.getDisplayedLayer().setUnit(this.activeUnit)
     },
     convertHex (hex, opacity) {
       const r = parseInt(hex.substring(1, 3), 16)
@@ -107,7 +99,7 @@ export default {
   filters: {
     convert: function (value, from, to) {
       if (from !== to) {
-        value = Unit.convert(from, to, value).toFixed(2)
+        value = Unit.convert(from, to, value)
       }
       return value
     }

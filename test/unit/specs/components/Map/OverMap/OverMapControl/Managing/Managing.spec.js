@@ -21,7 +21,8 @@ function getMapMock () {
 
 const mockDisplayedLayer = {
   setDisplayedLayer: jest.fn(),
-  getUnit: jest.fn()
+  getUnit: jest.fn(),
+  setUnit: jest.fn()
 }
 function getDisplayedLayer () {
   return function () {
@@ -68,7 +69,10 @@ describe('Managing.vue', () => {
   })
 
   it('Mounted correctly', () => {
-    expect(mockMap.on).toBeCalled()
+    expect(wrapper.emitted().selectedReportedParameter).toEqual([[{
+      label: 'Meteorological stations',
+      name: 'meteorological_station'
+    }]])
   })
 
   it('Toggle ForecastSelection modal', () => {
@@ -105,10 +109,10 @@ describe('Managing.vue', () => {
     expect(wrapper.emitted().selectedParameter).toEqual([[mockGetDisplayedLayer], ['selectedParameter']])
   })
 
-  it('On layer add', () => {
-    mockMap.layeradd()
-    expect(wrapper.vm.displayedParameter).toBe(mockGetDisplayedLayer)
-  })
+  // it('On layer add', () => {
+  //   mockMap.layeradd()
+  //   expect(wrapper.vm.displayedParameter).toBe(mockGetDisplayedLayer)
+  // })
 
   it('On open graph modal', () => {
     wrapper.find('#open-graph-modal').trigger('click')

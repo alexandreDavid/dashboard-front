@@ -83,6 +83,7 @@ export default {
         unit: 'K',
         hasGraph: true,
         hasTimeFrame: true,
+        interactiveLegend: true,
         timeModels: getDaysModelsForForecast()
       }, {
         displayName: 'Relative humidity',
@@ -142,7 +143,7 @@ export default {
         workspaceName: 'hidrology',
         unit: 'mm',
         hasGraph: false,
-        hasTimeFrame: true
+        hasTimeFrame: false
       }, {
         displayName: 'Evapotranspiration',
         groupingId: 1,
@@ -151,7 +152,7 @@ export default {
         workspaceName: 'hidrology',
         unit: 'mm',
         hasGraph: false,
-        hasTimeFrame: true
+        hasTimeFrame: false
       }, {
         displayName: 'Surface runoff',
         groupingId: 1,
@@ -160,7 +161,7 @@ export default {
         workspaceName: 'hidrology',
         unit: 'mm',
         hasGraph: false,
-        hasTimeFrame: true
+        hasTimeFrame: false
       }, {
         displayName: 'NDVI',
         groupingId: 2,
@@ -179,7 +180,8 @@ export default {
         workspaceName: 'env_sys',
         unit: 'NO_UNIT_SPECIFIED',
         hasGraph: false,
-        hasTimeFrame: false
+        hasTimeFrame: false,
+        timeModels: getDaysModelsForNdvi()
       }, {
         displayName: 'Land surface temperature',
         groupingId: 2,
@@ -188,7 +190,8 @@ export default {
         workspaceName: 'pixalytics',
         unit: 'K',
         hasGraph: false,
-        hasTimeFrame: false
+        hasTimeFrame: false,
+        timeModels: getDaysModelsForNdvi()
       }, {
         displayName: 'Soil moisture content',
         groupingId: 2,

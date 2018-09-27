@@ -9,10 +9,10 @@
     <div class="card shadow my-3 over-map-control" style="min-width: 250px;">
       <div class="card-body p-2">
         <h6>
-          {{ displayedParameter.displayName }}{{ activeUnit ? ` (${activeUnit})` : ''}}
+          {{ displayedParameter.displayName }}{{ activeUnitLabel ? ` (${activeUnitLabel})` : ''}}
         </h6>
         <button v-if="displayedParameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon :icon="iconGraph" /> Open graph</button>
-        <Legend class="pl-2"></Legend>
+        <Legend class="pl-2" v-if="displayedParameter"></Legend>
       </div>
     </div>
     <div class="card shadow my-3 over-map-control">
@@ -30,9 +30,9 @@
         </div>
       </div>
     </div>
-    <div class="slide-bar-content justify-content-end position-relative m-2">
+    <!-- <div class="slide-bar-content justify-content-end position-relative m-2">
       <ElevationSlider v-model="value" class="over-map-control" v-if="displayedParameter.interactiveLegend"/>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -71,7 +71,7 @@ export default {
       selectedArea: false,
       value: 50,
       activeUnits: Settings.activeSettings,
-      activeUnit: false
+      activeUnitLabel: false
     }
   },
   async created () {
@@ -88,22 +88,19 @@ export default {
     }
   },
   mounted () {
-    var vm = this
-    // On layer displayed change, legend refresh
-    vm.getMap().on('layeradd', function () {
-      vm.displayedParameter = Parameter.getDisplayedParameter()
-    })
     this.toggleMeteorologicalStations(this.displayMeteoStations)
   },
   methods: {
     onSelectedParameter (selectedParameter) {
       this.showModal = false
-      if (selectedParameter) {
-        this.displayedParameter = selectedParameter
-        Parameter.setDisplayedParameter(selectedParameter)
-        this.getDisplayedLayer().setDisplayedLayer(selectedParameter)
-        this.changeActiveUnit(this.getDisplayedLayer().getUnit())
-      }
+      let vm = this
+      vm.displayedParameter = false
+      this.$nextTick(function () {
+        vm.displayedParameter = selectedParameter
+      })
+      Parameter.setDisplayedParameter(selectedParameter)
+      this.getDisplayedLayer().setDisplayedLayer(selectedParameter)
+      this.changeActiveUnit(this.getDisplayedLayer().getUnit())
       this.$emit('selectedParameter', selectedParameter)
     },
     toggleMeteorologicalStations (val) {
@@ -118,7 +115,8 @@ export default {
       this.showModalGraph = true
     },
     changeActiveUnit (unit) {
-      this.activeUnit = Unit.getLabel(unit)
+      this.activeUnitLabel = Unit.getLabel(unit)
+      this.getDisplayedLayer().setUnit(unit)
     }
   },
   watch: {
