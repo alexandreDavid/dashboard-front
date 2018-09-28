@@ -56,6 +56,10 @@ export default {
   watch: {
     parameter (newParam) {
       this.getDisplayedLayer().setDisplayedLayer(newParam)
+      this.isLoaded = false
+      this.$nextTick(() => {
+        this.isLoaded = true
+      })
     },
     area (newArea) {
       this.areaLayer.setSelectedArea(newArea)

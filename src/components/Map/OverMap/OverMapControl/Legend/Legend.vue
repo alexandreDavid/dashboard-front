@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white">
-    <div v-if="activeUnitLabel">Unit: {{ activeUnitLabel }}</div>
+    <div v-if="activeUnitLabel" class="mx-1">Unit: {{ activeUnitLabel }}</div>
     <div class="legend-displaying" v-if="getDisplayedLayer()._hasInteractiveLegend">
       <div v-if="asline" class="on-line position-relative d-flex border rounded-left rounded-right">
         <button type="button" class="btn btn-sm btn-secondary rounded-0" @click="switchUnit()">{{ activeUnit}}</button>
