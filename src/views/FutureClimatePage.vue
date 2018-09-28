@@ -77,7 +77,7 @@
           </div>
           <div class="row mb-3">
             <div class="col-12">
-              The plot below shows the range of projected future changes for this location across 10 different statistically downscaled CMIP5 GCMs for two different RCP pathways (RCP 4.5 and RCP 8.5). Anomalies are currently calculated relative the historical period 1980 - 2000. The solid bars represent the range between the middle 80% of projected change and so excludes the upper and lower 10% as these are often considered to be outliers. However, the grey lines show the projected change for each model so it is possible to see how individual models (intentionally not named) project the future changes.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
             </div>
           </div>
           <div class="row">

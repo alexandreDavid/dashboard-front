@@ -21,7 +21,7 @@
       </div>
       <div class="row mb-3">
         <div class="col-12">
-          These maps enable you to view maps of monthly, seasonal and annual averages for the UK or your selected region. The analyses are based on 1 km grid-point data sets which are derived from station data. UK maps are available for the averaging periods 1961-1990, 1971-2000 and 1981-2010. Regional maps are only available for the period 1971-2000.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
         </div>
       </div>
       <div class="row">
