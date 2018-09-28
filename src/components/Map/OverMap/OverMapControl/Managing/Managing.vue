@@ -11,7 +11,7 @@
         <h6>
           {{ displayedParameter.displayName }}
         </h6>
-        <button v-if="displayedParameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon :icon="iconGraph" /> Open graph</button>
+        <button v-if="displayedParameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon icon="chart-bar" /> Open graph</button>
         <Legend class="pl-2" v-if="displayedParameter"></Legend>
       </div>
     </div>
@@ -42,8 +42,6 @@ import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/
 import Parameter from '@/store/parameter'
 import ElevationSlider from '@/components/Slider/ElevationSlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
 import Area from '@/store/area'
 import GraphModal from '@/components/Graph/GraphModal'
 import Unit from '@/utils/unit'
@@ -56,7 +54,6 @@ export default {
     ForecastSelection,
     ElevationSlider,
     Legend,
-    FontAwesomeIcon,
     GraphModal
   },
   inject: ['getMap', 'getDisplayedLayer'],
@@ -80,11 +77,6 @@ export default {
       displayedParameter = allParams[0]
     }
     this.onSelectedParameter(displayedParameter)
-  },
-  computed: {
-    iconGraph () {
-      return faChartBar
-    }
   },
   mounted () {
     this.toggleMeteorologicalStations(this.displayMeteoStations)

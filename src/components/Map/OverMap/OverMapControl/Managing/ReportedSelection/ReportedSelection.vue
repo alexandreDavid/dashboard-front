@@ -5,7 +5,7 @@
         <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="reportedParameter in reportedParameters" :key="reportedParameter.name" @click="onSelectParameter(reportedParameter)" v-bind:class="{ active: reportedParameter.name === activeParam }">
           <div class="d-flex w-100 justify-content-between">
             <div class="mb-1">{{reportedParameter.label}}</div>
-            <div><font-awesome-icon :icon="iconInfo" v-on:click.stop="displayInfos(reportedParameter)" class="display-infos text-secondary" /></div>
+            <div><font-awesome-icon icon="info" v-on:click.stop="displayInfos(reportedParameter)" class="display-infos text-secondary" /></div>
           </div>
           <div v-show="reportedParameter.name === displayedInfo" class="displayed-infos">
             <small>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</small>
@@ -19,14 +19,11 @@
 
 <script>
 import Loading from '@/components/Loading/Loading'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faInfo from '@fortawesome/fontawesome-free-solid/faInfoCircle'
 
 export default {
   name: 'ReportedSelection',
   components: {
-    Loading,
-    FontAwesomeIcon
+    Loading
   },
   inject: ['getSelectedReportedLayer'],
   data () {
@@ -36,11 +33,6 @@ export default {
       openedGroup: false,
       isLoaded: false,
       displayedInfo: false
-    }
-  },
-  computed: {
-    iconInfo () {
-      return faInfo
     }
   },
   created () {

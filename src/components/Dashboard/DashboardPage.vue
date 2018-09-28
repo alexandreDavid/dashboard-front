@@ -4,12 +4,12 @@
       <div class="row">
         <h4 class="col-12 mt-2 mb-2 p-2">
           <span v-if="!isEditing">{{ dashboard.title }}</span>
-          <button type="button" class="btn btn-light ml-2 edit" v-if="!isEditing" @click="edit()"><font-awesome-icon :icon="iconEdit" /> Edit</button>
+          <button type="button" class="btn btn-light ml-2 edit" v-if="!isEditing" @click="edit()"><font-awesome-icon icon="edit" /> Edit</button>
           <div class="d-flex" v-if="isEditing">
             <div class="flex-grow-1">
             <input type="text" v-model="dashboard.title" class="form-control" id="title" placeholder="title">
             </div>
-            <button type="button" class="btn btn-primary ml-2 save" @click="save()"><font-awesome-icon :icon="iconSave" /> Save</button>
+            <button type="button" class="btn btn-primary ml-2 save" @click="save()"><font-awesome-icon icon="save" /> Save</button>
           </div>
         </h4>
         <div class="col-12 mb-2 p-2">
@@ -19,12 +19,12 @@
           Select a location to display the dashboard
         </div>
         <div class="alert alert-info col-12" role="alert" v-if="isEditing && selectedArea">
-          Click on <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon :icon="iconPlus" /> Add a card</button> to add a new card
+          Click on <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon icon="plus" /> Add a card</button> to add a new card
         </div>
         <DashboardWidget v-if="selectedArea" v-for="card in dashboard.cards" :key="card.id" v-bind:cardConfiguration="card" @edit="editCard(card)" v-bind:isEditing="isEditing" v-bind:selectedArea="selectedArea" :allParameters="allParameters"></DashboardWidget>
         <div class="col-md-4 p-2" v-if="isEditing && selectedArea">
-          <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon :icon="iconPlus" /> Add a card</button>
-          <button type="button" class="btn btn-primary" @click="save()"><font-awesome-icon :icon="iconSave" /> Save</button>
+          <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon icon="plus" /> Add a card</button>
+          <button type="button" class="btn btn-primary" @click="save()"><font-awesome-icon icon="save" /> Save</button>
         </div>
       </div>
       <DashboardCardModal v-if="showCardModal" @close="closeEditCardModal()" @delete="removeCard(editedCard)" :editedCard="editedCard" :allParameters="allParameters"></DashboardCardModal>
@@ -41,10 +41,6 @@ import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import Parameter from '@/store/parameter.js'
 import Area from '@/store/area.js'
 import Api from '@/store/api.js'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
-import faEdit from '@fortawesome/fontawesome-free-solid/faEdit'
-import faSave from '@fortawesome/fontawesome-free-solid/faSave'
 import DashboardObj from '@/store/dashboard'
 import UserConfiguration from '@/store/userConfiguration'
 
@@ -54,8 +50,7 @@ export default {
     SearchLocation,
     Loading,
     DashboardWidget,
-    DashboardCardModal,
-    FontAwesomeIcon
+    DashboardCardModal
   },
   data () {
     return {
@@ -68,17 +63,6 @@ export default {
       displaySearchHelper: false,
       dashboard: {},
       editedCard: {}
-    }
-  },
-  computed: {
-    iconPlus () {
-      return faPlus
-    },
-    iconEdit () {
-      return faEdit
-    },
-    iconSave () {
-      return faSave
     }
   },
   async created () {

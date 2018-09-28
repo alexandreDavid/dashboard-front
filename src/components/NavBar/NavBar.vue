@@ -26,19 +26,9 @@
 </template>
 
 <script>
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faTachometerAlt from '@fortawesome/fontawesome-free-solid/faTachometerAlt'
-import faMap from '@fortawesome/fontawesome-free-solid/faMap'
-// import faChartBar from '@fortawesome/fontawesome-free-solid/faChartBar'
-import faUser from '@fortawesome/fontawesome-free-solid/faUser'
-import faInfoCircle from '@fortawesome/fontawesome-free-solid/faInfoCircle'
-import faHistory from '@fortawesome/fontawesome-free-solid/faHistory'
-import faForward from '@fortawesome/fontawesome-free-solid/faForward'
-
 export default {
   name: 'NavBar',
   components: {
-    FontAwesomeIcon,
     ProfileAboutSidebar: () => import('./ProfileAboutSidebar')
   },
   data () {
@@ -51,14 +41,14 @@ export default {
           click () {
             self.goTo(this.id)
           },
-          icon: faTachometerAlt
+          icon: 'tachometer-alt'
         }, {
           id: 'map',
           label: 'Map',
           click () {
             self.goTo(this.id)
           },
-          icon: faMap
+          icon: 'map'
         // }, {
         //   id: 'graph',
         //   label: 'Graph',
@@ -72,21 +62,21 @@ export default {
           click () {
             self.goTo(this.id)
           },
-          icon: faHistory
+          icon: 'history'
         }, {
           id: 'future-climate',
           label: 'Future climate',
           click () {
             self.goTo(this.id)
           },
-          icon: faForward
+          icon: 'forward'
         }, {
           id: 'about',
           label: 'About',
           click () {
             self.openSideBar(this.id)
           },
-          icon: faInfoCircle,
+          icon: 'info-circle',
           right: true,
           hideOnSm: true
         }, {
@@ -95,7 +85,7 @@ export default {
           click () {
             self.openSideBar(this.id)
           },
-          icon: faUser,
+          icon: 'user',
           right: true
         }
       ],

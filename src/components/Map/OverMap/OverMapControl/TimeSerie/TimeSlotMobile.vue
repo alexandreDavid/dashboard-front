@@ -1,37 +1,25 @@
 <template>
   <div id="time-slot" class="w-100">
     <div class="d-flex">
-      <button type="button" id="time-slot-previous" class="btn btn-secondary shadow" @click="previous()"><font-awesome-icon :icon="iconPrevious" /></button>
+      <button type="button" id="time-slot-previous" class="btn btn-secondary shadow" @click="previous()"><font-awesome-icon icon="caret-left" /></button>
       <div class="flex-grow-1 pl-2 pr-2">
         <select v-model="currentIndex" class="form-control w-100 shadow" @change="goToTime(currentIndex)">
           <option v-for="(time, i) in model.times" :key="i" v-bind:value="i">{{getTimeFormated(time)}}</option>
         </select>
       </div>
       <div>
-        <button type="button" id="time-slot-next" class="btn btn-secondary shadow" @click="next()"><font-awesome-icon :icon="iconNext" /></button>
+        <button type="button" id="time-slot-next" class="btn btn-secondary shadow" @click="next()"><font-awesome-icon icon="caret-right" /></button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faCaretLeft from '@fortawesome/fontawesome-free-solid/faCaretLeft'
-import faCaretRight from '@fortawesome/fontawesome-free-solid/faCaretRight'
 import TimeSlotCommon from './TimeSlotCommon'
 
 export default {
   name: 'TimeSlotMobile',
   mixins: [TimeSlotCommon],
-  components: { FontAwesomeIcon },
-  computed: {
-    iconPrevious () {
-      return faCaretLeft
-    },
-    iconNext () {
-      return faCaretRight
-    }
-  },
   methods: {
     previous () {
       if (this.currentIndex > 0) {

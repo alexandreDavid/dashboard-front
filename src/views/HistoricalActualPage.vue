@@ -11,7 +11,7 @@
     <div v-show="displayAddYearsButton" class="card h-100 m-2 add-years" @click="displayNextYears">
       <div class="m-auto text-center">
         <div class="font-weight-bold">Add next years</div>
-        <font-awesome-icon :icon="iconPlus" class="fa-3x"></font-awesome-icon>
+        <font-awesome-icon icon="plus" class="fa-3x"></font-awesome-icon>
       </div>
     </div>
   </div>
@@ -19,19 +19,11 @@
 
 <script>
 import MiniMap from '@/components/Map/MiniMap'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
 
 export default {
   name: 'HistoricalActualPage',
   components: {
-    MiniMap,
-    FontAwesomeIcon
-  },
-  computed: {
-    iconPlus () {
-      return faPlus
-    }
+    MiniMap
   },
   props: {
     variable: {

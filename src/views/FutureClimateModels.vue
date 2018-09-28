@@ -17,8 +17,8 @@
                 <span class="w-100">{{ model.label }}</span>
               </div>
               <div>
-                <button type="button" v-if="model.maximize" class="btn btn-light btn-sm ml-2 edit" @click="minimizeModel(model)"><font-awesome-icon :icon="iconWindowRestore" /></button>
-                <button type="button" v-else class="btn btn-light btn-sm ml-2 edit" @click="maximizeModel(model)"><font-awesome-icon :icon="iconWindowMaximize" /></button>
+                <button type="button" v-if="model.maximize" class="btn btn-light btn-sm ml-2 edit" @click="minimizeModel(model)"><font-awesome-icon icon="window-restore" /></button>
+                <button type="button" v-else class="btn btn-light btn-sm ml-2 edit" @click="maximizeModel(model)"><font-awesome-icon icon="window-maximize" /></button>
                 </div>
             </div>
           </div>
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="m-2">
-          <button type="button" class="btn btn-primary" id="add-card" @click="openModelModal()"><font-awesome-icon :icon="iconPlus" /> Add a model</button>
+          <button type="button" class="btn btn-primary" id="add-card" @click="openModelModal()"><font-awesome-icon icon="plus" /> Add a model</button>
           <modal v-if="displayModelModal === true" @close="displayModelModal = false">
             <div slot="body" class="graph-modal-content">
               <div class="form-group">
@@ -49,9 +49,6 @@
 
 <script>
 import MiniMap from '@/components/Map/MiniMap'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faPlus from '@fortawesome/fontawesome-free-solid/faPlus'
-import { faWindowMaximize, faWindowRestore } from '@fortawesome/free-regular-svg-icons'
 import FutureClimateModels from '@/store/futureClimateConfiguration'
 import AreaLayer from '@/store/areaLayer'
 import Loading from '@/components/Loading/Loading'
@@ -61,7 +58,6 @@ export default {
   name: 'FutureClimateModels',
   components: {
     MiniMap,
-    FontAwesomeIcon,
     Loading,
     Modal
   },
@@ -77,17 +73,6 @@ export default {
       areaLayer: false,
       isLoaded: false,
       displayModelModal: false
-    }
-  },
-  computed: {
-    iconPlus () {
-      return faPlus
-    },
-    iconWindowMaximize () {
-      return faWindowMaximize
-    },
-    iconWindowRestore () {
-      return faWindowRestore
     }
   },
   async mounted () {

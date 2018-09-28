@@ -37,17 +37,14 @@
         </select>
         <textarea class="form-control" v-if="formField.type === 'textarea'" v-model="formField.value"></textarea>
       </div>
-      <button type="button" class="btn btn-danger delete" @click="$emit('delete')"><font-awesome-icon :icon="iconRemove" /> Delete</button>
-      <button type="button" class="btn btn-success" @click="$emit('close')"><font-awesome-icon :icon="iconCheck" /> Apply</button>
+      <button type="button" class="btn btn-danger delete" @click="$emit('delete')"><font-awesome-icon icon="trash" /> Delete</button>
+      <button type="button" class="btn btn-success" @click="$emit('close')"><font-awesome-icon icon="check" /> Apply</button>
     </div>
   </modal>
 </template>
 
 <script>
 import Loading from '@/components/Loading/Loading'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
-import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import Dashboard from '@/store/dashboard'
 import Modal from '@/components/Modal/Modal'
 
@@ -55,21 +52,12 @@ export default {
   name: 'DashboardCardModal',
   components: {
     Loading,
-    FontAwesomeIcon,
     Modal
   },
   props: [
     'allParameters',
     'editedCard'
   ],
-  computed: {
-    iconRemove () {
-      return faTrash
-    },
-    iconCheck () {
-      return faCheck
-    }
-  },
   data () {
     return {
       sizes: Dashboard.getCardWidths(),

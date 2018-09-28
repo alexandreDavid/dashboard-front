@@ -2,8 +2,8 @@
   <div id="time-slot" class="w-100">
     <div class="mb-4 d-flex">
       <div class="align-middle">
-        <button type="button" id="time-play" class="btn btn-secondary btn-sm" @click="play" v-show="!isPlaying"><font-awesome-icon :icon="iconPlay" /></button>
-        <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon :icon="iconPause" /></button>
+        <button type="button" id="time-play" class="btn btn-secondary btn-sm" @click="play" v-show="!isPlaying"><font-awesome-icon icon="play" /></button>
+        <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon icon="pause" /></button>
       </div>
       <div class="flex-grow-1 d-flex align-middle position-relative ml-3 mr-3">
         <div class="time-slot with-indicator flex-fill" v-for="(time, i) in model.times" :key="i" @click="goToTime(i)">
@@ -35,23 +35,11 @@
 </template>
 
 <script>
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faPlay from '@fortawesome/fontawesome-free-solid/faPlay'
-import faPause from '@fortawesome/fontawesome-free-solid/faPause'
 import TimeSlotCommon from './TimeSlotCommon'
 
 export default {
   name: 'TimeSlot',
   mixins: [TimeSlotCommon],
-  components: { FontAwesomeIcon },
-  computed: {
-    iconPlay () {
-      return faPlay
-    },
-    iconPause () {
-      return faPause
-    }
-  },
   data () {
     return {
       activeDateDuration: 1500

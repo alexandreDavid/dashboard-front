@@ -4,8 +4,8 @@
       <a href="#" class="card-header" @click="toggleCollapsation(settingsFamily.type)">
         {{settingsFamily.label}}
         <div class="float-right">
-          <font-awesome-icon v-if="openedFamilyType === settingsFamily.type" :icon="iconCaretDown" />
-          <font-awesome-icon v-else :icon="iconCaretRight" />
+          <font-awesome-icon v-if="openedFamilyType === settingsFamily.type" icon="caret-down" />
+          <font-awesome-icon v-else icon="caret-right" />
         </div>
       </a>
       <ul class="list-group list-group-flush" v-show="openedFamilyType === settingsFamily.type">
@@ -17,9 +17,6 @@
 
 <script>
 import Settings from '@/store/settings'
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faCaretDown from '@fortawesome/fontawesome-free-solid/faCaretDown'
-import faCaretRight from '@fortawesome/fontawesome-free-solid/faCaretRight'
 import SettingControl from './SettingControl'
 
 export default {
@@ -27,7 +24,7 @@ export default {
   async created () {
     this.settings = Settings.getAllSettings()
   },
-  components: { FontAwesomeIcon, SettingControl },
+  components: { SettingControl },
   data () {
     return {
       settings: [],
@@ -41,14 +38,6 @@ export default {
         }
       ],
       openedFamilyType: 'unit'
-    }
-  },
-  computed: {
-    iconCaretDown () {
-      return faCaretDown
-    },
-    iconCaretRight () {
-      return faCaretRight
     }
   },
   methods: {

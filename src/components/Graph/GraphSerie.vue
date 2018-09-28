@@ -18,23 +18,20 @@
             </option>
           </select>
         </div>
-        <button type="button" class="btn btn-danger" @click="remove()"><font-awesome-icon :icon="iconRemove" /> Delete</button>
+        <button type="button" class="btn btn-danger" @click="remove()"><font-awesome-icon icon="trash" /> Delete</button>
       </div>
     </modal>
   </div>
 </template>
 
 <script>
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
-import faTrash from '@fortawesome/fontawesome-free-solid/faTrash'
 import Modal from '@/components/Modal/Modal'
 
 export default {
   name: 'GraphSerie',
   inject: ['getParameters'],
   components: {
-    Modal,
-    FontAwesomeIcon
+    Modal
   },
   props: {
     serie: {
@@ -46,11 +43,6 @@ export default {
     return {
       showModal: false,
       allParameters: []
-    }
-  },
-  computed: {
-    iconRemove () {
-      return faTrash
     }
   },
   created () {

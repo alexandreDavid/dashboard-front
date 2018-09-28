@@ -3,8 +3,8 @@
     <a href="#" class="card-header" @click="onClickGroup(parameterGrouping.groupingId)">
       {{parameterGrouping.displayName}} <span class="badge badge-secondary badge-pill">{{parameters.length}}</span>
       <div class="float-right">
-        <font-awesome-icon v-if="openedGroup === parameterGrouping.groupingId" :icon="iconCaretDown" />
-        <font-awesome-icon v-else :icon="iconCaretRight" />
+        <font-awesome-icon v-if="openedGroup === parameterGrouping.groupingId" icon="caret-down" />
+        <font-awesome-icon v-else icon="caret-right" />
       </div>
     </a>
     <div class="list-group" v-show="openedGroup === parameterGrouping.groupingId">
@@ -12,8 +12,8 @@
         <div class="d-flex w-100 justify-content-between">
           <div class="mb-1">{{parameter.displayName}}</div>
           <font-awesome-layers class="fa-lg display-infos text-secondary" v-on:click.stop="displayInfos(parameter)">
-            <font-awesome-icon :icon="iconCircle" class="text-white" size="xs" />
-            <font-awesome-icon :icon="iconInfo" />
+            <font-awesome-icon icon="circle" class="text-white" size="xs" />
+            <font-awesome-icon icon="info" />
           </font-awesome-layers>
         </div>
         <div v-show="parameter.paramName === displayedInfo" class="displayed-infos">
@@ -27,17 +27,12 @@
 
 <script>
 import Loading from '@/components/Loading/Loading'
-import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
-import faCaretDown from '@fortawesome/fontawesome-free-solid/faCaretDown'
-import faCaretRight from '@fortawesome/fontawesome-free-solid/faCaretRight'
-import faCircle from '@fortawesome/fontawesome-free-solid/faCircle'
-import faInfo from '@fortawesome/fontawesome-free-solid/faInfoCircle'
+import { FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 
 export default {
   name: 'ForecastSelectionGroup',
   components: {
     Loading,
-    FontAwesomeIcon,
     FontAwesomeLayers
   },
   props: [
@@ -51,20 +46,6 @@ export default {
   data () {
     return {
       displayedInfo: false
-    }
-  },
-  computed: {
-    iconCaretDown () {
-      return faCaretDown
-    },
-    iconCaretRight () {
-      return faCaretRight
-    },
-    iconInfo () {
-      return faInfo
-    },
-    iconCircle () {
-      return faCircle
     }
   },
   methods: {
