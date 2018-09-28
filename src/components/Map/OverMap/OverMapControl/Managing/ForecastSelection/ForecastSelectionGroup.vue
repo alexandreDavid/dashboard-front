@@ -13,7 +13,7 @@
           <div class="mb-1">{{parameter.displayName}}</div>
           <font-awesome-layers class="fa-lg display-infos text-secondary" v-on:click.stop="displayInfos(parameter)">
             <font-awesome-icon icon="circle" class="text-white" size="xs" />
-            <font-awesome-icon icon="info" />
+            <font-awesome-icon icon="info-circle" />
           </font-awesome-layers>
         </div>
         <div v-show="parameter.paramName === displayedInfo" class="displayed-infos">
