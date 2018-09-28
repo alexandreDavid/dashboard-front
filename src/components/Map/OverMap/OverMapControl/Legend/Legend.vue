@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="bg-white">
+    <div v-if="activeUnitLabel">Unit: {{ activeUnitLabel }}</div>
     <div class="legend-displaying" v-if="getDisplayedLayer()._hasInteractiveLegend">
       <div v-if="asline" class="on-line position-relative d-flex border rounded-left rounded-right">
         <button type="button" class="btn btn-sm btn-secondary rounded-0" @click="switchUnit()">{{ activeUnit}}</button>
@@ -75,19 +76,21 @@ export default {
         quantity: 301.3,
         label: '301.3'
       }],
-      activeUnits: Settings.activeSettings
+      activeUnits: Settings.activeSettings,
+      activeUnitLabel: false
     }
   },
   created () {
-    this.unitFamily = Unit.getFamilyUnit(this.getDisplayedLayer().getUnit())
-    this.activeUnit = Settings.activeSettings[this.unitFamily]
   },
   mounted () {
     this.gradientColor = `linear-gradient(${this.asline ? 'to right,' : ''}${this.displayedValues.map(d => this.convertHex(d.color, d.opacity)).join(', ')})`
+    this.unitFamily = Unit.getFamilyUnit(this.getDisplayedLayer().getUnit())
+    this.changeActiveUnit(Settings.activeSettings[this.unitFamily] || this.getDisplayedLayer().getUnit())
   },
   methods: {
     changeActiveUnit (unit) {
       this.$set(this, 'activeUnit', unit)
+      this.activeUnitLabel = Unit.getLabel(unit)
     },
     convertHex (hex, opacity) {
       const r = parseInt(hex.substring(1, 3), 16)

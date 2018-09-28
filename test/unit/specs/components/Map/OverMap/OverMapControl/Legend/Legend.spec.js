@@ -24,7 +24,8 @@ jest.mock('@/store/settings', () => ({
 jest.mock('@/utils/unit', () => ({
   convert: jest.fn().mockReturnValue(42),
   getUnitsFamily: jest.fn(),
-  getFamilyUnit: jest.fn()
+  getFamilyUnit: jest.fn(),
+  getLabel: jest.fn()
 }))
 Unit.getUnitsFamily.mockReturnValue(mockUnits)
 Unit.getFamilyUnit.mockReturnValue('getFamilyUnit')

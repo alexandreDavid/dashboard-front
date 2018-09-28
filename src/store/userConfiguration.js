@@ -17,7 +17,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'pa',
+            'unit': 'Pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -178,7 +178,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'pa',
+            'unit': 'Pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -230,7 +230,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'pa',
+            'unit': 'Pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -391,7 +391,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'pa',
+            'unit': 'Pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -428,7 +428,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'pa',
+            'unit': 'Pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {
@@ -641,7 +641,7 @@ let configuration = {
             'paramDescription': 'Air pressure at sea level',
             'paramName': 'air_pressure_at_sea_level',
             'workspaceName': 'twoDaysForecast',
-            'unit': 'pa',
+            'unit': 'Pa',
             'hasTimeFrame': true,
             'layerUrl': 'http://35.178.230.72:8180/geoserver/wms',
             'layerParameters': {

@@ -9,7 +9,7 @@
     <div class="card shadow my-3 over-map-control" style="min-width: 250px;">
       <div class="card-body p-2">
         <h6>
-          {{ displayedParameter.displayName }}{{ activeUnitLabel ? ` (${activeUnitLabel})` : ''}}
+          {{ displayedParameter.displayName }}
         </h6>
         <button v-if="displayedParameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon :icon="iconGraph" /> Open graph</button>
         <Legend class="pl-2" v-if="displayedParameter"></Legend>
@@ -70,8 +70,7 @@ export default {
       displaySelectedLayer: true,
       selectedArea: false,
       value: 50,
-      activeUnits: Settings.activeSettings,
-      activeUnitLabel: false
+      activeUnits: Settings.activeSettings
     }
   },
   async created () {
@@ -115,7 +114,6 @@ export default {
       this.showModalGraph = true
     },
     changeActiveUnit (unit) {
-      this.activeUnitLabel = Unit.getLabel(unit)
       this.getDisplayedLayer().setUnit(unit)
     }
   },

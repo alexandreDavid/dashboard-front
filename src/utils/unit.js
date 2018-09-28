@@ -41,6 +41,11 @@ const units = [
     }
   },
   {
+    key: 'hPa',
+    label: 'hPa',
+    family: 'pressure'
+  },
+  {
     key: 'Kg/m2/s',
     label: ' Kg/m2/s',
     family: 'precipitations',
