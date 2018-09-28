@@ -198,7 +198,7 @@ export default {
         paramDescription: 'Vertical integral from the surface down to the bottom of the soil model',
         paramName: 'soil_moisture_content',
         workspaceName: 'pixalytics',
-        unit: 'Kg/m2',
+        unit: 'm3/m3',
         hasGraph: false,
         hasTimeFrame: false
       }
