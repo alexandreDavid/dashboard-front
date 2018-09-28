@@ -105,7 +105,6 @@ describe('Managing.vue', () => {
     expect(wrapper.vm.showModal).toBe(false)
     expect(Parameter.setDisplayedParameter).toBeCalledWith('selectedParameter')
     expect(mockDisplayedLayer.getUnit).toBeCalled()
-    expect(Unit.getLabel).toBeCalled()
     expect(wrapper.emitted().selectedParameter).toEqual([[mockGetDisplayedLayer], ['selectedParameter']])
   })
 
