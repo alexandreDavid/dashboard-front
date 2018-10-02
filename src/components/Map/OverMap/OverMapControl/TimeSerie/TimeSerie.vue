@@ -7,9 +7,9 @@
         </button>
       </div>
     </div>
-    <TimeSlot class="d-none d-sm-block" v-if="activeModel && activeModel.type === 'interval'" @change="onChange" v-bind:model="activeModel"></TimeSlot>
+    <TimeSlot class="d-none d-sm-block" v-if="activeModel && activeModel.type === 'interval'" @change="onChange" v-model="activeIndex" v-bind:model="activeModel"></TimeSlot>
     <TimeSlider class="d-none d-sm-block" v-if="activeModel && activeModel.type === 'date'" v-model="activeTime" @input="onChange" v-bind:model="activeModel"></TimeSlider>
-    <TimeSlotMobile class="d-block d-sm-none" @input="onChange" v-bind:model="activeModel"></TimeSlotMobile>
+    <TimeSlotMobile class="d-block d-sm-none" @input="onChange" v-model="activeIndex" v-bind:model="activeModel"></TimeSlotMobile>
   </div>
 </template>
 
@@ -30,7 +30,8 @@ export default {
     return {
       daysModel: this.getDisplayedLayer().getTimeModels(),
       activeModel: false,
-      activeTime: false
+      activeTime: false,
+      activeIndex: false
     }
   },
   created () {
@@ -42,7 +43,14 @@ export default {
     },
     changeSelectedModel (model) {
       this.activeModel = model
-      this.activeTime = model.times[model.times.length - 1]
+      if (model.type === 'interval') {
+        let nowIndex = model.times.findIndex(time => (Date.now() / 1000) < time.endTime)
+        this.activeIndex = (nowIndex > -1 ? nowIndex : 0)
+        this.onChange(model.times[this.activeIndex])
+      } else {
+        this.activeTime = model.times[model.times.length - 1]
+        this.onChange(this.activeTime)
+      }
     }
   }
 }

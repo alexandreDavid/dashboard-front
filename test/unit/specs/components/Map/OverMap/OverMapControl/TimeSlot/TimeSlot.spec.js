@@ -33,7 +33,8 @@ describe('TimeSlot.vue', () => {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
-        }
+        },
+        value: 0
       }
     })
   })
@@ -51,7 +52,8 @@ describe('TimeSlot.vue', () => {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
-        }
+        },
+        value: 0
       }
     })
     const nowButton = wrapper.find('.now')
@@ -71,7 +73,8 @@ describe('TimeSlot.vue', () => {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
-        }
+        },
+        value: 0
       }
     })
     const nowButton = wrapper.find('.now')

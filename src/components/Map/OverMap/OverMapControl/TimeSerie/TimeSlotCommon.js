@@ -2,12 +2,12 @@ const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export default {
   props: [
-    'model'
+    'model', 'value'
   ],
   data () {
     return {
       isPlaying: false,
-      currentIndex: 0
+      currentIndex: this.value
     }
   },
   methods: {

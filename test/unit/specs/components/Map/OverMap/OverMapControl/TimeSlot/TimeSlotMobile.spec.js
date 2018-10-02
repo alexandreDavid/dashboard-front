@@ -33,7 +33,8 @@ describe('TimeSlotMobile.vue', () => {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
-        }
+        },
+        value: 0
       }
     })
   })

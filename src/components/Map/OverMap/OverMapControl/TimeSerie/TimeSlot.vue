@@ -77,9 +77,9 @@ export default {
     },
     calculateNowPlacement () {
       let now = Date.now() / 1000
-      let nowIndex = this.model.times.findIndex(time => now < time.startTime)
+      let nowIndex = this.model.times.findIndex(time => now < time.endTime)
       if (nowIndex !== -1) {
-        return this.getTransformValues(nowIndex - 1)
+        return this.getTransformValues(nowIndex)
       } else {
         return {
           display: 'none'
