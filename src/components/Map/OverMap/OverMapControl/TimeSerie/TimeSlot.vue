@@ -72,7 +72,7 @@ export default {
         transform: translateValue,
         WebkitTransform: translateValue,
         msTransform: translateValue,
-        width: `${100 / (this.model.times.length - 1)}%`
+        width: `${100 / (this.model.times.length)}%`
       }
     },
     calculateNowPlacement () {
