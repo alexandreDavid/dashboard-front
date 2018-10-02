@@ -1,9 +1,10 @@
 import OverMap from '@/components/Map/OverMap/OverMap'
 import { shallowMount } from '@vue/test-utils'
-import SearchLocation from '@/components/SearchLocation/SearchLocation'
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
 import AreaLayer from '@/store/areaLayer'
 import Parameter from '@/store/parameter'
-// import Area from '@/store/area'
+import Area from '@/store/area'
 // import Modal from '@/components/Modal/Modal'
 import Managing from '@/components/Map/OverMap//OverMapControl/Managing/Managing'
 
@@ -44,7 +45,8 @@ jest.mock('@/store/parameter', () => ({
   getDisplayedParameter: jest.fn().mockReturnValue('getDisplayedParameter')
 }))
 jest.mock('@/store/area', () => ({
-  getSelectedArea: jest.fn().mockReturnValue('getSelectedArea')
+  getSelectedArea: jest.fn().mockReturnValue('getSelectedArea'),
+  setSelectedArea: jest.fn()
 }))
 
 describe('OverMap.vue', () => {
@@ -92,13 +94,16 @@ describe('OverMap.vue', () => {
 
   it('Display SearchLocationResult with result', () => {
     const locationFound = 'SearchLocationResult'
-    wrapper.find(SearchLocation).vm.$emit('input', locationFound)
+    wrapper.find(AreaSelectionControl).vm.$emit('openSelectionModal')
+    wrapper.find(AreaSelectionModal).vm.$emit('input', locationFound)
     expect(wrapper.vm.selectedArea).toBe(locationFound)
+    expect(Area.setSelectedArea).toBeCalledWith(locationFound)
     expect(mockAreaLayer.setSelectedArea).toBeCalledWith(locationFound)
   })
 
   it('Display SearchLocationResult without result', () => {
-    wrapper.find(SearchLocation).vm.$emit('input')
+    wrapper.find(AreaSelectionControl).vm.$emit('openSelectionModal')
+    wrapper.find(AreaSelectionModal).vm.$emit('input')
     expect(wrapper.vm.searchLocationResult).toBeUndefined()
   })
 

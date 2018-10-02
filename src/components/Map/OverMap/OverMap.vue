@@ -11,7 +11,7 @@
     <div class="over-map-left">
       <div class="d-flex flex-nowrap position-relative">
         <div class="p-1 flex-grow-1 over-map-control">
-          <SearchLocation @input="onSearchLocationSelected" v-model="selectedArea" @openMap="displaySearchHelper = true" class="shadow"></SearchLocation>
+          <area-selection-control @input="onSearchLocationSelected" v-model="selectedArea" @openSelectionModal="displayAreaSelectionModal = true" class="shadow"></area-selection-control>
         </div>
         <div class="p-1 over-map-control">
           <button type="button" id="zoom-current-location" class="btn btn-primary align-top shadow" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon icon="location-arrow" /></button>
@@ -27,11 +27,13 @@
     <div class="over-map-right d-none d-sm-block">
       <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
     </div>
+    <area-selection-modal v-if="displayAreaSelectionModal" v-model="selectedArea" @input="onSearchLocationSelected" @close="displayAreaSelectionModal = false"></area-selection-modal>
   </div>
 </template>
 
 <script>
-import SearchLocation from '@/components/SearchLocation/SearchLocation'
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
 import Managing from './OverMapControl/Managing/Managing'
 import AreaLayer from '@/store/areaLayer'
 
@@ -44,7 +46,8 @@ import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 export default {
   name: 'OverMap',
   components: {
-    SearchLocation,
+    AreaSelectionControl,
+    AreaSelectionModal,
     Managing,
     SideBar: () => import('@/components/SideBar/SideBar'),
     ZoomControl,
@@ -59,7 +62,7 @@ export default {
     return {
       hasCurrentLocation: false,
       showSidebar: false,
-      displaySearchHelper: false,
+      displayAreaSelectionModal: false,
       selectedArea: false,
       selectedParameter: {},
       areaLayer: false
@@ -73,6 +76,7 @@ export default {
   methods: {
     onSearchLocationSelected (newValue) {
       if (newValue) {
+        Area.setSelectedArea(newValue)
         this.areaLayer.setSelectedArea(newValue)
       }
     },

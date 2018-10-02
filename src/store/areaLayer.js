@@ -5,6 +5,7 @@ let ugandaArea = false
 let ugandaSubAreas = false
 
 let AreaLayer = class {
+  _area = false
   _areaLayer = false
   _subAreasLayer = false
   _map = false
@@ -17,24 +18,34 @@ let AreaLayer = class {
     }
   }
   async setSelectedArea (area) {
-    let areaData
-    if (area.id !== 7552 || !ugandaArea) {
-      areaData = await axios.get(
-        `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
-          params: AreaLayer.getAreaRequestParams(area)
-        }
-      )
-      if (area.id === 7552) {
-        ugandaArea = areaData
-      }
-    } else {
-      areaData = ugandaArea
-    }
-    await this.setSubAreas(area)
+    this._area = area
     if (this._areaLayer) {
       this._areaLayer.remove()
     }
-    this._areaLayer = new GeoJSON(areaData.data, AreaLayer.getAreaLayerStyle())
+    if (this._subAreasLayer) {
+      this._subAreasLayer.remove()
+    }
+    let geom
+    if (area.type === 'custom') {
+      geom = area.geom.toGeoJSON()
+    } else {
+      let areaData
+      if (area.id !== 7552 || !ugandaArea) {
+        areaData = await axios.get(
+          `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
+            params: AreaLayer.getAreaRequestParams(area)
+          }
+        )
+        if (area.id === 7552) {
+          ugandaArea = areaData
+        }
+      } else {
+        areaData = ugandaArea
+      }
+      await this.setSubAreas(area)
+      geom = areaData.data
+    }
+    this._areaLayer = new GeoJSON(geom, AreaLayer.getAreaLayerStyle())
     if (this._map) {
       this._areaLayer.addTo(this._map)
       this.zoomToArea()
@@ -62,16 +73,15 @@ let AreaLayer = class {
     } else {
       areaData = ugandaSubAreas
     }
-    if (this._subAreasLayer) {
-      this._subAreasLayer.remove()
-    }
     this._subAreasLayer = new GeoJSON(areaData.data, AreaLayer.getSubAreaLayerStyle())
     if (this._map) {
       this._subAreasLayer.addTo(this._map)
     }
   }
   zoomToArea () {
-    this._map.fitBounds(this._areaLayer.getBounds())
+    if (this._areaLayer && this._areaLayer.getBounds().isValid()) {
+      this._map.fitBounds(this._areaLayer.getBounds())
+    }
   }
   isReady () {
     return this._isReady
@@ -82,6 +92,21 @@ let AreaLayer = class {
   }
   zoomTo (map) {
     map.fitBounds(this._areaLayer.getBounds())
+  }
+  getSelectedArea () {
+    return this._area
+  }
+  show () {
+    if (this._areaLayer) {
+      this._areaLayer.addTo(this._map)
+      this._subAreasLayer.addTo(this._map)
+    }
+  }
+  hide () {
+    if (this._areaLayer) {
+      this._areaLayer.remove()
+      this._subAreasLayer.remove()
+    }
   }
 }
 

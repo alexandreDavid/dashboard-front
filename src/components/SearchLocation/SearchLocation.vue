@@ -82,7 +82,6 @@ export default {
     },
     setResult (result) {
       this.isOpen = false
-      Area.setSelectedArea(result)
       this.prevValue = result
       this.search = result.name
       // Let's warn the parent that a change was made
