@@ -11,7 +11,7 @@
     <div class="over-map-left">
       <div class="d-flex flex-nowrap position-relative">
         <div class="p-1 flex-grow-1 over-map-control">
-          <area-selection-control @input="onSearchLocationSelected" v-model="selectedArea" @openSelectionModal="displayAreaSelectionModal = true" class="shadow"></area-selection-control>
+          <area-selection-control @input="onSearchLocationSelected" v-model="selectedArea" @openSelectionModal="displayAreaSelectionModal = true" @zoomToArea="zoomToArea" class="shadow"></area-selection-control>
         </div>
         <div class="p-1 over-map-control">
           <button type="button" id="zoom-current-location" class="btn btn-primary align-top shadow" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon icon="location-arrow" /></button>
@@ -95,6 +95,9 @@ export default {
     },
     onSelectedReportedParameter (selectedReportedParameter) {
       this.$emit('selectedReportedLayer', selectedReportedParameter)
+    },
+    zoomToArea () {
+      this.areaLayer.zoomToArea()
     }
   }
 }
