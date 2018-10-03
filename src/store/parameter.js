@@ -41,6 +41,29 @@ function getDaysModelsForForecast () {
   ]
 }
 
+function getDaysModelsForHrWallingford () {
+  let twoDays = []
+  // Try to find value to display to be removed for a smart service
+  const initDate = new Date()
+  initDate.setDate(3)
+  initDate.setMonth(1)
+  initDate.setFullYear(2014)
+  initDate.setHours(0, 0, 0, 0)
+  for (let i = 0; i < 16; i++) {
+    let startTime = initDate / 1000 + i * 10800
+    let endTime = initDate / 1000 + (i + 1) * 10800
+    twoDays.push({startTime, endTime})
+  }
+  return [
+    {
+      value: 2,
+      label: '2 days',
+      times: twoDays,
+      type: 'interval'
+    }
+  ]
+}
+
 function getDaysModelsForNdvi () {
   let sevenDays = []
   let initDate = new Date()
@@ -143,7 +166,8 @@ export default {
         workspaceName: 'hidrology',
         unit: 'mm',
         hasGraph: false,
-        hasTimeFrame: false
+        hasTimeFrame: true,
+        timeModels: getDaysModelsForHrWallingford()
       }, {
         displayName: 'Evapotranspiration',
         groupingId: 1,
@@ -152,7 +176,8 @@ export default {
         workspaceName: 'hidrology',
         unit: 'mm',
         hasGraph: false,
-        hasTimeFrame: false
+        hasTimeFrame: true,
+        timeModels: getDaysModelsForHrWallingford()
       }, {
         displayName: 'Surface runoff',
         groupingId: 1,
@@ -161,7 +186,8 @@ export default {
         workspaceName: 'hidrology',
         unit: 'mm',
         hasGraph: false,
-        hasTimeFrame: false
+        hasTimeFrame: true,
+        timeModels: getDaysModelsForHrWallingford()
       }, {
         displayName: 'NDVI',
         groupingId: 2,
