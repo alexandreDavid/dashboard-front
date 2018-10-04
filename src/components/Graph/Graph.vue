@@ -1,10 +1,11 @@
 <template>
   <div class="graph-container">
-    <div v-if="isLoaded" class="chart-container">
+    <Loading v-if="!isLoaded"/>
+    <div v-else-if="errorMessage" class="text-center alert alert-danger m-4">An error occured</div>
+    <div v-else class="chart-container">
       <LineChart v-if="graphType === 'LineChart'" v-bind:chartData="datacollection" :options="options"></LineChart>
       <PieChart v-else-if="graphType === 'PieChart'" v-bind:chartData="datacollection" :options="options"></PieChart>
     </div>
-    <Loading v-if="!isLoaded"/>
   </div>
 </template>
 
@@ -38,6 +39,7 @@ export default {
   data () {
     return {
       isLoaded: false,
+      errorMessage: false,
       datacollection: {},
       options: {
         scales: {
@@ -74,11 +76,15 @@ export default {
   methods: {
     async getData () {
       this.isLoaded = false
-      this.datacollection = await Data.getAreaParameterData(this.area, this.parameter)
-      this.familyUnit = Unit.getFamilyUnit(this.datacollection.unit)
-      this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.datacollection.unit))
-      // axes Y title
-      this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit || this.datacollection.unit)
+      try {
+        this.datacollection = await Data.getAreaParameterData(this.area, this.parameter)
+        this.familyUnit = Unit.getFamilyUnit(this.datacollection.unit)
+        this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.datacollection.unit))
+        // axes Y title
+        this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit || this.datacollection.unit)
+      } catch (e) {
+        this.errorMessage = true
+      }
       this.isLoaded = true
     }
   }
