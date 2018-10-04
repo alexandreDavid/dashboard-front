@@ -55,7 +55,8 @@ describe('MiniMap.vue', () => {
     expect(wrapper.vm.isLoaded).toBe(true)
     expect(MapObj).toBeCalledWith('minimap-container-minimapKey')
     expect(mockAreaLayer.addTo).toBeCalledWith(mockMap)
-    expect(DisplayedLayer).toBeCalledWith(mockMap, 'parameter')
+    expect(DisplayedLayer).toBeCalledWith(mockMap)
+    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith('parameter')
     expect(mockMap.boxZoom.disable).toHaveBeenCalledTimes(1)
   })
 

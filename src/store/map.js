@@ -18,6 +18,7 @@ let MapObj = Map.extend({
     zoomControl: false
   }, Map.options),
   _baseLayer: false,
+  _baseLayerUrl: false,
   _currentLocationMarker: false,
   setDefaultMap () {
     this.fitBounds(defaultParams.bounds)
@@ -25,12 +26,16 @@ let MapObj = Map.extend({
     this.setBaseMapLayer(defaultParams.baseLayer.layerUrl, defaultParams.baseLayer.options)
   },
   setBaseMapLayer (layerUrl, options = {}) {
+    this._baseLayerUrl = layerUrl
     if (!this._baseLayer) {
       this._baseLayer = new TileLayer.WMS(layerUrl, options).addTo(this)
     } else {
       this._baseLayer.setUrl(layerUrl, true)
       this._baseLayer.setParams(options)
     }
+  },
+  getBaseMapLayerUrl () {
+    return this._baseLayerUrl
   },
   setCurrentLocationLayer () {
     let that = this

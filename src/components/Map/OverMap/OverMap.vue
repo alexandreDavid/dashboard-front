@@ -1,9 +1,10 @@
 <template>
   <div class="over-map">
+    <base-map-sidebar class="over-map-bottom" v-if="showBaseMapSidebar" @close="showBaseMapSidebar = false">
+    </base-map-sidebar>
     <div class="over-map-bottom d-flex align-items-end">
-      <ZoomControl class="flex-shrink-1 d-none d-sm-inline-flex mr-1 over-map-control">
-      </ZoomControl>
-      <button type="button" id="reset-map" class="btn btn-primary align-bottom d-none d-sm-block shadow flex-shrink-1 mr-4 ml-1 over-map-control" @click="resetMap"><font-awesome-icon icon="undo" /></button>
+      <bar-control class="flex-shrink-1 d-none d-sm-inline-flex mr-1 over-map-control" @openBaseMapControl="showBaseMapSidebar = true">
+      </bar-control>
       <div class="mx-1 w-100 over-map-control">
         <displayed-layer-control class="d-inline-block align-bottom" v-bind:parameter="selectedParameter" v-if="selectedParameter"></displayed-layer-control>
       </div>
@@ -39,7 +40,7 @@ import AreaLayer from '@/store/areaLayer'
 
 import Parameter from '@/store/parameter'
 import Area from '@/store/area'
-import ZoomControl from './OverMapControl/ZoomControl/ZoomControl'
+import BarControl from './OverMapControl/BarControl/BarControl'
 import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
@@ -50,7 +51,8 @@ export default {
     AreaSelectionModal,
     Managing,
     SideBar: () => import('@/components/SideBar/SideBar'),
-    ZoomControl,
+    BaseMapSidebar: () => import('@/components/Map/OverMap/OverMapControl/BaseMap/BaseMapSidebar'),
+    BarControl,
     DisplayedLayerControl,
     Legend
   },
@@ -62,6 +64,7 @@ export default {
     return {
       hasCurrentLocation: false,
       showSidebar: false,
+      showBaseMapSidebar: false,
       displayAreaSelectionModal: false,
       selectedArea: false,
       selectedParameter: {},
@@ -82,9 +85,6 @@ export default {
     },
     zoomToCurrentLocation () {
       this.getMap().zoomToCurrentLocation()
-    },
-    resetMap () {
-      this.getMap().setDefaultMap()
     },
     onSelectedParameter (selectedParameter) {
       this.selectedParameter = false

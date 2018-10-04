@@ -86,12 +86,6 @@ describe('OverMap.vue', () => {
     expect(Parameter.getDisplayedParameter).toBeCalled()
   })
 
-  it('Click on reset map', () => {
-    const buttonResetMap = wrapper.find('#reset-map')
-    buttonResetMap.trigger('click')
-    expect(mockMap.setDefaultMap).toBeCalled()
-  })
-
   it('Display SearchLocationResult with result', () => {
     const locationFound = 'SearchLocationResult'
     wrapper.find(AreaSelectionControl).vm.$emit('openSelectionModal')

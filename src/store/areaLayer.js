@@ -89,6 +89,7 @@ let AreaLayer = class {
   addTo (map) {
     this._areaLayer.addTo(map)
     this._subAreasLayer.addTo(map)
+    this.zoomTo(map)
   }
   zoomTo (map) {
     map.fitBounds(this._areaLayer.getBounds())

@@ -27,7 +27,8 @@ export default {
     'parameter',
     'minimapKey',
     'interactive',
-    'areaLayer'
+    'areaLayer',
+    'baseLayer'
   ],
   data () {
     return {
@@ -50,7 +51,13 @@ export default {
   mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer.addTo(this.map)
-    this.displayedLayer = new DisplayedLayer(this.map, this.parameter)
+    this.displayedLayer = new DisplayedLayer(this.map)
+    if (this.parameter) {
+      this.getDisplayedLayer().setDisplayedLayer(this.parameter)
+    }
+    if (this.baseLayer) {
+      this.map.setBaseMapLayer(this.baseLayer)
+    }
     this.isLoaded = true
     this.toggleMapHandlers(this.interactive)
   },
