@@ -3,7 +3,7 @@ const units = [
     key: 'NO_UNIT_SPECIFIED',
     label: '',
     family: '',
-    precision: 0
+    precision: 7
   },
   {
     key: 'C',
