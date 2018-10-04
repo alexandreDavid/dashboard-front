@@ -1,15 +1,6 @@
 import TimeSlot from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSlot'
 import { mount } from '@vue/test-utils'
 
-const mockSetDate = jest.fn()
-function getDisplayedLayer () {
-  return function () {
-    return {
-      setDate: mockSetDate
-    }
-  }
-}
-
 const mockTimes = [
   {startTime: 0, endTime: 1},
   {startTime: 1, endTime: 2},
@@ -24,17 +15,12 @@ describe('TimeSlot.vue', () => {
   let wrapper
   beforeEach(() => {
     wrapper = mount(TimeSlot, {
-      provide: {
-        getDisplayedLayer: getDisplayedLayer()
-      },
       propsData: {
-        model: {
-          value: 2,
+        value: {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
-        },
-        value: 0
+        }
       }
     })
   })
@@ -43,17 +29,12 @@ describe('TimeSlot.vue', () => {
     const i = 1
     Date.now = jest.genMockFunction().mockReturnValue(i * 1000)
     const wrapper = mount(TimeSlot, {
-      provide: {
-        getDisplayedLayer: getDisplayedLayer()
-      },
       propsData: {
-        model: {
-          value: 2,
+        value: {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
-        },
-        value: 0
+        }
       }
     })
     const nowButton = wrapper.find('.now')
@@ -64,17 +45,12 @@ describe('TimeSlot.vue', () => {
   it('Check current date outside time serie', () => {
     Date.now = jest.genMockFunction().mockReturnValue(10000000000000)
     const wrapper = mount(TimeSlot, {
-      provide: {
-        getDisplayedLayer: getDisplayedLayer()
-      },
       propsData: {
-        model: {
-          value: 2,
+        value: {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
-        },
-        value: 0
+        }
       }
     })
     const nowButton = wrapper.find('.now')
@@ -94,7 +70,7 @@ describe('TimeSlot.vue', () => {
     wrapper.find('#time-play').trigger('click')
     expect(wrapper.vm.isPlaying).toBe(true)
 
-    for (let i = 1; i < wrapper.vm.model.times.length - 1; i++) {
+    for (let i = 1; i < wrapper.vm.value.times.length - 1; i++) {
       expect(setTimeout).toHaveBeenCalledTimes(i)
       expect(wrapper.vm.currentIndex).toBe(i)
       jest.advanceTimersByTime(wrapper.vm.activeDateDuration)

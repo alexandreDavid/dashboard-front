@@ -111,7 +111,7 @@ describe('displayedLayer.js', () => {
   })
 
   it('Calls getFeatureInfo with params.version === 1.3.0', async () => {
-    mockTileLayerWMS.addTo.mockReturnValue({...mockTileLayerWMS, options: {version: '1.3.0'}})
+    mockTileLayerWMS.options.version = '1.3.0'
     displayedLayer.setDisplayedLayer(mockParam)
     displayedLayer.getFeatureInfo({latlng: 'latlng'})
     expect(mockMap.getZoom).toHaveBeenCalled()
@@ -139,9 +139,9 @@ describe('displayedLayer.js', () => {
     }})
   })
 
-  it('Calls setDate', async () => {
+  it('Calls setTime', async () => {
     displayedLayer.setDisplayedLayer(mockParam)
-    displayedLayer.setDate(1000000000, 10000000001)
+    displayedLayer.setTime(1000000000, 10000000001)
     expect(mockTileLayerWMS.setParams).toHaveBeenCalled()
   })
 

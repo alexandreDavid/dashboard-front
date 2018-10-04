@@ -1,15 +1,6 @@
 import TimeSlotMobile from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSlotMobile'
 import { mount } from '@vue/test-utils'
 
-const mockSetDate = jest.fn()
-function getDisplayedLayer () {
-  return function () {
-    return {
-      setDate: mockSetDate
-    }
-  }
-}
-
 const mockTimes = [
   {startTime: 0, endTime: 1},
   {startTime: 1, endTime: 2},
@@ -24,17 +15,12 @@ describe('TimeSlotMobile.vue', () => {
   let wrapper
   beforeEach(() => {
     wrapper = mount(TimeSlotMobile, {
-      provide: {
-        getDisplayedLayer: getDisplayedLayer()
-      },
       propsData: {
-        model: {
-          value: 2,
+        value: {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
-        },
-        value: 0
+        }
       }
     })
   })
