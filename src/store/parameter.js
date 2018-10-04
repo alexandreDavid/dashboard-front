@@ -3,113 +3,100 @@ import Data from '@/store/data'
 let parameters = []
 let displayedParameter = false
 
-function getDaysModelsForForecast () {
-  let twoDays = []
-  let sevenDays = []
-  // Try to find value to display to be removed for a smart service
-  const initDate = new Date()
-  // initDate.setDate(18)
-  // initDate.setMonth(6)
-  initDate.setHours(0, 0, 0, 0)
-  for (let i = 0; i < 16; i++) {
-    let startTime = initDate / 1000 + i * 10800
-    let endTime = initDate / 1000 + (i + 1) * 10800
-    twoDays.push({startTime, endTime})
-  }
-  for (let i = 0; i < 28; i++) {
-    let startTime = initDate / 1000 + i * 21600
-    let endTime = initDate / 1000 + (i + 1) * 21600
-    sevenDays.push({startTime, endTime})
-  }
-  return [
-    {
-      value: 2,
-      label: '2 days',
-      times: twoDays,
-      type: 'interval'
-    }, {
-      value: 10,
-      label: '7 days',
-      times: sevenDays,
-      type: 'interval'
-    }, {
-      value: 90,
-      label: '90 days',
-      times: sevenDays,
-      type: 'interval'
-    }
-  ]
-}
-
-function getDaysModelsForHrWallingford () {
-  let twoDays = []
-  // Try to find value to display to be removed for a smart service
-  const initDate = new Date()
-  initDate.setDate(3)
-  initDate.setMonth(1)
-  initDate.setFullYear(2014)
-  initDate.setHours(0, 0, 0, 0)
-  for (let i = 0; i < 16; i++) {
-    let startTime = initDate / 1000 + i * 10800
-    let endTime = initDate / 1000 + (i + 1) * 10800
-    twoDays.push({startTime, endTime})
-  }
-  return [
-    {
-      value: 2,
-      label: '2 days',
-      times: twoDays,
-      type: 'interval'
-    }
-  ]
-}
-
-function getDaysModelsForNdvi () {
-  let sevenDays = []
-  let initDate = new Date()
-  initDate.setHours(23, 59, 59, 0)
-  initDate = initDate / 1000 - 30 * 86400
-  for (let i = 0; i < 16; i++) {
-    sevenDays.push(initDate + i * 172800)
-  }
-  return [
-    {
-      times: sevenDays,
-      dateFormat: 'days',
-      type: 'date'
-    }
-  ]
-}
-
 export default {
   async getAllParameters () {
     // let structure = await Data.getStructure()
     // parameters = structure.parameters.filter(p => p.isActive).map(this.getParameterInfos)
 
+    let twoDays = []
+    let sevenDays = []
+    // Try to find value to display to be removed for a smart service
+    const initDate = new Date()
+    // initDate.setDate(18)
+    // initDate.setMonth(6)
+    initDate.setHours(0, 0, 0, 0)
+    for (let i = 0; i < 16; i++) {
+      let startTime = initDate / 1000 + i * 10800
+      let endTime = initDate / 1000 + (i + 1) * 10800
+      twoDays.push({startTime, endTime})
+    }
+    for (let i = 0; i < 28; i++) {
+      let startTime = initDate / 1000 + i * 21600
+      let endTime = initDate / 1000 + (i + 1) * 21600
+      sevenDays.push({startTime, endTime})
+    }
+    let twoDaysHrWallingford = []
+    // Try to find value to display to be removed for a smart service
+    // const initDate = new Date()
+    initDate.setDate(3)
+    initDate.setMonth(1)
+    initDate.setFullYear(2014)
+    initDate.setHours(0, 0, 0, 0)
+    for (let i = 0; i < 16; i++) {
+      let startTime = initDate / 1000 + i * 10800
+      let endTime = initDate / 1000 + (i + 1) * 10800
+      twoDaysHrWallingford.push({startTime, endTime})
+    }
+
+    let sevenDaysSatellite = []
+    let initDateSatellite = new Date()
+    initDateSatellite.setHours(23, 59, 59, 0)
+    initDateSatellite = initDateSatellite / 1000 - 30 * 86400
+    for (let i = 0; i < 16; i++) {
+      sevenDaysSatellite.push(initDateSatellite + i * 172800)
+    }
+
     parameters = [
       {
-        displayName: 'Air pressure at sea level',
-        groupingId: 0,
-        paramDescription: 'Air pressure at sea level',
+        label: 'Air pressure at sea level',
+        layer: 'twoDaysForecast:air_pressure_at_sea_level',
         paramName: 'air_pressure_at_sea_level',
-        workspaceName: 'twoDaysForecast',
-        unit: 'Pa',
-        hasGraph: true,
-        hasTimeFrame: true,
-        timeModels: getDaysModelsForForecast()
-      }, {
-        displayName: 'Air temperature',
+        type: 'interval',
+        family: 'weather',
+        times: twoDays,
         groupingId: 0,
-        paramDescription: 'Air temperature',
-        paramName: 'air_temperature',
-        workspaceName: 'twoDaysForecast',
-        unit: 'K',
+        unit: 'Pa',
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level`,
         hasGraph: true,
-        hasTimeFrame: true,
-        interactiveLegend: true,
-        timeModels: getDaysModelsForForecast()
+        hasTimeFrame: true
       }, {
-        displayName: 'Relative humidity',
+        label: 'Air temperature',
+        paramName: 'temperature',
+        groupingId: 0,
+        hasTimeFrame: true,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature`,
+        family: 'weather',
+        unit: 'K',
+        data: [
+          {
+            label: '2 days',
+            layer: 'twoDaysForecast:air_temperature',
+            type: 'interval',
+            times: twoDays
+          }, {
+            label: '7 days',
+            data: [
+              {
+                label: 'min',
+                layer: 'mogreps:air_temperature_0',
+                type: 'interval',
+                times: sevenDays
+              }, {
+                label: 'avg',
+                layer: 'mogreps:air_temperature',
+                type: 'interval',
+                times: sevenDays
+              }, {
+                label: 'max',
+                layer: 'mogreps:air_temperature_1',
+                type: 'interval',
+                times: sevenDays
+              }
+            ]
+          }
+        ]
+      }, {
+        label: 'Relative humidity',
         groupingId: 0,
         paramDescription: 'Relative humidity',
         paramName: 'relative_humidity',
@@ -117,9 +104,13 @@ export default {
         unit: '%',
         hasGraph: true,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForForecast()
+        layer: 'twoDaysForecast:relative_humidity',
+        type: 'interval',
+        family: 'weather',
+        times: twoDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity`
       }, {
-        displayName: 'Total precipitation rate',
+        label: 'Total precipitation rate',
         groupingId: 0,
         paramDescription: 'Stratiform rainfall rate 0',
         paramName: 'stratiform_rainfall_rate_0',
@@ -127,9 +118,13 @@ export default {
         unit: 'Kg/m2/s',
         hasGraph: true,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForForecast()
+        layer: 'twoDaysForecast:stratiform_rainfall_rate_0',
+        type: 'interval',
+        family: 'weather',
+        times: twoDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:stratiform_rainfall_rate_0`
       }, {
-        displayName: 'Surface downwelling longwave flux',
+        label: 'Surface downwelling longwave flux',
         groupingId: 0,
         paramDescription: 'Surface downwelling longwave flux',
         paramName: 'surface_downwelling_longwave_flux',
@@ -137,9 +132,13 @@ export default {
         unit: 'W/m2',
         hasGraph: true,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForForecast()
+        layer: 'twoDaysForecast:surface_downwelling_longwave_flux',
+        type: 'interval',
+        family: 'weather',
+        times: twoDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_downwelling_longwave_flux`
       }, {
-        displayName: 'Surface atmospheric temperature',
+        label: 'Surface atmospheric temperature',
         groupingId: 0,
         paramDescription: 'Surface temperature',
         paramName: 'surface_temperature',
@@ -147,9 +146,13 @@ export default {
         unit: 'K',
         hasGraph: true,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForForecast()
+        layer: 'twoDaysForecast:surface_temperature',
+        type: 'interval',
+        family: 'weather',
+        times: twoDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:surface_temperature`
       }, {
-        displayName: 'TOA outgoing longwave flux',
+        label: 'TOA outgoing longwave flux',
         groupingId: 0,
         paramDescription: 'TOA outgoing longwave flux',
         paramName: 'toa_outgoing_longwave_flux',
@@ -157,9 +160,13 @@ export default {
         unit: 'W/m2',
         hasGraph: true,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForForecast()
+        layer: 'twoDaysForecast:toa_outgoing_longwave_flux',
+        type: 'interval',
+        family: 'weather',
+        times: twoDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux`
       }, {
-        displayName: 'Baseflow',
+        label: 'Baseflow',
         groupingId: 1,
         paramDescription: 'OUT_BASEFLOW',
         paramName: 'OUT_BASEFLOW',
@@ -167,9 +174,13 @@ export default {
         unit: 'mm',
         hasGraph: false,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForHrWallingford()
+        layer: 'hidrology:OUT_BASEFLOW',
+        type: 'interval',
+        family: 'hydrology',
+        times: twoDaysHrWallingford,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_BASEFLOW`
       }, {
-        displayName: 'Evapotranspiration',
+        label: 'Evapotranspiration',
         groupingId: 1,
         paramDescription: 'OUT_EVAP',
         paramName: 'OUT_EVAP',
@@ -177,9 +188,13 @@ export default {
         unit: 'mm',
         hasGraph: false,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForHrWallingford()
+        layer: 'hidrology:OUT_EVAP',
+        type: 'interval',
+        family: 'hydrology',
+        times: twoDaysHrWallingford,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_EVAP`
       }, {
-        displayName: 'Surface runoff',
+        label: 'Surface runoff',
         groupingId: 1,
         paramDescription: 'OUT_RUNOFF',
         paramName: 'OUT_RUNOFF',
@@ -187,9 +202,13 @@ export default {
         unit: 'mm',
         hasGraph: false,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForHrWallingford()
+        layer: 'hidrology:OUT_RUNOFF',
+        type: 'interval',
+        family: 'hydrology',
+        times: twoDaysHrWallingford,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=hidrology:OUT_RUNOFF`
       }, {
-        displayName: 'NDVI',
+        label: 'NDVI',
         groupingId: 2,
         paramDescription: 'NDVI',
         paramName: 'ndvi',
@@ -197,9 +216,13 @@ export default {
         unit: 'NO_UNIT_SPECIFIED',
         hasGraph: false,
         hasTimeFrame: true,
-        timeModels: getDaysModelsForNdvi()
+        layer: 'env_sys:ndvi',
+        type: 'date',
+        family: 'satellite',
+        times: sevenDaysSatellite,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=env_sys:ndvi`
       }, {
-        displayName: 'BAI',
+        label: 'BAI',
         groupingId: 2,
         paramDescription: 'BAI',
         paramName: 'bai',
@@ -207,28 +230,40 @@ export default {
         unit: 'NO_UNIT_SPECIFIED',
         hasGraph: false,
         hasTimeFrame: false,
-        timeModels: getDaysModelsForNdvi()
+        layer: 'env_sys:bai',
+        type: 'date',
+        family: 'satellite',
+        times: sevenDaysSatellite,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=env_sys:bai`
       }, {
-        displayName: 'Land surface temperature',
+        label: 'Land surface temperature',
         groupingId: 2,
         paramDescription: 'Land surface temperature',
         paramName: 'land_surface_temperature',
         workspaceName: 'pixalytics',
         unit: 'K',
         hasGraph: false,
-        hasTimeFrame: false,
-        timeModels: getDaysModelsForNdvi()
+        hasTimeFrame: true,
+        layer: 'pixalytics:land_surface_temperature',
+        type: 'date',
+        family: 'satellite',
+        times: sevenDaysSatellite,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=pixalytics:land_surface_temperature`
       }, {
-        displayName: 'Soil moisture content',
+        label: 'Soil moisture content',
         groupingId: 2,
         paramDescription: 'Vertical integral from the surface down to the bottom of the soil model',
         paramName: 'soil_moisture_content',
         workspaceName: 'pixalytics',
         unit: 'm3/m3',
         hasGraph: false,
-        hasTimeFrame: false
+        hasTimeFrame: false,
+        layer: 'pixalytics:soil_moisture_content',
+        family: 'satellite',
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=pixalytics:soil_moisture_content`
       }
-    ].map(this.getParameterInfos)
+    ]
+    // ].map(this.getParameterInfos)
     return parameters
   },
   getParameterInfos (p) {

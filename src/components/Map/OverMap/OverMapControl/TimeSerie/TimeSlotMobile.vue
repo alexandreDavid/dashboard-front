@@ -4,7 +4,7 @@
       <button type="button" id="time-slot-previous" class="btn btn-secondary shadow" @click="previous()"><font-awesome-icon icon="caret-left" /></button>
       <div class="flex-grow-1 pl-2 pr-2">
         <select v-model="currentIndex" class="form-control w-100 shadow" @change="goToTime(currentIndex)">
-          <option v-for="(time, i) in model.times" :key="i" v-bind:value="i">{{getTimeFormated(time)}}</option>
+          <option v-for="(time, i) in value.times" :key="i" v-bind:value="i">{{getTimeFormated(time)}}</option>
         </select>
       </div>
       <div>
@@ -28,14 +28,14 @@ export default {
       }
     },
     next () {
-      if (this.currentIndex < this.model.times.length - 1) {
+      if (this.currentIndex < this.value.times.length - 1) {
         this.currentIndex++
         this.goToTime(this.currentIndex)
       }
     },
     getTimeFormated (time) {
       let formatedDate
-      if (this.model.type === 'interval') {
+      if (this.value.type === 'interval') {
         const startDate = new Date(time.startTime * 1000)
         const endDate = new Date(time.endTime * 1000)
         formatedDate = `${startDate.toDateString()} ${('0' + startDate.getHours()).slice(-2)}:${('0' + startDate.getMinutes()).slice(-2)} - ${('0' + endDate.getHours()).slice(-2)}:${('0' + endDate.getMinutes()).slice(-2)}`

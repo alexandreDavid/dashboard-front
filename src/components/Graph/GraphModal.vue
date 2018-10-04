@@ -1,6 +1,6 @@
 <template>
   <modal @close="close()">
-    <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.displayName }}</div>
+    <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.label }}</div>
     <div slot="body" class="graph-modal-content">
       <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph>
     </div>

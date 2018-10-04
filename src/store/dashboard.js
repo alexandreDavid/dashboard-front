@@ -86,10 +86,7 @@ export default class Dashboard {
     return cardHeights
   }
   static getCardWidgets () {
-    let allParameters = Parameter.getParams().map(param => {
-      param.label = param.displayName
-      return param
-    })
+    let allParameters = Parameter.getParams()
     let fieldParameter = {
       id: 'parameter',
       label: 'Data to display',

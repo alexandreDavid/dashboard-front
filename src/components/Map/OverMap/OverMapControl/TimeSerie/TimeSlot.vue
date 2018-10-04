@@ -6,7 +6,7 @@
         <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon icon="pause" /></button>
       </div>
       <div class="flex-grow-1 d-flex align-middle position-relative ml-3 mr-3">
-        <div class="time-slot with-indicator flex-fill" v-for="(time, i) in model.times" :key="i" @click="goToTime(i)">
+        <div class="time-slot with-indicator flex-fill" v-for="(time, i) in value.times" :key="i" @click="goToTime(i)">
           <div class="time-slot-content h-100"></div>
           <small class="time-slot-indicator">
             <div>{{getDateDay(time.startTime)}}</div>
@@ -16,9 +16,9 @@
         </div>
         <div class="time-slot with-indicator">
           <small class="time-slot-indicator">
-            <div>{{getDateDay(model.times[model.times.length - 1].endTime)}}</div>
-            <div>{{getDate(model.times[model.times.length - 1].endTime)}}</div>
-            <div>{{getDateHour(model.times[model.times.length - 1].endTime)}}</div>
+            <div>{{getDateDay(value.times[value.times.length - 1].endTime)}}</div>
+            <div>{{getDate(value.times[value.times.length - 1].endTime)}}</div>
+            <div>{{getDateHour(value.times[value.times.length - 1].endTime)}}</div>
           </small>
         </div>
         <div class="time-slot position-absolute current-time" :style="calculateCurrentPlacement()">
@@ -54,7 +54,7 @@ export default {
       this.isPlaying = false
     },
     activePlay () {
-      if (this.currentIndex < (this.model.times.length - 1)) {
+      if (this.currentIndex < (this.value.times.length - 1)) {
         this.currentIndex++
         this.afterSelect()
         setTimeout(() => {
@@ -72,12 +72,12 @@ export default {
         transform: translateValue,
         WebkitTransform: translateValue,
         msTransform: translateValue,
-        width: `${100 / (this.model.times.length)}%`
+        width: `${100 / (this.value.times.length)}%`
       }
     },
     calculateNowPlacement () {
       let now = Date.now() / 1000
-      let nowIndex = this.model.times.findIndex(time => now < time.endTime)
+      let nowIndex = this.value.times.findIndex(time => now < time.endTime)
       if (nowIndex !== -1) {
         return this.getTransformValues(nowIndex)
       } else {

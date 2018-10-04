@@ -10,7 +10,7 @@
     <div class="list-group" v-show="openedGroup === parameterGrouping.groupingId">
       <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" v-for="parameter in parameters" :key="parameter.paramName" @click="onSelectParameter(parameter)" v-bind:class="{ active: parameter.paramName === activeParam }">
         <div class="d-flex w-100 justify-content-between">
-          <div class="mb-1">{{parameter.displayName}}</div>
+          <div class="mb-1">{{parameter.label}}</div>
           <font-awesome-layers class="fa-lg display-infos text-secondary" v-on:click.stop="displayInfos(parameter)">
             <font-awesome-icon icon="circle" class="text-white" size="xs" />
             <font-awesome-icon icon="info-circle" />

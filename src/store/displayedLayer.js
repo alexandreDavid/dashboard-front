@@ -23,27 +23,54 @@ export default class {
     if (this._displayedLayer) {
       this._displayedLayer.remove()
     }
-    if (this._map && this._parameter && this._parameter.layerUrl) {
-      this._displayedLayer = new TileLayer.WMS(this._parameter.layerUrl, this._parameter.layerParameters).addTo(this._map)
+    if (this._map && this._parameter) {
+      if (this._parameter.layerUrl) {
+        this._displayedLayer = new TileLayer.WMS(this._parameter.layerUrl, this._parameter.layerParameters)
+      } else {
+        this._displayedLayer = new TileLayer.WMS(
+          `${process.env.GEOSERVER_URL}/wms`,
+          this.findDefaultParam(this._parameter)
+        )
+      }
+      this._displayedLayer.addTo(this._map)
       this._defaultUnit = this._parameter.unit
       this._activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this._defaultUnit)) || this._defaultUnit
       this._hasInteractiveLegend = this._parameter.interactiveLegend
       this._legendUrl = this._parameter.legendUrl
     }
   }
-  setDate (time) {
+  findDefaultParam (param) {
+    if (param.layer) {
+      let defaultParam = {
+        layers: param.layer,
+        format: 'image/png',
+        transparent: true
+      }
+      if (param.type === 'interval') {
+        let nowIndex = param.times.findIndex(time => (Date.now() / 1000) < time.endTime)
+        defaultParam.time = this.formatTime(param.times[(nowIndex > -1 ? nowIndex : 0)])
+      } else if (param.type === 'date') {
+        defaultParam.time = this.formatTime(param.times[param.times.length - 1])
+      }
+      return defaultParam
+    }
+    return param.data && this.findDefaultParam(param.data[0])
+  }
+  formatTime (time) {
+    let formattedTime
     if (time && time.startTime) {
       const startFormatedDate = time.startTime && new Date(time.startTime * 1000).toISOString()
       const endFormatedDate = time.endTime && new Date(time.endTime * 1000).toISOString()
-      this._displayedLayer.setParams({
-        time: `${startFormatedDate}/${endFormatedDate}`
-      })
+      formattedTime = `${startFormatedDate}/${endFormatedDate}`
     } else {
-      const date = time && new Date(time * 1000).toISOString()
-      this._displayedLayer.setParams({
-        time: date
-      })
+      formattedTime = time && new Date(time * 1000).toISOString()
     }
+    return formattedTime
+  }
+  setTime (time) {
+    this._displayedLayer.setParams({
+      time: this.formatTime(time)
+    })
   }
   setUnit (unit) {
     this._activeUnit = unit

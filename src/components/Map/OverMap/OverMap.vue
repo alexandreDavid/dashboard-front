@@ -5,7 +5,7 @@
       </ZoomControl>
       <button type="button" id="reset-map" class="btn btn-primary align-bottom d-none d-sm-block shadow flex-shrink-1 mr-4 ml-1 over-map-control" @click="resetMap"><font-awesome-icon icon="undo" /></button>
       <div class="mx-1 w-100 over-map-control">
-        <TimeSerie class="d-inline-block align-bottom" v-if="selectedParameter && selectedParameter.hasTimeFrame"/>
+        <displayed-layer-control class="d-inline-block align-bottom" v-bind:parameter="selectedParameter" v-if="selectedParameter"></displayed-layer-control>
       </div>
     </div>
     <div class="over-map-left">
@@ -40,7 +40,7 @@ import AreaLayer from '@/store/areaLayer'
 import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import ZoomControl from './OverMapControl/ZoomControl/ZoomControl'
-import TimeSerie from './OverMapControl/TimeSerie/TimeSerie'
+import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 
 export default {
@@ -51,7 +51,7 @@ export default {
     Managing,
     SideBar: () => import('@/components/SideBar/SideBar'),
     ZoomControl,
-    TimeSerie,
+    DisplayedLayerControl,
     Legend
   },
   inject: ['getMap', 'getDisplayedLayer'],

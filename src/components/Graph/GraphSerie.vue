@@ -2,7 +2,7 @@
   <div class="graph-serie">
     <div class="d-flex border p-2 mb-2">
       <div class="flex-grow-1">
-        <span class="align-middle">{{ serie.title || (serie.selectedParameter && serie.selectedParameter.displayName) }}</span>
+        <span class="align-middle">{{ serie.title || (serie.selectedParameter && serie.selectedParameter.label) }}</span>
       </div>
       <button type="button" class="btn btn-secondary btn-sm" @click="edit()">Edit</button>
     </div>
@@ -14,7 +14,7 @@
         <div class="form-group">
           <select class="form-control" v-model="serie.selectedParameter">
             <option v-for="(param, key) in allParameters" :key="key" v-bind:value="param">
-              {{ param.displayName }}
+              {{ param.label }}
             </option>
           </select>
         </div>

@@ -9,7 +9,7 @@
     <div class="card shadow my-3 over-map-control" style="min-width: 250px;">
       <div class="card-body p-2">
         <h6>
-          {{ displayedParameter.displayName }}
+          {{ displayedParameter.label }}
         </h6>
         <button v-if="displayedParameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon icon="chart-bar" /> Open graph</button>
         <Legend class="pl-2" v-if="displayedParameter"></Legend>
