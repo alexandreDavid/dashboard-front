@@ -49,7 +49,6 @@ export default {
     parameters = [
       {
         label: 'Air pressure at sea level',
-        layer: 'twoDaysForecast:air_pressure_at_sea_level',
         paramName: 'air_pressure_at_sea_level',
         type: 'interval',
         family: 'weather',
@@ -58,7 +57,20 @@ export default {
         unit: 'Pa',
         legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level`,
         hasGraph: true,
-        hasTimeFrame: true
+        hasTimeFrame: true,
+        data: [
+          {
+            label: '2 days',
+            layer: 'twoDaysForecast:air_pressure_at_sea_level',
+            type: 'interval',
+            times: twoDays
+          }, {
+            label: '7 days',
+            layer: 'mogreps:air_pressure_at_sea_level',
+            type: 'interval',
+            times: sevenDays
+          }
+        ]
       }, {
         label: 'Air temperature',
         paramName: 'temperature',
@@ -96,6 +108,45 @@ export default {
           }
         ]
       }, {
+        label: 'Dewpoint temperature',
+        groupingId: 0,
+        paramDescription: 'Dewpoint at 1.5m',
+        paramName: 'dew_point_temperature',
+        unit: 'K',
+        hasGraph: false,
+        hasTimeFrame: true,
+        layer: 'mogreps:dew_point_temperature',
+        type: 'interval',
+        family: 'weather',
+        times: sevenDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=mogreps:dew_point_temperature`
+      }, {
+        label: 'High cloud amount',
+        groupingId: 0,
+        paramDescription: 'High cloud amount',
+        paramName: 'high_type_cloud_area_fraction',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
+        hasTimeFrame: true,
+        layer: 'mogreps:high_type_cloud_area_fraction',
+        type: 'interval',
+        family: 'weather',
+        times: sevenDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=mogreps:high_type_cloud_area_fraction`
+      }, {
+        label: 'Low cloud amount',
+        groupingId: 0,
+        paramDescription: 'Low cloud amount',
+        paramName: 'low_type_cloud_area_fraction',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
+        hasTimeFrame: true,
+        layer: 'mogreps:low_type_cloud_area_fraction',
+        type: 'interval',
+        family: 'weather',
+        times: sevenDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=mogreps:low_type_cloud_area_fraction`
+      }, {
         label: 'Relative humidity',
         groupingId: 0,
         paramDescription: 'Relative humidity',
@@ -104,11 +155,34 @@ export default {
         unit: '%',
         hasGraph: true,
         hasTimeFrame: true,
-        layer: 'twoDaysForecast:relative_humidity',
+        family: 'weather',
+        data: [
+          {
+            label: '2 days',
+            layer: 'twoDaysForecast:relative_humidity',
+            type: 'interval',
+            times: twoDays
+          }, {
+            label: '7 days',
+            layer: 'mogreps:relative_humidity',
+            type: 'interval',
+            times: sevenDays
+          }
+        ],
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity`
+      }, {
+        label: 'Total cloud amount',
+        groupingId: 0,
+        paramDescription: 'Total cloud amount - Random overlap',
+        paramName: 'cloud_area_fraction_assuming_maximum_random_overlap',
+        unit: 'NO_UNIT_SPECIFIED',
+        hasGraph: false,
+        hasTimeFrame: true,
+        layer: 'mogreps:cloud_area_fraction_assuming_maximum_random_overlap',
         type: 'interval',
         family: 'weather',
-        times: twoDays,
-        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:relative_humidity`
+        times: sevenDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=cloud_area_fraction_assuming_maximum_random_overlap_av`
       }, {
         label: 'Total precipitation rate',
         groupingId: 0,
@@ -165,6 +239,19 @@ export default {
         family: 'weather',
         times: twoDays,
         legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:toa_outgoing_longwave_flux`
+      }, {
+        label: 'Visibility',
+        groupingId: 0,
+        paramDescription: 'Visibility at 1.5m (incl precip)',
+        paramName: 'visibility_in_air',
+        unit: 'm',
+        hasGraph: false,
+        hasTimeFrame: true,
+        layer: 'mogreps:visibility_in_air',
+        type: 'interval',
+        family: 'weather',
+        times: sevenDays,
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=mogreps:visibility_in_air`
       }, {
         label: 'Baseflow',
         groupingId: 1,

@@ -3,7 +3,7 @@
     <div class="mb-2" v-if="parameter.data">
       <displayed-layer-control-params :data="parameter.data" @changeDisplaying="changeSelectedModel"></displayed-layer-control-params>
     </div>
-    <TimeSerie class="d-inline-block align-bottom" v-if="activeModel && activeModel.hasTimeFrame" v-model="activeModel" @change="onChange"></TimeSerie>
+    <TimeSerie class="d-inline-block align-bottom" v-if="activeModel && parameter.hasTimeFrame" v-model="activeModel" @change="onChange"></TimeSerie>
   </div>
 </template>
 
