@@ -50,7 +50,7 @@ describe('DisplayedLayerControl.vue', () => {
     expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
   })
 
-  it('On changeSelectedModel as interval', () => {
+  it('On changeSelectedModel as interval in', () => {
     const now = Date.now() / 1000
     const mockModel = {
       type: 'interval',
@@ -65,6 +65,23 @@ describe('DisplayedLayerControl.vue', () => {
     wrapper.vm.changeSelectedModel(mockModel)
     expect(wrapper.vm.activeModel).toEqual(mockModel)
     expect(mockDisplayedLayer.formatTime).toBeCalledWith({endTime: now + 1})
+    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
+  })
+
+  it('On changeSelectedModel as interval out', () => {
+    const now = Date.now() / 1000
+    const mockModel = {
+      type: 'interval',
+      times: [
+        {endTime: now - 4},
+        {endTime: now - 3},
+        {endTime: now - 2},
+        {endTime: now - 1}
+      ]
+    }
+    wrapper.vm.changeSelectedModel(mockModel)
+    expect(wrapper.vm.activeModel).toEqual(mockModel)
+    expect(mockDisplayedLayer.formatTime).toBeCalledWith({endTime: now - 4})
     expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
   })
 
