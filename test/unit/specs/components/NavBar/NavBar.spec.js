@@ -15,6 +15,12 @@ const router = new VueRouter({
   }, {
     path: '/graph',
     name: 'graph'
+  }, {
+    path: '/historical',
+    name: 'historical'
+  }, {
+    path: '/future-climate',
+    name: 'future-climate'
   }]
 })
 
@@ -55,9 +61,13 @@ describe('DashboardCardModal.vue', () => {
     verifyClickGoTo('map')
   })
 
-  // it('Click on graph', () => {
-  //   verifyClickGoTo('graph')
-  // })
+  it('Click on historical', () => {
+    verifyClickGoTo('historical')
+  })
+
+  it('Click on future-climate', () => {
+    verifyClickGoTo('future-climate')
+  })
 
   it('Click on profile and toggle sidebar', async () => {
     await verifyClickOpenSideBar('profile')

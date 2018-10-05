@@ -4,7 +4,9 @@ import MapObj from '@/store/map'
 import DisplayedLayer from '@/store/displayedLayer.js'
 import OverMap from '@/components/Map/OverMap/OverMap'
 
-const mockMap = jest.fn()
+const mockMap = {
+  remove: jest.fn()
+}
 jest.mock('@/store/map.js', () => {
   return jest.fn().mockImplementation(() => {
     return mockMap
@@ -41,5 +43,10 @@ describe('Map.vue', () => {
   it('On selectedReportedLayer', () => {
     wrapper.find(OverMap).vm.$emit('selectedReportedLayer', 'selectedReportedLayerVal')
     expect(wrapper.vm.selectedReportedLayer).toBe('selectedReportedLayerVal')
+  })
+
+  it('On destroy', () => {
+    wrapper.destroy()
+    expect(mockMap.remove).toHaveBeenCalledTimes(1)
   })
 })
