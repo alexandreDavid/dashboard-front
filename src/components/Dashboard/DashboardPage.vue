@@ -107,6 +107,7 @@ export default {
     },
     save () {
       Api.setDashboard(this.dashboard)
+      UserConfiguration.setDashboardConfiguration(this.dashboard.prepareForSaving())
       this.isEditing = false
     }
   }

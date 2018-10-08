@@ -73,7 +73,7 @@ export default {
         ]
       }, {
         label: 'Air temperature',
-        paramName: 'temperature',
+        paramName: 'air_temperature',
         groupingId: 0,
         hasTimeFrame: true,
         legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature`,

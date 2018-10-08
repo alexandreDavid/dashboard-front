@@ -24,7 +24,7 @@ describe('dashboard.js', () => {
     const cards = [{}, {}]
     let dashboard2 = new Dashboard(title, cards)
     expect(dashboard2.title).toBe(title)
-    expect(dashboard2.getCards()).toBe(cards)
+    expect(dashboard2.getCards().length).toBe(cards.length)
   })
 
   it('Calls addCard, setCard, getCard, removeCard', () => {

@@ -20,7 +20,8 @@ jest.mock('@/store/api', () => ({
 }))
 
 jest.mock('@/store/userConfiguration', () => ({
-  getDashboardConfiguration: jest.fn()
+  getDashboardConfiguration: jest.fn(),
+  setDashboardConfiguration: jest.fn()
 }))
 
 const mockScrollBy = jest.fn()
