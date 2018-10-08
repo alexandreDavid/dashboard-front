@@ -1,5 +1,5 @@
 <template>
-  <SideBar @close="close()" position="bottom" title="Base map selection" class="p-0">
+  <SideBar @close="close()" position="bottom" title="Base map selection" class="p-0 shadow-top">
     <div class="h-100 d-flex" v-if="isLoaded">
       <div v-for="(baseMap, key) in availableBaseMaps" :key="key" class="card mx-2" @click="selectBaseMap(baseMap)" v-bind:class="{active: activeBaseMap === baseMap.url}">
         <div class="card-header"> {{ baseMap.label }}</div>
