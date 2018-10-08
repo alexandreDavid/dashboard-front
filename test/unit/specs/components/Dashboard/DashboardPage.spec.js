@@ -12,7 +12,8 @@ jest.mock('@/store/parameter', () => ({
   getParams: jest.fn()
 }))
 jest.mock('@/store/area', () => ({
-  getSelectedArea: jest.fn()
+  getSelectedArea: jest.fn(),
+  setSelectedArea: jest.fn()
 }))
 jest.mock('@/store/api', () => ({
   setDashboard: jest.fn()
