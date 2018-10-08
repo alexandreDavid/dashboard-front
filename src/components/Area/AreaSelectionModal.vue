@@ -90,7 +90,7 @@ export default {
     })
 
     if (this.activeAreaType === 'custom') {
-      this.val.geom.eachLayer((layer) => this.drawnItems.addLayer(layer))
+      new L.GeoJSON(this.val.geom).eachLayer((layer) => this.drawnItems.addLayer(layer))
       this.goToCustom()
     } else {
       this.areaLayer.setSelectedArea(this.val)
@@ -140,7 +140,7 @@ export default {
         this.$emit('input', {
           name: 'Custom area',
           type: 'custom',
-          geom: this.drawnItems
+          geom: this.drawnItems.toGeoJSON()
         })
       }
       this.close()

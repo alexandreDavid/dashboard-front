@@ -825,7 +825,7 @@ let configuration = {
       'id': 4
     }]
   },
-  area: {
+  activeArea: {
     type: 'district',
     name: 'Abim',
     id: 5
@@ -845,12 +845,33 @@ export default {
     return configuration.dashboard
   },
   getArea () {
-    return configuration.area
+    let activeArea
+    if (localStorage.getItem('activeArea')) {
+      try {
+        activeArea = JSON.parse(localStorage.getItem('activeArea'))
+      } catch (e) {
+        localStorage.removeItem('activeArea')
+      }
+    }
+    return activeArea || configuration.activeArea
+  },
+  setActiveArea (activeArea) {
+    const parsed = JSON.stringify(activeArea)
+    localStorage.setItem('activeArea', parsed)
   },
   getActiveSettings () {
-    return configuration.activeSettings
+    let activeSettings
+    if (localStorage.getItem('activeSettings')) {
+      try {
+        activeSettings = JSON.parse(localStorage.getItem('activeSettings'))
+      } catch (e) {
+        localStorage.removeItem('activeSettings')
+      }
+    }
+    return activeSettings || configuration.activeSettings
   },
   setActiveSettings (activeSettings) {
-    configuration.activeSettings = activeSettings
+    const parsed = JSON.stringify(activeSettings)
+    localStorage.setItem('activeSettings', parsed)
   }
 }

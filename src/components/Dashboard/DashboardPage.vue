@@ -13,7 +13,7 @@
           </div>
         </h4>
         <div class="col-12 mb-2 p-2">
-          <SearchLocation v-model="selectedArea" @openMap="displaySearchHelper = true" />
+          <SearchLocation v-model="selectedArea" @openMap="displaySearchHelper = true" @input="updateSearchLocation" />
         </div>
         <div class="alert alert-info col-12" role="alert" v-if="!selectedArea">
           Select a location to display the dashboard

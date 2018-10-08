@@ -1,4 +1,5 @@
 import axios from 'axios'
+import UserConfiguration from '@/store/userConfiguration'
 
 const urlRoot = `${process.env.API_URL}/areas`
 let selectedArea
@@ -19,6 +20,7 @@ export default {
     }
   },
   setSelectedArea (area) {
+    UserConfiguration.setActiveArea(area)
     selectedArea = area
   },
   getSelectedArea () {

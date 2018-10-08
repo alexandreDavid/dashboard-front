@@ -76,6 +76,7 @@ export default {
   methods: {
     async getData () {
       this.isLoaded = false
+      this.errorMessage = false
       try {
         this.datacollection = await Data.getAreaParameterData(this.area, this.parameter)
         this.familyUnit = Unit.getFamilyUnit(this.datacollection.unit)

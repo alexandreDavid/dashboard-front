@@ -27,7 +27,7 @@ let AreaLayer = class {
     }
     let geom
     if (area.type === 'custom') {
-      geom = area.geom.toGeoJSON()
+      geom = area.geom
     } else {
       let areaData
       if (area.id !== 7552 || !ugandaArea) {
