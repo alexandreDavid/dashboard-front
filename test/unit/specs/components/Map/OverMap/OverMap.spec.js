@@ -60,27 +60,6 @@ describe('OverMap.vue', () => {
     })
   })
 
-  it('Has current location', async () => {
-    expect(wrapper.vm.hasCurrentLocation).toBe(true)
-    const buttonLocation = wrapper.find('#zoom-current-location')
-    expect(buttonLocation.exists()).toBeDefined()
-
-    buttonLocation.trigger('click')
-    expect(mockMap.zoomToCurrentLocation).toBeCalled()
-  })
-
-  it('Hasn\'t current location', async () => {
-    mockMap.setCurrentLocationLayer = jest.fn().mockResolvedValue(true)
-    const wrapper = shallowMount(OverMap, {
-      provide: {
-        getMap: getMapMock(),
-        getDisplayedLayer: getDisplayedLayer()
-      }
-    })
-    expect(wrapper.vm.hasCurrentLocation).toBe(false)
-    expect(wrapper.find('#zoom-current-location').exists()).toBe(false)
-  })
-
   it('Mounted correctly', () => {
     expect(AreaLayer).toBeCalledWith(mockMap, 'getSelectedArea')
     expect(Parameter.getDisplayedParameter).toBeCalled()

@@ -3,19 +3,16 @@
     <base-map-sidebar class="over-map-bottom" v-if="showBaseMapSidebar" @close="showBaseMapSidebar = false">
     </base-map-sidebar>
     <div class="over-map-bottom d-flex align-items-end">
-      <bar-control class="flex-shrink-1 d-none d-sm-inline-flex mr-1 over-map-control" @openBaseMapControl="showBaseMapSidebar = true">
-      </bar-control>
       <div class="mx-1 w-100 over-map-control">
         <displayed-layer-control class="d-inline-block align-bottom" v-bind:parameter="selectedParameter" v-if="selectedParameter"></displayed-layer-control>
       </div>
+      <bar-control class="flex-shrink-1 d-none d-sm-inline-flex mr-1 over-map-control" @openBaseMapControl="showBaseMapSidebar = true">
+      </bar-control>
     </div>
     <div class="over-map-left">
-      <div class="d-flex flex-nowrap position-relative">
-        <div class="p-1 flex-grow-1 over-map-control">
+      <div class="d-flex flex-nowrap position-relative pb-2">
+        <div class="flex-grow-1 over-map-control">
           <area-selection-control @input="onSearchLocationSelected" v-model="selectedArea" @openSelectionModal="displayAreaSelectionModal = true" @zoomToArea="zoomToArea" class="shadow"></area-selection-control>
-        </div>
-        <div class="p-1 over-map-control">
-          <button type="button" id="zoom-current-location" class="btn btn-primary align-top shadow" @click="zoomToCurrentLocation()" v-if="hasCurrentLocation"><font-awesome-icon icon="location-arrow" /></button>
         </div>
         <div class="p-1 d-block d-sm-none over-map-control">
           <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon icon="bars" /></button>
@@ -24,9 +21,7 @@
           </SideBar>
         </div>
       </div>
-    </div>
-    <div class="over-map-right d-none d-sm-block">
-      <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
+      <Managing class="d-none d-sm-block" @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
     </div>
     <area-selection-modal v-if="displayAreaSelectionModal" v-model="selectedArea" @input="onSearchLocationSelected" @close="displayAreaSelectionModal = false"></area-selection-modal>
   </div>
@@ -57,12 +52,8 @@ export default {
     Legend
   },
   inject: ['getMap', 'getDisplayedLayer'],
-  async created () {
-    this.hasCurrentLocation = await this.getMap().setCurrentLocationLayer()
-  },
   data () {
     return {
-      hasCurrentLocation: false,
       showSidebar: false,
       showBaseMapSidebar: false,
       displayAreaSelectionModal: false,
@@ -82,9 +73,6 @@ export default {
         Area.setSelectedArea(newValue)
         this.areaLayer.setSelectedArea(newValue)
       }
-    },
-    zoomToCurrentLocation () {
-      this.getMap().zoomToCurrentLocation()
     },
     onSelectedParameter (selectedParameter) {
       this.selectedParameter = false

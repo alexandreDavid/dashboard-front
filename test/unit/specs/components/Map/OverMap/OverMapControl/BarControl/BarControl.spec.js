@@ -1,28 +1,37 @@
 import BarControl from '@/components/Map/OverMap/OverMapControl/BarControl/BarControl'
 import { mount } from '@vue/test-utils'
 
-function getMapMock (curZoom = 5, maxZoom = 10, minZoom = 1) {
+const mockMap = {
+  _zoom: 5,
+  getMaxZoom: function () {
+    return 10
+  },
+  getMinZoom: function () {
+    return 1
+  },
+  on: jest.fn(),
+  options: {
+    zoomDelta: 1
+  },
+  zoomOut: jest.fn(),
+  zoomIn: jest.fn(),
+  setDefaultMap: jest.fn(),
+  setCurrentLocationLayer: jest.fn().mockReturnValue(Promise.resolve(true)),
+  zoomToCurrentLocation: jest.fn()
+}
+
+function getMapMock () {
   return function () {
-    return {
-      _zoom: curZoom,
-      getMaxZoom: function () {
-        return maxZoom
-      },
-      getMinZoom: function () {
-        return minZoom
-      },
-      on: jest.fn(),
-      options: {
-        zoomDelta: 1
-      },
-      zoomOut: jest.fn(),
-      zoomIn: jest.fn(),
-      setDefaultMap: jest.fn()
-    }
+    return mockMap
   }
 }
 
 describe('BarControl.vue', () => {
+  beforeEach(() => {
+    mockMap.zoomIn.mockClear()
+    mockMap.zoomOut.mockClear()
+  })
+
   it('Click on zoomIn', () => {
     const wrapper = mount(BarControl, {
       provide: {
@@ -68,9 +77,10 @@ describe('BarControl.vue', () => {
   })
 
   it('Click on zoomIn but disabled', () => {
+    mockMap._zoom = 10
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock(10)
+        getMap: getMapMock()
       }
     })
     const button = wrapper.find('#zoom-in')
@@ -79,9 +89,10 @@ describe('BarControl.vue', () => {
   })
 
   it('Click on zoomOut but disabled', () => {
+    mockMap._zoom = 1
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock(1)
+        getMap: getMapMock()
       }
     })
     const button = wrapper.find('#zoom-out')
@@ -92,11 +103,38 @@ describe('BarControl.vue', () => {
   it('Click on go-to-global', () => {
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock(1)
+        getMap: getMapMock()
       }
     })
     const buttonResetMap = wrapper.find('#go-to-global')
     buttonResetMap.trigger('click')
     expect(wrapper.vm.map.setDefaultMap).toBeCalled()
+  })
+
+  it('Has current location', async () => {
+    const wrapper = mount(BarControl, {
+      provide: {
+        getMap: getMapMock()
+      }
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.hasCurrentLocation).toBe(true)
+    const buttonLocation = wrapper.find('#zoom-current-location')
+    expect(buttonLocation.exists()).toBeDefined()
+
+    buttonLocation.trigger('click')
+    expect(mockMap.zoomToCurrentLocation).toBeCalled()
+  })
+
+  it('Hasn\'t current location', async () => {
+    mockMap.setCurrentLocationLayer.mockReturnValue(Promise.resolve(false))
+    const wrapper = mount(BarControl, {
+      provide: {
+        getMap: getMapMock()
+      }
+    })
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.hasCurrentLocation).toBe(false)
+    expect(wrapper.find('#zoom-current-location').exists()).toBe(false)
   })
 })

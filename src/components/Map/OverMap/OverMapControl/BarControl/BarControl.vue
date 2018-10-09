@@ -1,5 +1,6 @@
 <template>
   <div class="btn-group-sm btn-group-vertical shadow">
+    <button type="button" class="btn btn-primary" id="zoom-current-location" @click="zoomToCurrentLocation" v-if="hasCurrentLocation"><font-awesome-icon icon="location-arrow" /></button>
     <button type="button" class="btn btn-primary" id="zoom-in" @click="zoomIn" :disabled="zoomInDisabled"><font-awesome-icon icon="plus" /></button>
     <button type="button" class="btn btn-primary" id="zoom-out" @click="zoomOut" :disabled="zoomOutDisabled"><font-awesome-icon icon="minus" /></button>
     <button type="button" class="btn btn-primary" id="go-to-global" @click="goToGlobalView"><font-awesome-icon icon="globe-africa" /></button>
@@ -14,9 +15,13 @@ export default {
   data () {
     return {
       map: this.getMap(),
+      hasCurrentLocation: false,
       zoomInDisabled: false,
       zoomOutDisabled: false
     }
+  },
+  async created () {
+    this.hasCurrentLocation = await this.getMap().setCurrentLocationLayer()
   },
   mounted () {
     this._updateDisabled()
@@ -32,6 +37,9 @@ export default {
       if (this.map._zoom > this.map.getMinZoom()) {
         this.map.zoomOut(this.map.options.zoomDelta * (e.shiftKey ? 3 : 1))
       }
+    },
+    zoomToCurrentLocation () {
+      this.getMap().zoomToCurrentLocation()
     },
     _updateDisabled () {
       this.zoomInDisabled = this.map._zoom === this.map.getMaxZoom()
