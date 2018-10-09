@@ -1,16 +1,11 @@
 import { Map, TileLayer, CircleMarker } from 'leaflet'
+import UserConfiguration from '@/store/userConfiguration'
 
 let defaultParams = {
   bounds: [
     [4.23136927, 35.00105353],
     [-1.48153053, 29.57346534]
-  ],
-  baseLayer: {
-    layerUrl: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
-    options: {
-      maxZoom: 18
-    }
-  }
+  ]
 }
 let MapObj = Map.extend({
   options: Object.assign({
@@ -23,15 +18,14 @@ let MapObj = Map.extend({
   setDefaultMap () {
     this.fitBounds(defaultParams.bounds)
 
-    this.setBaseMapLayer(defaultParams.baseLayer.layerUrl, defaultParams.baseLayer.options)
+    this.setBaseMapLayer(UserConfiguration.getActiveBaseMapLayer())
   },
-  setBaseMapLayer (layerUrl, options = {}) {
+  setBaseMapLayer (layerUrl) {
     this._baseLayerUrl = layerUrl
     if (!this._baseLayer) {
-      this._baseLayer = new TileLayer.WMS(layerUrl, options).addTo(this)
+      this._baseLayer = new TileLayer.WMS(layerUrl).addTo(this)
     } else {
-      this._baseLayer.setUrl(layerUrl, true)
-      this._baseLayer.setParams(options)
+      this._baseLayer.setUrl(layerUrl)
     }
   },
   getBaseMapLayerUrl () {

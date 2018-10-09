@@ -42,8 +42,7 @@ describe('map.js', () => {
     expect(L.TileLayer.WMS).toHaveBeenCalledTimes(1)
     expect(mockBaseLayer.addTo).toHaveBeenCalledTimes(1)
     // Update baseLayer
-    expect(mockBaseLayer.setUrl).toBeCalledWith('layerUrl', true)
-    expect(mockBaseLayer.setParams).toBeCalledWith({})
+    expect(mockBaseLayer.setUrl).toBeCalledWith('layerUrl')
   })
 
   it('Calls setCurrentLocationLayer without navigation location', () => {

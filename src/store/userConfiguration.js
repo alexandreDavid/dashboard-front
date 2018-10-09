@@ -46,7 +46,8 @@ let configuration = {
     precipitations: 'Kg/m2/s',
     floodWarning: false,
     stormWarning: false
-  }
+  },
+  activeBaseMapLayer: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
 }
 
 export default {
@@ -94,5 +95,20 @@ export default {
   setActiveSettings (activeSettings) {
     const parsed = JSON.stringify(activeSettings)
     localStorage.setItem('activeSettings', parsed)
+  },
+  getActiveBaseMapLayer () {
+    let activeBaseMapLayer
+    if (localStorage.getItem('activeBaseMapLayer')) {
+      try {
+        activeBaseMapLayer = JSON.parse(localStorage.getItem('activeBaseMapLayer'))
+      } catch (e) {
+        localStorage.removeItem('activeBaseMapLayer')
+      }
+    }
+    return activeBaseMapLayer || configuration.activeBaseMapLayer
+  },
+  setActiveBaseMapLayer (activeBaseMapLayer) {
+    const parsed = JSON.stringify(activeBaseMapLayer)
+    localStorage.setItem('activeBaseMapLayer', parsed)
   }
 }

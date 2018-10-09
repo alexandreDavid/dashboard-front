@@ -17,6 +17,7 @@ import SideBar from '@/components/SideBar/SideBar'
 import MiniMap from '@/components/Map/MiniMap'
 import AreaLayer from '@/store/areaLayer'
 import Loading from '@/components/Loading/Loading'
+import UserConfiguration from '@/store/userConfiguration'
 
 export default {
   name: 'BaseMapSidebar',
@@ -56,6 +57,7 @@ export default {
     },
     selectBaseMap (baseMap) {
       this.activeBaseMap = baseMap.url
+      UserConfiguration.setActiveBaseMapLayer(baseMap.url)
       this.getMap().setBaseMapLayer(baseMap.url)
     }
   }
