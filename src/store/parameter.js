@@ -182,7 +182,7 @@ export default {
         type: 'interval',
         family: 'weather',
         times: sevenDays,
-        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=cloud_area_fraction_assuming_maximum_random_overlap_av`
+        legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&STRICT=false&style=cloud_area_fraction_assuming_maximum_random_overlap`
       }, {
         label: 'Total precipitation rate',
         groupingId: 0,
