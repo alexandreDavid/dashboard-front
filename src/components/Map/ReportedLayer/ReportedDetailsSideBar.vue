@@ -1,8 +1,7 @@
 <template>
-  <SideBar @close="close()" class="p-2 position-absolute over-map-control">
+  <SideBar @close="close()" class="position-absolute over-map-control" :title="observation.name">
     <div class="d-flex flex-column h-100">
-      <div class="pt-3">
-        <h4>{{ observation.name }}</h4>
+      <div class="pt-4">
         <ObservationRangeSlider v-if="isDisplayed" class="mb-4 px-3" @input="updateDate" v-model="sliderDates"></ObservationRangeSlider>
       </div>
       <div v-if="isLoaded" class="flex-grow-1" style="overflow: auto;">
