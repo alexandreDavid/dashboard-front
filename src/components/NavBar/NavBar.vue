@@ -7,11 +7,12 @@
           <a class="nav-link" href="#" @click="navItem.click()" :class="{disabled: navItem.disabled}"><font-awesome-icon :icon="navItem.icon" /> {{navItem.label}}</a>
         </li>
       </ul>
-      <ul class="navbar-nav">
+      <!-- <ul class="navbar-nav">
         <li class="nav-item" v-for="(navItem, key) in rightNav(navItems)" :key="key" :id="'nav-'+ navItem.id">
           <a class="nav-link" href="#" @click="navItem.click()"><font-awesome-icon :icon="navItem.icon" /> {{navItem.label}}</a>
         </li>
-      </ul>
+      </ul> -->
+      <ProfileList class="navbar-nav" @openSideBar="openSideBar"></ProfileList>
     </nav>
     <nav class="navbar navbar-dark bg-dark navbar-expand bg-light d-sm-none shadow-top">
       <ul class="navbar-nav d-flex w-100 text-center">
@@ -26,10 +27,12 @@
 </template>
 
 <script>
+import ProfileList from '@/components/NavBar/ProfileList'
 export default {
   name: 'NavBar',
   components: {
-    ProfileAboutSidebar: () => import('./ProfileAboutSidebar')
+    ProfileAboutSidebar: () => import('./ProfileAboutSidebar'),
+    ProfileList
   },
   data () {
     let self = this
@@ -83,7 +86,7 @@ export default {
           id: 'profile',
           label: 'Profile',
           click () {
-            self.openSideBar(this.id)
+            self.openSideBar()
           },
           icon: 'user',
           right: true

@@ -1,18 +1,16 @@
 <template>
   <SideBar @close="close()" position="right" class="p-2">
     <ul class="nav nav-tabs">
-      <li class="nav-item" id="nav-item-profile">
-        <a class="nav-link" href="#" @click="selectedTab = 'profile'" v-bind:class="{'active': selectedTab === 'profile'}">Profile</a>
+      <li class="nav-item" id="nav-item-settings">
+        <a class="nav-link" href="#" @click="selectedTab = 'settings'" v-bind:class="{'active': selectedTab === 'settings'}">Settings</a>
       </li>
       <li class="nav-item" id="nav-item-about">
         <a class="nav-link" href="#" @click="selectedTab = 'about'" v-bind:class="{'active': selectedTab === 'about'}">About</a>
       </li>
     </ul>
     <div class="tab-content pt-3">
-      <div role="tabpanel" class="tab-pane fade" v-bind:class="{'active show': selectedTab === 'profile'}" id="profile">
-        <h5>Settings</h5>
+      <div role="tabpanel" class="tab-pane fade" v-bind:class="{'active show': selectedTab === 'settings'}" id="settings">
         <Settings/>
-        <button @click="logout()" id="user-logout" class="btn btn-secondary">Logout</button>
       </div>
       <div role="tabpanel" class="tab-pane fade" v-bind:class="{'active show': selectedTab === 'about'}" id="about">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.</p>
@@ -37,7 +35,7 @@ export default {
   props: {
     tab2Display: {
       type: String,
-      default: 'profile'
+      default: 'settings'
     }
   },
   data () {
