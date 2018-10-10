@@ -1,5 +1,5 @@
 <template>
-  <div id="time-serie" class="w-100">
+  <div id="time-serie" class="w-100" v-if="isLoaded">
     <div class="mb-2" v-if="parameter.data">
       <displayed-layer-control-params :data="parameter.data" @changeDisplaying="changeSelectedModel"></displayed-layer-control-params>
     </div>
@@ -21,7 +21,8 @@ export default {
   },
   data () {
     return {
-      activeModel: false
+      activeModel: false,
+      isLoaded: true
     }
   },
   mounted () {
@@ -60,9 +61,13 @@ export default {
   },
   watch: {
     parameter (parameter) {
+      this.isLoaded = false
       if (parameter.layer) {
         this.changeSelectedModel(parameter)
       }
+      this.$nextTick(() => {
+        this.isLoaded = true
+      })
     }
   }
 }

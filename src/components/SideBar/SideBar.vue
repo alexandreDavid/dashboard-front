@@ -7,7 +7,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="flex-grow-1 position-relative">
+      <div class="flex-grow-1 h-100 position-relative">
         <div class="sidebar-container p-2">
           <slot></slot>
         </div>

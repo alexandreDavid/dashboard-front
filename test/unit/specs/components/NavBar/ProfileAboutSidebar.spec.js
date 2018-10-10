@@ -1,7 +1,6 @@
 import ProfileAboutSidebar from '@/components/NavBar/ProfileAboutSidebar.vue'
 import { mount } from '@vue/test-utils'
 import SideBar from '@/components/SideBar/SideBar'
-import Authentication from '@/store/authentication'
 
 jest.mock('@/store/authentication', () => ({
   logout: jest.fn()
@@ -10,9 +9,9 @@ jest.mock('@/store/authentication', () => ({
 describe('ProfileAboutSidebar.vue', () => {
   it('Click on nav tab profile', () => {
     const wrapper = mount(ProfileAboutSidebar)
-    const button = wrapper.find('#nav-item-profile a')
+    const button = wrapper.find('#nav-item-settings a')
     button.trigger('click')
-    expect(wrapper.vm.selectedTab).toBe('profile')
+    expect(wrapper.vm.selectedTab).toBe('settings')
   })
 
   it('Click on nav tab about', () => {
@@ -26,12 +25,5 @@ describe('ProfileAboutSidebar.vue', () => {
     const wrapper = mount(ProfileAboutSidebar)
     wrapper.find(SideBar).vm.$emit('close')
     expect(wrapper.emitted().close).toBeTruthy()
-  })
-
-  it('Click on logout', async () => {
-    const wrapper = mount(ProfileAboutSidebar)
-    const button = wrapper.find('#user-logout')
-    button.trigger('click')
-    expect(Authentication.logout).toBeCalled()
   })
 })

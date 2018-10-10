@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex">
-    <div class="btn-group btn-group-sm m-2" role="group">
+    <div class="btn-group btn-group-sm mr-2" role="group">
       <button type="button" @click="changeSelectedValue(value)" v-for="(value, key) in data" v-bind:key="key" class="change-selected-model btn btn-secondary btn-group-sm" v-bind:class="{active: value.label === activeValue.label}">
         {{value.label}}
       </button>

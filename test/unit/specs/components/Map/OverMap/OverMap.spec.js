@@ -2,11 +2,8 @@ import OverMap from '@/components/Map/OverMap/OverMap'
 import { shallowMount } from '@vue/test-utils'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
-import AreaLayer from '@/store/areaLayer'
-import Parameter from '@/store/parameter'
 import Area from '@/store/area'
-// import Modal from '@/components/Modal/Modal'
-import Managing from '@/components/Map/OverMap//OverMapControl/Managing/Managing'
+import MapControlBar from '@/components/Map/MapControlBar'
 
 const mockMap = {
   setCurrentLocationLayer: jest.fn().mockResolvedValue(true),
@@ -33,17 +30,15 @@ function getDisplayedLayer () {
 }
 
 const mockAreaLayer = {
-  setSelectedArea: jest.fn()
+  setSelectedArea: jest.fn(),
+  zoomToArea: jest.fn()
 }
-jest.mock('@/store/areaLayer', () => {
-  return jest.fn().mockImplementation(() => {
+function getAreaLayer () {
+  return function () {
     return mockAreaLayer
-  })
-})
+  }
+}
 
-jest.mock('@/store/parameter', () => ({
-  getDisplayedParameter: jest.fn().mockReturnValue('getDisplayedParameter')
-}))
 jest.mock('@/store/area', () => ({
   getSelectedArea: jest.fn().mockReturnValue('getSelectedArea'),
   setSelectedArea: jest.fn()
@@ -55,14 +50,15 @@ describe('OverMap.vue', () => {
     wrapper = shallowMount(OverMap, {
       provide: {
         getMap: getMapMock(),
-        getDisplayedLayer: getDisplayedLayer()
+        getDisplayedLayer: getDisplayedLayer(),
+        getAreaLayer: getAreaLayer()
       }
     })
   })
 
   it('Mounted correctly', () => {
-    expect(AreaLayer).toBeCalledWith(mockMap, 'getSelectedArea')
-    expect(Parameter.getDisplayedParameter).toBeCalled()
+    expect(Area.getSelectedArea).toBeCalled()
+    expect(wrapper.vm.selectedArea).toBe('getSelectedArea')
   })
 
   it('Display SearchLocationResult with result', () => {
@@ -80,39 +76,13 @@ describe('OverMap.vue', () => {
     expect(wrapper.vm.searchLocationResult).toBeUndefined()
   })
 
-  // it('Toggle graph modal', () => {
-  //   wrapper.find('.open-graph-modal').trigger('click')
-  //   expect(Area.getSelectedArea).toBeCalled()
-  //   expect(Parameter.getDisplayedParameter).toBeCalled()
-  //   expect(wrapper.vm.selectedArea).toBe('getSelectedArea')
-  //   expect(wrapper.vm.selectedParameter).toBe('getDisplayedParameter')
-  //   expect(wrapper.vm.showModal).toBe(true)
-
-  //   wrapper.find(Modal).vm.$emit('close')
-  //   expect(wrapper.vm.showModal).toBe(false)
-  // })
-
-  // it('On select parameter null', () => {
-  //   mockDisplayedLayer.setDisplayedLayer.mockClear()
-  //   wrapper.find(Managing).vm.$emit('selectedParameter', false)
-  //   expect(mockDisplayedLayer.setDisplayedLayer).not.toBeCalled()
-  // })
-
-  // it('On select parameter', () => {
-  //   const selectedParameter = {
-  //     layerUrl: 'layerUrl',
-  //     layerParameters: 'layerParameters'
-  //   }
-  //   wrapper.find(Managing).vm.$emit('selectedParameter', selectedParameter)
-  //   expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith(selectedParameter)
-  // })
-
   it('On select reported parameter', () => {
     const selectedReportedParameter = {
       layerUrl: 'layerUrl',
       layerParameters: 'layerParameters'
     }
-    wrapper.find(Managing).vm.$emit('selectedReportedParameter', selectedReportedParameter)
+    wrapper.vm.showSidebar = true
+    wrapper.find(MapControlBar).vm.$emit('selectedReportedLayer', selectedReportedParameter)
     expect(wrapper.emitted().selectedReportedLayer).toEqual([[selectedReportedParameter]])
   })
 })

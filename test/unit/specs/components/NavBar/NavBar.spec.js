@@ -1,5 +1,6 @@
 import NavBar from '@/components/NavBar/NavBar.vue'
 import ProfileAboutSidebar from '@/components/NavBar/ProfileAboutSidebar.vue'
+import ProfileList from '@/components/NavBar/ProfileList'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 
@@ -42,8 +43,9 @@ async function verifyClickOpenSideBar (name) {
     router
   })
 
-  const button = wrapper.find(`#nav-${name} a`)
-  button.trigger('click')
+  // const button = wrapper.find(`#nav-${name} a`)
+  // button.trigger('click')
+  wrapper.find(ProfileList).vm.$emit('openSideBar', name)
   expect(wrapper.vm.sideBarTab).toBe(name)
   expect(wrapper.vm.showSidebar).toBe(true)
 
@@ -52,7 +54,7 @@ async function verifyClickOpenSideBar (name) {
   expect(wrapper.vm.showSidebar).toBe(false)
 }
 
-describe('DashboardCardModal.vue', () => {
+describe('NavBar.vue', () => {
   it('Click on dashboard', () => {
     verifyClickGoTo('dashboard')
   })
@@ -70,7 +72,7 @@ describe('DashboardCardModal.vue', () => {
   })
 
   it('Click on profile and toggle sidebar', async () => {
-    await verifyClickOpenSideBar('profile')
+    await verifyClickOpenSideBar('settings')
   })
 
   it('Click on about and toggle sidebar', async () => {

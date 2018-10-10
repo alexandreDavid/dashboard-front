@@ -1,12 +1,12 @@
 <template>
-  <div id="managing">
+  <div id="managing" class="w-100">
     <button id="forecast-selection-btn" @click="showModal = true" class="btn btn-primary shadow over-map-control position-relative w-100">Display available layers</button>
     <modal v-if="showModal" @close="showModal = false">
       <h3 slot="header">Select data to display</h3>
       <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
     </modal>
     <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="selectedParameter" @close="showModalGraph = false"></GraphModal>
-    <div class="card shadow my-2 over-map-control" style="min-width: 250px;">
+    <div class="card shadow my-2 over-map-control w-100">
       <div class="card-body p-2">
         <h6>
           {{ displayedParameter.label }}
