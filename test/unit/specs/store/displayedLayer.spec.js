@@ -8,6 +8,7 @@ let mockTileLayerWMS = {
   addTo: jest.fn().mockReturnThis(),
   remove: jest.fn(),
   setParams: jest.fn(),
+  setOpacity: jest.fn(),
   wmsParams: {
     time: 'time'
   },

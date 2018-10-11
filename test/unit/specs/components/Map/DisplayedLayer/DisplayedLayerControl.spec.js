@@ -1,15 +1,27 @@
 import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 import { shallowMount } from '@vue/test-utils'
-import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
+import Area from '@/store/area'
+import GraphModal from '@/components/Graph/GraphModal'
 
 const mockDisplayedLayer = {
   setDisplayedLayer: jest.fn(),
   setTime: jest.fn(),
-  formatTime: jest.fn()
+  formatTime: jest.fn(),
+  setOpacity: jest.fn()
 }
 function getDisplayedLayer () {
   return mockDisplayedLayer
 }
+
+const mockParameter = {
+  hasGraph: true
+}
+
+const mockGetSelectedArea = 'getSelectedArea'
+jest.mock('@/store/area', () => ({
+  getSelectedArea: jest.fn()
+}))
+Area.getSelectedArea.mockReturnValue(mockGetSelectedArea)
 
 describe('DisplayedLayerControl.vue', () => {
   let wrapper
@@ -20,114 +32,17 @@ describe('DisplayedLayerControl.vue', () => {
         getDisplayedLayer: getDisplayedLayer
       },
       propsData: {
-        parameter: {
-          hasTimeFrame: true,
-          layer: 'layer',
-          type: 'type',
-          times: []
-        }
+        parameter: mockParameter
       }
     })
   })
 
-  it('Mounted correctly without model', () => {
-    mockDisplayedLayer.setDisplayedLayer.mockClear()
-    shallowMount(DisplayedLayerControl, {
-      provide: {
-        getDisplayedLayer: getDisplayedLayer
-      },
-      propsData: {
-        parameter: {
-          type: 'type',
-          times: []
-        }
-      }
-    })
-    expect(mockDisplayedLayer.setDisplayedLayer).not.toBeCalled()
-  })
+  it('On open graph modal', () => {
+    wrapper.find('#open-graph-modal').trigger('click')
+    expect(wrapper.vm.showModalGraph).toBe(true)
+    expect(wrapper.vm.selectedArea).toBe(mockGetSelectedArea)
 
-  it('Mounted correctly with model', () => {
-    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
-  })
-
-  it('On changeSelectedModel as interval in', () => {
-    const now = Date.now() / 1000
-    const mockModel = {
-      type: 'interval',
-      times: [
-        {endTime: now - 2},
-        {endTime: now - 1},
-        {endTime: now},
-        {endTime: now + 1},
-        {endTime: now + 2}
-      ]
-    }
-    wrapper.vm.changeSelectedModel(mockModel)
-    expect(wrapper.vm.activeModel).toEqual(mockModel)
-    expect(mockDisplayedLayer.formatTime).toBeCalledWith({endTime: now + 1})
-    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
-  })
-
-  it('On changeSelectedModel as interval out', () => {
-    const now = Date.now() / 1000
-    const mockModel = {
-      type: 'interval',
-      times: [
-        {endTime: now - 4},
-        {endTime: now - 3},
-        {endTime: now - 2},
-        {endTime: now - 1}
-      ]
-    }
-    wrapper.vm.changeSelectedModel(mockModel)
-    expect(wrapper.vm.activeModel).toEqual(mockModel)
-    expect(mockDisplayedLayer.formatTime).toBeCalledWith({endTime: now - 4})
-    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
-  })
-
-  it('On changeSelectedModel as date', () => {
-    const mockModel = {
-      type: 'date',
-      times: ['time1', 'time2', 'lasttime']
-    }
-    wrapper.vm.changeSelectedModel(mockModel)
-    expect(wrapper.vm.activeModel).toEqual(mockModel)
-    expect(mockDisplayedLayer.formatTime).toBeCalledWith('lasttime')
-    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
-  })
-
-  it('On changeSelectedModel as no valid type', () => {
-    mockDisplayedLayer.formatTime.mockClear()
-    const mockModel = {
-      type: 'novalid',
-      times: ['time1', 'time2', 'lasttime']
-    }
-    wrapper.vm.changeSelectedModel(mockModel)
-    expect(wrapper.vm.activeModel).toEqual(mockModel)
-    expect(mockDisplayedLayer.formatTime).not.toBeCalled()
-    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
-  })
-
-  it('On time serie changes', () => {
-    wrapper.find(TimeSerie).vm.$emit('change', 'change')
-    expect(mockDisplayedLayer.setTime).toBeCalledWith('change')
-  })
-
-  it('On parameter changes', () => {
-    mockDisplayedLayer.setDisplayedLayer.mockClear()
-    wrapper.setProps({
-      parameter: {}
-    })
-    expect(mockDisplayedLayer.setDisplayedLayer).not.toBeCalled()
-
-    wrapper.setProps({
-      parameter: {
-        hasTimeFrame: true,
-        layer: 'layer',
-        type: 'type',
-        times: []
-      }
-    })
-    expect(mockDisplayedLayer.setDisplayedLayer).toBeCalled()
+    wrapper.find(GraphModal).vm.$emit('close')
+    expect(wrapper.vm.showModalGraph).toBe(false)
   })
 })

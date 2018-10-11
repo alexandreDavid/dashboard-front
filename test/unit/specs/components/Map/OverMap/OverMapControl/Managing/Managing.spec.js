@@ -3,9 +3,6 @@ import { mount, shallowMount } from '@vue/test-utils'
 import Modal from '@/components/Modal/Modal'
 import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
 import Parameter from '@/store/parameter'
-import GraphModal from '@/components/Graph/GraphModal'
-import Area from '@/store/area'
-import Unit from '@/utils/unit'
 
 const mockMap = {
   on: jest.fn().mockImplementation((evtName, callback) => {
@@ -22,7 +19,8 @@ function getMapMock () {
 const mockDisplayedLayer = {
   setDisplayedLayer: jest.fn(),
   getUnit: jest.fn(),
-  setUnit: jest.fn()
+  setUnit: jest.fn(),
+  setOpacity: jest.fn()
 }
 function getDisplayedLayer () {
   return function () {
@@ -34,12 +32,6 @@ jest.mock('@/store/parameter', () => ({
   getDisplayedParameter: jest.fn(),
   setDisplayedParameter: jest.fn()
 }))
-
-const mockGetSelectedArea = {getSelectedArea: 'getSelectedArea'}
-jest.mock('@/store/area', () => ({
-  getSelectedArea: jest.fn()
-}))
-Area.getSelectedArea.mockReturnValue(mockGetSelectedArea)
 
 const mockGetDisplayedLayer = {
   displayName: 'displayName',
@@ -113,13 +105,13 @@ describe('Managing.vue', () => {
   //   expect(wrapper.vm.displayedParameter).toBe(mockGetDisplayedLayer)
   // })
 
-  it('On open graph modal', () => {
-    wrapper.find('#open-graph-modal').trigger('click')
-    expect(wrapper.vm.showModalGraph).toBe(true)
-    expect(wrapper.vm.selectedArea).toBe(mockGetSelectedArea)
-    expect(wrapper.vm.selectedParameter).toBe(mockGetDisplayedLayer)
+  // it('On open graph modal', () => {
+  //   wrapper.find('#open-graph-modal').trigger('click')
+  //   expect(wrapper.vm.showModalGraph).toBe(true)
+  //   expect(wrapper.vm.selectedArea).toBe(mockGetSelectedArea)
+  //   expect(wrapper.vm.selectedParameter).toBe(mockGetDisplayedLayer)
 
-    wrapper.find(GraphModal).vm.$emit('close')
-    expect(wrapper.vm.showModalGraph).toBe(false)
-  })
+  //   wrapper.find(GraphModal).vm.$emit('close')
+  //   expect(wrapper.vm.showModalGraph).toBe(false)
+  // })
 })

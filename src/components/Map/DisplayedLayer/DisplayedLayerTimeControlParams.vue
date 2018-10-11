@@ -5,13 +5,13 @@
         {{value.label}}
       </button>
     </div>
-    <displayed-layer-control-params v-if="activeValue.data" :data="activeValue.data" @changeDisplaying="changeDisplaying"></displayed-layer-control-params>
+    <displayed-layer-time-control-params v-if="activeValue.data" :data="activeValue.data" @changeDisplaying="changeDisplaying"></displayed-layer-time-control-params>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'DisplayedLayerControlParams',
+  name: 'DisplayedLayerTimeControlParams',
   props: ['data'],
   data () {
     return {

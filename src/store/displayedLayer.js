@@ -33,6 +33,7 @@ export default class {
         )
       }
       this._displayedLayer.addTo(this._map)
+      this.setOpacity(80)
       this._defaultUnit = this._parameter.unit
       this._activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this._defaultUnit)) || this._defaultUnit
       this._hasInteractiveLegend = this._parameter.interactiveLegend
@@ -83,6 +84,9 @@ export default class {
   }
   getTimeModels () {
     return this._parameter.timeModels
+  }
+  setOpacity (opacity) {
+    this._displayedLayer && this._displayedLayer.setOpacity(opacity / 100)
   }
   async getFeatureInfo (evt) {
     if (this._displayedLayer) {

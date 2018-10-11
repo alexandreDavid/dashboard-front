@@ -1,73 +1,61 @@
 <template>
-  <div id="time-serie" class="w-100" v-if="isLoaded">
-    <div class="mb-2" v-if="parameter.data">
-      <displayed-layer-control-params :data="parameter.data" @changeDisplaying="changeSelectedModel"></displayed-layer-control-params>
+  <div class="card shadow my-2 over-map-control w-100">
+    <div class="card-body p-2">
+      <h6>
+        <button class="btn btn-sm btn-light" @click="toggleDisplay"><font-awesome-icon v-bind:icon="opacity ? 'eye' : 'eye-slash'" /></button> {{ parameter.label }}
+      </h6>
+      <button v-if="parameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon icon="chart-bar" /> Open graph</button>
+      <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter" @close="showModalGraph = false"></GraphModal>
+      <opacity-slider class="w-100" v-model="opacity" @input="setOpacity"></opacity-slider>
+      <Legend class="pl-2" v-if="parameter"></Legend>
     </div>
-    <TimeSerie class="d-inline-block align-bottom" v-if="activeModel && parameter.hasTimeFrame" v-model="activeModel" @change="onChange"></TimeSerie>
   </div>
 </template>
 
 <script>
-import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
-import DisplayedLayerControlParams from './DisplayedLayerControlParams'
+import OpacitySlider from '@/components/Slider/OpacitySlider'
+import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
+import Area from '@/store/area'
+import GraphModal from '@/components/Graph/GraphModal'
 
 export default {
   name: 'DisplayedLayerControl',
   inject: ['getDisplayedLayer'],
   props: ['parameter'],
   components: {
-    TimeSerie,
-    DisplayedLayerControlParams
+    OpacitySlider,
+    Legend,
+    GraphModal
   },
   data () {
     return {
       activeModel: false,
-      isLoaded: true
+      isLoaded: true,
+      opacity: 80,
+      savedOpacity: false,
+      selectedArea: false,
+      showModalGraph: false
     }
   },
   mounted () {
-    if (this.parameter.layer) {
-      this.changeSelectedModel(this.parameter)
-    }
+    this.setOpacity(this.opacity)
   },
   methods: {
-    onChange (value) {
-      this.getDisplayedLayer().setTime(value)
+    setOpacity (value) {
+      this.getDisplayedLayer().setOpacity(value)
     },
-    changeSelectedModel (model) {
-      this.activeModel = model
-      let activeTime = false
-      if (model.type === 'interval') {
-        let nowIndex = model.times.findIndex(time => (Date.now() / 1000) < time.endTime)
-        activeTime = model.times[(nowIndex > -1 ? nowIndex : 0)]
-      } else if (model.type === 'date') {
-        activeTime = model.times[model.times.length - 1]
+    toggleDisplay () {
+      if (this.opacity) {
+        this.savedOpacity = this.opacity
+        this.opacity = 0
+      } else {
+        this.opacity = this.savedOpacity
       }
-      let layerParameters = {
-        layers: model.layer,
-        format: 'image/png',
-        transparent: true
-      }
-      if (activeTime) {
-        layerParameters.time = this.getDisplayedLayer().formatTime(activeTime)
-      }
-      this.getDisplayedLayer().setDisplayedLayer({
-        layerUrl: `${process.env.GEOSERVER_URL}/wms`,
-        layerParameters,
-        unit: this.parameter.unit,
-        legendUrl: this.parameter.legendUrl
-      })
-    }
-  },
-  watch: {
-    parameter (parameter) {
-      this.isLoaded = false
-      if (parameter.layer) {
-        this.changeSelectedModel(parameter)
-      }
-      this.$nextTick(() => {
-        this.isLoaded = true
-      })
+      this.setOpacity(this.opacity)
+    },
+    initModal () {
+      this.selectedArea = Area.getSelectedArea()
+      this.showModalGraph = true
     }
   }
 }

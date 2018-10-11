@@ -5,16 +5,7 @@
       <h3 slot="header">Select data to display</h3>
       <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
     </modal>
-    <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="selectedParameter" @close="showModalGraph = false"></GraphModal>
-    <div class="card shadow my-2 over-map-control w-100">
-      <div class="card-body p-2">
-        <h6>
-          {{ displayedParameter.label }}
-        </h6>
-        <button v-if="displayedParameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon icon="chart-bar" /> Open graph</button>
-        <Legend class="pl-2" v-if="displayedParameter"></Legend>
-      </div>
-    </div>
+        <displayed-layer-control v-bind:parameter="displayedParameter"></displayed-layer-control>
     <div class="card shadow my-2 over-map-control">
       <div class="card-body p-2">
         <h6>
@@ -42,10 +33,9 @@ import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/
 import Parameter from '@/store/parameter'
 import ElevationSlider from '@/components/Slider/ElevationSlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
-import Area from '@/store/area'
-import GraphModal from '@/components/Graph/GraphModal'
 import Unit from '@/utils/unit'
 import Settings from '@/store/settings'
+import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 
 export default {
   name: 'Managing',
@@ -54,7 +44,7 @@ export default {
     ForecastSelection,
     ElevationSlider,
     Legend,
-    GraphModal
+    DisplayedLayerControl
   },
   inject: ['getMap', 'getDisplayedLayer'],
   data () {
@@ -91,6 +81,7 @@ export default {
       })
       Parameter.setDisplayedParameter(selectedParameter)
       this.getDisplayedLayer().setDisplayedLayer(selectedParameter)
+      this.getDisplayedLayer().setOpacity(40)
       this.changeActiveUnit(this.getDisplayedLayer().getUnit())
       this.$emit('selectedParameter', selectedParameter)
     },
@@ -99,11 +90,6 @@ export default {
         label: 'Meteorological stations',
         name: 'meteorological_station'
       } : false))
-    },
-    initModal () {
-      this.selectedArea = Area.getSelectedArea()
-      this.selectedParameter = Parameter.getDisplayedParameter()
-      this.showModalGraph = true
     },
     changeActiveUnit (unit) {
       this.getDisplayedLayer().setUnit(unit)
