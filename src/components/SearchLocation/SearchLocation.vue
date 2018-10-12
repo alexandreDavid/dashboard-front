@@ -1,34 +1,34 @@
 <template>
   <div id="search-location">
-    <div class="autocomplete position-relative w-100">
-      <input
-        type="text"
-        class="form-control w-100"
-        placeholder="Search a location"
-        @input="onChange"
-        @focus="onFocus"
-        v-model="search"
-        @keyup.down="onArrowDown"
-        @keyup.up="onArrowUp"
-        @keyup.enter="onEnter">
-      <ul
+    <div class="list-group" role="tablist">
+      <div class="input-group position-relative w-100" v-bind:class="{'rounded-bottom-0': isOpen && results.length}">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search a location"
+          @input="onChange"
+          @focus="onFocus"
+          v-model="search"
+          @keyup.down="onArrowDown"
+          @keyup.up="onArrowUp"
+          @keyup.enter="onEnter">
+      </div>
+      <div
+        class="list-group-item list-group-item-action"
         v-show="isOpen"
-        class="list-group shadow position-absolute w-100" style="z-index: 1060;">
-        <li
-          class="loading"
-          v-if="isLoading">
-          Loading results...
-        </li>
-        <li
-          v-else
-          v-for="(result, i) in results"
-          :key="i"
-          @click="setResult(result)"
-          class="list-group-item list-group-item-action"
-          :class="{ 'active': i === arrowCounter }">
-          {{ result.name }}
-        </li>
-      </ul>
+        v-if="isLoading">
+        Loading results...
+      </div>
+      <div
+        v-else
+        v-for="(result, i) in results"
+        v-show="isOpen"
+        :key="i"
+        @click="setResult(result)"
+        class="list-group-item list-group-item-action"
+        :class="{ 'active': i === arrowCounter }">
+        {{ result.name }}
+      </div>
     </div>
   </div>
 </template>
@@ -104,7 +104,7 @@ export default {
     returnToInitialeStatement () {
       this.isOpen = false
       this.arrowCounter = -1
-      this.search = this.prevValue && this.prevValue.name
+      this.search = (this.prevValue && this.prevValue.name) || ''
     },
     handleClickOutside (evt) {
       if (!this.$el.contains(evt.target)) {
@@ -118,3 +118,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.rounded-bottom-0 {
+  input, button {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+  }
+}
+</style>
