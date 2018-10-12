@@ -114,13 +114,13 @@ export default {
       }
     },
     goToExistingArea () {
-      this.areaLayer.show()
+      this.areaLayer.add()
       this.areaLayer.zoomToArea()
       this.drawnItems.remove()
       this.map.removeControl(this.drawControl)
     },
     goToCustom () {
-      this.areaLayer.hide()
+      this.areaLayer.remove()
       this.drawnItems.addTo(this.map)
       this.map.addControl(this.drawControl)
       if (this.drawnItems.getBounds().isValid()) {

@@ -13,7 +13,7 @@
     </div>
     <div class="over-map-left d-flex d-sm-none flex-nowrap">
       <div class="flex-grow-1 over-map-control">
-        <area-selection-control @input="onSearchLocationSelected" v-model="selectedArea" @openSelectionModal="displayAreaSelectionModal = true" @zoomToArea="zoomToArea" class="shadow"></area-selection-control>
+        <!-- <area-selection-control @input="onSearchLocationSelected" v-model="selectedArea" @openSelectionModal="displayAreaSelectionModal = true" @zoomToArea="zoomToArea" class="shadow"></area-selection-control> -->
       </div>
       <div class="p-1 d-block d-sm-none over-map-control">
         <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon icon="bars" /></button>
@@ -56,12 +56,12 @@ export default {
     this.selectedArea = Area.getSelectedArea()
   },
   methods: {
-    onSearchLocationSelected (newValue) {
-      if (newValue) {
-        Area.setSelectedArea(newValue)
-        this.getAreaLayer().setSelectedArea(newValue)
-      }
-    },
+    // onSearchLocationSelected (newValue) {
+    //   if (newValue) {
+    //     Area.setSelectedArea(newValue)
+    //     this.getAreaLayer().setSelectedArea(newValue)
+    //   }
+    // },
     onSelectedReportedLayer (selectedReportedLayer) {
       this.$emit('selectedReportedLayer', selectedReportedLayer)
     },

@@ -19,11 +19,9 @@ let AreaLayer = class {
   }
   async setSelectedArea (area) {
     this._area = area
-    if (this._areaLayer) {
-      this._areaLayer.remove()
-    }
-    if (this._subAreasLayer) {
-      this._subAreasLayer.remove()
+    this.remove()
+    if (!area) {
+      return
     }
     let geom
     if (area.type === 'custom') {
@@ -97,15 +95,19 @@ let AreaLayer = class {
   getSelectedArea () {
     return this._area
   }
-  show () {
+  add () {
     if (this._areaLayer) {
       this._areaLayer.addTo(this._map)
+    }
+    if (this._subAreasLayer) {
       this._subAreasLayer.addTo(this._map)
     }
   }
-  hide () {
+  remove () {
     if (this._areaLayer) {
       this._areaLayer.remove()
+    }
+    if (this._subAreasLayer) {
       this._subAreasLayer.remove()
     }
   }

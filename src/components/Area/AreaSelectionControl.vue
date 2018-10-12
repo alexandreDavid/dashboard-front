@@ -1,25 +1,59 @@
 <template>
   <div class="card">
     <div class="card-body p-2">
-      <h6>Working area - {{ value.name }}</h6>
-      <div class="ml-2">
-        <button class="btn btn-secondary btn-sm" @click="zoom"><font-awesome-icon icon="location-arrow" class="align-self-center" /> locate</button>
-        <button class="btn btn-secondary btn-sm" @click="edit"><font-awesome-icon icon="edit" class="align-self-center" /> edit</button>
+      <h6>Working area</h6>
+      <SearchLocation v-if="!drawMode" class="w-100" v-model="val" @input="onSearchLocationSelected" @locate="zoom" />
+      <div class="text-center">
+        <button class="btn btn-link" @click="startDrawMode">Draw a custom location on the map</button>
       </div>
+      <area-selection-draw-controls v-if="drawMode" @cancel="cancelDrawing" @validate="saveCustomLocation">
+      </area-selection-draw-controls>
     </div>
   </div>
 </template>
 
 <script>
+import SearchLocation from '@/components/SearchLocation/SearchLocation'
+import AreaSelectionDrawControls from './AreaSelectionDrawControls'
+import Area from '@/store/area'
+
 export default {
   name: 'AreaSelectionControl',
-  props: ['value'],
+  inject: ['getAreaLayer'],
+  components: {SearchLocation, AreaSelectionDrawControls},
+  data () {
+    return {
+      drawMode: false,
+      val: false
+    }
+  },
+  mounted () {
+    this.val = Area.getSelectedArea()
+  },
   methods: {
     zoom () {
-      this.$emit('zoomToArea')
+      this.getAreaLayer().zoomToArea()
     },
-    edit () {
-      this.$emit('openSelectionModal')
+    onSearchLocationSelected (val) {
+      this.val = val
+      Area.setSelectedArea(val)
+      this.getAreaLayer().setSelectedArea(val)
+    },
+    startDrawMode () {
+      this.getAreaLayer().remove()
+      this.drawMode = true
+    },
+    cancelDrawing () {
+      this.getAreaLayer().add()
+      this.drawMode = false
+    },
+    saveCustomLocation (newArea) {
+      this.drawMode = false
+      this.onSearchLocationSelected({
+        name: 'Custom area',
+        type: 'custom',
+        geom: newArea.toGeoJSON()
+      })
     }
   }
 }

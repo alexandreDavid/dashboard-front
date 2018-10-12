@@ -4,6 +4,7 @@
       <div class="input-group position-relative w-100" v-bind:class="{'rounded-bottom-0': isOpen && results.length}">
         <input
           type="text"
+          ref="searchLocation"
           class="form-control"
           placeholder="Search a location"
           @input="onChange"
@@ -12,9 +13,13 @@
           @keyup.down="onArrowDown"
           @keyup.up="onArrowUp"
           @keyup.enter="onEnter">
+        <div class="input-group-append" v-if="search">
+          <button class="btn btn-outline-secondary" v-if="!isOpen" type="button" @click="locate"><font-awesome-icon icon="search" /></button>
+          <button class="btn btn-outline-secondary" type="button" @click="remove"><font-awesome-icon icon="times" /></button>
+        </div>
       </div>
       <div
-        class="list-group-item list-group-item-action"
+        class="loading"
         v-show="isOpen"
         v-if="isLoading">
         Loading results...
@@ -25,7 +30,7 @@
         v-show="isOpen"
         :key="i"
         @click="setResult(result)"
-        class="list-group-item list-group-item-action"
+        class="list-group-item list-group-item-action list-group-item-light"
         :class="{ 'active': i === arrowCounter }">
         {{ result.name }}
       </div>
@@ -59,7 +64,7 @@ export default {
   watch: {
     value (val, oldVal) {
       if (val) {
-        this.setResult(val)
+        this.setResult(val, false)
       }
     }
   },
@@ -80,12 +85,12 @@ export default {
       this.onChange()
       document.addEventListener('click', this.handleClickOutside)
     },
-    setResult (result) {
+    setResult (result, emit = true) {
       this.isOpen = false
       this.prevValue = result
       this.search = result.name
       // Let's warn the parent that a change was made
-      this.$emit('input', result)
+      emit && this.$emit('input', result)
     },
     onArrowDown () {
       if (this.arrowCounter < this.results.length - 1) {
@@ -111,6 +116,15 @@ export default {
         this.returnToInitialeStatement()
         document.removeEventListener('click', this.handleClickOutside)
       }
+    },
+    remove () {
+      this.prevValue = false
+      this.returnToInitialeStatement()
+      this.$emit('input', false)
+      this.$refs.searchLocation.focus()
+    },
+    locate () {
+      this.$emit('locate', this.value)
     }
   },
   destroyed () {

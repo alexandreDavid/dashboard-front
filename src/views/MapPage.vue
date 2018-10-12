@@ -53,6 +53,7 @@ export default {
     this.map.invalidateSize()
     this.mapInitialised = true
     this.displayedLayer = new DisplayedLayer(this.map)
+    // this.areaLayer = new AreaLayer(this.map)
     this.areaLayer = new AreaLayer(this.map, Area.getSelectedArea())
   },
   methods: {
