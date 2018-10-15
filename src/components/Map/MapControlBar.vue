@@ -8,12 +8,9 @@
       <div class="row mb-2">
         <DisplayedLayers v-bind:layers="displayedLayers" @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
       </div>
-      <!-- <div class="row mb-2">
-        <button id="forecast-selection-btn" @click="showModal = true" class="btn btn-primary shadow over-map-control position-relative w-100">Display available layers</button>
-      </div> -->
-      <!-- <div class="row mb-2">
+      <div class="row mb-2">
         <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
-      </div> -->
+      </div>
     </div>
     <Loading v-if="!isLoaded"/>
   </SideBar>

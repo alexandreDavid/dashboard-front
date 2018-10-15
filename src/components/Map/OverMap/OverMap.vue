@@ -1,8 +1,6 @@
 <template>
   <div class="over-map">
-    <base-map-sidebar class="over-map-bottom" v-if="showBaseMapSidebar" @close="showBaseMapSidebar = false">
-    </base-map-sidebar>
-    <MapControlBar v-if="showSidebar" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" @close="showSidebar = false" class="position-relative over-map-left">
+    <MapControlBar v-if="showSidebar" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" @close="showSidebar = false" class="position-relative over-map-left p-0">
     </MapControlBar>
     <div class="over-map-bottom d-flex align-items-end">
       <div class=" mr-1 w-100 over-map-control">
@@ -19,6 +17,8 @@
         <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon icon="bars" /></button>
       </div>
     </div>
+    <base-map-sidebar class="over-map-bottom over-map-control" v-if="showBaseMapSidebar" @close="showBaseMapSidebar = false">
+    </base-map-sidebar>
   </div>
 </template>
 

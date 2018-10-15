@@ -1,5 +1,5 @@
 <template>
-  <div class="card shadow my-2 over-map-control w-100">
+  <div class="card shadow mt-2 over-map-control w-100">
     <div class="card-body p-2" v-if="isLoaded">
       <h6>
         <button class="btn btn-sm btn-light" @click="toggleDisplay"><font-awesome-icon v-bind:icon="opacity ? 'eye' : 'eye-slash'" /></button> {{ parameter.label }}

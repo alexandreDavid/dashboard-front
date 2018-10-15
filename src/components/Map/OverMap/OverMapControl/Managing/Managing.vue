@@ -1,12 +1,5 @@
 <template>
-  <div id="managing" class="w-100">
-    <button id="forecast-selection-btn" @click="showModal = true" class="btn btn-primary shadow over-map-control position-relative w-100">Display available layers</button>
-    <modal v-if="showModal" @close="showModal = false">
-      <h3 slot="header">Select data to display</h3>
-      <ForecastSelection slot="body" @selectedParameter="onSelectedParameter"></ForecastSelection>
-    </modal>
-        <displayed-layer-control v-bind:parameter="displayedParameter"></displayed-layer-control>
-    <div class="card shadow my-2 over-map-control">
+    <div class="card shadow w-100">
       <div class="card-body p-2">
         <h6>
           <div class="form-group form-check">
@@ -21,10 +14,6 @@
         </div>
       </div>
     </div>
-    <!-- <div class="slide-bar-content justify-content-end position-relative m-2">
-      <ElevationSlider v-model="value" class="over-map-control" v-if="displayedParameter.interactiveLegend"/>
-    </div> -->
-  </div>
 </template>
 
 <script>
