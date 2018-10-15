@@ -34,7 +34,7 @@ describe('SearchLocation.vue', () => {
   function checkNbResult (nb) {
     expect(wrapper.vm.isOpen).toBe(true)
     expect(wrapper.vm.arrowCounter).toBe(0)
-    const autocompleteResult = wrapper.findAll('li')
+    const autocompleteResult = wrapper.findAll('.list-group-item')
     // For the map opening
     expect(autocompleteResult.length).toBe(nb)
     if (nb) {
@@ -42,7 +42,7 @@ describe('SearchLocation.vue', () => {
     }
   }
   function checkActiveResult (nb) {
-    const autocompleteResult = wrapper.findAll('li')
+    const autocompleteResult = wrapper.findAll('.list-group-item')
     expect(wrapper.vm.arrowCounter).toBe(nb)
     expect(autocompleteResult.at(nb).classes()).toContain('active')
     expect(wrapper.findAll('.active').length).toBe(1)
@@ -164,7 +164,7 @@ describe('SearchLocation.vue', () => {
 
   it('On click on result', async () => {
     await display4Results()
-    const autocompleteResult = wrapper.findAll('li')
+    const autocompleteResult = wrapper.findAll('.list-group-item')
     autocompleteResult.at(1).trigger('click')
     expect(wrapper.emitted().input).toEqual([[mockAllAreas[3]]])
     expect(wrapper.find('input').element.value).toBe(mockAllAreas[3].name)

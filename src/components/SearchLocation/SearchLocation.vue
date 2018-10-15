@@ -13,7 +13,7 @@
           @keyup.down="onArrowDown"
           @keyup.up="onArrowUp"
           @keyup.enter="onEnter">
-        <div class="input-group-append" v-if="search">
+        <div class="input-group-append bg-white" v-if="search">
           <button class="btn btn-outline-secondary" v-if="!isOpen" type="button" @click="locate"><font-awesome-icon icon="search" /></button>
           <button class="btn btn-outline-secondary" type="button" @click="remove"><font-awesome-icon icon="times" /></button>
         </div>

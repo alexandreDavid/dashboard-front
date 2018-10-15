@@ -12,34 +12,31 @@
       </bar-control>
     </div>
     <div class="over-map-left d-flex d-sm-none flex-nowrap">
-      <div class="flex-grow-1 over-map-control">
-        <!-- <area-selection-control @input="onSearchLocationSelected" v-model="selectedArea" @openSelectionModal="displayAreaSelectionModal = true" @zoomToArea="zoomToArea" class="shadow"></area-selection-control> -->
+      <div class="flex-grow-1 over-map-control mr-2">
+        <SearchLocation class="shadow" v-model="selectedArea" @input="onSearchLocationSelected" @locate="zoomToArea" />
       </div>
-      <div class="p-1 d-block d-sm-none over-map-control">
+      <div class="d-block d-sm-none over-map-control">
         <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon icon="bars" /></button>
       </div>
     </div>
-    <area-selection-modal v-if="displayAreaSelectionModal" v-model="selectedArea" @input="onSearchLocationSelected" @close="displayAreaSelectionModal = false"></area-selection-modal>
   </div>
 </template>
 
 <script>
-import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
-import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
-
 import Area from '@/store/area'
 import BarControl from './OverMapControl/BarControl/BarControl'
 import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
 
+import SearchLocation from '@/components/SearchLocation/SearchLocation'
+
 export default {
   name: 'OverMap',
   components: {
-    AreaSelectionControl,
-    AreaSelectionModal,
     MapControlBar: () => import('@/components/Map/MapControlBar'),
     BaseMapSidebar: () => import('@/components/Map/OverMap/OverMapControl/BaseMap/BaseMapSidebar'),
     BarControl,
-    DisplayedLayerTimeControl
+    DisplayedLayerTimeControl,
+    SearchLocation
   },
   inject: ['getMap', 'getDisplayedLayer', 'getAreaLayer'],
   props: ['selectedParameter'],
@@ -56,12 +53,10 @@ export default {
     this.selectedArea = Area.getSelectedArea()
   },
   methods: {
-    // onSearchLocationSelected (newValue) {
-    //   if (newValue) {
-    //     Area.setSelectedArea(newValue)
-    //     this.getAreaLayer().setSelectedArea(newValue)
-    //   }
-    // },
+    onSearchLocationSelected (newValue) {
+      Area.setSelectedArea(newValue)
+      this.getAreaLayer().setSelectedArea(newValue)
+    },
     onSelectedReportedLayer (selectedReportedLayer) {
       this.$emit('selectedReportedLayer', selectedReportedLayer)
     },

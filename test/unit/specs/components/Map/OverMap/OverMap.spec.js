@@ -1,7 +1,6 @@
 import OverMap from '@/components/Map/OverMap/OverMap'
 import { shallowMount } from '@vue/test-utils'
-import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
-import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
+import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import Area from '@/store/area'
 import MapControlBar from '@/components/Map/MapControlBar'
 
@@ -63,16 +62,14 @@ describe('OverMap.vue', () => {
 
   it('Display SearchLocationResult with result', () => {
     const locationFound = 'SearchLocationResult'
-    wrapper.find(AreaSelectionControl).vm.$emit('openSelectionModal')
-    wrapper.find(AreaSelectionModal).vm.$emit('input', locationFound)
+    wrapper.find(SearchLocation).vm.$emit('input', locationFound)
     expect(wrapper.vm.selectedArea).toBe(locationFound)
     expect(Area.setSelectedArea).toBeCalledWith(locationFound)
     expect(mockAreaLayer.setSelectedArea).toBeCalledWith(locationFound)
   })
 
   it('Display SearchLocationResult without result', () => {
-    wrapper.find(AreaSelectionControl).vm.$emit('openSelectionModal')
-    wrapper.find(AreaSelectionModal).vm.$emit('input')
+    wrapper.find(SearchLocation).vm.$emit('input')
     expect(wrapper.vm.searchLocationResult).toBeUndefined()
   })
 
