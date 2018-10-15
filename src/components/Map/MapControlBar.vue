@@ -1,15 +1,26 @@
 <template>
-  <SideBar @close="close()" class="w-lg bg-light" :is-static="isStatic">
+<div class="h-100">
+  <SideBar @close="close()" class="position-relative w-lg bg-light" :is-static="isStatic">
     <div class="container" v-if="isLoaded">
-      <div class="row">
-        <area-selection-control class="shadow w-100 mb-2"></area-selection-control>
+      <div class="row mb-2">
+        <area-selection-control class="shadow w-100"></area-selection-control>
       </div>
-      <div class="row">
+      <div class="row mb-2">
+        <DisplayedLayers v-bind:layers="displayedLayers" @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
+      </div>
+      <!-- <div class="row mb-2">
+        <button id="forecast-selection-btn" @click="showModal = true" class="btn btn-primary shadow over-map-control position-relative w-100">Display available layers</button>
+      </div> -->
+      <!-- <div class="row mb-2">
         <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
-      </div>
+      </div> -->
     </div>
     <Loading v-if="!isLoaded"/>
   </SideBar>
+  <SideBar v-if="showModal" @close="showModal = false" title="Add a new layer" class="position-absolute w-lg bg-light" style="left: 100%;z-index: 1029;">
+    <ForecastSelection @selectedParameter="onSelectedParameter"></ForecastSelection>
+  </SideBar>
+</div>
 </template>
 
 <script>
@@ -19,6 +30,7 @@ import Parameter from '@/store/parameter'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import SideBar from '@/components/SideBar/SideBar'
 import Loading from '@/components/Loading/Loading'
+import DisplayedLayers from '@/components/DisplayedLayers/DisplayedLayers'
 
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import Managing from '@/components/Map/OverMap/OverMapControl/Managing/Managing'
@@ -32,18 +44,25 @@ export default {
     SideBar,
     Loading,
     AreaSelectionControl,
-    Managing
+    Managing,
+    DisplayedLayers
   },
   props: ['isStatic'],
   inject: ['getMap', 'getDisplayedLayer', 'getAreaLayer'],
   data () {
     return {
       showModal: false,
-      displayedParameter: {},
       value: 50,
       displayMeteoStations: true,
-      displaySelectedLayer: true,
-      isLoaded: false
+      isLoaded: false,
+      displayedLayers: []
+    }
+  },
+  async created () {
+    this.displayedLayers = Parameter.getDisplayedParameters()
+    if (!this.displayedLayers.length) {
+      const allParams = await Parameter.getAllParameters()
+      this.displayedLayers.push(allParams[0])
     }
   },
   mounted () {
@@ -56,12 +75,7 @@ export default {
     },
     onSelectedParameter (selectedParameter) {
       this.showModal = false
-      if (selectedParameter) {
-        this.displayedParameter = selectedParameter
-        Parameter.setDisplayedParameter(selectedParameter)
-        this.getDisplayedLayer().setDisplayedLayer(selectedParameter)
-      }
-      this.$emit('selectedParameter', selectedParameter)
+      this.displayedLayers.push(selectedParameter)
     },
     onSelectedReportedParameter (selectedReportedParameter) {
       this.$emit('selectedReportedLayer', selectedReportedParameter)

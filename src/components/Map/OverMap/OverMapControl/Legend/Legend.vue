@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white">
     <div v-if="activeUnitLabel" class="mx-1">Unit: {{ activeUnitLabel }}</div>
-    <div class="legend-displaying" v-if="getDisplayedLayer()._hasInteractiveLegend">
+    <div class="legend-displaying" v-if="layer._hasInteractiveLegend">
       <div v-if="asline" class="on-line position-relative d-flex border rounded-left rounded-right">
         <button type="button" class="btn btn-sm btn-secondary rounded-0" @click="switchUnit()">{{ activeUnit}}</button>
         <div class="gradient" v-bind:style="{ background: gradientColor }">
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <img v-bind:src="getDisplayedLayer()._legendUrl" v-else-if="!asline">
+    <img v-bind:src="layer._legendUrl" v-else-if="!asline">
   </div>
 </template>
 
@@ -38,7 +38,6 @@ import Settings from '@/store/settings'
 
 export default {
   name: 'Legend',
-  inject: ['getDisplayedLayer'],
   props: [
     'asline', 'layer'
   ],
@@ -84,8 +83,8 @@ export default {
   },
   mounted () {
     this.gradientColor = `linear-gradient(${this.asline ? 'to right,' : ''}${this.displayedValues.map(d => this.convertHex(d.color, d.opacity)).join(', ')})`
-    this.unitFamily = Unit.getFamilyUnit(this.getDisplayedLayer().getUnit())
-    this.changeActiveUnit(Settings.activeSettings[this.unitFamily] || this.getDisplayedLayer().getUnit())
+    this.unitFamily = Unit.getFamilyUnit(this.layer.getUnit())
+    this.changeActiveUnit(Settings.activeSettings[this.unitFamily] || this.layer.getUnit())
   },
   methods: {
     changeActiveUnit (unit) {

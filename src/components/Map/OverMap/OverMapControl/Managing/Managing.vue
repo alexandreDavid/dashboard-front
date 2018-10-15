@@ -60,14 +60,14 @@ export default {
       activeUnits: Settings.activeSettings
     }
   },
-  async created () {
-    let displayedParameter = Parameter.getDisplayedParameter()
-    if (!displayedParameter) {
-      const allParams = await Parameter.getAllParameters()
-      displayedParameter = allParams[0]
-    }
-    this.onSelectedParameter(displayedParameter)
-  },
+  // async created () {
+  //   let displayedParameter = Parameter.getDisplayedParameter()
+  //   if (!displayedParameter) {
+  //     const allParams = await Parameter.getAllParameters()
+  //     displayedParameter = allParams[0]
+  //   }
+  //   this.onSelectedParameter(displayedParameter)
+  // },
   mounted () {
     this.toggleMeteorologicalStations(this.displayMeteoStations)
   },

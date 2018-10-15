@@ -51,8 +51,8 @@ export default {
     this.parameterGroupings = await Parameter.getAllParameterGroupings()
 
     // selection of the current layer
-    const displayedParameter = Parameter.getDisplayedParameter()
-    this.activeParam = displayedParameter && displayedParameter.paramName
+    // const displayedParameter = Parameter.getDisplayedParameter()
+    // this.activeParam = displayedParameter && displayedParameter.paramName
 
     this.isLoaded = true
   },
@@ -69,7 +69,7 @@ export default {
     },
     selectParameter (selectedParameter) {
       this.activeParam = selectedParameter.paramName
-      Parameter.setDisplayedParameter(selectedParameter)
+      // Parameter.setDisplayedParameter(selectedParameter)
       this.$emit('selectedParameter', selectedParameter)
     }
   }

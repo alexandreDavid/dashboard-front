@@ -1,7 +1,7 @@
 import Data from '@/store/data'
 
 let parameters = []
-let displayedParameter = false
+let displayedParameters = []
 
 export default {
   async getAllParameters () {
@@ -367,11 +367,11 @@ export default {
     let structure = await Data.getStructure()
     return structure.parameterGroupings
   },
-  setDisplayedParameter (parameter) {
-    displayedParameter = parameter
+  setDisplayedParameters (parameters) {
+    displayedParameters = parameters
   },
-  getDisplayedParameter () {
-    return displayedParameter
+  getDisplayedParameters () {
+    return displayedParameters
   },
   getParams () {
     return parameters
