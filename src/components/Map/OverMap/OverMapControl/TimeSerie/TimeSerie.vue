@@ -1,8 +1,8 @@
 <template>
   <div id="time-serie" class="w-100">
-    <TimeSlot class="d-none d-sm-block" v-if="activeModel && activeModel.type === 'interval'" @change="onChange" v-model="value"></TimeSlot>
-    <TimeSlider class="d-none d-sm-block" v-if="activeModel && activeModel.type === 'date'" v-model="activeTime" @input="onChange" v-bind:model="activeModel"></TimeSlider>
-    <TimeSlotMobile class="d-block d-sm-none" @change="onChange" v-model="value"></TimeSlotMobile>
+    <TimeSlot class="d-none d-sm-block" v-if="activeModel && activeModel.type === 'interval'" @input="onChange" v-model="val" v-bind:model="activeModel"></TimeSlot>
+    <TimeSlider class="d-none d-sm-block" v-if="activeModel && activeModel.type === 'date'" v-model="val" @input="onChange" v-bind:model="activeModel"></TimeSlider>
+    <TimeSlotMobile class="d-block d-sm-none" v-if="activeModel" @input="onChange" v-model="val" v-bind:model="activeModel"></TimeSlotMobile>
   </div>
 </template>
 
@@ -13,11 +13,19 @@ import TimeSlotMobile from './TimeSlotMobile'
 
 export default {
   name: 'TimeSerie',
-  props: ['value'],
+  props: ['value', 'activeTime'],
   components: {
     TimeSlot,
     TimeSlider,
     TimeSlotMobile
+  },
+  computed: {
+    val: {
+      get () {
+        return this.activeTime
+      },
+      set (val) {}
+    }
   },
   watch: {
     value: 'changeSelectedModel'
@@ -25,7 +33,6 @@ export default {
   data () {
     return {
       activeModel: false,
-      activeTime: false,
       activeIndex: false
     }
   },
@@ -38,10 +45,6 @@ export default {
     },
     changeSelectedModel (model) {
       this.activeModel = model
-      if (model.type === 'date') {
-        this.activeTime = model.times[model.times.length - 1]
-        this.onChange(this.activeTime)
-      }
     }
   }
 }

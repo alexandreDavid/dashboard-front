@@ -1,13 +1,14 @@
 <template>
-  <div class="card shadow mt-2 over-map-control w-100">
+  <div class="card shadow mt-2 w-100">
     <div class="card-body p-2" v-if="isLoaded">
       <h6>
         <button class="btn btn-sm btn-light" @click="toggleDisplay"><font-awesome-icon v-bind:icon="opacity ? 'eye' : 'eye-slash'" /></button> {{ parameter.label }}
       </h6>
       <button v-if="parameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon icon="chart-bar" /> Open graph</button>
       <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter" @close="showModalGraph = false"></GraphModal>
+      <displayed-layer-time-control v-bind:parameter="parameter" :layer="layer" v-if="parameter"></displayed-layer-time-control>
       <opacity-slider class="w-100" v-model="opacity" @input="setOpacity"></opacity-slider>
-      <Legend class="pl-2" v-if="parameter" v-bind:layer="layer"></Legend>
+      <Legend class="p-2" v-if="parameter" v-bind:layer="layer"></Legend>
     </div>
     <Loading v-else></Loading>
   </div>
@@ -19,6 +20,7 @@ import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import Area from '@/store/area'
 import GraphModal from '@/components/Graph/GraphModal'
 import Loading from '@/components/Loading/Loading'
+import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
 
 import DisplayedLayer from '@/store/displayedLayer'
 
@@ -30,7 +32,8 @@ export default {
     OpacitySlider,
     Legend,
     GraphModal,
-    Loading
+    Loading,
+    DisplayedLayerTimeControl
   },
   data () {
     return {
@@ -40,7 +43,8 @@ export default {
       opacity: 80,
       savedOpacity: false,
       selectedArea: false,
-      showModalGraph: false
+      showModalGraph: false,
+      displayDropDownTime: false
     }
   },
   mounted () {

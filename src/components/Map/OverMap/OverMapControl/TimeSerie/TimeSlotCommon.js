@@ -2,7 +2,7 @@ const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export default {
   props: [
-    'value'
+    'value', 'model'
   ],
   data () {
     return {
@@ -11,7 +11,17 @@ export default {
     }
   },
   mounted () {
-    this.goToNow()
+    let curIndex = this.model.times.findIndex(time => this.value.endTime === time.endTime)
+    if (this.value.endTime) {
+      curIndex = this.model.times.findIndex(time => this.value.endTime === time.endTime)
+    } else {
+      curIndex = this.model.times.findIndex(time => this.value === time)
+    }
+    if (curIndex > -1) {
+      this.goToTime(curIndex)
+    } else {
+      this.goToNow()
+    }
   },
   methods: {
     goToTime (timeIdx) {
@@ -20,11 +30,11 @@ export default {
       this.afterSelect()
     },
     goToNow () {
-      let nowIndex = this.value.times.findIndex(time => (Date.now() / 1000) < time.endTime)
+      let nowIndex = this.model.times.findIndex(time => (Date.now() / 1000) < time.endTime)
       this.goToTime((nowIndex > -1 ? nowIndex : 0))
     },
     afterSelect () {
-      this.$emit('change', this.value.times[this.currentIndex])
+      this.$emit('input', this.model.times[this.currentIndex])
     },
     getDate (date) {
       return new Date(date * 1000).getDate()
@@ -38,6 +48,6 @@ export default {
     }
   },
   watch: {
-    value: 'goToNow'
+    model: 'goToNow'
   }
 }
