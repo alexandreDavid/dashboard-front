@@ -349,18 +349,11 @@ export default {
         family: 'satellite',
         legendUrl: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=pixalytics:soil_moisture_content`
       }
-    ]
-    // ].map(this.getParameterInfos)
+    ].map(this.getParameterInfos)
     return parameters
   },
   getParameterInfos (p) {
-    p.layerUrl = `${process.env.GEOSERVER_URL}/wms`
-    p.layerParameters = {
-      layers: `${p.workspaceName}:${p.paramName}`,
-      format: 'image/png',
-      transparent: true
-    }
-    p.legendUrl = `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=${p.workspaceName}:${p.paramName}`
+    p.id = p.paramName
     return p
   },
   async getAllParameterGroupings () {
