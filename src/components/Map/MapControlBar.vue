@@ -75,7 +75,7 @@ export default {
     },
     onSelectedParameter (selectedParameter) {
       this.showModal = false
-      this.displayedLayers.push(selectedParameter)
+      this.displayedLayers.unshift(selectedParameter)
     },
     onSelectedReportedParameter (selectedReportedParameter) {
       this.$emit('selectedReportedLayer', selectedReportedParameter)
