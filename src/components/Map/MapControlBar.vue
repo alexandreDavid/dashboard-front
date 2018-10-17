@@ -14,7 +14,7 @@
     </div>
     <Loading v-if="!isLoaded"/>
   </SideBar>
-  <SideBar v-if="showModal" @close="showModal = false" title="Add a new layer" class="position-absolute w-lg bg-light" style="left: 100%;z-index: 1029;">
+  <SideBar v-if="showModal" @close="showModal = false" title="Add a new layer" id="add-layer-sidebar" class="position-absolute w-lg bg-light">
     <ForecastSelection @selectedParameter="onSelectedParameter"></ForecastSelection>
   </SideBar>
 </div>
@@ -92,3 +92,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+@media screen and (min-width: 576px) {
+  #add-layer-sidebar {
+    left: 100%;
+    z-index: 1029;
+  }
+}
+</style>
+
