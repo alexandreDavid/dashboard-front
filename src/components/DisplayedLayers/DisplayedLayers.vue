@@ -1,8 +1,8 @@
 <template>
   <div class="w-100">
     <button id="forecast-selection-btn" @click="$emit('openAddingLayerSideBar')" class="btn btn-primary shadow"><font-awesome-icon icon="plus" /> Add a layers</button>
-    <div v-for="(layer, key) in layers" :key="key">
-      <displayed-layer-control v-bind:parameter="layer"></displayed-layer-control>
+    <div v-for="(layer, key) in val" :key="key">
+      <displayed-layer-control v-bind:parameter="layer" @remove="remove(key)" @up="up(key)" @down="down(key)"></displayed-layer-control>
     </div>
   </div>
 </template>
@@ -17,16 +17,46 @@ export default {
   components: {
     DisplayedLayerControl
   },
-  props: ['layers'],
-  inject: ['getMap', 'getDisplayedLayer', 'getAreaLayer'],
+  props: ['value'],
+  computed: {
+    val: {
+      get () {
+        const val = this.calculateZIndex(this.value)
+        Parameter.setDisplayedParameters(val)
+        return val
+      },
+      set (val) {
+        this.$emit('input', val)
+      }
+    }
+  },
   data () {
     return {
       displayedParameter: {}
     }
   },
-  watch: {
-    layers (layers) {
-      Parameter.setDisplayedParameters(layers)
+  methods: {
+    remove (index) {
+      this.val.splice(index, 1)
+    },
+    up (index) {
+      this.val = this.move(this.val, index, index - 1)
+    },
+    down (index) {
+      this.val = this.move(this.val, index, index + 1)
+    },
+    move (arr, oldIndex, newIndex) {
+      if (newIndex >= arr.length) {
+        return arr
+      }
+      arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0])
+      return arr
+    },
+    calculateZIndex (layers) {
+      layers.forEach((layer, key) => {
+        layer.zIndex = (layers.length - key) * 10
+      })
+      return layers
     }
   }
 }

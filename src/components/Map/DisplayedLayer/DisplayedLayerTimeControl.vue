@@ -16,7 +16,7 @@ import DisplayedLayerTimeControlParams from './DisplayedLayerTimeControlParams'
 
 export default {
   name: 'DisplayedLayerTimeControl',
-  props: ['parameter', 'layer'],
+  props: ['parameter'],
   components: {
     TimeSerie,
     DisplayedLayerTimeControlParams
@@ -31,12 +31,33 @@ export default {
     }
   },
   mounted () {
-    if (this.parameter.layer) {
-      this.changeSelectedModel(this.parameter)
-    }
-    this.activeTime = this.calculateActiveTime(this.parameter)
+    this.update()
   },
   methods: {
+    update () {
+      if (this.parameter.layer) {
+        this.parameter.activeLayer = this.parameter.layer
+        this.activeModel = this.parameter
+      }
+      if (this.parameter.activeLayer) {
+        this.selectModelParams(this.parameter)
+      }
+      this.activeTime = this.parameter.activeTime || this.calculateActiveTime(this.parameter)
+    },
+    selectModelParams (model, callBack = () => {}) {
+      model.selected = false
+      function selectModel () {
+        model.selected = true
+        callBack()
+      }
+      if (model.data && model.data.length) {
+        model.data.forEach((param) => {
+          this.selectModelParams(param, selectModel)
+        })
+      } else if (model.layer === this.parameter.activeLayer) {
+        selectModel()
+      }
+    },
     showTime (el) {
       this.displayDropDownTime = true
       this.position = el.target.getBoundingClientRect()
@@ -44,7 +65,7 @@ export default {
     },
     onChange (value) {
       this.activeTime = value
-      this.layer.setTime(value)
+      this.$emit('timeChange', value)
     },
     calculateActiveTime (model) {
       let activeTime = false
@@ -58,20 +79,8 @@ export default {
     },
     changeSelectedModel (model) {
       this.activeModel = model
-      let layerParameters = {
-        layers: model.layer,
-        format: 'image/png',
-        transparent: true
-      }
-      if (this.activeTime) {
-        layerParameters.time = this.layer.formatTime(this.activeTime)
-      }
-      this.layer.setDisplayedLayer({
-        layerUrl: `${process.env.GEOSERVER_URL}/wms`,
-        layerParameters,
-        unit: this.parameter.unit,
-        legendUrl: this.parameter.legendUrl
-      })
+      this.update()
+      this.$emit('layerChange', model.layer)
     },
     getTimeFormated (time) {
       let formatedDate
@@ -95,9 +104,7 @@ export default {
   watch: {
     parameter (parameter) {
       this.isLoaded = false
-      if (parameter.layer) {
-        this.changeSelectedModel(parameter)
-      }
+      this.update()
       this.$nextTick(() => {
         this.isLoaded = true
       })

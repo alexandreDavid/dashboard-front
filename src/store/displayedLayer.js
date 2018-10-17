@@ -88,6 +88,12 @@ export default class {
   setOpacity (opacity) {
     this._displayedLayer && this._displayedLayer.setOpacity(opacity / 100)
   }
+  remove () {
+    this._displayedLayer.remove()
+  }
+  setZIndex (idx) {
+    this._displayedLayer.setZIndex(idx)
+  }
   async getFeatureInfo (evt) {
     if (this._displayedLayer) {
       let point = this._map.latLngToContainerPoint(evt.latlng, this._map.getZoom())

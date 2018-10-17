@@ -19,7 +19,7 @@ export default {
     }
   },
   created () {
-    this.changeSelectedValue(this.data[0])
+    this.changeSelectedValue(this.data.find(val => val.selected) || this.data[0])
   },
   methods: {
     changeSelectedValue (value) {

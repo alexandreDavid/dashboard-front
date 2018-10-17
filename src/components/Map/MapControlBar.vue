@@ -6,10 +6,10 @@
         <area-selection-control class="shadow w-100"></area-selection-control>
       </div>
       <div class="row mb-2">
-        <DisplayedLayers v-bind:layers="displayedLayers" @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
+        <DisplayedLayers v-model="displayedLayers" @input="updateDisplayedLayers" @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
       </div>
       <div class="row mb-2">
-        <Managing @selectedParameter="onSelectedParameter" @selectedReportedParameter="onSelectedReportedParameter"></Managing>
+        <Managing @selectedReportedParameter="onSelectedReportedParameter"></Managing>
       </div>
     </div>
     <Loading v-if="!isLoaded"/>
@@ -69,6 +69,9 @@ export default {
   methods: {
     close () {
       this.$emit('close')
+    },
+    updateDisplayedLayers (val) {
+      this.displayedLayers = val
     },
     onSelectedParameter (selectedParameter) {
       this.showModal = false
