@@ -16,7 +16,6 @@
       <opacity-slider class="w-100" v-model="opacity" @input="setOpacity"></opacity-slider>
       <Legend class="p-2" v-if="parameter" v-bind:layer="layer"></Legend>
     </div>
-    <Loading v-else></Loading>
   </div>
 </template>
 
@@ -25,7 +24,6 @@ import OpacitySlider from '@/components/Slider/OpacitySlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import Area from '@/store/area'
 import GraphModal from '@/components/Graph/GraphModal'
-import Loading from '@/components/Loading/Loading'
 import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
 
 import DisplayedLayer from '@/store/displayedLayer'
@@ -38,7 +36,6 @@ export default {
     OpacitySlider,
     Legend,
     GraphModal,
-    Loading,
     DisplayedLayerTimeControl
   },
   computed: {

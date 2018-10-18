@@ -103,11 +103,7 @@ export default {
   },
   watch: {
     parameter (parameter) {
-      this.isLoaded = false
       this.update()
-      this.$nextTick(() => {
-        this.isLoaded = true
-      })
     }
   },
   directives: {

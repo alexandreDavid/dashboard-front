@@ -16,10 +16,11 @@ describe('TimeSlot.vue', () => {
   beforeEach(() => {
     wrapper = mount(TimeSlot, {
       propsData: {
-        value: {
+        model: {
           label: '2 days',
           times: mockTimes,
-          type: 'interval'
+          type: 'interval',
+          layer: 'layer'
         }
       }
     })
@@ -30,7 +31,7 @@ describe('TimeSlot.vue', () => {
     Date.now = jest.genMockFunction().mockReturnValue(i * 1000)
     const wrapper = mount(TimeSlot, {
       propsData: {
-        value: {
+        model: {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
@@ -46,7 +47,7 @@ describe('TimeSlot.vue', () => {
     Date.now = jest.genMockFunction().mockReturnValue(10000000000000)
     const wrapper = mount(TimeSlot, {
       propsData: {
-        value: {
+        model: {
           label: '2 days',
           times: mockTimes,
           type: 'interval'
@@ -70,7 +71,7 @@ describe('TimeSlot.vue', () => {
     wrapper.find('#time-play').trigger('click')
     expect(wrapper.vm.isPlaying).toBe(true)
 
-    for (let i = 1; i < wrapper.vm.value.times.length - 1; i++) {
+    for (let i = 1; i < wrapper.vm.model.times.length - 1; i++) {
       expect(setTimeout).toHaveBeenCalledTimes(i)
       expect(wrapper.vm.currentIndex).toBe(i)
       jest.advanceTimersByTime(wrapper.vm.activeDateDuration)

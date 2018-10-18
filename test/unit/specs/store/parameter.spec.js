@@ -44,7 +44,7 @@ describe('parameter.js', () => {
   })
 
   it('Calls setDisplayedParameter, getDisplayedParameter', () => {
-    Parameter.setDisplayedParameter('displayedParameter')
-    expect(Parameter.getDisplayedParameter()).toEqual('displayedParameter')
+    Parameter.setDisplayedParameters('displayedParameter')
+    expect(Parameter.getDisplayedParameters()).toEqual('displayedParameter')
   })
 })

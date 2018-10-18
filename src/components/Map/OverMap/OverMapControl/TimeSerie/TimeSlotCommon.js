@@ -11,8 +11,8 @@ export default {
     }
   },
   mounted () {
-    let curIndex = this.model.times.findIndex(time => this.value.endTime === time.endTime)
-    if (this.value.endTime) {
+    let curIndex
+    if (this.value && this.value.endTime) {
       curIndex = this.model.times.findIndex(time => this.value.endTime === time.endTime)
     } else {
       curIndex = this.model.times.findIndex(time => this.value === time)

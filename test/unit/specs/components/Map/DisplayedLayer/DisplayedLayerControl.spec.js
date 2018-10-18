@@ -3,14 +3,8 @@ import { shallowMount } from '@vue/test-utils'
 import Area from '@/store/area'
 import GraphModal from '@/components/Graph/GraphModal'
 
-const mockDisplayedLayer = {
-  setDisplayedLayer: jest.fn(),
-  setTime: jest.fn(),
-  formatTime: jest.fn(),
-  setOpacity: jest.fn()
-}
-function getDisplayedLayer () {
-  return mockDisplayedLayer
+function getMap () {
+  return {}
 }
 
 const mockParameter = {
@@ -23,13 +17,24 @@ jest.mock('@/store/area', () => ({
 }))
 Area.getSelectedArea.mockReturnValue(mockGetSelectedArea)
 
+const mockDisplayedLayer = {
+  setDisplayedLayer: jest.fn(),
+  setZIndex: jest.fn(),
+  setOpacity: jest.fn(),
+  setTime: jest.fn()
+}
+jest.mock('@/store/displayedLayer.js', () => {
+  return jest.fn().mockImplementation(() => {
+    return mockDisplayedLayer
+  })
+})
+
 describe('DisplayedLayerControl.vue', () => {
   let wrapper
   beforeEach(() => {
-    mockDisplayedLayer.setDisplayedLayer.mockClear()
     wrapper = shallowMount(DisplayedLayerControl, {
       provide: {
-        getDisplayedLayer: getDisplayedLayer
+        getMap: getMap
       },
       propsData: {
         parameter: mockParameter

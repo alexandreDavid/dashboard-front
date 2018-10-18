@@ -26,9 +26,7 @@ const mockAllParametersGroupings = [{
 
 jest.mock('@/store/parameter', () => ({
   getAllParameters: jest.fn(),
-  getAllParameterGroupings: jest.fn(),
-  getDisplayedParameter: jest.fn(),
-  setDisplayedParameter: jest.fn()
+  getAllParameterGroupings: jest.fn()
 }))
 
 Parameter.getAllParameters.mockReturnValue(Promise.resolve(mockAllParameters))
@@ -36,25 +34,20 @@ Parameter.getAllParameterGroupings.mockReturnValue(Promise.resolve(mockAllParame
 
 describe('ForecastSelection.vue', () => {
   it('Created without activeParam', async () => {
-    Parameter.getDisplayedParameter.mockReturnValue(false)
     const wrapper = mount(ForecastSelection)
     await wrapper.vm.$nextTick()
     expect(Parameter.getAllParameters).toBeCalled()
     expect(Parameter.getAllParameterGroupings).toBeCalled()
-    expect(Parameter.getDisplayedParameter).toBeCalled()
     expect(wrapper.vm.isLoaded).toBe(true)
     expect(wrapper.vm.activeParam).toBeFalsy()
   })
 
   it('Created with activeParam', async () => {
-    Parameter.getDisplayedParameter.mockReturnValue({paramName: 'paramName'})
     const wrapper = mount(ForecastSelection)
     await wrapper.vm.$nextTick()
     expect(Parameter.getAllParameters).toBeCalled()
     expect(Parameter.getAllParameterGroupings).toBeCalled()
-    expect(Parameter.getDisplayedParameter).toBeCalled()
     expect(wrapper.vm.isLoaded).toBe(true)
-    expect(wrapper.vm.activeParam).toBe('paramName')
   })
 
   function openFirstGroup (groupsCard) {
@@ -92,8 +85,6 @@ describe('ForecastSelection.vue', () => {
     const firstParam = groupCard.findAll('.list-group-item').at(0)
     firstParam.trigger('click')
 
-    expect(wrapper.vm.activeParam).toBe(mockAllParameters[0].paramName)
-    expect(Parameter.setDisplayedParameter).toBeCalled()
     expect(wrapper.emitted().selectedParameter).toEqual([[mockAllParameters[0]]])
     expect(firstParam.classes()).toContain('active')
   })

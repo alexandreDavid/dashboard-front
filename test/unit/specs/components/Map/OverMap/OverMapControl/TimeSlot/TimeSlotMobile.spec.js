@@ -16,7 +16,7 @@ describe('TimeSlotMobile.vue', () => {
   beforeEach(() => {
     wrapper = mount(TimeSlotMobile, {
       propsData: {
-        value: {
+        model: {
           label: '2 days',
           times: mockTimes,
           type: 'interval'

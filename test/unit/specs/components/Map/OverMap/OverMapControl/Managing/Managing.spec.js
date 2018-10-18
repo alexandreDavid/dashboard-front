@@ -67,38 +67,38 @@ describe('Managing.vue', () => {
     }]])
   })
 
-  it('Toggle ForecastSelection modal', () => {
-    const buttonForecastSelection = wrapper.find('#forecast-selection-btn')
-    expect(wrapper.vm.showModal).toBe(false)
-    buttonForecastSelection.trigger('click')
-    expect(wrapper.vm.showModal).toBe(true)
+  // it('Toggle ForecastSelection modal', () => {
+  //   const buttonForecastSelection = wrapper.find('#forecast-selection-btn')
+  //   expect(wrapper.vm.showModal).toBe(false)
+  //   buttonForecastSelection.trigger('click')
+  //   expect(wrapper.vm.showModal).toBe(true)
 
-    wrapper.find(Modal).vm.$emit('close')
-    expect(wrapper.vm.showModal).toBe(false)
-  })
+  //   wrapper.find(Modal).vm.$emit('close')
+  //   expect(wrapper.vm.showModal).toBe(false)
+  // })
 
-  it('Choose ForecastSelection', () => {
-    const wrapper = mount(Managing, {
-      provide: {
-        getMap: getMapMock(),
-        getDisplayedLayer: getDisplayedLayer()
-      },
-      stubs: {
-        ForecastSelection: true,
-        ReportedSelection: true,
-        Legend: true
-      }
-    })
-    const buttonForecastSelection = wrapper.find('#forecast-selection-btn')
-    buttonForecastSelection.trigger('click')
-    expect(wrapper.vm.showModal).toBe(true)
+  // it('Choose ForecastSelection', () => {
+  //   const wrapper = mount(Managing, {
+  //     provide: {
+  //       getMap: getMapMock(),
+  //       getDisplayedLayer: getDisplayedLayer()
+  //     },
+  //     stubs: {
+  //       ForecastSelection: true,
+  //       ReportedSelection: true,
+  //       Legend: true
+  //     }
+  //   })
+  //   const buttonForecastSelection = wrapper.find('#forecast-selection-btn')
+  //   buttonForecastSelection.trigger('click')
+  //   expect(wrapper.vm.showModal).toBe(true)
 
-    wrapper.find(ForecastSelection).vm.$emit('selectedParameter', 'selectedParameter')
-    expect(wrapper.vm.showModal).toBe(false)
-    expect(Parameter.setDisplayedParameter).toBeCalledWith('selectedParameter')
-    expect(mockDisplayedLayer.getUnit).toBeCalled()
-    expect(wrapper.emitted().selectedParameter).toEqual([[mockGetDisplayedLayer], ['selectedParameter']])
-  })
+  //   wrapper.find(ForecastSelection).vm.$emit('selectedParameter', 'selectedParameter')
+  //   expect(wrapper.vm.showModal).toBe(false)
+  //   expect(Parameter.setDisplayedParameter).toBeCalledWith('selectedParameter')
+  //   expect(mockDisplayedLayer.getUnit).toBeCalled()
+  //   expect(wrapper.emitted().selectedParameter).toEqual([[mockGetDisplayedLayer], ['selectedParameter']])
+  // })
 
   // it('On layer add', () => {
   //   mockMap.layeradd()

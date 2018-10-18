@@ -37,16 +37,12 @@ const mockDisplayedLayer = {
 }
 mockDisplayedLayer.getUnit.mockReturnValue('K')
 
-function getDisplayedLayer () {
-  return mockDisplayedLayer
-}
-
 describe('Legend.vue', () => {
   let wrapper
   beforeEach(() => {
     wrapper = mount(Legend, {
-      provide: {
-        getDisplayedLayer: getDisplayedLayer
+      propsData: {
+        layer: mockDisplayedLayer
       }
     })
   })
