@@ -13,9 +13,9 @@ export default class {
   _activeUnit = false
   _hasInteractiveLegend = false
   _legendUrl = false
-  constructor (map, layerUrl, options = {}) {
+  constructor (map, layer) {
     this._map = map
-    this.setDisplayedLayer(layerUrl)
+    this.setDisplayedLayer(layer)
   }
   setDisplayedLayer (parameter) {
     this._parameter = parameter
@@ -33,7 +33,10 @@ export default class {
         )
       }
       this._displayedLayer.addTo(this._map)
-      this.setOpacity(80)
+      this.setOpacity(this._parameter.opacity)
+      if (this._parameter.zIndex) {
+        this.setZIndex(this._parameter.zIndex)
+      }
       this._defaultUnit = this._parameter.unit
       this._activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this._defaultUnit)) || this._defaultUnit
       this._hasInteractiveLegend = this._parameter.interactiveLegend
@@ -86,7 +89,9 @@ export default class {
     return this._parameter.timeModels
   }
   setOpacity (opacity) {
+    opacity = isNaN(opacity) ? 80 : opacity
     this._displayedLayer && this._displayedLayer.setOpacity(opacity / 100)
+    return opacity
   }
   remove () {
     this._displayedLayer.remove()

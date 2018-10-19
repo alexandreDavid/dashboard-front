@@ -74,12 +74,8 @@ export default {
       }
     },
     setOpacity (value) {
-      this.opacity = value
-      if (isNaN(this.opacity)) {
-        this.opacity = 80
-      }
-      this.layer.setOpacity(value)
-      this.val.opacity = value
+      this.opacity = this.layer.setOpacity(value)
+      this.val.opacity = this.opacity
       this.$emit('input', this.val)
     },
     setLayer (value) {

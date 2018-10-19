@@ -19,13 +19,14 @@
         <WidgetMap v-if="cardConfiguration.widget.id === 'map'" class="widget-map" v-bind:area="selectedArea" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="cardConfiguration.id"></WidgetMap>
         <WidgetTextArea v-if="cardConfiguration.widget.id === 'textarea'" class="widget-textarea" v-bind:textArea="getValueForSelectedWidgetById('text')"></WidgetTextArea>
         <WidgetTable v-if="cardConfiguration.widget.id === 'table'" class="widget-table"></WidgetTable>
+        <WidgetCurrentMap v-if="cardConfiguration.widget.id === 'currentmap'" class="widget-map" v-bind:area="selectedArea"></WidgetCurrentMap>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { WidgetGraph, WidgetMap, WidgetTable, WidgetTextArea } from '@/components/Dashboard/Widgets'
+import { WidgetGraph, WidgetMap, WidgetTable, WidgetTextArea, WidgetCurrentMap } from '@/components/Dashboard/Widgets'
 import Loading from '@/components/Loading/Loading'
 
 export default {
@@ -34,6 +35,7 @@ export default {
     Loading,
     WidgetGraph,
     WidgetMap,
+    WidgetCurrentMap,
     WidgetTextArea,
     WidgetTable
   },

@@ -1,4 +1,5 @@
 import Parameter from '@/store/parameter.js'
+import UserConfiguration from '@/store/userConfiguration'
 
 const cardWidths = [
   {
@@ -103,11 +104,11 @@ export default class Dashboard {
   removeCard (card) {
     this.cards.splice(this.cards.findIndex(c => c.id === card.id), 1)
   }
-  prepareForSaving () {
-    return {
+  save () {
+    UserConfiguration.setDashboardConfiguration({
       title: this.title,
       cards: this.cards.map(prepareCardForSaving)
-    }
+    })
   }
   static getDefaultTitle () {
     return 'Dashboard'
@@ -167,6 +168,9 @@ export default class Dashboard {
         label: 'Map',
         formFields: [fieldParameter]
       }, {
+        id: 'currentmap',
+        label: 'Current map'
+      }, {
         id: 'textarea',
         label: 'Text',
         formFields: [{
@@ -179,5 +183,9 @@ export default class Dashboard {
         label: 'Table'
       }
     ]
+  }
+  static getSavedDashboard () {
+    const savedDashboard = UserConfiguration.getDashboardConfiguration()
+    return new Dashboard(savedDashboard.title, savedDashboard.cards)
   }
 }

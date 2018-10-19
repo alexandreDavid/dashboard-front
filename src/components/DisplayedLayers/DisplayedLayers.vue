@@ -1,6 +1,7 @@
 <template>
   <div class="w-100">
     <button id="forecast-selection-btn" @click="$emit('openAddingLayerSideBar')" class="btn btn-primary shadow"><font-awesome-icon icon="plus" /> Add a layers</button>
+    <button id="save-dashboard-btn" @click="addToDashboard" class="btn btn-primary shadow"><font-awesome-icon icon="plus" /> Add to dashboard</button>
     <div v-for="(layer, key) in val" :key="key">
       <displayed-layer-control v-bind:parameter="layer" @remove="remove(key)" @up="up(key)" @down="down(key)"></displayed-layer-control>
     </div>
@@ -11,6 +12,7 @@
 import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 
 import Parameter from '@/store/parameter'
+import Dashboard from '@/store/dashboard'
 
 export default {
   name: 'DisplayedLayers',
@@ -36,6 +38,17 @@ export default {
     }
   },
   methods: {
+    addToDashboard () {
+      const savedDashboard = Dashboard.getSavedDashboard()
+      savedDashboard.addCard({
+        title: 'Current map',
+        widget: {
+          id: 'currentmap',
+          label: 'Current map'
+        }
+      })
+      savedDashboard.save()
+    },
     remove (index) {
       this.val.splice(index, 1)
     },

@@ -42,7 +42,6 @@ import Parameter from '@/store/parameter.js'
 import Area from '@/store/area.js'
 import Api from '@/store/api.js'
 import DashboardObj from '@/store/dashboard'
-import UserConfiguration from '@/store/userConfiguration'
 
 export default {
   name: 'DashboardPage',
@@ -59,7 +58,6 @@ export default {
       showCardModal: false,
       allParameters: [],
       selectedArea: false,
-      // searchLocationValue: false,
       displaySearchHelper: false,
       dashboard: {},
       editedCard: {}
@@ -68,8 +66,7 @@ export default {
   async created () {
     this.allParameters = await Parameter.getAllParameters()
     this.selectedArea = Area.getSelectedArea()
-    const savedDashboard = UserConfiguration.getDashboardConfiguration()
-    this.dashboard = new DashboardObj(savedDashboard.title, savedDashboard.cards)
+    this.dashboard = DashboardObj.getSavedDashboard()
     this.isLoaded = true
   },
   methods: {
@@ -107,7 +104,7 @@ export default {
     },
     save () {
       Api.setDashboard(this.dashboard)
-      UserConfiguration.setDashboardConfiguration(this.dashboard.prepareForSaving())
+      this.dashboard.save()
       this.isEditing = false
     }
   }
