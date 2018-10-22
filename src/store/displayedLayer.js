@@ -26,6 +26,15 @@ export default class {
     if (this._map && this._parameter) {
       if (this._parameter.layerUrl) {
         this._displayedLayer = new TileLayer.WMS(this._parameter.layerUrl, this._parameter.layerParameters)
+      } else if (this._parameter.activeLayer && this._parameter.activeTime) {
+        this._displayedLayer = new TileLayer.WMS(
+          `${process.env.GEOSERVER_URL}/wms`, {
+            layers: this._parameter.activeLayer,
+            format: 'image/png',
+            transparent: true,
+            time: this.formatTime(this._parameter.activeTime)
+          }
+        )
       } else {
         this._displayedLayer = new TileLayer.WMS(
           `${process.env.GEOSERVER_URL}/wms`,

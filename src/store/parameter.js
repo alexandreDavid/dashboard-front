@@ -1,4 +1,5 @@
 import Data from '@/store/data'
+import UserConfiguration from '@/store/userConfiguration'
 
 let parameters = []
 let displayedParameters = []
@@ -362,8 +363,12 @@ export default {
   },
   setDisplayedParameters (parameters) {
     displayedParameters = parameters
+    UserConfiguration.setSelectedLayers(parameters)
   },
   getDisplayedParameters () {
+    if (!displayedParameters.length) {
+      displayedParameters = UserConfiguration.getSelectedLayers()
+    }
     return displayedParameters
   },
   getParams () {

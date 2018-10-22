@@ -110,5 +110,20 @@ export default {
   setActiveBaseMapLayer (activeBaseMapLayer) {
     const parsed = JSON.stringify(activeBaseMapLayer)
     localStorage.setItem('activeBaseMapLayer', parsed)
+  },
+  getSelectedLayers () {
+    let selectedLayers
+    if (localStorage.getItem('activeBaseMapLayer')) {
+      try {
+        selectedLayers = JSON.parse(localStorage.getItem('selectedLayers'))
+      } catch (e) {
+        localStorage.removeItem('activeBaseMapLayer')
+      }
+    }
+    return selectedLayers || []
+  },
+  setSelectedLayers (selectedLayers) {
+    const parsed = JSON.stringify(selectedLayers)
+    localStorage.setItem('selectedLayers', parsed)
   }
 }
