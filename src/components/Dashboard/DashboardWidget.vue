@@ -19,7 +19,7 @@
         <WidgetMap v-if="cardConfiguration.widget.id === 'map'" class="widget-map" v-bind:area="selectedArea" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="cardConfiguration.id"></WidgetMap>
         <WidgetTextArea v-if="cardConfiguration.widget.id === 'textarea'" class="widget-textarea" v-bind:textArea="getValueForSelectedWidgetById('text')"></WidgetTextArea>
         <WidgetTable v-if="cardConfiguration.widget.id === 'table'" class="widget-table"></WidgetTable>
-        <WidgetCurrentMap v-if="cardConfiguration.widget.id === 'currentmap'" class="widget-map" v-bind:area="selectedArea"></WidgetCurrentMap>
+        <WidgetCurrentMap v-if="cardConfiguration.widget.id === 'currentmap'" class="widget-map" v-bind:area="selectedArea" :widgetKey="cardConfiguration.id"></WidgetCurrentMap>
       </div>
     </div>
   </div>
