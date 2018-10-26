@@ -1,5 +1,5 @@
 <template>
-  <div class="card shadow mt-2 w-100">
+  <div class="card mt-2 w-100" ref="layer">
     <div class="card-body p-2" v-if="isLoaded">
       <h6 class="d-flex align-items-center">
         <button class="btn btn-sm btn-light flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="opacity ? 'eye' : 'eye-slash'" /></button>
@@ -7,24 +7,23 @@
         <div class="btn-group btn-group-sm flex-shrink-1" role="group">
           <button class="btn btn-sm btn-light" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
           <button class="btn btn-sm btn-light" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>
+          <button class="btn btn-sm btn-light" @click="edit"><font-awesome-icon icon="cog" /></button>
           <button class="btn btn-sm btn-light" @click="$emit('remove')"><font-awesome-icon icon="trash" /></button>
         </div>
       </h6>
-      <button v-if="parameter.hasGraph" type="button" id="open-graph-modal" class="btn btn-sm btn-secondary align-bottom ml-2 mb-2" @click="initModal()"><font-awesome-icon icon="chart-bar" /> Open graph</button>
-      <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter" @close="showModalGraph = false"></GraphModal>
       <displayed-layer-time-control class="ml-2 mb-2" v-bind:parameter="val" @timeChange="setTime" @layerChange="setLayer" v-if="val"></displayed-layer-time-control>
       <opacity-slider class="w-100" v-model="opacity" @input="setOpacity"></opacity-slider>
       <Legend class="p-2" v-if="parameter" v-bind:layer="layer"></Legend>
     </div>
+    <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @close="showSettingTools = false"></displayed-layer-setting-tools>
   </div>
 </template>
 
 <script>
 import OpacitySlider from '@/components/Slider/OpacitySlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
-import Area from '@/store/area'
-import GraphModal from '@/components/Graph/GraphModal'
 import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
+import DisplayedLayerSettingTools from '@/components/Map/DisplayedLayer/DisplayedLayerSettingTools'
 
 import DisplayedLayer from '@/store/displayedLayer'
 
@@ -35,8 +34,8 @@ export default {
   components: {
     OpacitySlider,
     Legend,
-    GraphModal,
-    DisplayedLayerTimeControl
+    DisplayedLayerTimeControl,
+    DisplayedLayerSettingTools
   },
   computed: {
     val: {
@@ -54,9 +53,9 @@ export default {
       isLoaded: false,
       opacity: false,
       savedOpacity: false,
-      selectedArea: false,
-      showModalGraph: false,
-      displayDropDownTime: false
+      displayDropDownTime: false,
+      showSettingTools: false,
+      position: false
     }
   },
   mounted () {
@@ -65,6 +64,10 @@ export default {
     this.isLoaded = true
   },
   methods: {
+    edit () {
+      this.position = this.$refs.layer.getBoundingClientRect()
+      this.showSettingTools = !this.showSettingTools
+    },
     update (parameter) {
       this.layer.setDisplayedLayer(parameter)
       this.setOpacity(parameter.opacity)
@@ -109,10 +112,6 @@ export default {
         this.opacity = this.savedOpacity
       }
       this.setOpacity(this.opacity)
-    },
-    initModal () {
-      this.selectedArea = Area.getSelectedArea()
-      this.showModalGraph = true
     }
   },
   watch: {
@@ -120,6 +119,13 @@ export default {
   },
   destroyed () {
     this.layer.remove()
+  },
+  directives: {
+    'fixed-position': function (el, binding) {
+      el.style.position = 'fixed'
+      el.style.top = `${binding.value.top}px`
+      el.style.left = `${binding.value.left + binding.value.width}px`
+    }
   }
 }
 </script>
