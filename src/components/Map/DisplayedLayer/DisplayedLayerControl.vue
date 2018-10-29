@@ -11,15 +11,17 @@
           <button class="btn btn-sm btn-light" @click="$emit('remove')"><font-awesome-icon icon="trash" /></button>
         </div>
       </h6>
-      <displayed-layer-time-control class="ml-2 mb-2" v-bind:parameter="val" @timeChange="setTime" @layerChange="setLayer" v-if="val"></displayed-layer-time-control>
+      <!-- <displayed-layer-time-control class="ml-2 mb-2" v-bind:parameter="val" @timeChange="setTime" @layerChange="setLayer" v-if="val"></displayed-layer-time-control> -->
       <opacity-slider class="w-100" v-model="opacity" @input="setOpacity"></opacity-slider>
       <Legend class="p-2" v-if="parameter" v-bind:layer="layer"></Legend>
+      <time-serie v-model="val.activeTime" @input="setTime"></time-serie>
     </div>
     <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @close="showSettingTools = false"></displayed-layer-setting-tools>
   </div>
 </template>
 
 <script>
+import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
 import OpacitySlider from '@/components/Slider/OpacitySlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
@@ -35,7 +37,8 @@ export default {
     OpacitySlider,
     Legend,
     DisplayedLayerTimeControl,
-    DisplayedLayerSettingTools
+    DisplayedLayerSettingTools,
+    TimeSerie
   },
   computed: {
     val: {
