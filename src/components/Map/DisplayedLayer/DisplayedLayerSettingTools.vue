@@ -6,10 +6,10 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </h6>
-    <div>
-      <button type="button" class="btn btn-sm btn-secondary"><font-awesome-icon icon="calendar-alt" /> {{ getTimeFormated(parameter.activeTime) }}</button>
-      <button v-if="parameter.hasGraph" type="button" class="btn btn-sm btn-secondary" @click="openGraphModal"><font-awesome-icon icon="chart-bar" /> Open graph</button>
-      <button type="button" class="btn btn-sm btn-secondary">Opacity</button>
+    <div class="d-flex">
+      <button type="button" class="btn btn-sm btn-secondary m-1"><font-awesome-icon icon="calendar-alt" /> {{ getTimeFormated(parameter.activeTime) }}</button>
+      <button v-if="parameter.hasGraph" type="button" class="btn btn-sm btn-secondary m-1" @click="openGraphModal"><font-awesome-icon icon="chart-bar" /> Open graph</button>
+      <opacity-control class="m-1" v-model="parameter.opacity" @input="setOpacity"></opacity-control>
     </div>
     <div class="mt-1">
       Treshold value
@@ -21,12 +21,14 @@
 <script>
 import GraphModal from '@/components/Graph/GraphModal'
 import Area from '@/store/area'
+import OpacityControl from '@/components/Map/DisplayedLayer/OpacityControl'
 
 export default {
   name: 'DisplayedLayerSettingTools',
   props: ['parameter'],
   components: {
-    GraphModal
+    GraphModal,
+    OpacityControl
   },
   data () {
     return {
@@ -38,7 +40,8 @@ export default {
     document.addEventListener('click', this.handleClickOutside)
   },
   methods: {
-    update () {
+    setOpacity (val) {
+      this.$emit('setOpacity', val)
     },
     openGraphModal () {
       this.selectedArea = Area.getSelectedArea()
