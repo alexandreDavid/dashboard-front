@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GeoJSON } from 'leaflet'
+import { GeoJSON, Circle } from 'leaflet'
 
 let ugandaArea = false
 let ugandaSubAreas = false
@@ -23,9 +23,13 @@ let AreaLayer = class {
     if (!area) {
       return
     }
-    let geom
     if (area.type === 'custom') {
-      geom = area.geom
+      if (area.radius) {
+        this._areaLayer = new Circle([area.geom.geometry.coordinates[1], area.geom.geometry.coordinates[0]], {radius: area.radius})
+        this._areaLayer.setStyle(AreaLayer.getAreaLayerStyle())
+      } else {
+        this._areaLayer = new GeoJSON(area.geom, AreaLayer.getAreaLayerStyle())
+      }
     } else {
       let areaData
       if (area.id !== 7552 || !ugandaArea) {
@@ -41,9 +45,8 @@ let AreaLayer = class {
         areaData = ugandaArea
       }
       await this.setSubAreas(area)
-      geom = areaData.data
+      this._areaLayer = new GeoJSON(areaData.data, AreaLayer.getAreaLayerStyle())
     }
-    this._areaLayer = new GeoJSON(geom, AreaLayer.getAreaLayerStyle())
     if (this._map) {
       this._areaLayer.addTo(this._map)
       this.zoomToArea()
