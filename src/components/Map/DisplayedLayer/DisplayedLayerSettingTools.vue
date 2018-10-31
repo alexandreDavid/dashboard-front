@@ -49,11 +49,11 @@ export default {
     },
     getTimeFormated (time) {
       let formatedDate
-      if (time.startTime) {
+      if (time && time.startTime) {
         const startDate = new Date(time.startTime * 1000)
         const endDate = new Date(time.endTime * 1000)
         formatedDate = `${startDate.toDateString()} ${('0' + startDate.getHours()).slice(-2)}:${('0' + startDate.getMinutes()).slice(-2)} - ${('0' + endDate.getHours()).slice(-2)}:${('0' + endDate.getMinutes()).slice(-2)}`
-      } else {
+      } else if (time) {
         const date = new Date(time * 1000)
         formatedDate = date.toDateString()
       }
