@@ -8,13 +8,13 @@
     </h6>
     <div class="d-flex">
       <button type="button" class="btn btn-sm btn-secondary m-1"><font-awesome-icon icon="calendar-alt" /> {{ getTimeFormated(parameter.geoRessource.time) }}</button>
-      <button v-if="parameter.hasGraph" type="button" class="btn btn-sm btn-secondary m-1" @click="openGraphModal"><font-awesome-icon icon="chart-bar" /> Open graph</button>
+      <button type="button" class="btn btn-sm btn-secondary m-1" @click="openGraphModal"><font-awesome-icon icon="chart-bar" /> Open graph</button>
       <opacity-control class="m-1" v-model="parameter.geoRessource.opacity" @input="setOpacity"></opacity-control>
     </div>
     <div class="mt-1">
       Treshold value
     </div>
-    <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter" @close="showModalGraph = false"></GraphModal>
+    <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter.geoRessource" @close="showModalGraph = false"></GraphModal>
   </div>
 </template>
 
