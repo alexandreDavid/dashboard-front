@@ -7,9 +7,9 @@
       </button>
     </h6>
     <div class="d-flex">
-      <button type="button" class="btn btn-sm btn-secondary m-1"><font-awesome-icon icon="calendar-alt" /> {{ getTimeFormated(parameter.activeTime) }}</button>
+      <button type="button" class="btn btn-sm btn-secondary m-1"><font-awesome-icon icon="calendar-alt" /> {{ getTimeFormated(parameter.geoRessource.time) }}</button>
       <button v-if="parameter.hasGraph" type="button" class="btn btn-sm btn-secondary m-1" @click="openGraphModal"><font-awesome-icon icon="chart-bar" /> Open graph</button>
-      <opacity-control class="m-1" v-model="parameter.opacity" @input="setOpacity"></opacity-control>
+      <opacity-control class="m-1" v-model="parameter.geoRessource.opacity" @input="setOpacity"></opacity-control>
     </div>
     <div class="mt-1">
       Treshold value
@@ -55,7 +55,7 @@ export default {
         formatedDate = `${startDate.toDateString()} ${('0' + startDate.getHours()).slice(-2)}:${('0' + startDate.getMinutes()).slice(-2)} - ${('0' + endDate.getHours()).slice(-2)}:${('0' + endDate.getMinutes()).slice(-2)}`
       } else if (time) {
         const date = new Date(time * 1000)
-        formatedDate = date.toDateString()
+        formatedDate = `${date.toDateString()} ${date.toLocaleTimeString()}`
       }
       return formatedDate
     },

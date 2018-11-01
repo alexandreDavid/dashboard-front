@@ -1,9 +1,9 @@
 <template>
   <div class="card mt-2 w-100" ref="layer">
-    <div class="card-body p-2" v-if="isLoaded">
+    <div class="card-body p-2">
       <h6 class="d-flex align-items-center">
-        <button class="btn btn-sm btn-light flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="opacity ? 'eye' : 'eye-slash'" /></button>
-        <span class="w-100"> {{ parameter.label }}</span>
+        <button class="btn btn-sm btn-light flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoRessource.opacity ? 'eye' : 'eye-slash'" /></button>
+        <span class="w-100"> {{ layer.geoRessource.name }}</span>
         <div class="btn-group btn-group-sm flex-shrink-1" role="group">
           <button class="btn btn-sm btn-light" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
           <button class="btn btn-sm btn-light" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>
@@ -11,10 +11,8 @@
           <button class="btn btn-sm btn-light" @click="$emit('remove')"><font-awesome-icon icon="trash" /></button>
         </div>
       </h6>
-      <!-- <displayed-layer-time-control class="ml-2 mb-2" v-bind:parameter="val" @timeChange="setTime" @layerChange="setLayer" v-if="val"></displayed-layer-time-control> -->
-      <opacity-slider class="w-100" v-model="opacity" @input="setOpacity"></opacity-slider>
-      <Legend class="p-2" v-if="parameter" v-bind:layer="layer"></Legend>
-      <time-serie v-model="val.activeTime" @input="setTime"></time-serie>
+      <Legend class="p-2" v-bind:layer="layer"></Legend>
+      <time-serie v-model="val" @input="setTime"></time-serie>
     </div>
     <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
   </div>
@@ -22,106 +20,54 @@
 
 <script>
 import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
-import OpacitySlider from '@/components/Slider/OpacitySlider'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
-import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
 import DisplayedLayerSettingTools from '@/components/Map/DisplayedLayer/DisplayedLayerSettingTools'
-
-import DisplayedLayer from '@/store/displayedLayer'
 
 export default {
   name: 'DisplayedLayerControl',
-  inject: ['getMap'],
-  props: ['parameter'],
-  components: {
-    OpacitySlider,
-    Legend,
-    DisplayedLayerTimeControl,
-    DisplayedLayerSettingTools,
-    TimeSerie
-  },
+  props: ['parameter', 'layer'],
   computed: {
     val: {
       get () {
-        return this.parameter
+        return this.layer
       },
-      set (val) {
-      }
+      set (val) {}
     }
+  },
+  components: {
+    Legend,
+    DisplayedLayerSettingTools,
+    TimeSerie
   },
   data () {
     return {
-      layer: false,
-      activeModel: false,
-      isLoaded: false,
-      opacity: false,
       savedOpacity: false,
       displayDropDownTime: false,
       showSettingTools: false,
       position: false
     }
   },
-  mounted () {
-    this.layer = new DisplayedLayer(this.getMap())
-    this.update(this.parameter)
-    this.isLoaded = true
-  },
   methods: {
     edit () {
       this.position = this.$refs.layer.getBoundingClientRect()
       this.showSettingTools = !this.showSettingTools
     },
-    update (parameter) {
-      this.layer.setDisplayedLayer(parameter)
-      this.setOpacity(parameter.opacity)
-      this.layer.setZIndex(parameter.zIndex)
-      if (parameter.activeTime) {
-        this.setTime(parameter.activeTime)
-      }
-    },
     setOpacity (value) {
-      this.opacity = this.layer.setOpacity(value)
-      this.val.opacity = this.opacity
-      this.$emit('input', this.val)
-    },
-    setLayer (value) {
-      let layerParameters = {
-        layers: value,
-        format: 'image/png',
-        transparent: true
-      }
-      if (this.val.time) {
-        layerParameters.time = this.layer.formatTime(this.val.time)
-      }
-      this.layer.setDisplayedLayer({
-        layerUrl: `${process.env.GEOSERVER_URL}/wms`,
-        layerParameters,
-        unit: this.val.unit,
-        legendUrl: this.val.legendUrl
-      })
-      this.val.activeLayer = value
-      this.$emit('input', this.val)
+      this.layer.setOpacity(value)
     },
     setTime (value) {
       this.layer.setTime(value)
-      this.val.activeTime = value
-      this.$emit('input', this.val)
     },
     toggleDisplay () {
-      if (this.opacity) {
-        this.savedOpacity = this.opacity
-        this.opacity = 0
+      let opacity
+      if (this.layer.geoRessource.opacity) {
+        this.savedOpacity = this.layer.geoRessource.opacity
+        opacity = 0
       } else {
-        this.opacity = this.savedOpacity
+        opacity = this.savedOpacity
       }
-      this.setOpacity(this.opacity)
+      this.setOpacity(opacity)
     }
-  },
-  watch: {
-    parameter: 'update'
-  },
-  destroyed () {
-    this.layer.remove()
   },
   directives: {
     'fixed-position': function (el, binding) {

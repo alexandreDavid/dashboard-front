@@ -15,28 +15,30 @@
     <Loading v-if="!isLoaded"/>
   </SideBar>
   <SideBar v-if="showModal" @close="showModal = false" title="Add a new layer" id="add-layer-sidebar" class="position-absolute w-lg bg-light">
-    <ForecastSelection @selectedParameter="onSelectedParameter"></ForecastSelection>
+    <Catalogue @selectedParameter="onSelectedParameter"></Catalogue>
   </SideBar>
 </div>
 </template>
 
 <script>
 import Modal from '@/components/Modal/Modal'
-import ForecastSelection from '@/components/Map/OverMap/OverMapControl/Managing/ForecastSelection/ForecastSelection'
 import Parameter from '@/store/parameter'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import SideBar from '@/components/SideBar/SideBar'
 import Loading from '@/components/Loading/Loading'
 import DisplayedLayers from '@/components/DisplayedLayers/DisplayedLayers'
+import Catalogue from '@/components/Catalogue/Catalogue'
 
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import Managing from '@/components/Map/OverMap/OverMapControl/Managing/Managing'
+
+import SelectedLayers from '@/store/selectedLayers'
 
 export default {
   name: 'MapControlBar',
   components: {
     Modal,
-    ForecastSelection,
+    Catalogue,
     Legend,
     SideBar,
     Loading,
@@ -76,6 +78,7 @@ export default {
     onSelectedParameter (selectedParameter) {
       this.showModal = false
       this.displayedLayers.unshift(selectedParameter)
+      SelectedLayers.add(selectedParameter).addTo(this.getMap())
     },
     onSelectedReportedParameter (selectedReportedParameter) {
       this.$emit('selectedReportedLayer', selectedReportedParameter)

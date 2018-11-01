@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <img v-bind:src="layer._legendUrl" v-else-if="!asline">
+    <img v-bind:src="layer.geoRessource.config.legend.link" v-else-if="!asline">
   </div>
 </template>
 
@@ -83,8 +83,9 @@ export default {
   },
   mounted () {
     this.gradientColor = `linear-gradient(${this.asline ? 'to right,' : ''}${this.displayedValues.map(d => this.convertHex(d.color, d.opacity)).join(', ')})`
-    this.unitFamily = Unit.getFamilyUnit(this.layer.getUnit())
-    this.changeActiveUnit(Settings.activeSettings[this.unitFamily] || this.layer.getUnit())
+    // this.unitFamily = Unit.getFamilyUnit(this.layer.getUnit())
+    this.unitFamily = Unit.getFamilyUnit('K')
+    this.changeActiveUnit(Settings.activeSettings[this.unitFamily] || 'K')
   },
   methods: {
     changeActiveUnit (unit) {
