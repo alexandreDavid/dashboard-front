@@ -3,7 +3,7 @@
     <div class="card-body p-2">
       <button id="forecast-selection-btn" @click="$emit('openAddingLayerSideBar')" class="btn btn-secondary w-100"><font-awesome-icon icon="plus" /> Add coverage maps</button>
       <div v-for="(layer, key) in selectedLayers" :key="key">
-        <displayed-layer-control v-bind:layer="layer" @remove="remove(key)" @up="up(key)" @down="down(key)"></displayed-layer-control>
+        <displayed-layer-control v-bind:layer="layer" @change="saveChanges" @remove="remove(key)" @up="up(key)" @down="down(key)"></displayed-layer-control>
       </div>
     </div>
   </div>
@@ -25,6 +25,9 @@ export default {
     }
   },
   methods: {
+    saveChanges () {
+      SelectedLayers.saveChanges()
+    },
     remove (index) {
       SelectedLayers.remove(index)
     },

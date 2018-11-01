@@ -41,10 +41,10 @@ export default class {
   }
   setTime (time) {
     if (this._availableTimes && this._availableTimes.length) {
-      if (!time || !this._availableTimes.indexOf(time) > -1) {
+      if (!(time && this._availableTimes.indexOf(time) > -1)) {
         time = this._availableTimes[0]
-        this.geoRessource.time = time
       }
+      this.geoRessource.time = time
       this._layer.setParams({
         time: this.formatTime(time)
       })

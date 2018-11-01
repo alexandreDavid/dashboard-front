@@ -6,7 +6,7 @@
         <Popup v-if="mapInitialised"/>
         <ReportedLayer v-if="mapInitialised" v-bind:selectedReportedLayer="selectedReportedLayer"/>
       </div>
-      <div class="d-none d-sm-block">
+      <div class="d-none d-sm-block" v-if="mapInitialised">
         <MapControlBar class="position-relative" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" :is-static="true"></MapControlBar>
       </div>
     </div>

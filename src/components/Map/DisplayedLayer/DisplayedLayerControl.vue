@@ -54,9 +54,11 @@ export default {
     },
     setOpacity (value) {
       this.layer.setOpacity(value)
+      this.$emit('change')
     },
     setTime (value) {
       this.layer.setTime(value)
+      this.$emit('change')
     },
     toggleDisplay () {
       let opacity

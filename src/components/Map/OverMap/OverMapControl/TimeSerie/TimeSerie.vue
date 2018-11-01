@@ -6,8 +6,8 @@
         <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon icon="pause" /></button>
       </div>
       <div class="flex-grow-1">
-        <TimeSlider class="d-none d-sm-block" v-model="currentTime" @input="onChange" v-bind:times="value._availableTimes"></TimeSlider>
-        <div class="text-center" style="font-size: 0.8em">{{ getTimeFormated(currentTime) }}</div>
+        <TimeSlider class="d-none d-sm-block" v-model="value.geoRessource.time" @input="onChange" v-bind:times="value._availableTimes"></TimeSlider>
+        <div class="text-center" style="font-size: 0.8em">{{ getTimeFormated(value.geoRessource.time) }}</div>
       </div>
     </div>
   </div>
@@ -29,12 +29,10 @@ export default {
       isLoaded: false,
       activeDateDuration: 1500,
       isPlaying: false,
-      currentIndex: 0,
-      currentTime: false
+      currentIndex: 0
     }
   },
   created () {
-    this.currentTime = this.value.geoRessource.time
     this.isLoaded = true
   },
   methods: {
@@ -44,11 +42,11 @@ export default {
       this.afterSelect()
     },
     afterSelect () {
-      this.currentTime = this.value._availableTimes[this.currentIndex]
-      this.$emit('input', this.currentTime)
+      this.value.geoRessource.time = this.value._availableTimes[this.currentIndex]
+      this.$emit('input', this.value.geoRessource.time)
     },
     play () {
-      this.currentIndex = this.value._availableTimes.findIndex(t => t === this.currentTime)
+      this.currentIndex = this.value._availableTimes.findIndex(t => t === this.value.geoRessource.time)
       this.isPlaying = true
       this.activePlay()
     },
@@ -69,7 +67,7 @@ export default {
       }
     },
     onChange (val) {
-      this.currentTime = val
+      this.value.geoRessource.time = val
       this.$emit('input', val)
     },
     getTimeFormated (time) {

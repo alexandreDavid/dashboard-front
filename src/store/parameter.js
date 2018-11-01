@@ -363,7 +363,7 @@ export default {
   },
   setDisplayedParameters (parameters) {
     displayedParameters = parameters
-    UserConfiguration.setSelectedLayers(parameters)
+    // UserConfiguration.setSelectedLayers(parameters)
   },
   getDisplayedParameters () {
     if (!displayedParameters.length) {

@@ -113,11 +113,11 @@ export default {
   },
   getSelectedLayers () {
     let selectedLayers
-    if (localStorage.getItem('activeBaseMapLayer')) {
+    if (localStorage.getItem('selectedLayers')) {
       try {
         selectedLayers = JSON.parse(localStorage.getItem('selectedLayers'))
       } catch (e) {
-        localStorage.removeItem('activeBaseMapLayer')
+        localStorage.removeItem('selectedLayers')
       }
     }
     return selectedLayers || []

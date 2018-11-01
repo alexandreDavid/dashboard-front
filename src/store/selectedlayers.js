@@ -1,8 +1,5 @@
-// import UserConfiguration from '@/store/userConfiguration'
+import UserConfiguration from '@/store/userConfiguration'
 import SelectedLayer from '@/store/selectedLayer'
-
-let allSelectedLayers = []
-// let allSelectedLayers  = UserConfiguration.getActiveSettings()
 
 function move (arr, oldIndex, newIndex) {
   if (newIndex >= arr.length) {
@@ -20,27 +17,34 @@ function calculateZIndex (layers) {
 }
 
 export default {
-  allSelectedLayers: allSelectedLayers,
+  allSelectedLayers: [],
+  getAllSelectedLayers () {
+    this.allSelectedLayers = UserConfiguration.getSelectedLayers().map(layer => new SelectedLayer(layer))
+    return this.allSelectedLayers
+  },
   add (geoRessources) {
     const newLayer = new SelectedLayer(geoRessources)
     this.allSelectedLayers.unshift(newLayer)
     this.allSelectedLayers = calculateZIndex(this.allSelectedLayers)
+    this.saveChanges()
     return newLayer
   },
   up (index) {
     this.allSelectedLayers = move(this.allSelectedLayers, index, index - 1)
     this.allSelectedLayers = calculateZIndex(this.allSelectedLayers)
+    this.saveChanges()
   },
   down (index) {
     this.allSelectedLayers = move(this.allSelectedLayers, index, index + 1)
     this.allSelectedLayers = calculateZIndex(this.allSelectedLayers)
+    this.saveChanges()
   },
   remove (index) {
     this.allSelectedLayers[index].remove()
     this.allSelectedLayers.splice(index, 1)
-  // },
-  // setActiveKeyById (id, value) {
-  //   this.activeSettings[id] = value
-  //   UserConfiguration.setActiveSettings(this.activeSettings)
+    this.saveChanges()
+  },
+  saveChanges () {
+    UserConfiguration.setSelectedLayers(this.allSelectedLayers.map(layer => layer.geoRessource))
   }
 }
