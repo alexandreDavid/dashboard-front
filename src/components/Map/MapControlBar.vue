@@ -63,7 +63,6 @@ export default {
       const allParams = await Parameter.getAllParameters()
       this.displayedLayers.push(allParams[0])
     }
-    SelectedLayers.getAllSelectedLayers().forEach(l => l.addTo(this.getMap()))
   },
   mounted () {
     this.toggleMeteorologicalStations(this.displayMeteoStations)

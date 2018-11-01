@@ -6,7 +6,7 @@
         <Popup v-if="mapInitialised"/>
         <ReportedLayer v-if="mapInitialised" v-bind:selectedReportedLayer="selectedReportedLayer"/>
       </div>
-      <div class="d-none d-sm-block" v-if="mapInitialised">
+      <div class="d-none d-sm-block">
         <MapControlBar class="position-relative" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" :is-static="true"></MapControlBar>
       </div>
     </div>
@@ -21,6 +21,8 @@ import ReportedLayer from '@/components/Map/ReportedLayer/ReportedLayer'
 import MapControlBar from '@/components/Map/MapControlBar'
 import Area from '@/store/area'
 import AreaLayer from '@/store/areaLayer'
+
+import SelectedLayers from '@/store/selectedLayers'
 
 export default {
   name: 'MapPage',
@@ -55,6 +57,7 @@ export default {
     this.displayedLayer = new DisplayedLayer(this.map)
     // this.areaLayer = new AreaLayer(this.map)
     this.areaLayer = new AreaLayer(this.map, Area.getSelectedArea())
+    SelectedLayers.getAllSelectedLayers().forEach(l => l.addTo(this.map))
   },
   methods: {
     getMap () {

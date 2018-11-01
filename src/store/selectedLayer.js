@@ -60,6 +60,7 @@ export default class {
     this._layer.remove()
   }
   setZIndex (idx) {
+    this.geoRessource.zIndex = idx
     this._layer.setZIndex(idx)
   }
   async getFeatureInfo (evt, map) {
