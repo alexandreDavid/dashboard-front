@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const urlRoot = process.env.DATA_URL
+// const urlRoot = process.env.DATA_URL
 
 // let structureCache
 
@@ -36,8 +36,8 @@ export default {
   },
   async getAreaParameterData (area, parameter) {
     const response = await axios.get(
-      `${urlRoot}/${area.type}/${area.name}/${parameter.paramName}`
+      parameter.config.statistics.link.replace(':type', area.type).replace(':name', area.name)
     )
-    return response.data[parameter.paramName]
+    return response.data[Object.keys(response.data)[0]]
   }
 }

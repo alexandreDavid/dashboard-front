@@ -14,9 +14,11 @@
 <script>
 import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
-import DisplayedLayer from '@/store/displayedLayer'
 import Popup from '@/components/Map/Popup'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
+
+import SelectedLayer from '@/store/selectedLayer'
+import GeoRessources from '@/store/geoRessources'
 
 export default {
   name: 'WidgetMap',
@@ -50,12 +52,14 @@ export default {
   mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map, this.area)
-    this.displayedLayer = new DisplayedLayer(this.map, this.parameter)
+    this.displayedLayer = new SelectedLayer(GeoRessources.searchByName(this.parameter.label))
+    this.displayedLayer.addTo(this.map)
     this.isLoaded = true
   },
   watch: {
     parameter (newParam) {
-      this.getDisplayedLayer().setDisplayedLayer(newParam)
+      this.displayedLayer.setLayer(GeoRessources.searchByName(newParam.label))
+      this.displayedLayer.addTo(this.map)
       this.isLoaded = false
       this.$nextTick(() => {
         this.isLoaded = true

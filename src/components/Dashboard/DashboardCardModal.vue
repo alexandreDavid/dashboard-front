@@ -55,7 +55,6 @@ export default {
     Modal
   },
   props: [
-    'allParameters',
     'editedCard'
   ],
   data () {

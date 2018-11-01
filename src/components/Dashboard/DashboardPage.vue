@@ -21,13 +21,13 @@
         <div class="alert alert-info col-12" role="alert" v-if="isEditing && selectedArea">
           Click on <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon icon="plus" /> Add a card</button> to add a new card
         </div>
-        <DashboardWidget v-if="selectedArea" v-for="card in dashboard.cards" :key="card.id" v-bind:cardConfiguration="card" @edit="editCard(card)" v-bind:isEditing="isEditing" v-bind:selectedArea="selectedArea" :allParameters="allParameters"></DashboardWidget>
+        <DashboardWidget v-if="selectedArea" v-for="card in dashboard.cards" :key="card.id" v-bind:cardConfiguration="card" @edit="editCard(card)" v-bind:isEditing="isEditing" v-bind:selectedArea="selectedArea"></DashboardWidget>
         <div class="col-md-4 p-2" v-if="isEditing && selectedArea">
           <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon icon="plus" /> Add a card</button>
           <button type="button" class="btn btn-primary" @click="save()"><font-awesome-icon icon="save" /> Save</button>
         </div>
       </div>
-      <DashboardCardModal v-if="showCardModal" @close="closeEditCardModal()" @delete="removeCard(editedCard)" :editedCard="editedCard" :allParameters="allParameters"></DashboardCardModal>
+      <DashboardCardModal v-if="showCardModal" @close="closeEditCardModal()" @delete="removeCard(editedCard)" :editedCard="editedCard"></DashboardCardModal>
     </div>
     <Loading v-if="!isLoaded"/>
   </div>
@@ -38,7 +38,6 @@ import DashboardWidget from './DashboardWidget'
 import DashboardCardModal from './DashboardCardModal'
 import Loading from '@/components/Loading/Loading'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
-import Parameter from '@/store/parameter.js'
 import Area from '@/store/area.js'
 import Api from '@/store/api.js'
 import DashboardObj from '@/store/dashboard'
@@ -56,7 +55,6 @@ export default {
       isLoaded: false,
       isEditing: false,
       showCardModal: false,
-      allParameters: [],
       selectedArea: false,
       displaySearchHelper: false,
       dashboard: {},
@@ -64,7 +62,6 @@ export default {
     }
   },
   async created () {
-    this.allParameters = await Parameter.getAllParameters()
     this.selectedArea = Area.getSelectedArea()
     this.dashboard = DashboardObj.getSavedDashboard()
     this.isLoaded = true

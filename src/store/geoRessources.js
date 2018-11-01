@@ -17,24 +17,28 @@ let parameters = [
     name: 'Air pressure at sea level (2 days forecast)',
     layer: 'twoDaysForecast:air_pressure_at_sea_level',
     legend: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level`,
+    statistics: 'http://demo.dfms.co.uk/data/:type/:name/air_pressure_at_sea_level',
     times: twoDays,
     unit: 'Pa'
   }, {
     name: 'Air pressure at sea level (7 days forecast)',
     layer: 'mogreps:air_pressure_at_sea_level',
     legend: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_pressure_at_sea_level`,
+    statistics: 'http://demo.dfms.co.uk/data/:type/:name/air_pressure_at_sea_level',
     times: sevenDays,
     unit: 'Pa'
   }, {
     name: 'Air temperature (2 days forecast)',
     layer: 'twoDaysForecast:air_temperature',
     legend: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature`,
+    statistics: 'http://demo.dfms.co.uk/data/:type/:name/air_temperature',
     // times: twoDays,
     unit: 'K'
   }, {
     name: 'Air temperature (7 days forecast)',
     layer: 'mogreps:air_temperature',
     legend: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature`,
+    statistics: 'http://demo.dfms.co.uk/data/:type/:name/air_temperature',
     times: sevenDays,
     unit: 'K'
   }
@@ -118,6 +122,9 @@ export default {
   async getAll () {
     return parameters.map(this.getParameterInfos)
   },
+  getAllParams () {
+    return parameters.map(this.getParameterInfos)
+  },
   getParameterInfos (p) {
     return Object.assign({
       name: p.name,
@@ -129,10 +136,16 @@ export default {
             date: p.times
           }
         },
+        statistics: {
+          link: p.statistics
+        },
         legend: {
           link: p.legend
         }
       }
     }, ...defaultFormat)
+  },
+  searchByName (name) {
+    return parameters.map(this.getParameterInfos).find(p => p.name === name)
   }
 }

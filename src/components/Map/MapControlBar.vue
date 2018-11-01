@@ -6,7 +6,7 @@
         <area-selection-control class="shadow w-100"></area-selection-control>
       </div>
       <div class="row mb-2">
-        <DisplayedLayers v-model="displayedLayers" @input="updateDisplayedLayers" @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
+        <DisplayedLayers @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
       </div>
       <div class="row mb-2">
         <Managing @selectedReportedParameter="onSelectedReportedParameter"></Managing>
@@ -22,7 +22,6 @@
 
 <script>
 import Modal from '@/components/Modal/Modal'
-import Parameter from '@/store/parameter'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import SideBar from '@/components/SideBar/SideBar'
 import Loading from '@/components/Loading/Loading'
@@ -53,15 +52,7 @@ export default {
       showModal: false,
       value: 50,
       displayMeteoStations: true,
-      isLoaded: false,
-      displayedLayers: []
-    }
-  },
-  async created () {
-    this.displayedLayers = Parameter.getDisplayedParameters()
-    if (!this.displayedLayers.length) {
-      const allParams = await Parameter.getAllParameters()
-      this.displayedLayers.push(allParams[0])
+      isLoaded: false
     }
   },
   mounted () {
@@ -72,12 +63,8 @@ export default {
     close () {
       this.$emit('close')
     },
-    updateDisplayedLayers (val) {
-      this.displayedLayers = val
-    },
     onSelectedParameter (selectedParameter) {
       this.showModal = false
-      this.displayedLayers.unshift(selectedParameter)
       SelectedLayers.add(selectedParameter).addTo(this.getMap())
     },
     onSelectedReportedParameter (selectedReportedParameter) {
