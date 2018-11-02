@@ -3,25 +3,45 @@
     <div v-if="isLoaded" class="container mt-4">
       <div class="row mb-3">
         <div class="col-12">
+          These maps enable you to view monthly, seasonal and annual averages for Uganda for your selected region, for recent years. The different variables are based on different observational data sets.
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-12">
           <div class="form-inline">
-            <label class="m-2" for="region">Region</label>
-            <select class="m-2 custom-select" id="region" name="region">
-              <option value="1">Uganda</option>
-            </select>
-            <label class="m-2" for="inlineFormCustomSelectPref">Climate variable</label>
-            <select class="m-2 custom-select" v-model="activeVariable" id="inlineFormCustomSelectPref">
-              <option v-for="variable in variables" :key="variable.name" :value="variable" :disabled="variable.disabled">{{ variable.label }}</option>
-            </select>
-            <label v-if="activeVariable.type !== 'Daily'" class="m-2" for="period">Month/Season/Annual</label>
-            <select v-model="activePeriod" v-if="activeVariable.type !== 'Daily'" class="m-2 custom-select" id="period" name="period">
-              <option v-for="timePeriod in timePeriods" :key="timePeriod.value" :value="timePeriod">{{ timePeriod.label }}</option>
-            </select>
+            <div class="form-group">
+              <label class="m-2" for="region">Region</label>
+              <select class="m-2 custom-select" id="region" name="region">
+                <option value="1">Uganda</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="m-2" for="variable">Climate variable</label>
+              <select class="m-2 custom-select" v-model="activeVariable" id="variable">
+                <option v-for="variable in variables" :key="variable.name" :value="variable" :disabled="variable.disabled">{{ variable.label }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label v-if="activeVariable.type !== 'Daily'" class="m-2" for="period">Month/Season/Annual</label>
+              <select v-model="activePeriod" v-if="activeVariable.type !== 'Daily'" class="m-2 custom-select" id="period" name="period">
+                <option v-for="timePeriod in timePeriods" :key="timePeriod.value" :value="timePeriod">{{ timePeriod.label }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="m-2" for="dataset">Dataset</label>
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button v-for="dataset in activeVariable.datasets" @click="onSelectVariableDataset(dataset)" :key="dataset.id" type="button" class="btn btn-secondary" :disabled="dataset.disabled">
+                  {{ datasets[dataset.id].label }}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="row mb-3">
         <div class="col-12">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
+          {{ datasets[activeVariableDataset.id].description }}
+          <div v-for="(link, key) in datasets[activeVariableDataset.id].links" :key="key"><a :href="link" target="__blank">{{ link }}</a> </div>
         </div>
       </div>
       <div class="row">
@@ -60,7 +80,7 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <HistoricalActualPage v-bind:variable="activeVariable" v-bind:period="activePeriod" v-bind:areaLayer="areaLayer" @change="changeYear"></HistoricalActualPage>
+          <HistoricalActualPage v-bind:variable="activeVariableDataset" v-bind:period="activePeriod" v-bind:areaLayer="areaLayer" @change="changeYear"></HistoricalActualPage>
         </div>
       </div>
     </div>
@@ -85,14 +105,15 @@ export default {
   data () {
     return {
       isLoaded: false,
-      selectedTab: 'actual',
       displayedLayer: false,
       variables: [],
       activeVariable: false,
+      activeVariableDataset: false,
       activeYear: false,
       activePeriod: false,
       areaLayer: false,
-      timePeriods: []
+      timePeriods: [],
+      datasets: []
     }
   },
   created () {
@@ -100,6 +121,7 @@ export default {
     this.activeVariable = this.variables[0]
     this.timePeriods = config.getAllTimePeriods()
     this.activePeriod = this.timePeriods[0]
+    this.datasets = config.getAllDatasets()
   },
   async mounted () {
     this.onSelectVariable(this.activeVariable)
@@ -112,15 +134,16 @@ export default {
       this.onSelectVariable(variable)
     },
     activePeriod () {
-      this.onSelectVariable(this.activeVariable, this.activeYear)
+      this.onSelectVariableDataset(this.activeVariableDataset, this.activeYear)
     }
   },
   methods: {
-    onSelectVariable (selectedVariable, year) {
+    onSelectVariableDataset (dataset, year) {
+      this.activeVariableDataset = dataset
+      let selectedVariable = dataset
       this.activeYear = year || selectedVariable.endDate
       let time
-
-      if (selectedVariable.type !== 'Monthly') {
+      if (this.datasets[dataset.id].frequency !== 'Monthly') {
         this.activePeriod = this.timePeriods[0]
         time = `${this.activeYear}-${this.activePeriod.value}`
         selectedVariable.layer = `${selectedVariable.workspaceName}:${selectedVariable.layerName}`
@@ -147,8 +170,11 @@ export default {
         }
       }
     },
+    onSelectVariable (selectedVariable, year) {
+      this.onSelectVariableDataset(selectedVariable.datasets.find(d => !d.disabled))
+    },
     changeYear (year) {
-      this.onSelectVariable(this.activeVariable, year)
+      this.onSelectVariableDataset(this.activeVariableDataset, year)
     },
     timePeriodTypeFilter: function (timePeriods, type) {
       return timePeriods.filter(t => t.type === type)
