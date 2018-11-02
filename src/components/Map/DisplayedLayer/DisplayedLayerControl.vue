@@ -14,7 +14,7 @@
       <Legend class="p-2" v-bind:layer="layer"></Legend>
       <time-serie v-model="val" @input="setTime"></time-serie>
     </div>
-    <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
+    <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
   </div>
 </template>
 
