@@ -38,7 +38,7 @@ const variables = [
   }, {
     name: 'Precipitation',
     label: 'Precipitation',
-    description: '{mm/month, mm/season or mm/year}* based on the {CHIRPS, ERA-Interim or GPCC}* dataset.',
+    description: '{mm/month, mm/season or mm/year}* based on the {dataset}* dataset.',
     datasets: [
       {
         id: 'GPCC',
@@ -80,7 +80,7 @@ const variables = [
   }, {
     name: 'Temperature',
     label: 'Temperature (2m)',
-    description: '{monthly, seasonal or annual}* average temperature, based on the {CRU, ERA-Interim or GHCN}* dataset',
+    description: '{monthly, seasonal or annual}* average temperature, based on the {dataset}* dataset',
     datasets: [
       {
         id: 'GHCN',

@@ -22,8 +22,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label v-if="activeVariable.type !== 'Daily'" class="m-2" for="period">Month/Season/Annual</label>
-              <select v-model="activePeriod" v-if="activeVariable.type !== 'Daily'" class="m-2 custom-select" id="period" name="period">
+              <label v-if="datasets[activeVariableDataset.id].frequency !== 'Daily'" class="m-2" for="period">Month/Season/Annual</label>
+              <select v-model="activePeriod" v-if="datasets[activeVariableDataset.id].frequency !== 'Daily'" class="m-2 custom-select" id="period" name="period">
                 <option v-for="timePeriod in timePeriods" :key="timePeriod.value" :value="timePeriod">{{ timePeriod.label }}</option>
               </select>
             </div>
@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6 col-lg-4 mb-3" v-if="activeVariable.type !== 'Daily'">
+        <div class="col-md-6 col-lg-4 mb-3" v-if="datasets[activeVariableDataset.id].frequency !== 'Daily'">
           <div class="card p-3 h-100">
             <h6>Months</h6>
             <div class="mb-1 d-flex flex-wrap">
@@ -67,10 +67,10 @@
             </div>
           </div>
         </div>
-        <div class="col-12 mb-3" v-bind:class="{ 'col-md-6 col-lg-8': activeVariable.type !== 'Daily'}">
+        <div class="col-12 mb-3" v-bind:class="{ 'col-md-6 col-lg-8': datasets[activeVariableDataset.id].frequency !== 'Daily'}">
           <div class="card h-100" style="min-height: 400px">
             <div class="card-header">
-              {{ activeVariable.description }} - {{(activeVariable.type !== 'Daily') ? `${activePeriod.label} ` : ''}}{{ activeYear }}
+              {{ label }}
             </div>
             <div class="card-body position-relative">
               <MiniMap minimapKey="historical-map-container" v-bind:parameter="displayedLayer" v-bind:areaLayer="areaLayer" interactive="true"></MiniMap>
@@ -113,7 +113,8 @@ export default {
       activePeriod: false,
       areaLayer: false,
       timePeriods: [],
-      datasets: []
+      datasets: [],
+      label: false
     }
   },
   created () {
@@ -169,6 +170,7 @@ export default {
           time
         }
       }
+      this.setLabel()
     },
     onSelectVariable (selectedVariable, year) {
       this.onSelectVariableDataset(selectedVariable.datasets.find(d => !d.disabled))
@@ -178,6 +180,21 @@ export default {
     },
     timePeriodTypeFilter: function (timePeriods, type) {
       return timePeriods.filter(t => t.type === type)
+    },
+    setLabel () {
+      let desc = this.activeVariable.description
+      if (this.activePeriod.type === 'month') {
+        desc = desc.replace('{monthly, seasonal or annual}*', 'Monthly')
+        desc = desc.replace('{mm/month, mm/season or mm/year}*', 'mm/month')
+      } else if (this.activePeriod.type === 'season') {
+        desc = desc.replace('{monthly, seasonal or annual}*', 'Seasonal')
+        desc = desc.replace('{mm/month, mm/season or mm/year}*', 'mm/season')
+      } else {
+        desc = desc.replace('{monthly, seasonal or annual}*', 'Annual')
+        desc = desc.replace('{mm/month, mm/season or mm/year}*', 'mm/year')
+      }
+      desc = desc.replace('{dataset}*', this.datasets[this.activeVariableDataset.id].label)
+      this.label = `${desc} - ${(this.datasets[this.activeVariableDataset.id].frequency !== 'Daily') ? `${this.activePeriod.label} ` : ''}${this.activeYear}`
     }
   },
   destroyed () {
