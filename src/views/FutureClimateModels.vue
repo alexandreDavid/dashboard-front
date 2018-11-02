@@ -4,10 +4,21 @@
       Models
     </div>
     <div class="card-body position-relative">
-      <div class="btn-group ml-2 mb-2" role="group" aria-label="unit">
-        <button type="button" @click="selectModelType(modelType)" class="btn btn-primary" v-for="modelType in modelTypes" :key="modelType.value" v-bind:class="{active: modelType === selectedModelType}">
-          {{modelType.label}}
-        </button>
+      <div class="ml-2 mb-2">
+        <div class="mb-2">
+          <div class="btn-group" role="group" aria-label="unit">
+            <button type="button" @click="selectDataset(dataset)" class="btn btn-primary" v-for="dataset in datasets" :key="dataset.value" v-bind:class="{active: dataset === selectedDataset}">
+              {{dataset.label}}
+            </button>
+          </div>
+          <button type="button" class="btn btn-light" @click="openHelpDataset = !openHelpDataset"><font-awesome-icon icon="question-circle" /></button>
+        </div>
+        <div class="alert alert-info" role="alert" v-show="openHelpDataset">
+          {{ selectedDataset.description }}
+          <div v-for="(link, key) in selectedDataset.links" :key="key"><a :href="link" target="__blank">{{ link }}</a> </div>
+          {{ selectedDataset.credentials }}
+          <a :href="selectedDataset.credentialsLink" target="__blank">{{ selectedDataset.credentialsLink }}</a>
+        </div>
       </div>
       <div class="d-flex flex-wrap justify-content-center justify-content-md-start" v-if="isLoaded">
         <div class="card h-100 m-2 model-card" v-for="(model, key) in models" :key="key" v-bind:class="{maximize: model.maximize}">
@@ -65,35 +76,42 @@ export default {
   data () {
     return {
       model2Add: false,
-      modelTypes: false,
-      selectedModelType: false,
+      datasets: false,
+      selectedDataset: false,
       availableModels: [],
       models: [],
       miniMap: [],
       areaLayer: false,
       isLoaded: false,
-      displayModelModal: false
+      displayModelModal: false,
+      openHelpDataset: false
     }
   },
   async mounted () {
-    this.modelTypes = FutureClimateModels.getAllModelTypes()
-    this.selectModelType(this.modelTypes[0])
+    this.datasets = FutureClimateModels.getAllDatasets()
+    this.selectDataset(this.datasets[0])
     this.areaLayer = new AreaLayer()
     await this.areaLayer.setSelectedArea({id: 7552})
     this.isLoaded = true
   },
   methods: {
-    selectModelType (type) {
-      this.selectedModelType = type
+    selectDataset (type) {
+      this.selectedDataset = type
       this.models = []
       this.availableModels = FutureClimateModels.getAllModelsByType(type.value)
       this.availableModels.filter(m => m.default).forEach(this.addModel)
     },
     setParam (model) {
+      let type
+      if (this.timePeriod.type === 'month') {
+        type = 'months'
+      } else if (this.timePeriod.type === 'season') {
+        type = 'seasons'
+      }
       model.param = {
         layerUrl: `${process.env.GEOSERVER_URL}/wms`,
         layerParameters: {
-          layers: `${model.name}:${this.variable.name}_${this.timePeriod.type}_${this.period.id}`,
+          layers: `${model.name}:${this.variable.name}_${type}_${this.period.id}`,
           format: 'image/png',
           transparent: true
         },

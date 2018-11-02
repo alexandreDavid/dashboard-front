@@ -18,19 +18,9 @@
           <div class="form-group">
             <label class="m-2" for="timePeriod">Month/Season/Annual</label>
             <select v-model="activeTimePeriod" class="m-2 custom-select" id="timePeriod" name="timePeriod">
-              <option v-for="month in months" :key="month.id" :value="month">{{ month.label }}</option>
-              <option v-for="season in seasons" :key="season.id" :value="season">{{ season.label }}</option>
-              <option :value="annual">{{ annual.label }}</option>
+              <option v-for="timePeriod in timePeriods" :key="timePeriod.id" :value="timePeriod">{{ timePeriod.label }}</option>
             </select>
           </div>
-          <!-- <div class="btn-group m-2" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-primary active">CMIP5</button>
-            <button type="button" class="btn btn-primary" disabled>CORDEX</button>
-          </div> -->
-          <!-- <div class="btn-group m-2" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary active">Anomaly</button>
-            <button type="button" class="btn btn-secondary" disabled>Model consensus</button>
-          </div> -->
           <div class="form-group">
             <label class="m-2" for="period">Period</label>
             <select v-model="activePeriod" class="m-2 custom-select" id="period" name="period">
@@ -48,24 +38,25 @@
           left: 0;
           right: 0;
           overflow: auto;">
+          <div class="row mt-3 col-12">{{ label }}</div>
           <div class="row mt-3">
             <div class="col-md-4 mb-3">
               <div class="card p-3 h-100">
                 <h6>Months</h6>
                 <div class="mb-1 d-flex flex-wrap">
-                  <div v-for="(month, key) in months" :key="key" class="p-1" style="min-width: 80px">
+                  <div v-for="(month, key) in timePeriodTypeFilter(timePeriods, 'month')" :key="key" class="p-1" style="min-width: 80px">
                     <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = month" v-bind:class="{active: activeTimePeriod.id === month.id}">{{ month.shortLabel }}</button>
                   </div>
                 </div>
                 <h6>Seasons</h6>
                 <div class="mb-1 d-flex flex-wrap">
-                  <div v-for="(season, key) in seasons" :key="key" class="p-1" style="min-width: 80px">
+                  <div v-for="(season, key) in timePeriodTypeFilter(timePeriods, 'season')" :key="key" class="p-1" style="min-width: 80px">
                     <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = season" v-bind:class="{active: activeTimePeriod.id === season.id}">{{ season.label }}</button>
                   </div>
                 </div>
                 <h6>Annual</h6>
                 <div class="mb-1 d-flex flex-wrap">
-                  <div class="p-1" style="min-width: 80px">
+                  <div v-for="(annual, key) in timePeriodTypeFilter(timePeriods, 'annual')" :key="key" class="p-1" style="min-width: 80px">
                     <button type="button" class="btn btn-sm btn-secondary w-100" @click="activeTimePeriod = annual" v-bind:class="{active: activeTimePeriod.id === annual.id}">{{ annual.label }}</button>
                   </div>
                 </div>
@@ -77,7 +68,7 @@
           </div>
           <div class="row mb-3">
             <div class="col-12">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae, consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tempor. Cras vestibulum bibendum augue. Praesent egestas leo in pede. Praesent blandit odio eu enim. Pellentesque sed dui ut augue blandit sodales. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam nibh. Mauris ac mauris sed pede pellentesque fermentum. Maecenas adipiscing ante non diam sodales hendrerit.
+              The plots show projected future changes for Uganda across two sets of climate models: CMIP5 and CORDEX. The data are presented as anomalies; that is, the change from the baseline period (1971-2000) to the two future periods (2030-2059 and 2070-2099). The socio-economic scenarios are known as RCPs, and this data uses only RCP8.5, a high-emission or low-regulation scenario.
             </div>
           </div>
           <div class="row">
@@ -111,7 +102,6 @@ export default {
     })
   },
   data () {
-    const months = config.getAllMonths()
     let periods = [
       {
         id: '2030-2059',
@@ -128,61 +118,71 @@ export default {
     return {
       isLoaded: false,
       sliderValue: [2040, 2060],
-      activeTimePeriod: months[0],
-      months: months,
+      activeTimePeriod: false,
+      timePeriods: [],
       variables: [],
       activeVariable: false,
       periods: periods,
       activePeriod: periods[0],
-      seasons: [
-        {
-          id: 13,
-          value: '01',
-          label: 'Spring',
-          type: 'seasons'
-        }, {
-          id: 14,
-          value: '02',
-          label: 'Summer',
-          type: 'seasons'
-        }, {
-          id: 15,
-          value: '03',
-          label: 'Autumn',
-          type: 'seasons'
-        }, {
-          id: 16,
-          value: '04',
-          label: 'Winter',
-          type: 'seasons'
-        }
-      ],
-      annual: {
-        id: 17,
-        label: 'Annual',
-        type: 'annual'
-      }
+      label: false
     }
   },
   async created () {
     this.variables = [{
       name: 'CDD_anom',
-      label: 'Consecutive dry days',
-      description: 'Maximum number of consecutive dry days',
+      label: 'Consecutive Dry Days Anomaly',
+      description: 'For the maximum number of consecutive days with less than 1mm of precipitation in a {year, season or month}*, the change in the future (2030-2059 or 2070-2099) compared with the baseline period (1971-2000).',
       styleName: 'CCSM4'
     }, {
       name: 'TX30',
       label: 'Days > 30°C',
-      description: 'Number of days in a year exceeding 30°C, based on the WFDEI dataset',
+      description: 'For the average number of days that exceed 30oC per {year, season or month}*, the change in the future (2030-2059 or 2070-2099) compared with the baseline period (1971-2000). A dry spells is a minimum of fourteen consecutive days with less than 1mm of precipitation.',
       styleName: 'CCSM4_tx30anom'
     }, {
       name: 'dry_spells',
-      label: 'Dry spells',
-      description: 'Dry spells',
+      label: 'Dry Spells Anomaly',
+      description: 'For the average number of dry spells per {year, season or month}*, the change in the future (2030-2059 or 2070-2099) compared with the baseline period (1971-2000). A dry spells is a minimum of fourteen consecutive days with less than 1mm of precipitation.',
+      styleName: 'CCSM4_dsanom'
+    }, {
+      name: 'precipitation',
+      label: 'Precipitation Anomaly',
+      description: 'For average daily rainfall in mm per day, the change in the future (2030-2059 or 2070-2099) compared with the baseline period (1971-2000).',
+      styleName: 'CCSM4_dsanom'
+    }, {
+      name: 'R95p',
+      label: 'Rainfall on days > 95th percentile',
+      description: 'Projected future change in percentage of days where daily rainfall exceeds 95th percentile of baseline period (1971-2000).',
+      styleName: 'CCSM4_dsanom'
+    }, {
+      name: 'temperature',
+      label: 'Temperature Anomaly',
+      description: 'For mean daily temperature at the surface in oC, the change in the future (2030-2059 or 2070-2099) compared with the baseline period (1971-2000).',
       styleName: 'CCSM4_dsanom'
     }]
     this.activeVariable = this.variables[0]
+    this.timePeriods = config.getAllTimePeriods()
+    this.activeTimePeriod = this.timePeriods[0]
     this.isLoaded = true
+  },
+  methods: {
+    setLabel () {
+      let desc = this.activeVariable.description
+      if (this.activeTimePeriod.type === 'month') {
+        desc = desc.replace('{year, season or month}*', 'month')
+      } else if (this.activeTimePeriod.type === 'season') {
+        desc = desc.replace('{year, season or month}*', 'season')
+      } else {
+        desc = desc.replace('{year, season or month}*', 'year')
+      }
+      this.label = desc
+    },
+    timePeriodTypeFilter: function (timePeriods, type) {
+      return timePeriods.filter(t => t.type === type)
+    }
+  },
+  watch: {
+    activeVariable: 'setLabel',
+    activeTimePeriod: 'setLabel'
   }
 }
 </script>
