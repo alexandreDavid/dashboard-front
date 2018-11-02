@@ -14,7 +14,7 @@
     </div>
     <Loading v-if="!isLoaded"/>
   </SideBar>
-  <SideBar v-if="showModal" @close="showModal = false" title="Add a new layer" id="add-layer-sidebar" class="position-absolute w-lg bg-light">
+  <SideBar v-if="showModal" @close="showModal = false" title="Add coverage maps" id="add-layer-sidebar" class="position-absolute w-lg bg-light">
     <Catalogue @selectedParameter="onSelectedParameter"></Catalogue>
   </SideBar>
 </div>
