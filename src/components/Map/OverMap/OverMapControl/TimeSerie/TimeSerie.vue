@@ -1,13 +1,13 @@
 <template>
-  <div id="time-slot" class="w-100" v-if="value._availableTimes && value._availableTimes.length">
+  <div id="time-slot" class="w-100" v-if="times && times.length">
     <div class="d-flex align-items-end" v-if="isLoaded">
       <div class="mr-1">
         <button type="button" id="time-play" class="btn btn-secondary btn-sm" @click="play" v-show="!isPlaying"><font-awesome-icon icon="play" /></button>
         <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon icon="pause" /></button>
       </div>
       <div class="flex-grow-1">
-        <TimeSlider class="d-none d-sm-block" v-model="value.geoRessource.time" @input="onChange" v-bind:times="value._availableTimes"></TimeSlider>
-        <div class="text-center" style="font-size: 0.8em">{{ getTimeFormated(value.geoRessource.time) }}</div>
+        <TimeSlider class="d-none d-sm-block" v-model="val" @input="onChange" v-bind:times="times"></TimeSlider>
+        <div class="text-center" style="font-size: 0.8em">{{ getTimeFormated(value) }}</div>
       </div>
     </div>
   </div>
@@ -21,9 +21,17 @@ export default {
   components: {
     TimeSlider
   },
-  props: [
-    'value'
-  ],
+  computed: {
+    val: {
+      get () {
+        return this.value
+      },
+      set (val) {
+        this.$emit('input', val)
+      }
+    }
+  },
+  props: ['value', 'times'],
   data () {
     return {
       isLoaded: false,
@@ -42,11 +50,10 @@ export default {
       this.afterSelect()
     },
     afterSelect () {
-      this.value.geoRessource.time = this.value._availableTimes[this.currentIndex]
-      this.$emit('input', this.value.geoRessource.time)
+      this.val = this.times[this.currentIndex]
     },
     play () {
-      this.currentIndex = this.value._availableTimes.findIndex(t => t === this.value.geoRessource.time)
+      this.currentIndex = this.times.findIndex(t => t === this.value)
       this.isPlaying = true
       this.activePlay()
     },
@@ -54,7 +61,7 @@ export default {
       this.isPlaying = false
     },
     activePlay () {
-      if (this.currentIndex < (this.value._availableTimes.length - 1)) {
+      if (this.currentIndex < (this.times.length - 1)) {
         this.currentIndex++
         this.afterSelect()
         setTimeout(() => {
@@ -67,8 +74,7 @@ export default {
       }
     },
     onChange (val) {
-      this.value.geoRessource.time = val
-      this.$emit('input', val)
+      this.val = val
     },
     getTimeFormated (time) {
       let formatedDate

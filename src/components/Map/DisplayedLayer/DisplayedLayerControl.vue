@@ -12,7 +12,7 @@
         </div>
       </h6>
       <Legend class="p-2" v-bind:layer="layer"></Legend>
-      <time-serie v-model="val" @input="setTime"></time-serie>
+      <time-serie v-model="currentTime" :times="layer._availableTimes" @input="setTime"></time-serie>
     </div>
     <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
   </div>
@@ -44,8 +44,12 @@ export default {
       savedOpacity: false,
       displayDropDownTime: false,
       showSettingTools: false,
-      position: false
+      position: false,
+      currentTime: false
     }
+  },
+  created () {
+    this.currentTime = this.layer.geoRessource.time
   },
   methods: {
     edit () {
@@ -58,6 +62,7 @@ export default {
     },
     setTime (value) {
       this.layer.setTime(value)
+      this.currentTime = this.layer.geoRessource.time
       this.$emit('change')
     },
     toggleDisplay () {
