@@ -14,10 +14,9 @@
 <script>
 import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
-import DisplayedLayer from '@/store/displayedLayer'
 import Popup from '@/components/Map/Popup'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
-import Parameter from '@/store/parameter'
+import SelectedLayers from '@/store/selectedLayers'
 
 export default {
   name: 'WidgetCurrentMap',
@@ -49,7 +48,7 @@ export default {
   mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map, this.area)
-    this.allLayers = Parameter.getDisplayedParameters().forEach(layer => new DisplayedLayer(this.map, layer))
+    SelectedLayers.getAllSelectedLayers().forEach(l => l.addTo(this.map))
     this.isLoaded = true
   },
   watch: {
