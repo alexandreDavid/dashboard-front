@@ -51,7 +51,7 @@ export default class {
     }
   }
   setOpacity (opacity) {
-    opacity = isNaN(opacity) ? 80 : opacity
+    opacity = Number.isInteger(opacity) ? opacity : 80
     this.geoRessource.opacity = opacity
     this._layer && this._layer.setOpacity(opacity / 100)
     return opacity
