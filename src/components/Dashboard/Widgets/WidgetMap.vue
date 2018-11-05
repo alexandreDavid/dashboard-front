@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div :id="mapId" class="map-container-widget">
+    <div :id="mapId" class="map-container-widget rounded-bottom">
       <Popup v-if="isLoaded"/>
     </div>
     <div class="over-map">
-      <div class="over-map-right over-map-control">
-        <Legend class="over-map-control" v-if="isLoaded" :layer="displayedLayer"></Legend>
+      <div class="over-map-bottom over-map-control p-0 shadow-top">
+        <Legend class="over-map-control p-1 rounded-bottom" v-if="isLoaded" :layer="displayedLayer"></Legend>
       </div>
     </div>
   </div>

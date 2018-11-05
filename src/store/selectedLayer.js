@@ -95,4 +95,32 @@ export default class {
       return featureInfo.data.features
     }
   }
+  async getLegend () {
+    return {
+      type: 'raster',
+      values: [
+        {
+          color: '#2c7bb6',
+          value: 281,
+          name: '281'
+        }, {
+          color: '#abd9e9',
+          value: 286.1,
+          name: '286.1'
+        }, {
+          color: '#ffffbf',
+          value: 291.2,
+          name: '291.2'
+        }, {
+          color: '#fdae61',
+          value: 296.2,
+          name: '296.2'
+        }, {
+          color: '#d7191c',
+          value: 301.3,
+          name: '301.3'
+        }
+      ]
+    }
+  }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :id="mapId" class="map-container-widget">
+    <div :id="mapId" class="map-container-widget rounded-bottom">
       <!-- <Popup v-if="isLoaded"/> -->
     </div>
     <div class="over-map">
