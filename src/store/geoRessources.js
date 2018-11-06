@@ -32,7 +32,7 @@ let parameters = [
     layer: 'twoDaysForecast:air_temperature',
     legend: `${process.env.GEOSERVER_URL}/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&LAYER=twoDaysForecast:air_temperature`,
     statistics: 'http://demo.dfms.co.uk/data/:type/:name/air_temperature',
-    // times: twoDays,
+    times: twoDays,
     unit: 'K'
   }, {
     name: 'Air temperature (7 days forecast)',
