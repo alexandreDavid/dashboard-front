@@ -14,9 +14,7 @@
     </div>
     <Loading v-if="!isLoaded"/>
   </SideBar>
-  <SideBar v-if="showModal" @close="showModal = false" title="Add coverage maps" id="add-layer-sidebar" class="position-absolute w-lg bg-light">
-    <Catalogue @selectedParameter="onSelectedParameter"></Catalogue>
-  </SideBar>
+  <catalogue-modal v-if="showModal" @close="showModal = false" @selectedRessource="onSelectedRessource"></catalogue-modal>
 </div>
 </template>
 
@@ -26,7 +24,7 @@ import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import SideBar from '@/components/SideBar/SideBar'
 import Loading from '@/components/Loading/Loading'
 import DisplayedLayers from '@/components/DisplayedLayers/DisplayedLayers'
-import Catalogue from '@/components/Catalogue/Catalogue'
+import CatalogueModal from '@/components/Catalogue/CatalogueModal'
 
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import MeteoStationsControl from '@/components/Map/MeteoStations/MeteoStationsControl'
@@ -37,7 +35,7 @@ export default {
   name: 'MapControlBar',
   components: {
     Modal,
-    Catalogue,
+    CatalogueModal,
     Legend,
     SideBar,
     Loading,
@@ -63,9 +61,8 @@ export default {
     close () {
       this.$emit('close')
     },
-    onSelectedParameter (selectedParameter) {
-      this.showModal = false
-      SelectedLayers.add(selectedParameter).addTo(this.getMap())
+    onSelectedRessource (ressource) {
+      SelectedLayers.add(ressource).addTo(this.getMap())
     },
     onSelectedReportedParameter (selectedReportedParameter) {
       this.$emit('selectedReportedLayer', selectedReportedParameter)

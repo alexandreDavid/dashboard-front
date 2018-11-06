@@ -171,7 +171,7 @@ let parameters = [
 ]
 const defaultFormat = {
   'name': 'Air temperature (2 days forecast)',
-  'desc': 'MetOffice model ....',
+  'description': 'MetOffice model ....',
   'type': 'tms',
   'tags': ['wheater', 'forecast', 'metoffice', '2 days'],
   'config': {
@@ -252,24 +252,26 @@ export default {
     return parameters.map(this.getParameterInfos)
   },
   getParameterInfos (p) {
-    return Object.assign({
-      name: p.name,
-      config: {
-        layer: {
-          link: `${process.env.GEOSERVER_URL}/wms`,
-          layerName: p.layer,
-          params: {
-            date: p.times
+    return {...defaultFormat,
+      ...{
+        name: p.name,
+        config: {
+          layer: {
+            link: `${process.env.GEOSERVER_URL}/wms`,
+            layerName: p.layer,
+            params: {
+              date: p.times
+            }
+          },
+          statistics: {
+            link: p.statistics
+          },
+          legend: {
+            link: p.legend
           }
-        },
-        statistics: {
-          link: p.statistics
-        },
-        legend: {
-          link: p.legend
         }
       }
-    }, ...defaultFormat)
+    }
   },
   searchByName (name) {
     return parameters.map(this.getParameterInfos).find(p => p.name === name)

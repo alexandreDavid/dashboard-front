@@ -1,7 +1,7 @@
 <template>
   <div class="card mt-2 w-100" ref="layer">
     <div class="card-body p-2">
-      <h6 class="d-flex align-items-center">
+      <h6 class="d-flex align-items-start">
         <button class="btn btn-xs btn-outline-secondary flex-shrink-1 mr-1" @click="select"><font-awesome-icon v-bind:class="{'text-white': !selected}" icon="check" /></button>
         <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoRessource.opacity ? 'eye' : 'eye-slash'" /></button>
         <span class="w-100 mx-1"> {{ layer.geoRessource.name }}</span>
