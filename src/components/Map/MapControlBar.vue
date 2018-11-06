@@ -9,7 +9,7 @@
         <DisplayedLayers @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
       </div>
       <div class="row mb-2">
-        <Managing @selectedReportedParameter="onSelectedReportedParameter"></Managing>
+        <meteo-stations-control @selectedReportedParameter="onSelectedReportedParameter"></meteo-stations-control>
       </div>
     </div>
     <Loading v-if="!isLoaded"/>
@@ -29,7 +29,7 @@ import DisplayedLayers from '@/components/DisplayedLayers/DisplayedLayers'
 import Catalogue from '@/components/Catalogue/Catalogue'
 
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
-import Managing from '@/components/Map/OverMap/OverMapControl/Managing/Managing'
+import MeteoStationsControl from '@/components/Map/MeteoStations/MeteoStationsControl'
 
 import SelectedLayers from '@/store/selectedLayers'
 
@@ -42,7 +42,7 @@ export default {
     SideBar,
     Loading,
     AreaSelectionControl,
-    Managing,
+    MeteoStationsControl,
     DisplayedLayers
   },
   props: ['isStatic'],

@@ -25,7 +25,7 @@ import Loading from '@/components/Loading/Loading'
 import { FontAwesomeLayers } from '@fortawesome/vue-fontawesome'
 
 export default {
-  name: 'ForecastSelection',
+  name: 'Catalogue',
   components: {
     Loading,
     FontAwesomeLayers
