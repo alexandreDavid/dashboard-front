@@ -1,0 +1,33 @@
+$font-size-xs:                ($font-size-base * .750) !default;
+
+$line-height-xs:              1.5 !default;
+
+$input-btn-padding-y-xs:      .125rem !default;
+$input-btn-padding-x-xs:      .25rem !default;
+$input-btn-line-height-xs:    $line-height-xs !default;
+
+$btn-padding-y-xs:            $input-btn-padding-y-xs !default;
+$btn-padding-x-xs:            $input-btn-padding-x-xs !default;
+$btn-line-height-xs:          $input-btn-line-height-xs !default;
+
+$border-radius-xs:            .15rem !default;
+
+$btn-border-radius-xs:        $border-radius-xs !default;
+
+.btn-xs {
+  @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $font-size-xs, $btn-line-height-xs, $btn-border-radius-xs);
+}
+
+.btn-group-xs > .btn { @extend .btn-xs; }
+
+$modal-xl:                    1000px !default;
+@include media-breakpoint-up(lg) {
+  .modal-xl { max-width: $modal-lg; }
+}
+@include media-breakpoint-up(xl) {
+  .modal-xl { max-width: $modal-xl; }
+}
+
+.shadow-top {
+  box-shadow: 0 0 1rem rgba($black, .15) !important;
+}
