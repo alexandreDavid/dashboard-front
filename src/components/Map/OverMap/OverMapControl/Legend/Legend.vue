@@ -74,7 +74,6 @@ export default {
 .legend-displaying {
   background: var(--white);
   position: relative;
-  height: 100%;
 
   .gradient {
     height: 10px;
