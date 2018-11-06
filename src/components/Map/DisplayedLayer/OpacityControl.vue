@@ -20,19 +20,24 @@ export default {
     DropDown,
     OpacitySlider
   },
-  data () {
-    return {
-      displayDropDownMenu: false,
-      opacity: 0
+  computed: {
+    opacity: {
+      get () {
+        return this.value
+      },
+      set (val) {
+        this.$emit('input', val)
+      }
     }
   },
-  created () {
-    this.opacity = this.value
+  data () {
+    return {
+      displayDropDownMenu: false
+    }
   },
   methods: {
     setOpacity (value) {
       this.opacity = value
-      this.$emit('input', value)
     }
   }
 }

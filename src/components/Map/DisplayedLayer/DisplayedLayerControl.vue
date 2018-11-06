@@ -2,8 +2,9 @@
   <div class="card mt-2 w-100" ref="layer">
     <div class="card-body p-2">
       <h6 class="d-flex align-items-center">
-        <button class="btn btn-sm btn-light flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoRessource.opacity ? 'eye' : 'eye-slash'" /></button>
-        <span class="w-100"> {{ layer.geoRessource.name }}</span>
+        <input type="checkbox" @click="select" v-model="selected">
+        <button class="btn btn-sm btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoRessource.opacity ? 'eye' : 'eye-slash'" /></button>
+        <span class="w-100 mr-1"> {{ layer.geoRessource.name }}</span>
         <div class="btn-group btn-group-sm flex-shrink-1" role="group">
           <button class="btn btn-sm btn-light" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
           <button class="btn btn-sm btn-light" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>
@@ -12,7 +13,7 @@
         </div>
       </h6>
       <Legend class="p-2" v-bind:layer="layer"></Legend>
-      <time-serie v-model="currentTime" :times="layer._availableTimes" @input="setTime"></time-serie>
+      <time-serie v-model="layer._time" :times="layer._availableTimes" @input="setTime"></time-serie>
     </div>
     <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
   </div>
@@ -25,7 +26,7 @@ import DisplayedLayerSettingTools from '@/components/Map/DisplayedLayer/Displaye
 
 export default {
   name: 'DisplayedLayerControl',
-  props: ['parameter', 'layer'],
+  props: ['layer'],
   computed: {
     val: {
       get () {
@@ -45,13 +46,13 @@ export default {
       displayDropDownTime: false,
       showSettingTools: false,
       position: false,
-      currentTime: false
+      selected: false
     }
   },
-  created () {
-    this.currentTime = this.layer.geoRessource.time
-  },
   methods: {
+    select () {
+      this.$emit('select', this.selected)
+    },
     edit () {
       this.position = this.$refs.layer.getBoundingClientRect()
       this.showSettingTools = !this.showSettingTools
@@ -62,7 +63,6 @@ export default {
     },
     setTime (value) {
       this.layer.setTime(value)
-      this.currentTime = this.layer.geoRessource.time
       this.$emit('change')
     },
     toggleDisplay () {

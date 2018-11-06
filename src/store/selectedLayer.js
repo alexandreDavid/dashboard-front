@@ -7,6 +7,8 @@ export default class {
   geoRessource = false
   _layer = false
   _availableTimes = []
+  _time = false
+  _opacity = false
   constructor (geoRessource) {
     this.setLayer(geoRessource)
   }
@@ -45,6 +47,7 @@ export default class {
         time = this._availableTimes[0]
       }
       this.geoRessource.time = time
+      this._time = time
       this._layer.setParams({
         time: this.formatTime(time)
       })
@@ -53,6 +56,7 @@ export default class {
   setOpacity (opacity) {
     opacity = Number.isInteger(opacity) ? opacity : 80
     this.geoRessource.opacity = opacity
+    this._opacity = opacity
     this._layer && this._layer.setOpacity(opacity / 100)
     return opacity
   }
