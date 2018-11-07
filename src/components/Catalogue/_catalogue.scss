@@ -1,0 +1,25 @@
+.catalogue-modal-content {
+  height: 70vh;
+
+  .ressources-list {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+  }
+}
+@include media-breakpoint-down(md) {
+  .ressource-info {
+    display: none;
+  }
+  .selected-ressource {
+    .ressource-selection {
+      display: none !important;
+    }
+    .ressource-info {
+      display: block;
+    }
+  }
+}

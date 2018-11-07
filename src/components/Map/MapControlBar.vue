@@ -12,9 +12,9 @@
         <meteo-stations-control @selectedReportedParameter="onSelectedReportedParameter"></meteo-stations-control>
       </div>
     </div>
-    <Loading v-if="!isLoaded"/>
+    <Loading v-else/>
+    <catalogue-modal v-if="showModal" @close="showModal = false" @selectedRessource="onSelectedRessource"></catalogue-modal>
   </SideBar>
-  <catalogue-modal v-if="showModal" @close="showModal = false" @selectedRessource="onSelectedRessource"></catalogue-modal>
 </div>
 </template>
 
