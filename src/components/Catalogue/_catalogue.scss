@@ -1,7 +1,7 @@
 .catalogue-modal-content {
   height: 70vh;
 
-  .ressources-list {
+  .resources-list {
     position: absolute;
     top: 0;
     right: 0;
@@ -11,14 +11,14 @@
   }
 }
 @include media-breakpoint-down(md) {
-  .ressource-info {
+  .resource-info {
     display: none;
   }
-  .selected-ressource {
-    .ressource-selection {
+  .selected-resource {
+    .resource-selection {
       display: none !important;
     }
-    .ressource-info {
+    .resource-info {
       display: block;
     }
   }

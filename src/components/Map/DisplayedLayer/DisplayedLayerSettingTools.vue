@@ -7,11 +7,11 @@
       </button>
     </h6>
     <div class="d-flex">
-      <time-control class="m-1" @input="onTimeChange" v-model="parameter.geoRessource.time" :times="parameter._availableTimes"></time-control>
+      <time-control class="m-1" @input="onTimeChange" v-model="parameter.geoResource.time" :times="parameter._availableTimes"></time-control>
       <button type="button" class="btn btn-sm btn-secondary m-1" @click="openGraphModal"><font-awesome-icon icon="chart-bar" /> Open graph</button>
-      <opacity-control class="m-1" v-model="parameter.geoRessource.opacity" @input="setOpacity"></opacity-control>
+      <opacity-control class="m-1" v-model="parameter.geoResource.opacity" @input="setOpacity"></opacity-control>
     </div>
-    <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter.geoRessource" @close="showModalGraph = false"></GraphModal>
+    <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter.geoResource" @close="showModalGraph = false"></GraphModal>
   </div>
 </template>
 

@@ -1,3 +1,7 @@
+import axios from 'axios'
+
+const urlRoot = process.env.CATALOGUE_API_URL
+
 let twoDays = []
 let sevenDays = []
 // Try to find value to display to be removed for a smart service
@@ -245,6 +249,12 @@ const defaultFormat = {
 }
 
 export default {
+  async getAllRessources () {
+    const response = await axios.get(
+      `${urlRoot}/ressources`
+    )
+    return response.data
+  },
   async getAll () {
     return parameters.map(this.getParameterInfos)
   },

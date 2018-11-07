@@ -13,7 +13,7 @@
       </div>
     </div>
     <Loading v-else/>
-    <catalogue-modal v-if="showModal" @close="showModal = false" @selectedRessource="onSelectedRessource"></catalogue-modal>
+    <catalogue-modal v-if="showModal" @close="showModal = false" @selectedResource="onSelectedResource"></catalogue-modal>
   </SideBar>
 </div>
 </template>
@@ -61,8 +61,8 @@ export default {
     close () {
       this.$emit('close')
     },
-    onSelectedRessource (ressource) {
-      SelectedLayers.add(ressource).addTo(this.getMap())
+    onSelectedResource (resource) {
+      SelectedLayers.add(resource).addTo(this.getMap())
     },
     onSelectedReportedParameter (selectedReportedParameter) {
       this.$emit('selectedReportedLayer', selectedReportedParameter)

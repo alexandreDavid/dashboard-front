@@ -22,8 +22,8 @@ export default {
     this.allSelectedLayers = UserConfiguration.getSelectedLayers().map(layer => new SelectedLayer(layer))
     return this.allSelectedLayers
   },
-  add (geoRessources) {
-    const newLayer = new SelectedLayer(geoRessources)
+  add (geoResources) {
+    const newLayer = new SelectedLayer(geoResources)
     this.allSelectedLayers.unshift(newLayer)
     this.allSelectedLayers = calculateZIndex(this.allSelectedLayers)
     this.saveChanges()
@@ -45,6 +45,6 @@ export default {
     this.saveChanges()
   },
   saveChanges () {
-    UserConfiguration.setSelectedLayers(this.allSelectedLayers.map(layer => layer.geoRessource))
+    UserConfiguration.setSelectedLayers(this.allSelectedLayers.map(layer => layer.geoResource))
   }
 }

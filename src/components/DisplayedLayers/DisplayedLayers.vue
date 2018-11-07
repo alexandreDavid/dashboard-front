@@ -69,7 +69,7 @@ export default {
       })
     },
     openGraphModalSelected () {
-      this.openGraphModal(this.refLayer.geoRessource)
+      this.openGraphModal(this.refLayer.geoResource)
     },
     openGraphModal (modalParams) {
       this.selectedArea = Area.getSelectedArea()

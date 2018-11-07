@@ -2,24 +2,24 @@
   <modal @close="close()">
     <div slot="header">Add coverage maps</div>
     <div slot="body" class="catalogue-modal-content">
-      <div class="row h-100" v-if="isLoaded" v-bind:class="{'selected-ressource': selectedRessource}">
-        <div class="col-lg-4 h-100 d-flex flex-column ressource-selection">
+      <div class="row h-100" v-if="isLoaded" v-bind:class="{'selected-resource': selectedResource}">
+        <div class="col-lg-4 h-100 d-flex flex-column resource-selection">
           <div>
             <div class="input-group mb-2">
               <div class="input-group-prepend">
                 <span class="input-group-text"><font-awesome-icon icon="search" /></span>
               </div>
-              <input type="text" class="form-control" v-model="searchRessource" placeholder="Search a ressource" aria-label="Search a ressource" aria-describedby="Search a ressource">
-              <div class="input-group-append" v-if="searchRessource">
-                <button class="btn btn-outline-secondary" type="button" @click="searchRessource = ''">
+              <input type="text" class="form-control" v-model="searchResource" placeholder="Search a resource" aria-label="Search a resource" aria-describedby="Search a resource">
+              <div class="input-group-append" v-if="searchResource">
+                <button class="btn btn-outline-secondary" type="button" @click="searchResource = ''">
                   <font-awesome-icon icon="times" />
                 </button>
               </div>
             </div>
           </div>
           <div class="h-100 position-relative">
-            <div class="ressources-list">
-              <div v-for="group in groups" :key="group.id" v-if="!searchRessource">
+            <div class="resources-list">
+              <div v-for="group in groups" :key="group.id" v-if="!searchResource">
                 <button class="btn btn-light d-flex w-100" @click="toggleGroup(group)">
                   <div class="w-100 text-left font-weight-bold">{{ group.friendly_name }}</div>
                   <div class="flex-shrink-1">
@@ -27,37 +27,37 @@
                   </div>
                 </button>
                 <div class="list-group list-group-flush" v-show="displayedGroups.indexOf(group) > -1">
-                  <a href="#" class="list-group-item list-group-item-action" @click="selectRessource(ressource)" v-for="ressource in ressources" :key="ressource.name">{{ ressource.name }}</a>
+                  <a href="#" class="list-group-item list-group-item-action" @click="selectResource(resource)" v-for="resource in resources" :key="resource.name">{{ resource.name }}</a>
                 </div>
               </div>
-              <div v-if="searchRessource">
+              <div v-if="searchResource">
                 <h6>Search results</h6>
                 <div class="list-group list-group-flush">
-                  <a href="#" class="list-group-item list-group-item-action" @click="selectRessource(ressource)" v-for="ressource in foundRessources" :key="ressource.name">{{ ressource.name }}</a>
+                  <a href="#" class="list-group-item list-group-item-action" @click="selectResource(resource)" v-for="resource in foundResources" :key="resource.name">{{ resource.name }}</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-8 h-100 ressource-info">
-          <div v-if="selectedRessource">
+        <div class="col-lg-8 h-100 resource-info">
+          <div v-if="selectedResource">
             <button class="btn btn-link d-lg-none" @click="backToList"><font-awesome-icon icon="caret-left" /> Back</button>
             <div id="preview-map" class="w-100 mb-2" style="height:200px"></div>
             <div class="container">
-              <h5>{{ selectedRessource.name }}</h5>
-              <span v-for="(tag, key) in selectedRessource.tags" :key="key" class="badge badge-secondary badge-pill mr-1 mb-2">{{ tag }}</span>
+              <h5>{{ selectedResource.name }}</h5>
+              <span v-for="(tag, key) in selectedResource.tags" :key="key" class="badge badge-secondary badge-pill mr-1 mb-2">{{ tag }}</span>
               <h6>Description</h6>
-              <div class="mb-2">{{ selectedRessource.description }}</div>
+              <div class="mb-2">{{ selectedResource.description }}</div>
               <h6>Type</h6>
-              <div class="mb-2">{{ selectedRessource.type }}</div>
+              <div class="mb-2">{{ selectedResource.type }}</div>
               <h6>Creation date</h6>
-              <div class="mb-2">{{ selectedRessource.creation_date }}</div>
+              <div class="mb-2">{{ selectedResource.creation_date }}</div>
               <h6>Ingestion date</h6>
-              <div class="mb-2">{{ selectedRessource.ingestion_date }}</div>
-              <button type="button" class="btn btn-primary" @click="addToMap(selectedRessource)"><font-awesome-icon icon="plus" /> Add to the map</button>
+              <div class="mb-2">{{ selectedResource.ingestion_date }}</div>
+              <button type="button" class="btn btn-primary" @click="addToMap(selectedResource)"><font-awesome-icon icon="plus" /> Add to the map</button>
             </div>
           </div>
-          <div class="alert alert-info" v-else>Select a ressource to see a preview</div>
+          <div class="alert alert-info" v-else>Select a resource to see a preview</div>
         </div>
       </div>
       <Loading v-else></Loading>
@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import Georessources from '@/store/geoRessources'
-import GeoressourcesGroups from '@/store/geoRessourcesGroups'
+import GeoResources from '@/store/geoResources'
+import GeoResourcesGroups from '@/store/geoResourcesGroups'
 import MapObj from '@/store/map'
 import L from 'leaflet'
 
@@ -81,9 +81,9 @@ export default {
     Loading
   },
   computed: {
-    foundRessources () {
-      return this.ressources.filter(ressource => {
-        return ressource.name.toLowerCase().includes(this.searchRessource.toLowerCase())
+    foundResources () {
+      return this.resources.filter(resource => {
+        return resource.name.toLowerCase().includes(this.searchResource.toLowerCase())
       })
     }
   },
@@ -91,18 +91,18 @@ export default {
     return {
       groups: [],
       displayedGroups: [],
-      ressources: [],
+      resources: [],
       isLoaded: false,
-      selectedRessource: false,
+      selectedResource: false,
       map: false,
       currentLayer: false,
-      searchRessource: ''
+      searchResource: ''
     }
   },
   async created () {
-    this.groups = await GeoressourcesGroups.getAllGroups()
+    this.groups = await GeoResourcesGroups.getAllGroups()
     this.displayedGroups.push(this.groups[0])
-    this.ressources = await Georessources.getAll()
+    this.resources = await GeoResources.getAll()
     this.isLoaded = true
   },
   methods: {
@@ -114,8 +114,8 @@ export default {
         this.displayedGroups.push(group)
       }
     },
-    selectRessource (ressource) {
-      this.selectedRessource = ressource
+    selectResource (resource) {
+      this.selectedResource = resource
       this.$nextTick(() => {
         if (!this.map) {
           this.map = new MapObj('preview-map')
@@ -123,18 +123,18 @@ export default {
         if (this.currentLayer) {
           this.currentLayer.remove()
         }
-        this.currentLayer = new L.GeoJSON(this.selectedRessource.extent)
+        this.currentLayer = new L.GeoJSON(this.selectedResource.extent)
         this.currentLayer.addTo(this.map)
         this.map.fitBounds(this.currentLayer.getBounds())
       })
     },
     backToList () {
-      this.selectedRessource = false
+      this.selectedResource = false
       this.map.remove()
       this.map = false
     },
-    addToMap (ressource) {
-      this.$emit('selectedRessource', ressource)
+    addToMap (resource) {
+      this.$emit('selectedResource', resource)
     },
     close () {
       this.$emit('close')

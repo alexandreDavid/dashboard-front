@@ -1,5 +1,5 @@
 import UserConfiguration from '@/store/userConfiguration'
-import GeoRessources from '@/store/geoRessources'
+import GeoResources from '@/store/geoResources'
 
 const cardWidths = [
   {
@@ -127,7 +127,7 @@ export default class Dashboard {
     return cardHeights
   }
   static getCardWidgets () {
-    let allParameters = GeoRessources.getAllParams().map(p => {
+    let allParameters = GeoResources.getAllParams().map(p => {
       return {
         label: p.name
       }

@@ -4,34 +4,34 @@ import {
 import axios from 'axios'
 
 export default class {
-  geoRessource = false
+  geoResource = false
   _layer = false
   _availableTimes = []
   _time = false
   _opacity = false
-  constructor (geoRessource) {
-    this.setLayer(geoRessource)
+  constructor (geoResource) {
+    this.setLayer(geoResource)
   }
-  setLayer (geoRessource) {
-    this.geoRessource = geoRessource
+  setLayer (geoResource) {
+    this.geoResource = geoResource
     // Remove and add to activate the addlayer event
     if (this._layer) {
       this._layer.remove()
     }
-    if (this.geoRessource) {
-      this._layer = new TileLayer.WMS(this.geoRessource.config.layer.link, {
-        layers: this.geoRessource.config.layer.layerName,
+    if (this.geoResource) {
+      this._layer = new TileLayer.WMS(this.geoResource.config.layer.link, {
+        layers: this.geoResource.config.layer.layerName,
         format: 'image/png',
         transparent: true
       })
-      this._availableTimes = this.geoRessource.config.layer.params.date
+      this._availableTimes = this.geoResource.config.layer.params.date
       // Date
-      this.setTime(this.geoRessource.time)
+      this.setTime(this.geoResource.time)
       // Opacity
-      this.setOpacity(this.geoRessource.opacity)
+      this.setOpacity(this.geoResource.opacity)
       // zIndex
-      if (this.geoRessource.zIndex) {
-        this.setZIndex(this.geoRessource.zIndex)
+      if (this.geoResource.zIndex) {
+        this.setZIndex(this.geoResource.zIndex)
       }
     }
   }
@@ -46,7 +46,7 @@ export default class {
       if (!(time && this._availableTimes.indexOf(time) > -1)) {
         time = this._availableTimes[0]
       }
-      this.geoRessource.time = time
+      this.geoResource.time = time
       this._time = time
       this._layer.setParams({
         time: this.formatTime(time)
@@ -55,7 +55,7 @@ export default class {
   }
   setOpacity (opacity) {
     opacity = Number.isInteger(opacity) ? opacity : 80
-    this.geoRessource.opacity = opacity
+    this.geoResource.opacity = opacity
     this._opacity = opacity
     this._layer && this._layer.setOpacity(opacity / 100)
     return opacity
@@ -64,7 +64,7 @@ export default class {
     this._layer.remove()
   }
   setZIndex (idx) {
-    this.geoRessource.zIndex = idx
+    this.geoResource.zIndex = idx
     this._layer.setZIndex(idx)
   }
   async getFeatureInfo (evt, map) {

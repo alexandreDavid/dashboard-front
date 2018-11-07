@@ -3,8 +3,8 @@
     <div class="card-body p-2">
       <h6 class="d-flex align-items-start">
         <button class="btn btn-xs btn-outline-secondary flex-shrink-1 mr-1" @click="select"><font-awesome-icon v-bind:class="{'text-white': !selected}" icon="check" /></button>
-        <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoRessource.opacity ? 'eye' : 'eye-slash'" /></button>
-        <span class="w-100 mx-1"> {{ layer.geoRessource.name }}</span>
+        <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoResource.opacity ? 'eye' : 'eye-slash'" /></button>
+        <span class="w-100 mx-1"> {{ layer.geoResource.name }}</span>
         <div class="btn-group btn-group-xs flex-shrink-1" role="group">
           <button class="btn btn-sm btn-light" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
           <button class="btn btn-sm btn-light" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>
@@ -68,8 +68,8 @@ export default {
     },
     toggleDisplay () {
       let opacity
-      if (this.layer.geoRessource.opacity) {
-        this.savedOpacity = this.layer.geoRessource.opacity
+      if (this.layer.geoResource.opacity) {
+        this.savedOpacity = this.layer.geoResource.opacity
         opacity = 0
       } else {
         opacity = this.savedOpacity

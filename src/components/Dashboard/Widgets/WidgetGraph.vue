@@ -1,9 +1,9 @@
 <template>
-  <Graph v-if="ressource" v-bind:area="area" v-bind:parameter="ressource" v-bind:graphType="graphType"></Graph>
+  <Graph v-if="resource" v-bind:area="area" v-bind:parameter="resource" v-bind:graphType="graphType"></Graph>
 </template>
 
 <script>
-import GeoRessources from '@/store/geoRessources'
+import GeoResources from '@/store/geoResources'
 
 export default {
   name: 'WidgetGraph',
@@ -17,15 +17,15 @@ export default {
   ],
   data () {
     return {
-      ressource: false
+      resource: false
     }
   },
   mounted () {
-    this.ressource = GeoRessources.searchByName(this.parameter.label)
+    this.resource = GeoResources.searchByName(this.parameter.label)
   },
   watch: {
     parameter (newParam) {
-      this.ressource = GeoRessources.searchByName(newParam.label)
+      this.resource = GeoResources.searchByName(newParam.label)
     }
   }
 }
