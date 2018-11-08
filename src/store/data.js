@@ -36,8 +36,8 @@ export default {
   },
   async getAreaParameterData (area, parameter) {
     const response = await axios.get(
-      parameter.config.statistics.link.replace(':type', area.type).replace(':name', area.name)
+      parameter.config.statistics.link
     )
-    return response.data[Object.keys(response.data)[0]]
+    return response.data
   }
 }

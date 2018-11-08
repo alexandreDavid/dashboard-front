@@ -78,7 +78,7 @@ export default {
       this.isLoaded = false
       this.errorMessage = false
       try {
-        this.datacollection = await Data.getAreaParameterData(this.area, this.parameter)
+        this.datacollection.data = await Data.getAreaParameterData(this.area, this.parameter)
         this.familyUnit = Unit.getFamilyUnit(this.datacollection.unit)
         this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.datacollection.unit))
         // axes Y title

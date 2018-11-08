@@ -34,6 +34,7 @@ export default {
   methods: {
     fillData (data) {
       let datasets = []
+      console.log(data)
       let labels = []
 
       let valueConversion = function (value) {
@@ -44,7 +45,7 @@ export default {
       }
 
       // Adding every datasets
-      Object.keys(Object.values(data.data)[0]).forEach((value, key) => {
+      Object.keys(data.data[0].values).forEach((value, key) => {
         let color = Object.values(ChartUtil.colors)[key]
         datasets.push(
           {
@@ -56,11 +57,11 @@ export default {
           }
         )
       })
-      Object.entries(data.data).forEach(([key, value]) => {
-        labels.push(ChartUtil.convertDate(key))
-        Object.entries(value).forEach(([key, value]) => {
-          datasets.find(d => d.label === key).data.push(valueConversion(value))
-        })
+      data.data.forEach(data => {
+        labels.push(ChartUtil.convertDate(data.date))
+        for (let label in data.values) {
+          datasets.find(d => d.label === label).data.push(valueConversion(data.values[label]))
+        }
       })
 
       return {datasets, labels}
