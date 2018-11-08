@@ -5,7 +5,7 @@
     </div>
     <div class="over-map">
       <div class="over-map-bottom over-map-control p-0 shadow-top">
-        <Legend class="over-map-control p-1 rounded-bottom" v-if="isLoaded" :layer="displayedLayer"></Legend>
+        <Legend class="over-map-control p-1 rounded-bottom" v-if="isLoaded" v-bind:legend="displayedLayer._legend"></Legend>
       </div>
     </div>
   </div>

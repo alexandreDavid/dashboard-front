@@ -10,6 +10,7 @@ export default class {
   _time = false
   _opacity = false
   _layerId = false
+  _legend = false
   constructor (geoResource) {
     this.setLayer(geoResource)
   }
@@ -43,6 +44,8 @@ export default class {
       if (this.geoResource.zIndex) {
         this.setZIndex(this.geoResource.zIndex)
       }
+      // Legend
+      this.setLegend()
     }
   }
   addTo (map) {
@@ -61,6 +64,7 @@ export default class {
       this._layerId = await this.getLayerId({date: this.geoResource.time})
       this._layer.options.layer_id = this._layerId
       this._layer.redraw()
+      this.setLegend()
     }
   }
   setOpacity (opacity) {
@@ -109,8 +113,9 @@ export default class {
       return featureInfo.data.features
     }
   }
-  async getLegend () {
+  async setLegend () {
     const legendInfos = await axios.get(this.geoResource.config.legend.link.replace('{layer_id}', this._layerId))
-    return legendInfos.data
+    this._legend = legendInfos.data
+    return this._legend
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="legend-displaying" v-if="isLoaded">
+  <div class="legend-displaying" v-if="legend && legend.values">
     <div class="position-relative d-flex align-items-center">
       <div class="mr-1 label">{{ legend.values[0].name }}</div>
       <div class="gradient flex-grow-1" v-bind:style="{ background: getGradientColor(legend.values) }"></div>
@@ -15,22 +15,15 @@ import Settings from '@/store/settings'
 export default {
   name: 'Legend',
   props: [
-    'layer'
+    'legend'
   ],
   data () {
     return {
       // unitFamily: false,
       // activeUnit: false,
       activeUnits: Settings.activeSettings,
-      legend: false,
       isLoaded: false
     }
-  },
-  created () {
-  },
-  async mounted () {
-    this.legend = await this.layer.getLegend()
-    this.isLoaded = true
   },
   methods: {
     getGradientColor (values) {
@@ -46,7 +39,7 @@ export default {
       const b = parseInt(hex.substring(5, 7), 16)
       return `rgba(${r}, ${g}, ${b})`
     }
-  },
+  // },
   // filters: {
   //   convert: function (value, from, to) {
   //     if (from !== to) {
@@ -55,16 +48,16 @@ export default {
   //     return value
   //   }
   // },
-  watch: {
-    activeUnits: {
-      async handler (val) {
-        this.isLoaded = false
-        this.legend = await this.layer.getLegend()
-        this.isLoaded = true
-        // this.changeActiveUnit(val[this.unitFamily])
-      },
-      deep: true
-    }
+  // watch: {
+  //   activeUnits: {
+  //     async handler (val) {
+  //       // this.isLoaded = false
+  //       // this.legend = await this.layer.getLegend()
+  //       // this.isLoaded = true
+  //       // this.changeActiveUnit(val[this.unitFamily])
+  //     },
+  //     deep: true
+    // }
   }
 }
 </script>
