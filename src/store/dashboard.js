@@ -127,8 +127,9 @@ export default class Dashboard {
     return cardHeights
   }
   static getCardWidgets () {
-    let allParameters = GeoResources.getAllParams().map(p => {
+    let allParameters = GeoResources.getAll().map(p => {
       return {
+        id: p.id,
         label: p.name
       }
     })

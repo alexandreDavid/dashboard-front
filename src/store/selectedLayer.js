@@ -9,24 +9,34 @@ export default class {
   _availableTimes = []
   _time = false
   _opacity = false
+  _layerId = false
   constructor (geoResource) {
     this.setLayer(geoResource)
   }
-  setLayer (geoResource) {
+  async getLayerId (params) {
+    const creationInfos = await axios.get(this.geoResource.config.layer_creation.link, {
+      params
+    })
+    return creationInfos.data.layer_id
+  }
+  getAvailableTimes (geoResource) {
+    return (geoResource.config.layer_creation.params && geoResource.config.layer_creation.params.date && geoResource.config.layer_creation.params.date.values) || []
+  }
+  getTime () {
+    this.geoResource.time = this.geoResource.time || (this._availableTimes && this._availableTimes[0])
+    this._time = this.geoResource.time
+    return this.geoResource.time
+  }
+  async setLayer (geoResource) {
     this.geoResource = geoResource
     // Remove and add to activate the addlayer event
     if (this._layer) {
       this._layer.remove()
     }
     if (this.geoResource) {
-      this._layer = new TileLayer.WMS(this.geoResource.config.layer.link, {
-        layers: this.geoResource.config.layer.layerName,
-        format: 'image/png',
-        transparent: true
-      })
-      this._availableTimes = this.geoResource.config.layer.params.date
-      // Date
-      this.setTime(this.geoResource.time)
+      this._availableTimes = this.getAvailableTimes(this.geoResource)
+      this._layerId = await this.getLayerId({date: this.getTime()})
+      this._layer = new TileLayer(this.geoResource.config.layer.link, {layer_id: this._layerId})
       // Opacity
       this.setOpacity(this.geoResource.opacity)
       // zIndex
@@ -41,16 +51,16 @@ export default class {
   formatTime (time) {
     return time && new Date(time * 1000).toISOString()
   }
-  setTime (time) {
+  async setTime (time) {
     if (this._availableTimes && this._availableTimes.length) {
       if (!(time && this._availableTimes.indexOf(time) > -1)) {
         time = this._availableTimes[0]
       }
       this.geoResource.time = time
       this._time = time
-      this._layer.setParams({
-        time: this.formatTime(time)
-      })
+      this._layerId = await this.getLayerId({date: this.geoResource.time})
+      this._layer.options.layer_id = this._layerId
+      this._layer.redraw()
     }
   }
   setOpacity (opacity) {

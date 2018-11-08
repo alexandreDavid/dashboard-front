@@ -1,10 +1,10 @@
 <template>
   <div class="btn-group">
     <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" @click="displayDropDownMenu = true">
-      <font-awesome-icon icon="calendar-alt" /> {{ getTimeFormated(value) }}
+      <font-awesome-icon icon="calendar-alt" /> {{ value }}
     </button>
     <select class="custom-select" v-model="selectedTime">
-      <option v-for="(time, key) in times" :key="key" :value="time" href="#">{{ getTimeFormated(time) }}</option>
+      <option v-for="(time, key) in times" :key="key" :value="time" href="#">{{ time }}</option>
     </select>
   </div>
 </template>
@@ -27,20 +27,6 @@ export default {
       set (val) {
         this.$emit('input', val)
       }
-    }
-  },
-  methods: {
-    getTimeFormated (time) {
-      let formatedDate
-      if (time && time.startTime) {
-        const startDate = new Date(time.startTime * 1000)
-        const endDate = new Date(time.endTime * 1000)
-        formatedDate = `${startDate.toDateString()} ${('0' + startDate.getHours()).slice(-2)}:${('0' + startDate.getMinutes()).slice(-2)} - ${('0' + endDate.getHours()).slice(-2)}:${('0' + endDate.getMinutes()).slice(-2)}`
-      } else if (time) {
-        const date = new Date(time * 1000)
-        formatedDate = `${date.toDateString()} ${date.toLocaleTimeString()}`
-      }
-      return formatedDate
     }
   }
 }

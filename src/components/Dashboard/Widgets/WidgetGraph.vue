@@ -21,11 +21,11 @@ export default {
     }
   },
   mounted () {
-    this.resource = GeoResources.searchByName(this.parameter.label)
+    this.resource = GeoResources.searchById(this.parameter.id)
   },
   watch: {
     parameter (newParam) {
-      this.resource = GeoResources.searchByName(newParam.label)
+      this.resource = GeoResources.searchById(newParam.id)
     }
   }
 }

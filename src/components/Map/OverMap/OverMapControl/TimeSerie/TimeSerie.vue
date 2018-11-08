@@ -7,7 +7,7 @@
       </div>
       <div class="flex-grow-1">
         <TimeSlider class="d-none d-sm-block" v-model="val" @input="onChange" v-bind:times="times"></TimeSlider>
-        <div class="text-center" style="font-size: 0.8em">{{ getTimeFormated(value) }}</div>
+        <div class="text-center" style="font-size: 0.8em">{{ value }}</div>
       </div>
     </div>
   </div>
@@ -75,18 +75,6 @@ export default {
     },
     onChange (val) {
       this.val = val
-    },
-    getTimeFormated (time) {
-      let formatedDate
-      if (time && time.startTime) {
-        const startDate = new Date(time.startTime * 1000)
-        const endDate = new Date(time.endTime * 1000)
-        formatedDate = `${startDate.toDateString()} ${('0' + startDate.getHours()).slice(-2)}:${('0' + startDate.getMinutes()).slice(-2)} - ${('0' + endDate.getHours()).slice(-2)}:${('0' + endDate.getMinutes()).slice(-2)}`
-      } else if (time) {
-        const date = new Date(time * 1000)
-        formatedDate = `${date.toDateString()} ${date.toLocaleTimeString()}`
-      }
-      return formatedDate
     }
   }
 }

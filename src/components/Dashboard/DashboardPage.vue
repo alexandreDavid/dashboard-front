@@ -41,6 +41,7 @@ import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import Area from '@/store/area.js'
 import Api from '@/store/api.js'
 import DashboardObj from '@/store/dashboard'
+import GeoResources from '@/store/geoResources'
 
 export default {
   name: 'DashboardPage',
@@ -64,6 +65,7 @@ export default {
   async created () {
     this.selectedArea = Area.getSelectedArea()
     this.dashboard = DashboardObj.getSavedDashboard()
+    await GeoResources.getAllResources()
     this.isLoaded = true
   },
   methods: {

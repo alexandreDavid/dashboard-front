@@ -62,8 +62,8 @@ export default {
       this.layer.setOpacity(value)
       this.$emit('change')
     },
-    setTime (value) {
-      this.layer.setTime(value)
+    async setTime (value) {
+      await this.layer.setTime(value)
       this.$emit('change')
     },
     toggleDisplay () {

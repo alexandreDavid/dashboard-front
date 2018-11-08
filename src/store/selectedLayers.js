@@ -18,12 +18,19 @@ function calculateZIndex (layers) {
 
 export default {
   allSelectedLayers: [],
-  getAllSelectedLayers () {
-    this.allSelectedLayers = UserConfiguration.getSelectedLayers().map(layer => new SelectedLayer(layer))
+  async getAllSelectedLayers () {
+    const selectedLayers = UserConfiguration.getSelectedLayers()
+    this.allSelectedLayers = []
+    for (const idx in selectedLayers) {
+      const newLayer = await new SelectedLayer()
+      await newLayer.setLayer(selectedLayers[idx])
+      this.allSelectedLayers.push(newLayer)
+    }
     return this.allSelectedLayers
   },
-  add (geoResources) {
-    const newLayer = new SelectedLayer(geoResources)
+  async add (geoResources) {
+    const newLayer = new SelectedLayer()
+    await newLayer.setLayer(geoResources)
     this.allSelectedLayers.unshift(newLayer)
     this.allSelectedLayers = calculateZIndex(this.allSelectedLayers)
     this.saveChanges()

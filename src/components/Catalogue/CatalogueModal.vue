@@ -27,13 +27,13 @@
                   </div>
                 </button>
                 <div class="list-group list-group-flush" v-show="displayedGroups.indexOf(group) > -1">
-                  <a href="#" class="list-group-item list-group-item-action" @click="selectResource(resource)" v-for="resource in resources" :key="resource.name">{{ resource.name }}</a>
+                  <a href="#" class="list-group-item list-group-item-action" @click="selectResource(resource)" v-for="resource in getResourceByGroup(group)" :key="resource.id">{{ resource.name }}</a>
                 </div>
               </div>
               <div v-if="searchResource">
                 <h6>Search results</h6>
                 <div class="list-group list-group-flush">
-                  <a href="#" class="list-group-item list-group-item-action" @click="selectResource(resource)" v-for="resource in foundResources" :key="resource.name">{{ resource.name }}</a>
+                  <a href="#" class="list-group-item list-group-item-action" @click="selectResource(resource)" v-for="resource in foundResources" :key="resource.id">{{ resource.name }}</a>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ export default {
   async created () {
     this.groups = await GeoResourcesGroups.getAllGroups()
     this.displayedGroups.push(this.groups[0])
-    this.resources = await GeoResources.getAll()
+    this.resources = await GeoResources.getAllResources()
     this.isLoaded = true
   },
   methods: {
@@ -114,18 +114,23 @@ export default {
         this.displayedGroups.push(group)
       }
     },
+    getResourceByGroup (group) {
+      return this.resources.filter(r => r.groups.indexOf(group.id) > -1)
+    },
     selectResource (resource) {
       this.selectedResource = resource
       this.$nextTick(() => {
         if (!this.map) {
           this.map = new MapObj('preview-map')
         }
-        if (this.currentLayer) {
-          this.currentLayer.remove()
+        if (this.selectedResource.extent) {
+          if (this.currentLayer) {
+            this.currentLayer.remove()
+          }
+          this.currentLayer = new L.GeoJSON(this.selectedResource.extent)
+          this.currentLayer.addTo(this.map)
+          this.map.fitBounds(this.currentLayer.getBounds())
         }
-        this.currentLayer = new L.GeoJSON(this.selectedResource.extent)
-        this.currentLayer.addTo(this.map)
-        this.map.fitBounds(this.currentLayer.getBounds())
       })
     },
     backToList () {

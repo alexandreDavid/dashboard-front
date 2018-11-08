@@ -49,18 +49,19 @@ export default {
       getDisplayedLayer: this.getDisplayedLayer
     }
   },
-  mounted () {
+  async mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map, this.area)
-    this.displayedLayer = new SelectedLayer(GeoResources.searchByName(this.parameter.label))
+    this.displayedLayer = new SelectedLayer()
+    await this.displayedLayer.setLayer(GeoResources.searchById(this.parameter.id))
     this.displayedLayer.addTo(this.map)
     this.isLoaded = true
   },
   watch: {
-    parameter (newParam) {
-      this.displayedLayer.setLayer(GeoResources.searchByName(newParam.label))
-      this.displayedLayer.addTo(this.map)
+    async parameter (newParam) {
       this.isLoaded = false
+      await this.displayedLayer.setLayer(GeoResources.searchById(newParam.id))
+      this.displayedLayer.addTo(this.map)
       this.$nextTick(() => {
         this.isLoaded = true
       })

@@ -50,14 +50,15 @@ export default {
       selectedParameter: false
     }
   },
-  mounted () {
+  async mounted () {
     this.map = new MapObj('map-container')
     this.map.invalidateSize()
     this.mapInitialised = true
     this.displayedLayer = new DisplayedLayer(this.map)
     // this.areaLayer = new AreaLayer(this.map)
     this.areaLayer = new AreaLayer(this.map, Area.getSelectedArea())
-    SelectedLayers.getAllSelectedLayers().forEach(l => l.addTo(this.map))
+    const layers = await SelectedLayers.getAllSelectedLayers()
+    layers.forEach(l => l.addTo(this.map))
   },
   methods: {
     getMap () {

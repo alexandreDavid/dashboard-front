@@ -45,10 +45,11 @@ export default {
       getMap: this.getMap
     }
   },
-  mounted () {
+  async mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map, this.area)
-    SelectedLayers.getAllSelectedLayers().forEach(l => l.addTo(this.map))
+    const selectedLayers = await SelectedLayers.getAllSelectedLayers()
+    selectedLayers.forEach(l => l.addTo(this.map))
     this.isLoaded = true
   },
   watch: {

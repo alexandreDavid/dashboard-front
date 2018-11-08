@@ -61,8 +61,9 @@ export default {
     close () {
       this.$emit('close')
     },
-    onSelectedResource (resource) {
-      SelectedLayers.add(resource).addTo(this.getMap())
+    async onSelectedResource (resource) {
+      const newLayer = await SelectedLayers.add(resource)
+      newLayer.addTo(this.getMap())
     },
     onSelectedReportedParameter (selectedReportedParameter) {
       this.$emit('selectedReportedLayer', selectedReportedParameter)
