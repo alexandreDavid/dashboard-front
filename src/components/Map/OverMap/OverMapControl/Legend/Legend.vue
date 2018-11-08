@@ -2,7 +2,7 @@
   <div class="legend-displaying" v-if="isLoaded">
     <div class="position-relative d-flex align-items-center">
       <div class="mr-1 label">{{ legend.values[0].name }}</div>
-      <div class="gradient" v-bind:style="{ background: getGradientColor(legend.values) }"></div>
+      <div class="gradient flex-grow-1" v-bind:style="{ background: getGradientColor(legend.values) }"></div>
       <div class="ml-1 label">{{ legend.values[legend.values.length - 1].name }}</div>
     </div>
   </div>
@@ -77,7 +77,6 @@ export default {
 
   .gradient {
     height: 10px;
-    width: 100%;
   }
 
   .label {

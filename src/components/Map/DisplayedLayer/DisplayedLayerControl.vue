@@ -12,7 +12,7 @@
           <button class="btn btn-sm btn-light" @click="$emit('remove')"><font-awesome-icon icon="trash" /></button>
         </div>
       </h6>
-      <Legend class="p-2" v-bind:layer="layer"></Legend>
+      <Legend class="py-2" v-bind:layer="layer"></Legend>
       <time-serie v-model="layer._time" :times="layer._availableTimes" @input="setTime"></time-serie>
     </div>
     <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
