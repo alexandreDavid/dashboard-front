@@ -35,11 +35,17 @@ export default {
     // }
   },
   async getAreaParameterData (area, parameter) {
-    const response = await axios.post(
-      parameter.config.statistics.link, {
-        area
-      }
-    )
+    let response
+    try {
+      response = await axios.post(
+        parameter.config.statistics.link, {
+          area
+        }
+      )
+    } catch (error) {
+      console.warn('Area too complex for get the values')
+      response = await axios.get(parameter.config.statistics.link)
+    }
     return response.data
   }
 }
