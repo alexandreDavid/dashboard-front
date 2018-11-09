@@ -69,7 +69,7 @@
 import GeoResources from '@/store/geoResources'
 import GeoResourcesGroups from '@/store/geoResourcesGroups'
 import MapObj from '@/store/map'
-import L from 'leaflet'
+import SelectedLayer from '@/store/selectedLayer'
 
 import Modal from '@/components/Modal/Modal'
 import Loading from '@/components/Loading/Loading'
@@ -119,18 +119,17 @@ export default {
     },
     selectResource (resource) {
       this.selectedResource = resource
-      this.$nextTick(() => {
+      this.$nextTick(async () => {
         if (!this.map) {
           this.map = new MapObj('preview-map')
         }
-        if (this.selectedResource.extent) {
-          if (this.currentLayer) {
-            this.currentLayer.remove()
-          }
-          this.currentLayer = new L.GeoJSON(this.selectedResource.extent)
-          this.currentLayer.addTo(this.map)
-          this.map.fitBounds(this.currentLayer.getBounds())
+        if (this.currentLayer) {
+          this.currentLayer.remove()
         }
+
+        this.currentLayer = await new SelectedLayer()
+        await this.currentLayer.setLayer(this.selectedResource)
+        this.currentLayer.addTo(this.map)
       })
     },
     backToList () {
