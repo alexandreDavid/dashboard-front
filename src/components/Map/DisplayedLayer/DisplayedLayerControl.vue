@@ -52,6 +52,7 @@ export default {
   methods: {
     select () {
       this.selected = !this.selected
+      this.layer.selected = this.selected
       this.$emit('select', this.selected)
     },
     edit () {

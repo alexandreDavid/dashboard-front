@@ -2,7 +2,7 @@
   <div class="w-100 card shadow">
     <div class="card-body p-2">
       <button id="forecast-selection-btn" @click="$emit('openAddingLayerSideBar')" class="btn btn-secondary w-100"><font-awesome-icon icon="plus" /> Add coverage maps</button>
-      <displayed-layers-tools class="mt-2" v-if="selectedIndexes.length" v-bind:time="refLayer._time" v-bind:times="refLayer._availableTimes" v-bind:opacity="refLayer._opacity" @setTime="onTimeChanges" @setOpacity="setOpacity" @openGraphModal="openGraphModalSelected"></displayed-layers-tools>
+      <displayed-layers-tools class="mt-2" v-if="refLayer" v-bind:time="refLayer._time" v-bind:times="refLayer._availableTimes" v-bind:opacity="refLayer._opacity" @setTime="onTimeChanges" @setOpacity="setOpacity" @openGraphModal="openGraphModalSelected"></displayed-layers-tools>
       <div v-for="(layer, key) in selectedLayers" :key="key">
         <displayed-layer-control v-bind:layer="layer" @change="saveChanges" @select="select(key)" @remove="remove(key)" @up="up(key)" @down="down(key)"></displayed-layer-control>
       </div>
@@ -50,23 +50,16 @@ export default {
       SelectedLayers.down(index)
     },
     select (index) {
-      const selectedIdx = this.selectedIndexes.findIndex(i => i === index)
-      if (selectedIdx > -1) {
-        this.selectedIndexes.splice(selectedIdx, 1)
-      } else {
-        this.selectedIndexes.push(index)
-      }
-      this.refLayer = this.selectedLayers[this.selectedIndexes[0]]
+      this.refLayer = this.selectedLayers.find(l => l.selected)
     },
     onTimeChanges (time) {
+      this.selectedLayers.filter(l => l.selected).forEach(l => l.setTime(time))
       this.selectedIndexes.forEach(i => {
         this.selectedLayers[i].setTime(time)
       })
     },
     setOpacity (opacity) {
-      this.selectedIndexes.forEach(i => {
-        this.selectedLayers[i].setOpacity(opacity)
-      })
+      this.selectedLayers.filter(l => l.selected).forEach(l => l.setOpacity(opacity))
     },
     openGraphModalSelected () {
       this.openGraphModal(this.refLayer.geoResource)
