@@ -50,7 +50,12 @@ export default {
       SelectedLayers.down(index)
     },
     select (index) {
-      this.refLayer = this.selectedLayers.find(l => l.selected)
+      const allSelectedLayers = this.selectedLayers.filter(l => l.selected)
+      if (allSelectedLayers.length > 1) {
+        this.refLayer = allSelectedLayers[0]
+      } else {
+        this.refLayer = false
+      }
     },
     onTimeChanges (time) {
       this.selectedLayers.filter(l => l.selected).forEach(l => l.setTime(time))
