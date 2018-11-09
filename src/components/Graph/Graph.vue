@@ -79,10 +79,10 @@ export default {
       this.errorMessage = false
       try {
         this.datacollection.data = await Data.getAreaParameterData(this.area, this.parameter)
-        this.familyUnit = Unit.getFamilyUnit(this.datacollection.unit)
-        this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.datacollection.unit))
+        this.familyUnit = Unit.getFamilyUnit(this.parameter.config.units.default)
+        this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.parameter.config.units.default))
         // axes Y title
-        this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit || this.datacollection.unit)
+        this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit || this.parameter.config.units.default)
       } catch (e) {
         this.errorMessage = true
       }

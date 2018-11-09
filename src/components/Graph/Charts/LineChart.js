@@ -34,7 +34,6 @@ export default {
   methods: {
     fillData (data) {
       let datasets = []
-      console.log(data)
       let labels = []
 
       let valueConversion = function (value) {
