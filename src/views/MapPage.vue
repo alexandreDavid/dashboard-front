@@ -7,7 +7,7 @@
         <ReportedLayer v-if="mapInitialised" v-bind:selectedReportedLayer="selectedReportedLayer"/>
       </div>
       <div class="d-none d-sm-block">
-        <MapControlBar class="position-relative" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" :is-static="true"></MapControlBar>
+        <MapControlBar v-bind:mapIsLoading="!mapInitialised" class="position-relative" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" :is-static="true"></MapControlBar>
       </div>
     </div>
 </template>
@@ -50,15 +50,18 @@ export default {
       selectedParameter: false
     }
   },
+  // created () {
+  //   this.areaLayer = new AreaLayer()
+  // },
   async mounted () {
     this.map = new MapObj('map-container')
     this.map.invalidateSize()
-    this.mapInitialised = true
     this.displayedLayer = new DisplayedLayer(this.map)
-    // this.areaLayer = new AreaLayer(this.map)
-    this.areaLayer = new AreaLayer(this.map, Area.getSelectedArea())
-    const layers = await SelectedLayers.getAllSelectedLayers()
-    layers.forEach(l => l.addTo(this.map))
+    this.areaLayer = new AreaLayer(this.map)
+    await this.areaLayer.setSelectedArea(Area.getSelectedArea())
+    const layers = await SelectedLayers.getAllSelectedLayers(this.getAreaLayer().toGeoJSON())
+    layers.forEach(l => l.addTo(this.getMap()))
+    this.mapInitialised = true
   },
   methods: {
     getMap () {

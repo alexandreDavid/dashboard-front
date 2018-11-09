@@ -11,13 +11,19 @@ export default class {
   _opacity = false
   _layerId = false
   _legend = false
+  _area = false
   constructor (geoResource) {
     this.setLayer(geoResource)
   }
   async getLayerId (params) {
-    const creationInfos = await axios.get(this.geoResource.config.layer_creation.link, {
-      params
-    })
+    let creationInfos
+    try {
+      creationInfos = await axios.post(this.geoResource.config.layer_creation.link, params)
+    } catch (error) {
+      console.warn('Area too complex for croping the layer')
+      delete params.area
+      creationInfos = await axios.post(this.geoResource.config.layer_creation.link, params)
+    }
     return creationInfos.data.layer_id
   }
   getAvailableTimes (geoResource) {
@@ -28,15 +34,22 @@ export default class {
     this._time = this.geoResource.time
     return this.geoResource.time
   }
-  async setLayer (geoResource) {
+  async updateLayer () {
+    this._layerId = await this.getLayerId({date: this.geoResource.time, area: this._area})
+    this._layer.options.layer_id = this._layerId
+    this._layer.redraw()
+    this.setLegend()
+  }
+  async setLayer (geoResource, area) {
     this.geoResource = geoResource
+    this._area = area
     // Remove and add to activate the addlayer event
     if (this._layer) {
       this._layer.remove()
     }
     if (this.geoResource) {
       this._availableTimes = this.getAvailableTimes(this.geoResource)
-      this._layerId = await this.getLayerId({date: this.getTime()})
+      this._layerId = await this.getLayerId({date: this.getTime(), area: this._area})
       this._layer = new TileLayer(this.geoResource.config.layer.link, {layer_id: this._layerId})
       // Opacity
       this.setOpacity(this.geoResource.opacity)
@@ -54,6 +67,10 @@ export default class {
   formatTime (time) {
     return time && new Date(time * 1000).toISOString()
   }
+  async setArea (area) {
+    this._area = area
+    await this.updateLayer()
+  }
   async setTime (time) {
     if (this._availableTimes && this._availableTimes.length) {
       if (!(time && this._availableTimes.indexOf(time) > -1)) {
@@ -61,10 +78,7 @@ export default class {
       }
       this.geoResource.time = time
       this._time = time
-      this._layerId = await this.getLayerId({date: this.geoResource.time})
-      this._layer.options.layer_id = this._layerId
-      this._layer.redraw()
-      this.setLegend()
+      await this.updateLayer()
     }
   }
   setOpacity (opacity) {

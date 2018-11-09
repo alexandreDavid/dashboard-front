@@ -1,5 +1,5 @@
 <template>
-  <div class="legend-displaying" v-if="legend && legend.values">
+  <div class="legend-displaying" v-if="legend && legend.values && legend.values.length">
     <div class="position-relative d-flex align-items-center">
       <div class="mr-1 label">{{ legend.values[0].name }}</div>
       <div class="gradient flex-grow-1" v-bind:style="{ background: getGradientColor(legend.values) }"></div>

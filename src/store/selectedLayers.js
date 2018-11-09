@@ -18,13 +18,13 @@ function calculateZIndex (layers) {
 
 export default {
   allSelectedLayers: [],
-  async getAllSelectedLayers () {
+  async getAllSelectedLayers (area) {
     const selectedLayers = UserConfiguration.getSelectedLayers()
     this.allSelectedLayers = []
     try {
       for (const idx in selectedLayers) {
         const newLayer = await new SelectedLayer()
-        await newLayer.setLayer(selectedLayers[idx])
+        await newLayer.setLayer(selectedLayers[idx], area)
         this.allSelectedLayers.push(newLayer)
       }
     } catch (error) {
@@ -33,9 +33,9 @@ export default {
     }
     return this.allSelectedLayers
   },
-  async add (geoResources) {
+  async add (geoResources, area) {
     const newLayer = new SelectedLayer()
-    await newLayer.setLayer(geoResources)
+    await newLayer.setLayer(geoResources, area)
     this.allSelectedLayers.unshift(newLayer)
     this.allSelectedLayers = calculateZIndex(this.allSelectedLayers)
     this.saveChanges()
@@ -58,5 +58,8 @@ export default {
   },
   saveChanges () {
     UserConfiguration.setSelectedLayers(this.allSelectedLayers.map(layer => layer.geoResource))
+  },
+  updateArea (area) {
+    this.allSelectedLayers.forEach(l => l.setArea(area))
   }
 }

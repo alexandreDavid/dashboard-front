@@ -114,6 +114,9 @@ let AreaLayer = class {
       this._subAreasLayer.remove()
     }
   }
+  toGeoJSON () {
+    return this._areaLayer.toGeoJSON()
+  }
 }
 
 AreaLayer.getAreaRequestParams = (area) => {

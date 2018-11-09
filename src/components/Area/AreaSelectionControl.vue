@@ -38,10 +38,11 @@ export default {
     zoom () {
       this.getAreaLayer().zoomToArea()
     },
-    onSearchLocationSelected (val) {
+    async onSearchLocationSelected (val) {
       this.val = val
       Area.setSelectedArea(val)
-      this.getAreaLayer().setSelectedArea(val)
+      await this.getAreaLayer().setSelectedArea(val)
+      this.$emit('change', val)
     },
     switchDrawMode (mode) {
       this.drawMode = mode

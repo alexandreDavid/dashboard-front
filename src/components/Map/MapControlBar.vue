@@ -3,10 +3,11 @@
   <SideBar @close="close()" class="position-relative w-lg bg-light" :is-static="isStatic">
     <div class="container" v-if="isLoaded">
       <div class="row mb-2">
-        <area-selection-control class="shadow w-100"></area-selection-control>
+        <area-selection-control @change="onAreaChange" class="shadow w-100"></area-selection-control>
       </div>
       <div class="row mb-2">
-        <DisplayedLayers @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
+        <DisplayedLayers v-if="!mapIsLoading" @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
+        <Loading class="w-100" v-else/>
       </div>
       <div class="row mb-2">
         <meteo-stations-control @selectedReportedParameter="onSelectedReportedParameter"></meteo-stations-control>
@@ -43,7 +44,7 @@ export default {
     MeteoStationsControl,
     DisplayedLayers
   },
-  props: ['isStatic'],
+  props: ['isStatic', 'mapIsLoading'],
   inject: ['getMap', 'getDisplayedLayer', 'getAreaLayer'],
   data () {
     return {
@@ -61,8 +62,11 @@ export default {
     close () {
       this.$emit('close')
     },
+    onAreaChange (area) {
+      SelectedLayers.updateArea(this.getAreaLayer().toGeoJSON())
+    },
     async onSelectedResource (resource) {
-      const newLayer = await SelectedLayers.add(resource)
+      const newLayer = await SelectedLayers.add(resource, this.getAreaLayer().toGeoJSON())
       newLayer.addTo(this.getMap())
     },
     onSelectedReportedParameter (selectedReportedParameter) {
