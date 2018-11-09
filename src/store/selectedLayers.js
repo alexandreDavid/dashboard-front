@@ -21,10 +21,15 @@ export default {
   async getAllSelectedLayers () {
     const selectedLayers = UserConfiguration.getSelectedLayers()
     this.allSelectedLayers = []
-    for (const idx in selectedLayers) {
-      const newLayer = await new SelectedLayer()
-      await newLayer.setLayer(selectedLayers[idx])
-      this.allSelectedLayers.push(newLayer)
+    try {
+      for (const idx in selectedLayers) {
+        const newLayer = await new SelectedLayer()
+        await newLayer.setLayer(selectedLayers[idx])
+        this.allSelectedLayers.push(newLayer)
+      }
+    } catch (error) {
+      console.warn('Selected layers local storage unreadable')
+      UserConfiguration.setSelectedLayers([])
     }
     return this.allSelectedLayers
   },
