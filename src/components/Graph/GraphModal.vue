@@ -1,10 +1,16 @@
 <template>
   <modal @close="close()">
-    <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.name + (selectedParameter2 && selectedParameter2.name) }}</div>
+    <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.name }}<span v-if="selectedParameter2"> - {{ selectedParameter2.name }}</span></div>
     <div slot="body" class="graph-modal-content" v-bind:class="{'double': selectedParameter2}">
       <div class="d-flex flex-column w-100 h-100">
-        <div class="flex-fill position-relative"><Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph></div>
-        <div class="flex-fill position-relative" v-if="selectedParameter2"><Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter2"></Graph></div>
+        <div class="flex-fill position-relative">
+          <h6>{{ selectedParameter.name }}</h6>
+          <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph>
+        </div>
+        <div class="flex-fill position-relative" v-if="selectedParameter2">
+          <h6>{{ selectedParameter2.name }}</h6>
+          <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter2"></Graph>
+        </div>
       </div>
     </div>
   </modal>
