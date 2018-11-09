@@ -109,13 +109,15 @@ let AreaLayer = class {
   remove () {
     if (this._areaLayer) {
       this._areaLayer.remove()
+      this._areaLayer = false
     }
     if (this._subAreasLayer) {
       this._subAreasLayer.remove()
+      this._subAreasLayer = false
     }
   }
   toGeoJSON () {
-    return this._areaLayer.toGeoJSON()
+    return this._areaLayer && this._areaLayer.toGeoJSON()
   }
 }
 
