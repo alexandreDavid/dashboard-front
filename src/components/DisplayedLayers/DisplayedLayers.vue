@@ -6,7 +6,7 @@
       <div v-for="(layer, key) in selectedLayers" :key="key">
         <displayed-layer-control v-bind:layer="layer" @change="saveChanges" @select="select(key)" @remove="remove(key)" @up="up(key)" @down="down(key)"></displayed-layer-control>
       </div>
-      <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="modalParams" @close="showModalGraph = false"></GraphModal>
+      <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="modalParams" v-bind:selectedParameter2="modalParams2" @close="showModalGraph = false"></GraphModal>
     </div>
   </div>
 </template>
@@ -53,8 +53,10 @@ export default {
       const allSelectedLayers = this.selectedLayers.filter(l => l.selected)
       if (allSelectedLayers.length > 1) {
         this.refLayer = allSelectedLayers[0]
+        this.refLayer2 = allSelectedLayers[1]
       } else {
         this.refLayer = false
+        this.refLayer2 = false
       }
     },
     onTimeChanges (time) {
@@ -67,12 +69,13 @@ export default {
       this.selectedLayers.filter(l => l.selected).forEach(l => l.setOpacity(opacity))
     },
     openGraphModalSelected () {
-      this.openGraphModal(this.refLayer.geoResource)
+      this.openGraphModal(this.refLayer.geoResource, this.refLayer2.geoResource)
     },
-    openGraphModal (modalParams) {
+    openGraphModal (modalParams, modalParams2) {
       this.selectedArea = Area.getSelectedArea()
       this.showModalGraph = true
       this.modalParams = modalParams
+      this.modalParams2 = modalParams2
     }
   }
 }
