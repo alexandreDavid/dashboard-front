@@ -35,8 +35,10 @@ export default {
     // }
   },
   async getAreaParameterData (area, parameter) {
-    const response = await axios.get(
-      parameter.config.statistics.link
+    const response = await axios.post(
+      parameter.config.statistics.link, {
+        area
+      }
     )
     return response.data
   }

@@ -4,6 +4,7 @@
 
 <script>
 import GeoResources from '@/store/geoResources'
+import AreaLayer from '@/store/areaLayer'
 
 export default {
   name: 'WidgetGraph',
@@ -15,13 +16,26 @@ export default {
     'parameter',
     'graphType'
   ],
+  provide () {
+    return {
+      getAreaLayer: this.getAreaLayer
+    }
+  },
   data () {
     return {
-      resource: false
+      resource: false,
+      areaLayer: false
     }
   },
   mounted () {
     this.resource = GeoResources.searchById(this.parameter.id)
+    this.areaLayer = new AreaLayer()
+    this.areaLayer.setSelectedArea(this.area)
+  },
+  methods: {
+    getAreaLayer () {
+      return this.areaLayer
+    }
   },
   watch: {
     parameter (newParam) {

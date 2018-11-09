@@ -24,6 +24,7 @@ export default {
     PieChart,
     Loading
   },
+  inject: ['getAreaLayer'],
   props: {
     area: Object,
     parameter: Object,
@@ -78,7 +79,7 @@ export default {
       this.isLoaded = false
       this.errorMessage = false
       try {
-        this.datacollection.data = await Data.getAreaParameterData(this.area, this.parameter)
+        this.datacollection.data = await Data.getAreaParameterData(this.getAreaLayer().toGeoJSON(), this.parameter)
         this.familyUnit = Unit.getFamilyUnit(this.parameter.config.units.default)
         this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.parameter.config.units.default))
         // axes Y title
