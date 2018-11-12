@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       isLoaded: false,
-      activeDateDuration: 1500,
+      activeDateDuration: 3000,
       isPlaying: false,
       currentIndex: 0
     }

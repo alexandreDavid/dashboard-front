@@ -43,7 +43,7 @@ export default {
     return {
       showModalGraph: false,
       selectedArea: false,
-      activeDateDuration: 1500,
+      activeDateDuration: 3000,
       isPlaying: false,
       currentIndex: 0
     }
