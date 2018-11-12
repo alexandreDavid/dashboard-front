@@ -27,10 +27,10 @@ export default {
       areaLayer: false
     }
   },
-  mounted () {
-    this.resource = GeoResources.searchById(this.parameter.id)
+  async mounted () {
     this.areaLayer = new AreaLayer()
-    this.areaLayer.setSelectedArea(this.area)
+    await this.areaLayer.setSelectedArea(this.area)
+    this.resource = GeoResources.searchById(this.parameter.id)
   },
   methods: {
     getAreaLayer () {

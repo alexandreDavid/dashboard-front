@@ -51,23 +51,25 @@ export default {
   },
   async mounted () {
     this.map = new MapObj(this.mapId)
-    this.areaLayer = new AreaLayer(this.map, this.area)
+    this.areaLayer = new AreaLayer(this.map)
+    await this.areaLayer.setSelectedArea(this.area)
     this.displayedLayer = new SelectedLayer()
-    await this.displayedLayer.setLayer(GeoResources.searchById(this.parameter.id))
+    await this.displayedLayer.setLayer(GeoResources.searchById(this.parameter.id), this.areaLayer.toGeoJSON())
     this.displayedLayer.addTo(this.map)
     this.isLoaded = true
   },
   watch: {
     async parameter (newParam) {
       this.isLoaded = false
-      await this.displayedLayer.setLayer(GeoResources.searchById(newParam.id))
+      await this.displayedLayer.setLayer(GeoResources.searchById(newParam.id), this.areaLayer.toGeoJSON())
       this.displayedLayer.addTo(this.map)
       this.$nextTick(() => {
         this.isLoaded = true
       })
     },
-    area (newArea) {
-      this.areaLayer.setSelectedArea(newArea)
+    async area (newArea) {
+      await this.areaLayer.setSelectedArea(newArea)
+      this.displayedLayer.setArea(this.areaLayer.toGeoJSON())
     }
   },
   methods: {

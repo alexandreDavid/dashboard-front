@@ -47,14 +47,16 @@ export default {
   },
   async mounted () {
     this.map = new MapObj(this.mapId)
-    this.areaLayer = new AreaLayer(this.map, this.area)
-    const selectedLayers = await SelectedLayers.getAllSelectedLayers()
-    selectedLayers.forEach(l => l.addTo(this.map))
+    this.areaLayer = new AreaLayer(this.map)
+    await this.areaLayer.setSelectedArea(this.area)
+    this.allLayers = await SelectedLayers.getAllSelectedLayers(this.areaLayer.toGeoJSON())
+    this.allLayers.forEach(l => l.addTo(this.getMap()))
     this.isLoaded = true
   },
   watch: {
     area (newArea) {
       this.areaLayer.setSelectedArea(newArea)
+      this.allLayers.forEach(l => l.setArea(this.areaLayer.toGeoJSON()))
     }
   },
   methods: {
