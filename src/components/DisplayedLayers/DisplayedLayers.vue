@@ -64,9 +64,11 @@ export default {
       this.selectedIndexes.forEach(i => {
         this.selectedLayers[i].setTime(time)
       })
+      this.saveChanges()
     },
     setOpacity (opacity) {
       this.selectedLayers.filter(l => l.selected).forEach(l => l.setOpacity(opacity))
+      this.saveChanges()
     },
     openGraphModalSelected () {
       this.openGraphModal(this.refLayer.geoResource, this.refLayer2.geoResource)
