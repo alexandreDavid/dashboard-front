@@ -8,29 +8,29 @@ let configuration = {
         'title': 'Air pressure at sea level',
         'id': 1,
         'widgetId': 'graph',
-        'parameter': {'label': 'Air pressure at sea level (2 days forecast)'},
+        'parameter': {id: 2},
         'graphType': {'value': 'LineChart', 'label': 'Line chart'}
       }, {'widthClass': 'col-md-6',
         'heightClass': 'height-medium',
         'title': 'Air pressure at sea level',
         'id': 2,
         'widgetId': 'map',
-        'parameter': {'label': 'Air pressure at sea level (2 days forecast)'}
+        'parameter': {id: 2}
       }, {
         'widthClass': 'col-md-6',
         'heightClass': 'height-medium',
-        'title': 'Air temperature',
+        'title': 'Temperature',
         'id': 3,
         'widgetId': 'graph',
-        'parameter': {'label': 'Air temperature (2 days forecast)'},
+        'parameter': {id: 1},
         'graphType': {'value': 'LineChart', 'label': 'Line chart'}
       }, {
         'widthClass': 'col-md-6',
         'heightClass': 'height-medium',
-        'title': 'Air temperature',
+        'title': 'Temperature',
         'id': 4,
         'widgetId': 'map',
-        'parameter': {'label': 'Air temperature (2 days forecast)'}
+        'parameter': {id: 1}
       }
     ]
   },
