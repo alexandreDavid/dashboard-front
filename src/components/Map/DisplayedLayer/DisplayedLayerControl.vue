@@ -33,6 +33,15 @@ export default {
         return this.layer
       },
       set (val) {}
+    },
+    selected: {
+      get () {
+        return this.layer._selected
+      },
+      set (val) {
+        this.layer.setSelected(val)
+        this.$emit('select')
+      }
     }
   },
   components: {
@@ -45,15 +54,12 @@ export default {
       savedOpacity: false,
       displayDropDownTime: false,
       showSettingTools: false,
-      position: false,
-      selected: false
+      position: false
     }
   },
   methods: {
     select () {
       this.selected = !this.selected
-      this.layer.selected = this.selected
-      this.$emit('select', this.selected)
     },
     edit () {
       this.position = this.$refs.layer.getBoundingClientRect()

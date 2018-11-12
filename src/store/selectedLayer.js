@@ -12,6 +12,7 @@ export default class {
   _layerId = false
   _legend = false
   _area = false
+  _selected = false
   constructor (geoResource) {
     this.setLayer(geoResource)
   }
@@ -87,6 +88,12 @@ export default class {
     this._opacity = opacity
     this._layer && this._layer.setOpacity(opacity / 100)
     return opacity
+  }
+  setSelected (val) {
+    this._selected = val
+  }
+  isSelected () {
+    return this._selected
   }
   remove () {
     this._layer.remove()

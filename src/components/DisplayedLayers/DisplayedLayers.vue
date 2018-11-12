@@ -50,7 +50,7 @@ export default {
       SelectedLayers.down(index)
     },
     select (index) {
-      const allSelectedLayers = this.selectedLayers.filter(l => l.selected)
+      const allSelectedLayers = this.selectedLayers.filter(l => l.isSelected())
       if (allSelectedLayers.length > 1) {
         this.refLayer = allSelectedLayers[0]
         this.refLayer2 = allSelectedLayers[1]
@@ -60,14 +60,14 @@ export default {
       }
     },
     onTimeChanges (time) {
-      this.selectedLayers.filter(l => l.selected).forEach(l => l.setTime(time))
+      this.selectedLayers.filter(l => l.isSelected()).forEach(l => l.setTime(time))
       this.selectedIndexes.forEach(i => {
         this.selectedLayers[i].setTime(time)
       })
       this.saveChanges()
     },
     setOpacity (opacity) {
-      this.selectedLayers.filter(l => l.selected).forEach(l => l.setOpacity(opacity))
+      this.selectedLayers.filter(l => l.isSelected()).forEach(l => l.setOpacity(opacity))
       this.saveChanges()
     },
     openGraphModalSelected () {
@@ -76,7 +76,7 @@ export default {
     openGraphModal (modalParams, modalParams2) {
       this.selectedArea = Area.getSelectedArea()
       this.showModalGraph = true
-      this.modalParams = this.selectedLayers.filter(l => l.selected)
+      this.modalParams = this.selectedLayers.filter(l => l.isSelected())
       this.modalParams2 = modalParams2
     }
   }
