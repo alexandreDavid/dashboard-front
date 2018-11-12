@@ -6,7 +6,7 @@
       <div v-for="(layer, key) in selectedLayers" :key="key">
         <displayed-layer-control v-bind:layer="layer" @change="saveChanges" @select="select(key)" @remove="remove(key)" @up="up(key)" @down="down(key)"></displayed-layer-control>
       </div>
-      <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="modalParams" v-bind:selectedParameter2="modalParams2" @close="showModalGraph = false"></GraphModal>
+      <multi-graph-modal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:resources="modalParams" @close="showModalGraph = false"></multi-graph-modal>
     </div>
   </div>
 </template>
@@ -17,14 +17,14 @@ import Area from '@/store/area'
 
 import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 import DisplayedLayersTools from '@/components/DisplayedLayers/DisplayedLayersTools'
-import GraphModal from '@/components/Graph/GraphModal'
+import MultiGraphModal from '@/components/Graph/MultiGraphModal'
 
 export default {
   name: 'DisplayedLayers',
   components: {
     DisplayedLayersTools,
     DisplayedLayerControl,
-    GraphModal
+    MultiGraphModal
   },
   data () {
     return {
@@ -76,7 +76,7 @@ export default {
     openGraphModal (modalParams, modalParams2) {
       this.selectedArea = Area.getSelectedArea()
       this.showModalGraph = true
-      this.modalParams = modalParams
+      this.modalParams = this.selectedLayers.filter(l => l.selected)
       this.modalParams2 = modalParams2
     }
   }
