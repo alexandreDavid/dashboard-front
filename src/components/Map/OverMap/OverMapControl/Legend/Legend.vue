@@ -65,7 +65,6 @@ export default {
 <style lang="scss" scoped>
 
 .legend-displaying {
-  background: var(--white);
   position: relative;
 
   .gradient {

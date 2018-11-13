@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <div :id="mapId" class="map-container-widget rounded-bottom">
-      <Popup v-if="isLoaded"/>
-    </div>
-    <div class="over-map">
-      <div class="over-map-bottom over-map-control p-0 shadow-top">
-        <Legend class="over-map-control p-1 rounded-bottom" v-if="isLoaded" v-bind:legend="displayedLayer._legend"></Legend>
+  <div class="d-flex flex-column widget-container">
+    <div class="flex-grow-1 position-relative">
+      <div :id="mapId" class="map-container-widget">
+        <Popup v-if="isLoaded"/>
       </div>
+    </div>
+    <div class="shadow-top p-1 legend-container">
+      <Legend v-bind:legend="displayedLayer._legend"></Legend>
     </div>
   </div>
 </template>
@@ -87,11 +87,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.map-container-widget {
+.widget-container, .map-container-widget {
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.legend-container {
+  height: 27px;
+  z-index: 1000;
 }
 </style>
