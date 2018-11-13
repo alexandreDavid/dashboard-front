@@ -27,12 +27,12 @@
                   </div>
                 </button>
                 <div class="list-group list-group-flush" v-show="displayedGroups.indexOf(group) > -1">
-                  <div href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" v-for="resource in getResourceByGroup(group)" :key="resource.id">
-                    <a href="#" class="list-group-item-action h-100" @click="selectResource(resource)">{{ resource.name }}</a>
+                  <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" @click="selectResource(resource)" v-for="resource in getResourceByGroup(group)" :key="resource.id">
+                    {{ resource.name }}
                     <button type="button" class="btn btn-light" @click="addToMap(resource)" title="Add this resource to the map">
                       <font-awesome-icon v-bind:class="{'fa-rotate-90': displayedGroups.indexOf(group) > -1}" icon="plus" />
                     </button>
-                  </div>
+                  </a>
                 </div>
               </div>
               <div v-if="searchResource">
