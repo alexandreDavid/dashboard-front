@@ -14,21 +14,68 @@ export default {
       scope: 'openid'
     })
   },
-  login () {
-    webAuth.authorize()
+  login (username, password) {
+    return new Promise((resolve, reject) => {
+      webAuth.login({
+        realm: 'Username-Password-Authentication',
+        username,
+        password,
+        scope: 'openid'
+      }, function (err, resp) {
+        if (err) {
+          console.log(err)
+          reject(err.error_description)
+        } else {
+          resolve(resp)
+        }
+      })
+    })
+  },
+
+  signUp (email, password) {
+    return new Promise((resolve, reject) => {
+      webAuth.signup({
+        connection: 'Username-Password-Authentication',
+        email,
+        password
+      }, function (err, resp) {
+        if (err) {
+          reject(err.description)
+        } else {
+          resolve(resp)
+        }
+      })
+    })
+  },
+
+  resetPassword (email) {
+    return new Promise((resolve, reject) => {
+      webAuth.changePassword({
+        connection: 'Username-Password-Authentication',
+        email
+      }, function (err, resp) {
+        if (err) {
+          reject(err.code)
+        } else {
+          resolve(resp)
+        }
+      })
+    })
   },
 
   handleAuthentication () {
-    const self = this
-    webAuth.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setSession(authResult)
-        router.replace('/')
-      } else if (err) {
-        router.replace('error')
-      } else {
-        self.login()
-      }
+    return new Promise((resolve, reject) => {
+      webAuth.parseHash((err, authResult) => {
+        if (err) {
+          reject(err)
+        } else if (authResult && authResult.accessToken && authResult.idToken) {
+          this.setSession(authResult)
+          router.go()
+          resolve(true)
+        } else {
+          resolve(false)
+        }
+      })
     })
   },
 

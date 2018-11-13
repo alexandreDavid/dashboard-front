@@ -8,12 +8,13 @@ import GraphPage from '@/components/Graph/GraphPage'
 import HistoricalPage from '@/views/HistoricalPage'
 import FutureClimatePage from '@/views/FutureClimatePage'
 import Auth from '@/store/authentication'
+// import Login from '@/components/Login/Login'
 
 Vue.use(Router)
 
 function checkAuth (to, from, next) {
   if (!Auth.isAuthenticated()) {
-    Auth.handleAuthentication()
+    // Auth.handleAuthentication()
   } else {
     next()
   }
@@ -52,6 +53,11 @@ export default new Router({
       component: FutureClimatePage,
       beforeEnter: checkAuth
     },
+    // {
+    //   path: '/login',
+    //   name: 'login',
+    //   component: Login
+    // },
     {
       path: '/settings',
       name: 'settings',
