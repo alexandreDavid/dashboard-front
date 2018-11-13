@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     mapId () {
-      return `map-container-widget${this.widgetKey}`
+      return `currentmap-container-widget${this.widgetKey}`
     }
   },
   provide () {
