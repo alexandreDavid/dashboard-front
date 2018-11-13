@@ -44,20 +44,16 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 h-100 resource-info">
-          <div v-if="selectedResource">
+        <div class="col-lg-8 h-100 resource-info position-relative">
+          <div v-if="selectedResource" class="resource-info-container">
             <button class="btn btn-link d-lg-none" @click="backToList"><font-awesome-icon icon="caret-left" /> Back</button>
-            <div id="preview-map" class="w-100 mb-2" style="height:200px"></div>
             <div class="container">
+              <div id="preview-map" class="w-100 mb-2" style="height:200px"></div>
               <h5>{{ selectedResource.name }}</h5>
               <span v-for="(tag, key) in selectedResource.tags" :key="key" class="badge badge-secondary badge-pill mr-1 mb-2">{{ tag }}</span>
               <h6>Description</h6>
               <div class="mb-2">{{ selectedResource.description }}</div>
-              <h6>Type</h6>
-              <div class="mb-2">{{ selectedResource.type }}</div>
-              <h6>Creation date</h6>
-              <div class="mb-2">{{ selectedResource.creation_date }}</div>
-              <h6>Ingestion date</h6>
+              <h6>Last update</h6>
               <div class="mb-2">{{ selectedResource.ingestion_date }}</div>
               <button type="button" class="btn btn-primary" @click="addToMap(selectedResource)"><font-awesome-icon icon="plus" /> Add to the map</button>
             </div>
