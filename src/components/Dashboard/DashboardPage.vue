@@ -64,8 +64,8 @@ export default {
   },
   async created () {
     this.selectedArea = Area.getSelectedArea()
-    this.dashboard = DashboardObj.getSavedDashboard()
     await GeoResources.getAllResources()
+    this.dashboard = DashboardObj.getSavedDashboard()
     this.isLoaded = true
   },
   methods: {
