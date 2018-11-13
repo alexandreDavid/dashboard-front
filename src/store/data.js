@@ -43,7 +43,7 @@ export default {
         }
       )
     } catch (error) {
-      console.warn('Area too complex for get the values')
+      console.warn('Area too complex for getting the values')
       response = await axios.get(parameter.config.statistics.link)
     }
     return response.data
