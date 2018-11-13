@@ -42,6 +42,7 @@ export default {
     },
     remove (index) {
       SelectedLayers.remove(index)
+      this.select()
     },
     up (index) {
       SelectedLayers.up(index)
@@ -49,14 +50,12 @@ export default {
     down (index) {
       SelectedLayers.down(index)
     },
-    select (index) {
+    select () {
       const allSelectedLayers = this.selectedLayers.filter(l => l.isSelected())
       if (allSelectedLayers.length > 1) {
         this.refLayer = allSelectedLayers[0]
-        this.refLayer2 = allSelectedLayers[1]
       } else {
         this.refLayer = false
-        this.refLayer2 = false
       }
     },
     onTimeChanges (time) {
@@ -71,13 +70,12 @@ export default {
       this.saveChanges()
     },
     openGraphModalSelected () {
-      this.openGraphModal(this.refLayer.geoResource, this.refLayer2.geoResource)
+      this.openGraphModal(this.selectedLayers.filter(l => l.isSelected()))
     },
-    openGraphModal (modalParams, modalParams2) {
+    openGraphModal (modalParams) {
       this.selectedArea = Area.getSelectedArea()
       this.showModalGraph = true
       this.modalParams = this.selectedLayers.filter(l => l.isSelected())
-      this.modalParams2 = modalParams2
     }
   }
 }
