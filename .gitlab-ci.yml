@@ -1,5 +1,5 @@
 variables:
-  S3_BUCKET_NAME: "platform-static-dfms-front"
+  S3_BUCKET_NAME: "beta.dfms.co.uk"
 launch tests:
   image: adexlavid/npmpython:latest
   script:
