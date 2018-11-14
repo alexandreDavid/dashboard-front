@@ -2,6 +2,8 @@ import {
   TileLayer
 } from 'leaflet'
 import axios from 'axios'
+import Unit from '@/utils/unit'
+import Settings from '@/store/settings'
 
 export default class {
   geoResource = false
@@ -13,6 +15,8 @@ export default class {
   _legend = false
   _area = false
   _selected = false
+  _unit = false
+  _unitFamily = false
   constructor (geoResource) {
     this.setLayer(geoResource)
   }
@@ -39,7 +43,7 @@ export default class {
     this._layerId = await this.getLayerId({date: this.geoResource.time, area: this._area})
     this._layer.options.layer_id = this._layerId
     this._layer.redraw()
-    this.setLegend()
+    this.setLegend(this._unit)
   }
   async setLayer (geoResource, area) {
     this.geoResource = geoResource
@@ -52,6 +56,8 @@ export default class {
       this._availableTimes = this.getAvailableTimes(this.geoResource)
       this._layerId = await this.getLayerId({date: this.getTime(), area: this._area})
       this._layer = new TileLayer(this.geoResource.config.layer.link, {layer_id: this._layerId})
+      this._unitFamily = Unit.getFamilyUnit(this.geoResource.config.units.default)
+      this._unit = Settings.getActiveKeyById(this._unitFamily)
       // Opacity
       this.setOpacity(this.geoResource.opacity)
       // zIndex
@@ -59,7 +65,7 @@ export default class {
         this.setZIndex(this.geoResource.zIndex)
       }
       // Legend
-      this.setLegend()
+      this.setLegend(this._unit)
     }
   }
   addTo (map) {
@@ -94,6 +100,16 @@ export default class {
   }
   isSelected () {
     return this._selected
+  }
+  getUnitFamily () {
+    return this._unitFamily
+  }
+  async setUnit (unit) {
+    this._unit = unit
+    await this.updateLayer()
+  }
+  getUnit () {
+    return this._unit
   }
   remove () {
     this._layer.remove()
@@ -134,9 +150,34 @@ export default class {
       return featureInfo.data.features
     }
   }
-  async setLegend () {
-    const legendInfos = await axios.get(this.geoResource.config.legend.link.replace('{layer_id}', this._layerId))
+  async setLegend (unit) {
+    let params = {}
+    if (unit) {
+      this._unit = unit
+    }
+    if (this._unit) {
+      params.unit = this._unit
+    }
+    const legendInfos = await axios.get(this.geoResource.config.legend.link.replace('{layer_id}', this._layerId), {params})
     this._legend = legendInfos.data
     return this._legend
+  }
+  async getStatistics () {
+    let response
+    let url = this.geoResource.config.statistics.link.replace('{layer_id}', this._layerId)
+    if (this._unit) {
+      url += `?unit=${this._unit}`
+    }
+    try {
+      response = await axios.post(
+        url, {
+          area: this._area
+        }
+      )
+    } catch (error) {
+      console.warn('Area too complex for getting the values')
+      response = await axios.get(url)
+    }
+    return response.data
   }
 }

@@ -1,8 +1,8 @@
 <template>
   <modal @close="close()">
-    <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.name }}</div>
+    <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.geoResource.name }}</div>
     <div slot="body" class="graph-modal-content">
-      <Graph v-bind:area="selectedArea" v-bind:parameter="selectedParameter"></Graph>
+      <Graph v-bind:parameter="selectedParameter"></Graph>
     </div>
   </modal>
 </template>

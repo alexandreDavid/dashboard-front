@@ -1,15 +1,21 @@
 <template>
-  <Graph v-if="resource" v-bind:area="area" v-bind:parameter="resource" v-bind:graphType="graphType"></Graph>
+  <div>
+    <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType"></Graph>
+    <Loading v-else></Loading>
+  </div>
 </template>
 
 <script>
 import GeoResources from '@/store/geoResources'
 import AreaLayer from '@/store/areaLayer'
+import SelectedLayer from '@/store/selectedLayer'
+import Loading from '@/components/Loading/Loading'
 
 export default {
   name: 'WidgetGraph',
   components: {
-    Graph: () => import('@/components/Graph/Graph')
+    Graph: () => import('@/components/Graph/Graph'),
+    Loading
   },
   props: [
     'area',
@@ -24,13 +30,16 @@ export default {
   data () {
     return {
       resource: false,
-      areaLayer: false
+      areaLayer: false,
+      isLoaded: false
     }
   },
   async mounted () {
     this.areaLayer = new AreaLayer()
     await this.areaLayer.setSelectedArea(this.area)
-    this.resource = GeoResources.searchById(this.parameter.id)
+    this.resource = new SelectedLayer()
+    await this.resource.setLayer(GeoResources.searchById(this.parameter.id), this.areaLayer.toGeoJSON())
+    this.isLoaded = true
   },
   methods: {
     getAreaLayer () {
@@ -40,6 +49,12 @@ export default {
   watch: {
     parameter (newParam) {
       this.resource = GeoResources.searchById(newParam.id)
+    },
+    async area (newArea) {
+      this.isLoaded = false
+      await this.areaLayer.setSelectedArea(newArea)
+      this.resource.setArea(this.areaLayer.toGeoJSON())
+      this.isLoaded = true
     }
   }
 }

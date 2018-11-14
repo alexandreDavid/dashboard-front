@@ -12,7 +12,6 @@
 import Modal from '@/components/Modal/Modal'
 import Loading from '@/components/Loading/Loading'
 
-import Data from '@/store/data'
 import ChartUtil from '@/utils/chart'
 
 export default {
@@ -36,10 +35,6 @@ export default {
   data () {
     return {
       isLoaded: false,
-      areas: false,
-      parameters: false,
-      selectedParameter: false,
-      series: [],
       chartData: {},
       chartOptions: {}
     }
@@ -57,8 +52,8 @@ export default {
     let yAxisNb = 0
 
     await Promise.all(this.resources.map(async (resource, key) => {
-      const data = await Data.getAreaParameterData(this.getAreaLayer().toGeoJSON(), resource.geoResource)
-      const unit = resource.geoResource.config.units.default
+      const data = await resource.getStatistics()
+      const unit = resource.getUnit()
 
       let yAxis = this.chartOptions.scales.yAxes.find(y => y.unit === unit)
       if (!yAxis) {

@@ -21,7 +21,6 @@
 
 <script>
 import Modal from '@/components/Modal/Modal'
-import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import SideBar from '@/components/SideBar/SideBar'
 import Loading from '@/components/Loading/Loading'
 import DisplayedLayers from '@/components/DisplayedLayers/DisplayedLayers'
@@ -37,7 +36,6 @@ export default {
   components: {
     Modal,
     CatalogueModal,
-    Legend,
     SideBar,
     Loading,
     AreaSelectionControl,

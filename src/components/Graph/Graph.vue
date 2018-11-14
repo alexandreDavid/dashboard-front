@@ -14,7 +14,6 @@
 import LineChart from './Charts/LineChart'
 import PieChart from './Charts/PieChart'
 import BarChart from './Charts/BarChart'
-import Data from '@/store/data'
 import Loading from '@/components/Loading/Loading'
 import Unit from '@/utils/unit'
 import Settings from '@/store/settings'
@@ -27,9 +26,7 @@ export default {
     BarChart,
     Loading
   },
-  inject: ['getAreaLayer'],
   props: {
-    area: Object,
     parameter: Object,
     graphType: {
       type: String,
@@ -63,16 +60,13 @@ export default {
     await this.getData()
   },
   watch: {
-    // whenever question changes, this function will run
     async parameter () {
       await this.getData()
     },
-    area: 'getData',
     activeUnits: {
       handler (val) {
-        if (!this.familyUnit || val[this.familyUnit] !== this.datacollection.activeUnit) {
-          this.getData()
-        }
+        this.parameter.setUnit(val[this.parameter.getUnitFamily()])
+        this.getData()
       },
       deep: true
     }
@@ -82,11 +76,11 @@ export default {
       this.isLoaded = false
       this.errorMessage = false
       try {
-        this.datacollection.data = await Data.getAreaParameterData(this.getAreaLayer().toGeoJSON(), this.parameter)
-        this.familyUnit = Unit.getFamilyUnit(this.parameter.config.units.default)
-        this.datacollection.activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this.parameter.config.units.default))
+        this.datacollection.data = await this.parameter.getStatistics()
+        this.datacollection.activeUnit = this.parameter.getUnit()
+
         // axes Y title
-        this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit || this.parameter.config.units.default)
+        this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.parameter.getUnit())
       } catch (e) {
         this.errorMessage = true
       }

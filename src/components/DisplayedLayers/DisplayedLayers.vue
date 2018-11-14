@@ -14,6 +14,7 @@
 <script>
 import SelectedLayers from '@/store/selectedLayers'
 import Area from '@/store/area'
+import Settings from '@/store/settings'
 
 import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 import DisplayedLayersTools from '@/components/DisplayedLayers/DisplayedLayersTools'
@@ -29,11 +30,11 @@ export default {
   data () {
     return {
       selectedLayers: SelectedLayers.allSelectedLayers,
-      selectedIndexes: [],
       refLayer: false,
       showModalGraph: false,
       selectedArea: false,
-      modalParams: false
+      modalParams: false,
+      activeUnits: Settings.activeSettings
     }
   },
   methods: {
@@ -60,9 +61,6 @@ export default {
     },
     onTimeChanges (time) {
       this.selectedLayers.filter(l => l.isSelected()).forEach(l => l.setTime(time))
-      this.selectedIndexes.forEach(i => {
-        this.selectedLayers[i].setTime(time)
-      })
       this.saveChanges()
     },
     setOpacity (opacity) {
@@ -76,6 +74,17 @@ export default {
       this.selectedArea = Area.getSelectedArea()
       this.showModalGraph = true
       this.modalParams = this.selectedLayers.filter(l => l.isSelected())
+    }
+  },
+  watch: {
+    activeUnits: {
+      handler (val) {
+        console.log('activeUnit')
+        this.selectedLayers.forEach(l => {
+          l.setUnit(val[l.getUnitFamily()])
+        })
+      },
+      deep: true
     }
   }
 }
