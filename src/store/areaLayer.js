@@ -117,7 +117,16 @@ let AreaLayer = class {
     }
   }
   toGeoJSON () {
-    return this._areaLayer && this._areaLayer.toGeoJSON()
+    let geoJSON
+    if (this._areaLayer) {
+      geoJSON = this._areaLayer.toGeoJSON()
+      // Non-official GeoJSON format for the Circle: https://gist.github.com/virtualandy/1233401
+      if (this._areaLayer.getRadius) {
+        geoJSON.geometry.type = 'Circle'
+        geoJSON.geometry.radius = this._areaLayer.getRadius()
+      }
+    }
+    return geoJSON
   }
 }
 
