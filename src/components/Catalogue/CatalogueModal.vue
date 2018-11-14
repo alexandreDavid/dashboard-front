@@ -29,9 +29,6 @@
                 <div class="list-group list-group-flush" v-show="displayedGroups.indexOf(group) > -1">
                   <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" @click="selectResource(resource)" v-for="resource in getResourceByGroup(group)" :key="resource.id">
                     {{ resource.name }}
-                    <button type="button" class="btn btn-light" @click="addToMap(resource)" title="Add this resource to the map">
-                      <font-awesome-icon v-bind:class="{'fa-rotate-90': displayedGroups.indexOf(group) > -1}" icon="plus" />
-                    </button>
                   </a>
                 </div>
               </div>
@@ -55,7 +52,11 @@
               <div class="mb-2">{{ selectedResource.description }}</div>
               <h6>Last update</h6>
               <div class="mb-2">{{ selectedResource.ingestion_date }}</div>
-              <button type="button" class="btn btn-primary" @click="addToMap(selectedResource)"><font-awesome-icon icon="plus" /> Add to the map</button>
+              <button v-if="!isAdding && !showAlertMessage" type="button" class="btn btn-primary" @click="addToMap(selectedResource)"><font-awesome-icon icon="plus" /> Add to the map</button>
+              <Loading v-if="isAdding"></Loading>
+              <div v-if="showAlertMessage" class="alert alert-success mt-2" role="alert">
+                Resource added to the map
+              </div>
             </div>
           </div>
           <div class="alert alert-info" v-else>Select a resource to see a preview</div>
@@ -71,6 +72,7 @@ import GeoResources from '@/store/geoResources'
 import GeoResourcesGroups from '@/store/geoResourcesGroups'
 import MapObj from '@/store/map'
 import SelectedLayer from '@/store/selectedLayer'
+import SelectedLayers from '@/store/selectedLayers'
 
 import Modal from '@/components/Modal/Modal'
 import Loading from '@/components/Loading/Loading'
@@ -97,7 +99,10 @@ export default {
       selectedResource: false,
       map: false,
       currentLayer: false,
-      searchResource: ''
+      searchResource: '',
+      selectedLayers: SelectedLayers.allSelectedLayers,
+      isAdding: false,
+      showAlertMessage: false
     }
   },
   async created () {
@@ -139,10 +144,20 @@ export default {
       this.map = false
     },
     addToMap (resource) {
+      this.isAdding = true
       this.$emit('selectedResource', resource)
     },
     close () {
       this.$emit('close')
+    }
+  },
+  watch: {
+    selectedLayers () {
+      this.isAdding = false
+      this.showAlertMessage = true
+      setTimeout(() => {
+        this.showAlertMessage = false
+      }, 3000)
     }
   }
 }
