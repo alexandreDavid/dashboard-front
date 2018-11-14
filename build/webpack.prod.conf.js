@@ -119,6 +119,15 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
+    ]),
+
+    // copy favicon
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../favicon.png'),
+        to: config.build.favicon,
+        ignore: ['.*']
+      }
     ])
   ]
 })

@@ -53,6 +53,9 @@ module.exports = {
     // Template for index.html
     index: path.resolve(__dirname, '../dist/index.html'),
 
+    // Template for favicon
+    favicon: path.resolve(__dirname, '../dist/favicon.png'),
+
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
