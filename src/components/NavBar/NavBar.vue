@@ -61,13 +61,13 @@ export default {
             self.goTo(this.id)
           },
           icon: 'history'
-        }, {
-          id: 'future-climate',
-          label: 'Future climate',
-          click () {
-            self.goTo(this.id)
-          },
-          icon: 'forward'
+        // }, {
+        //   id: 'future-climate',
+        //   label: 'Future climate',
+        //   click () {
+        //     self.goTo(this.id)
+        //   },
+        //   icon: 'forward'
         }, {
           id: 'about',
           label: 'About',
