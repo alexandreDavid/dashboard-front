@@ -4,6 +4,7 @@
     <div v-else-if="errorMessage" class="text-center alert alert-danger m-4">An error occured</div>
     <div v-else class="chart-container">
       <LineChart v-if="graphType === 'LineChart'" v-bind:chartData="datacollection" :options="options"></LineChart>
+      <BarChart v-if="graphType === 'BarChart'" v-bind:chartData="datacollection" :options="options"></BarChart>
       <PieChart v-else-if="graphType === 'PieChart'" v-bind:chartData="datacollection" :options="options"></PieChart>
     </div>
   </div>
@@ -12,6 +13,7 @@
 <script>
 import LineChart from './Charts/LineChart'
 import PieChart from './Charts/PieChart'
+import BarChart from './Charts/BarChart'
 import Data from '@/store/data'
 import Loading from '@/components/Loading/Loading'
 import Unit from '@/utils/unit'
@@ -22,6 +24,7 @@ export default {
   components: {
     LineChart,
     PieChart,
+    BarChart,
     Loading
   },
   inject: ['getAreaLayer'],
@@ -30,10 +33,10 @@ export default {
     parameter: Object,
     graphType: {
       type: String,
-      default: 'LineChart',
+      default: 'BarChart',
       validator: function (value) {
         // The value must match one of these strings
-        return ['LineChart', 'PieChart'].indexOf(value) !== -1
+        return ['LineChart', 'PieChart', 'BarChart'].indexOf(value) !== -1
       }
     }
   },

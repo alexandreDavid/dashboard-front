@@ -9,7 +9,7 @@ let configuration = {
         'id': 1,
         'widgetId': 'graph',
         'parameter': {id: 2},
-        'graphType': {'value': 'LineChart', 'label': 'Line chart'}
+        'graphType': {'value': 'BarChart', 'label': 'Bar chart'}
       }, {'widthClass': 'col-md-6',
         'heightClass': 'height-medium',
         'title': 'Air pressure at sea level',
@@ -23,7 +23,7 @@ let configuration = {
         'id': 3,
         'widgetId': 'graph',
         'parameter': {id: 1},
-        'graphType': {'value': 'LineChart', 'label': 'Line chart'}
+        'graphType': {'value': 'BarChart', 'label': 'Bar chart'}
       }, {
         'widthClass': 'col-md-6',
         'heightClass': 'height-medium',

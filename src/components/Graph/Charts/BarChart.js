@@ -1,5 +1,6 @@
 import { Bar } from './BaseCharts'
 import ChartUtil from '@/utils/chart'
+import Unit from '@/utils/unit'
 
 export default {
   extends: Bar,
@@ -28,19 +29,22 @@ export default {
         }]
       }
     }
-    this.renderChart(this.chartData, {...defaultOptions, ...this.options})
+    this.renderChart(this.fillData(this.chartData), {...defaultOptions, ...this.options})
   },
   methods: {
     fillData (data) {
       let datasets = []
       let labels = []
 
-      let valueConversion = function (value, unit) {
-        return parseFloat(value.replace(',', '.')).toFixed(2)
+      let valueConversion = function (value) {
+        if (isNaN(value)) {
+          value = parseFloat(value.replace(',', '.')).toFixed(2)
+        }
+        return Unit.convert(data.unit, data.activeUnit, value)
       }
 
       // Adding every datasets
-      Object.keys(Object.values(data.data)[0]).forEach((value, key) => {
+      Object.keys(data.data[0].values).forEach((value, key) => {
         let color = Object.values(ChartUtil.colors)[key]
         datasets.push(
           {
@@ -52,11 +56,11 @@ export default {
           }
         )
       })
-      Object.entries(data.data).slice(0, 12).forEach(([key, value]) => {
-        labels.push(ChartUtil.convertDate(key))
-        Object.entries(value).forEach(([key, value]) => {
-          datasets.find(d => d.label === key).data.push(valueConversion(value, 0))
-        })
+      data.data.forEach(data => {
+        labels.push(ChartUtil.convertDate(data.date))
+        for (let label in data.values) {
+          datasets.find(d => d.label === label).data.push(valueConversion(data.values[label]))
+        }
       })
 
       return {datasets, labels}

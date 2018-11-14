@@ -148,6 +148,10 @@ export default class Dashboard {
 
     const graphTypes = [
       {
+        value: 'BarChart',
+        label: 'Bar chart'
+      },
+      {
         value: 'LineChart',
         label: 'Line chart'
       },
