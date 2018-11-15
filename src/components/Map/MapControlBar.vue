@@ -2,14 +2,14 @@
 <div class="h-100">
   <SideBar @close="close()" class="position-relative w-lg bg-light" :is-static="isStatic">
     <div class="container" v-if="isLoaded">
-      <div class="row mb-2">
+      <div class="row mb-2" id="area-selection-control">
         <area-selection-control @change="onAreaChange" class="shadow w-100"></area-selection-control>
       </div>
-      <div class="row mb-2">
+      <div class="row mb-2" id="displayed-layers">
         <DisplayedLayers v-if="!mapIsLoading" @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
         <Loading class="w-100" v-else/>
       </div>
-      <div class="row mb-2">
+      <div class="row mb-2" id="meteo-stations-control">
         <meteo-stations-control @selectedReportedParameter="onSelectedReportedParameter"></meteo-stations-control>
       </div>
     </div>

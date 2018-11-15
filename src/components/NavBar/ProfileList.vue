@@ -4,6 +4,7 @@
     <div class="dropdown-menu dropdown-menu-right shadow" v-bind:class="{show: displayDropDownMenu}">
       <button class="dropdown-item" type="button" @click="goTo('settings')">Settings</button>
       <button class="dropdown-item" type="button" @click="goTo('about')">About</button>
+      <button class="dropdown-item" type="button" @click="openHelp">Help</button>
       <div class="dropdown-divider"></div>
       <button class="dropdown-item" type="button" @click="logout">Sign out</button>
     </div>
@@ -24,6 +25,10 @@ export default {
     goTo (page) {
       this.$emit('openSideBar', page)
       this.displayDropDownMenu = false
+    },
+    openHelp () {
+      this.displayDropDownMenu = false
+      this.$tours['MapTour'].start()
     },
     logout () {
       Authentication.logout()

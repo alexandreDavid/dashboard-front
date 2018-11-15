@@ -1,5 +1,5 @@
 <template>
-  <div class="btn-group-sm btn-group-vertical shadow">
+  <div id="bar-control" class="btn-group-sm btn-group-vertical shadow">
     <button type="button" class="btn btn-primary" id="zoom-current-location" @click="zoomToCurrentLocation" v-if="hasCurrentLocation"><font-awesome-icon icon="location-arrow" /></button>
     <button type="button" class="btn btn-primary" id="zoom-in" @click="zoomIn" :disabled="zoomInDisabled"><font-awesome-icon icon="plus" /></button>
     <button type="button" class="btn btn-primary" id="zoom-out" @click="zoomOut" :disabled="zoomOutDisabled"><font-awesome-icon icon="minus" /></button>

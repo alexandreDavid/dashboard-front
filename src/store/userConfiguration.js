@@ -125,5 +125,20 @@ export default {
   setSelectedLayers (selectedLayers) {
     const parsed = JSON.stringify(selectedLayers)
     localStorage.setItem('selectedLayers', parsed)
+  },
+  getDisplayingHelp () {
+    let displayHelp = true
+    if (localStorage.getItem('displayHelp')) {
+      try {
+        displayHelp = JSON.parse(localStorage.getItem('displayHelp'))
+      } catch (e) {
+        localStorage.removeItem('displayHelp')
+      }
+    }
+    return displayHelp
+  },
+  setDisplayingHelp (displayHelp) {
+    const parsed = JSON.stringify(displayHelp)
+    localStorage.setItem('displayHelp', parsed)
   }
 }

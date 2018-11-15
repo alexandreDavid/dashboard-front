@@ -8,6 +8,7 @@
         </div>
       </div>
     </div>
+    <map-tour></map-tour>
   </div>
 </template>
 
@@ -17,11 +18,12 @@ import Api from '@/store/api'
 import Area from '@/store/area'
 import UserConfiguration from '@/store/userConfiguration'
 import Settings from '@/store/settings'
+import MapTour from '@/components/Tour/MapTour'
 
 export default {
   name: 'App',
   components: {
-    NavBar
+    NavBar, MapTour
   },
   data () {
     return {

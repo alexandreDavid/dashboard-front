@@ -6,6 +6,7 @@ import router from './router'
 import Tracking from './tracking'
 import Authentication from './store/authentication'
 import '@/utils/fontAwesome'
+import VueTour from 'vue-tour'
 
 Vue.config.productionTip = false
 
@@ -16,6 +17,8 @@ if (process.env.TRACKER_URL && process.env.TRACKER_SITE_ID) {
 if (process.env.AUTH.domain && process.env.AUTH.clientID) {
   Authentication.init(process.env.AUTH.domain, process.env.AUTH.clientID)
 }
+
+Vue.use(VueTour)
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,12 +1,14 @@
 @import "../node_modules/leaflet/dist/leaflet.css";
 @import "../node_modules/leaflet-draw/dist/leaflet.draw-src.css";
 @import "~bootstrap/scss/bootstrap.scss";
+@import "../node_modules/vue-tour/dist/vue-tour.css";
 @import "./utils/bootstrap-custom";
 @import "./components/Map/OverMap/overmap";
 @import "./components/Modal/modal";
 @import "./components/SideBar/sidebar";
 @import "./components/Slider/slider";
 @import "./components/Catalogue/catalogue";
+
 #app {
   position: absolute;
   top: 0;
@@ -22,4 +24,11 @@
     right: 0;
     overflow: auto;
   }
+}
+
+.v-step {
+  z-index: 2000;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
