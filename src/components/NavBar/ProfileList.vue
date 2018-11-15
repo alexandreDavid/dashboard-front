@@ -28,6 +28,7 @@ export default {
     },
     openHelp () {
       this.displayDropDownMenu = false
+      this.$router.push({ name: 'map' })
       this.$tours['MapTour'].start()
     },
     logout () {
