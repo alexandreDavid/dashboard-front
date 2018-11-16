@@ -79,7 +79,6 @@ export default {
   watch: {
     activeUnits: {
       handler (val) {
-        console.log('activeUnit')
         this.selectedLayers.forEach(l => {
           l.setUnit(val[l.getUnitFamily()])
         })
