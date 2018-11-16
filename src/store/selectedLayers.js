@@ -33,9 +33,9 @@ export default {
     }
     return this.allSelectedLayers
   },
-  async add (geoResources, area) {
+  async add (geoResource, area) {
     const newLayer = new SelectedLayer()
-    await newLayer.setLayer(geoResources, area)
+    await newLayer.setLayer(geoResource, area)
     this.allSelectedLayers.unshift(newLayer)
     this.allSelectedLayers = calculateZIndex(this.allSelectedLayers)
     this.saveChanges()
@@ -61,5 +61,8 @@ export default {
   },
   updateArea (area) {
     this.allSelectedLayers.forEach(l => l.setArea(area))
+  },
+  isSelected (geoResource) {
+    return !!this.allSelectedLayers.find(l => l.geoResource.id === geoResource.id)
   }
 }

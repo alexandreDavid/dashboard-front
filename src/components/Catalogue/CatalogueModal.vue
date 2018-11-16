@@ -52,7 +52,8 @@
               <div class="mb-2">{{ selectedResource.description }}</div>
               <h6>Last update</h6>
               <div class="mb-2">{{ selectedResource.ingestion_date }}</div>
-              <button v-if="!isAdding && !showAlertMessage" type="button" class="btn btn-primary" @click="addToMap(selectedResource)"><font-awesome-icon icon="plus" /> Add to the map</button>
+              <div v-if="isSelected" class="alert alert-info" role="alert">Resource already added</div>
+              <button v-if="!isSelected && !isAdding && !showAlertMessage" type="button" class="btn btn-primary" @click="addToMap(selectedResource)"><font-awesome-icon icon="plus" /> Add to the map</button>
               <Loading v-if="isAdding"></Loading>
               <div v-if="showAlertMessage" class="alert alert-success mt-2" role="alert">
                 Resource added to the map
@@ -102,7 +103,8 @@ export default {
       searchResource: '',
       selectedLayers: SelectedLayers.allSelectedLayers,
       isAdding: false,
-      showAlertMessage: false
+      showAlertMessage: false,
+      isSelected: false
     }
   },
   async created () {
@@ -125,6 +127,7 @@ export default {
     },
     selectResource (resource) {
       this.selectedResource = resource
+      this.isSelected = SelectedLayers.isSelected(resource)
       this.$nextTick(async () => {
         if (!this.map) {
           this.map = new MapObj('preview-map')
@@ -157,6 +160,7 @@ export default {
       this.showAlertMessage = true
       setTimeout(() => {
         this.showAlertMessage = false
+        this.isSelected = true
       }, 3000)
     }
   }
