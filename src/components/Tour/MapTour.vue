@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$mq !== 'sm'">
     <modal v-if="showModalHelp" @close="closeModal">
       <div slot="header">Welcome to the DFMS application</div>
       <div slot="body">

@@ -7,6 +7,7 @@ import Tracking from './tracking'
 import Authentication from './store/authentication'
 import '@/utils/fontAwesome'
 import VueTour from 'vue-tour'
+import VueMq from 'vue-mq'
 
 Vue.config.productionTip = false
 
@@ -19,6 +20,17 @@ if (process.env.AUTH.domain && process.env.AUTH.clientID) {
 }
 
 Vue.use(VueTour)
+
+// Based on Bootstrap grid breakpoints
+Vue.use(VueMq, {
+  breakpoints: {
+    xs: 0,
+    sm: 576,
+    md: 768,
+    lg: 992,
+    xl: 1200
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
