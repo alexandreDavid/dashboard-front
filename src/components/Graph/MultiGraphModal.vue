@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     async getData () {
-      this.isLoaded =  false
+      this.isLoaded = false
       let datasets = []
       let labels = []
       this.chartOptions = {
