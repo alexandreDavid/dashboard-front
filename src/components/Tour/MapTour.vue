@@ -33,7 +33,7 @@ export default {
         },
         {
           target: '.navbar-nav.nav-item.btn-group',
-          content: 'Managing the profile'
+          content: 'Managing your profile'
         },
         {
           target: '#area-selection-control',
@@ -45,11 +45,11 @@ export default {
         },
         {
           target: '#meteo-stations-control',
-          content: 'Managing the displayinf of the meteorological stations'
+          content: 'Managing the displaying of the meteorological stations'
         },
         {
           target: '#bar-control',
-          content: 'Controling the map',
+          content: 'Controlling the map',
           params: {
             placement: 'right'
           }
