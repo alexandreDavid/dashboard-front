@@ -162,21 +162,28 @@ export default class {
     this._legend = legendInfos.data
     return this._legend
   }
-  async getStatistics () {
+  async getStatistics (dateStart, dateEnd) {
     let response
     let url = this.geoResource.config.statistics.link.replace('{layer_id}', this._layerId)
+    let params = {}
     if (this._unit) {
-      url += `?unit=${this._unit}`
+      params.unit = this._unit
+    }
+    if (dateStart) {
+      params.start_date = dateStart
+    }
+    if (dateEnd) {
+      params.end_date = dateEnd
     }
     try {
       response = await axios.post(
         url, {
-          area: this._area
+          area: this._area, ...params
         }
       )
     } catch (error) {
       console.warn('Area too complex for getting the values')
-      response = await axios.get(url)
+      response = await axios.get(url, {params})
     }
     return response.data
   }

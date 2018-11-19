@@ -35,7 +35,9 @@ export default {
         // The value must match one of these strings
         return ['LineChart', 'PieChart', 'BarChart'].indexOf(value) !== -1
       }
-    }
+    },
+    startDate: {},
+    endDate: {}
   },
   data () {
     return {
@@ -60,9 +62,9 @@ export default {
     await this.getData()
   },
   watch: {
-    async parameter () {
-      await this.getData()
-    },
+    parameter: 'getData',
+    startDate: 'getData',
+    endDate: 'getData',
     activeUnits: {
       handler (val) {
         this.parameter.setUnit(val[this.parameter.getUnitFamily()])
@@ -76,7 +78,7 @@ export default {
       this.isLoaded = false
       this.errorMessage = false
       try {
-        this.datacollection.data = await this.parameter.getStatistics()
+        this.datacollection.data = await this.parameter.getStatistics(this.startDate, this.endDate)
         this.datacollection.activeUnit = this.parameter.getUnit()
 
         // axes Y title
@@ -85,6 +87,9 @@ export default {
         this.errorMessage = true
       }
       this.isLoaded = true
+    },
+    datesChange (newDates) {
+      this.getData(newDates[0], newDates[1])
     }
   }
 }
