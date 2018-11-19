@@ -96,7 +96,7 @@ export default {
 }
 
 .legend-container {
-  height: 27px;
+  min-height: 27px;
   z-index: 1000;
 }
 </style>
