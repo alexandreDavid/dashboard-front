@@ -47,13 +47,15 @@ export default {
     }
   },
   watch: {
-    parameter (newParam) {
-      this.resource = GeoResources.searchById(newParam.id)
+    async parameter (newParam) {
+      this.isLoaded = false
+      await this.resource.setLayer(GeoResources.searchById(newParam.id), this.areaLayer.toGeoJSON())
+      this.isLoaded = true
     },
     async area (newArea) {
       this.isLoaded = false
       await this.areaLayer.setSelectedArea(newArea)
-      this.resource.setArea(this.areaLayer.toGeoJSON())
+      await this.resource.setArea(this.areaLayer.toGeoJSON())
       this.isLoaded = true
     }
   }
