@@ -78,8 +78,11 @@ export default class {
     this._area = area
     await this.updateLayer()
   }
+  hasTime () {
+    return this._availableTimes && this._availableTimes.length
+  }
   async setTime (time) {
-    if (this._availableTimes && this._availableTimes.length) {
+    if (this.hasTime()) {
       if (!(time && this._availableTimes.indexOf(time) > -1)) {
         time = this._availableTimes[0]
       }
@@ -161,6 +164,9 @@ export default class {
     const legendInfos = await axios.get(this.geoResource.config.legend.link.replace('{layer_id}', this._layerId), {params})
     this._legend = legendInfos.data
     return this._legend
+  }
+  hasGraph () {
+    return !!this.geoResource.config.statistics
   }
   async getStatistics (dateStart, dateEnd) {
     let response

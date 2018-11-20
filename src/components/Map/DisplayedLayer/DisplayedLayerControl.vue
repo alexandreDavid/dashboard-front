@@ -13,7 +13,7 @@
         </div>
       </h6>
       <Legend class="py-2" v-bind:legend="layer._legend"></Legend>
-      <time-serie v-model="layer._time" :times="layer._availableTimes" @input="setTime"></time-serie>
+      <time-serie v-if="layer.hasTime()" v-model="layer._time" :times="layer._availableTimes" @input="setTime"></time-serie>
     </div>
     <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
   </div>
