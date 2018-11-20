@@ -6,7 +6,18 @@
       </div>
     </div>
     <div class="shadow-top p-1 legend-container">
-      <Legend v-bind:legend="displayedLayer._legend"></Legend>
+      <div class="d-flex">
+        <div class="flex-fill">
+          <button class="btn btn-link btn-block" v-if="displayedControl === 'legend'" @click="displayedControl = false">Hide legend</button>
+          <button class="btn btn-link btn-block" v-else @click="displayedControl = 'legend'">Show legend</button>
+        </div>
+        <div class="flex-fill" v-if="isLoaded && displayedLayer.hasTime()">
+          <button class="flex-fill btn btn-link btn-block" v-if="displayedControl === 'time'" @click="displayedControl = false">Hide time</button>
+          <button class="flex-fill btn btn-link btn-block" v-else @click="displayedControl = 'time'">Show time</button>
+        </div>
+      </div>
+      <Legend v-if="displayedControl === 'legend'" v-bind:legend="displayedLayer._legend"></Legend>
+      <time-serie v-if="displayedControl === 'time'" v-model="displayedLayer._time" :times="displayedLayer._availableTimes" @input="setTime"></time-serie>
     </div>
   </div>
 </template>
@@ -16,6 +27,7 @@ import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
 import Popup from '@/components/Map/Popup'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
+import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
 
 import SelectedLayer from '@/store/selectedLayer'
 import GeoResources from '@/store/geoResources'
@@ -23,7 +35,7 @@ import GeoResources from '@/store/geoResources'
 export default {
   name: 'WidgetMap',
   components: {
-    Popup, Legend
+    Popup, Legend, TimeSerie
   },
   props: [
     'area',
@@ -35,7 +47,8 @@ export default {
       isLoaded: false,
       map: false,
       displayedLayer: false,
-      areaLayer: false
+      areaLayer: false,
+      displayedControl: false
     }
   },
   computed: {
@@ -78,6 +91,9 @@ export default {
     },
     getDisplayedLayer () {
       return this.displayedLayer
+    },
+    setTime (value) {
+      this.displayedLayer.setTime(value)
     }
   },
   destroyed () {
@@ -96,7 +112,7 @@ export default {
 }
 
 .legend-container {
-  min-height: 27px;
+  // min-height: 27px;
   z-index: 1000;
 }
 </style>

@@ -6,7 +6,7 @@
         <button type="button" id="time-pause" class="btn btn-secondary btn-sm" @click="pause" v-show="isPlaying"><font-awesome-icon icon="pause" /></button>
       </div>
       <div class="flex-grow-1">
-        <TimeSlider class="d-none d-sm-block" v-model="val" @input="onChange" v-bind:times="times"></TimeSlider>
+        <TimeSlider v-model="val" @input="onChange" v-bind:times="times"></TimeSlider>
         <div class="text-center" style="font-size: 0.8em">{{ value }}</div>
       </div>
     </div>
