@@ -57,7 +57,7 @@ export default class {
       this._layerId = await this.getLayerId({date: this.getTime(), area: this._area})
       this._layer = new TileLayer(this.geoResource.config.layer.link, {layer_id: this._layerId})
       this._unitFamily = Unit.getFamilyUnit(this.geoResource.config.units.default)
-      this._unit = Settings.getActiveKeyById(this._unitFamily)
+      this._unit = this._unitFamily ? Settings.getActiveKeyById(this._unitFamily) : this.geoResource.config.units.default
       // Opacity
       this.setOpacity(this.geoResource.opacity)
       // zIndex
