@@ -3,8 +3,14 @@
     <div class="mr-1 label">{{ legend.values[0].name }}</div>
     <div class="gradient flex-grow-1 position-relative" v-bind:style="{ background: getGradientColor(legend.values) }">
       <div v-if="legend.range" class="position-absolute range" v-bind:style="calculateRangePlacement(legend)">
-        <div class="position-absolute pr-1 range-label min">{{ legend.range.min.name }}</div>
-        <div class="position-absolute pl-1 range-label max">{{ legend.range.max.name }}</div>
+        <div class="position-absolute range-label min d-flex flex-row-reverse">
+          <div class="range-bar"></div>
+          <div class="pr-1">{{ legend.range.min.name }}</div>
+        </div>
+        <div class="position-absolute range-label max d-flex">
+          <div class="range-bar"></div>
+          <div class="pl-1">{{ legend.range.max.name }}</div>
+        </div>
       </div>
     </div>
     <div class="ml-1 label">{{ legend.values[legend.values.length - 1].name }}</div>
@@ -52,15 +58,20 @@ export default {
 }
 
 .range {
-  border-left: 2px solid #888;
-  border-right: 2px solid #888;
-  height: 30px;
+  border-left: 1px solid #888;
+  border-right: 1px solid #888;
+  height: 20px;
 
   .range-label {
     font-size: 0.7em;
-    width: max-content;
     bottom: 0;
-    border-bottom: 2px solid #888;
+    top: 50%;
+    width: max-content;
+
+    .range-bar {
+      border-bottom: 1px solid #888;
+      width: 5px;
+    }
 
     &.min {
       right: 100%;
