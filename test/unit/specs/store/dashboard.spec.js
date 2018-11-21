@@ -1,10 +1,10 @@
 import Dashboard from '@/store/dashboard'
-import Parameter from '@/store/parameter'
+import GeoResources from '@/store/geoResources'
 
-jest.mock('@/store/parameter', () => ({
-  getParams: jest.fn()
+jest.mock('@/store/geoResources', () => ({
+  getAll: jest.fn()
 }))
-Parameter.getParams.mockReturnValue([
+GeoResources.getAll.mockReturnValue([
   {
     id: 1,
     displayName: 'displayName1'

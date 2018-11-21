@@ -19,6 +19,6 @@ describe('WidgetMap.vue', () => {
       },
       stubs: { Graph: '<div class="stubbed" />' }
     })
-    expect(wrapper.find('.stubbed').exists()).toBe(true)
+    expect(wrapper.find('.stubbed').exists()).toBe(false)
   })
 })

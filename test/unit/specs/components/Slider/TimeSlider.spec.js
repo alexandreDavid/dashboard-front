@@ -14,27 +14,23 @@ describe('TimeSlider.vue', () => {
     const wrapper = mount(TimeSlider, {
       propsData: {
         value: date1,
-        model: {
-          times: mockTimes
-        }
+        times: mockTimes
       }
     })
     wrapper.vm.$nextTick()
     expect(wrapper.vm.val).toBe(date1)
-    expect(wrapper.find('.vue-slider-dot .vue-slider-tooltip').text()).toBe('1/08')
+    expect(wrapper.find('.vue-slider-dot .vue-slider-tooltip').text()).toBe(date1 + '')
   })
 
   it('Change value from ext', () => {
     const wrapper = mount(TimeSlider, {
       propsData: {
         value: date1,
-        model: {
-          times: mockTimes
-        }
+        times: mockTimes
       }
     })
     wrapper.setProps({value: date4})
     expect(wrapper.vm.val).toBe(date4)
-    expect(wrapper.find('.vue-slider-dot .vue-slider-tooltip').text()).toBe('1/11')
+    expect(wrapper.find('.vue-slider-dot .vue-slider-tooltip').text()).toBe(date4 + '')
   })
 })

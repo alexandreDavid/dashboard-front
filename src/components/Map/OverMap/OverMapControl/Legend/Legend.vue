@@ -1,7 +1,7 @@
 <template>
   <div class="position-relative" v-if="legend">
-    <legend-gradient v-if="legend.type === 'gradient'" v-bind:legend="legend"></legend-gradient>
-    <legend-discrete v-if="legend.type === 'discrete'" v-bind:legend="legend"></legend-discrete>
+    <legend-gradient class="legend-type" v-if="legend.type === 'gradient'" v-bind:legend="legend"></legend-gradient>
+    <legend-discrete class="legend-type" v-if="legend.type === 'discrete'" v-bind:legend="legend"></legend-discrete>
   </div>
 </template>
 

@@ -2,12 +2,12 @@ import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import Dashboard from '@/store/dashboard'
 import { mount } from '@vue/test-utils'
 import Modal from '@/components/Modal/Modal'
-import Parameter from '@/store/parameter'
+import GeoResources from '@/store/geoResources'
 
-jest.mock('@/store/parameter', () => ({
-  getParams: jest.fn()
+jest.mock('@/store/geoResources', () => ({
+  getAll: jest.fn()
 }))
-Parameter.getParams.mockReturnValue([
+GeoResources.getAll.mockReturnValue([
   {
     id: 1,
     displayName: 'displayName1'
@@ -19,14 +19,13 @@ Parameter.getParams.mockReturnValue([
 
 describe('DashboardCardModal.vue', () => {
   let wrapper
-  beforeEach(() => {
+  beforeEach(async () => {
     let dashboard = new Dashboard()
     dashboard.addCard()
 
     wrapper = mount(DashboardCardModal, {
       propsData: {
-        editedCard: dashboard.cards[0],
-        allParameters: []
+        editedCard: dashboard.cards[0]
       }
     })
   })

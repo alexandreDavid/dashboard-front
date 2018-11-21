@@ -6,11 +6,6 @@ const units = [
     precision: 7
   },
   {
-    key: 'k',
-    label: 'K',
-    family: 'temperature'
-  },
-  {
     key: 'C',
     label: '°C',
     family: 'temperature'

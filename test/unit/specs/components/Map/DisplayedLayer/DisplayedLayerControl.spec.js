@@ -1,14 +1,14 @@
 import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 import { shallowMount } from '@vue/test-utils'
 import Area from '@/store/area'
-import GraphModal from '@/components/Graph/GraphModal'
 
 function getMap () {
   return {}
 }
 
-const mockParameter = {
-  hasGraph: true
+const mockLayer = {
+  geoResource: {},
+  hasTime: jest.fn()
 }
 
 const mockGetSelectedArea = 'getSelectedArea'
@@ -37,17 +37,13 @@ describe('DisplayedLayerControl.vue', () => {
         getMap: getMap
       },
       propsData: {
-        parameter: mockParameter
+        layer: mockLayer
       }
     })
   })
 
   it('On open graph modal', () => {
-    wrapper.find('#open-graph-modal').trigger('click')
-    expect(wrapper.vm.showModalGraph).toBe(true)
-    expect(wrapper.vm.selectedArea).toBe(mockGetSelectedArea)
-
-    wrapper.find(GraphModal).vm.$emit('close')
-    expect(wrapper.vm.showModalGraph).toBe(false)
+    wrapper.find('.up').trigger('click')
+    expect(wrapper.emitted('up')).toBeTruthy()
   })
 })

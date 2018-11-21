@@ -18,7 +18,7 @@ describe('Graph.vue', () => {
     wrapper = shallowMount(Graph, {
       propsData: {
         parameter: {
-          displayName: 'displayName'
+          getStatistics: jest.fn()
         }
       }
     })
@@ -33,9 +33,8 @@ describe('Graph.vue', () => {
   // the raw component options
   it('On created call data', () => {
     expect(typeof Graph.data).toBe('function')
-    expect(wrapper.vm.graphType).toBe('LineChart')
-    expect(Data.getAreaParameterData).toBeCalled()
-    wrapper.vm.options.scales.yAxes[0].scaleLabel.labelString = 'displayName unit'
+    expect(wrapper.vm.graphType).toBe('BarChart')
+    expect(wrapper.vm.parameter.getStatistics).toBeCalled()
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 
@@ -43,12 +42,12 @@ describe('Graph.vue', () => {
   it('On watch parameter', async () => {
     wrapper.setProps({
       parameter: {
-        displayName: 'displayName2'
+        displayName: 'displayName2',
+        getStatistics: jest.fn()
       }
     })
     await wrapper.vm.$nextTick()
-    expect(Data.getAreaParameterData).toBeCalled()
-    wrapper.vm.options.scales.yAxes[0].scaleLabel.labelString = 'displayName2 unit'
+    expect(wrapper.vm.parameter.getStatistics).toBeCalled()
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 })

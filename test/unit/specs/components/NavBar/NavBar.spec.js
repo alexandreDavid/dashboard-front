@@ -67,9 +67,9 @@ describe('NavBar.vue', () => {
     verifyClickGoTo('historical')
   })
 
-  it('Click on future-climate', () => {
-    verifyClickGoTo('future-climate')
-  })
+  // it('Click on future-climate', () => {
+  //   verifyClickGoTo('future-climate')
+  // })
 
   it('Click on profile and toggle sidebar', async () => {
     await verifyClickOpenSideBar('settings')

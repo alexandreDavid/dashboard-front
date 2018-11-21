@@ -1,6 +1,5 @@
 import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
 import { shallowMount } from '@vue/test-utils'
-import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
 
 describe('DisplayedLayerTimeControl.vue', () => {
   let wrapper
@@ -18,15 +17,9 @@ describe('DisplayedLayerTimeControl.vue', () => {
   })
 
   it('Mounted correctly without model', () => {
-    // shallowMount(DisplayedLayerTimeControl, {
-    //   propsData: {
-    //     parameter: {
-    //       type: 'type',
-    //       layer: 'interval',
-    //       times: []
-    //     }
-    //   }
-    // })
+    expect(wrapper.find('.dropdown-menu').exists()).toBe(false)
+    wrapper.find('.dropdown-toggle').trigger('click')
+    expect(wrapper.find('.dropdown-menu').exists()).toBe(true)
   })
 
   it('Mounted correctly with model', () => {

@@ -6,7 +6,7 @@
         <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoResource.opacity ? 'eye' : 'eye-slash'" /></button>
         <span class="w-100 mx-1"> {{ layer.geoResource.name }}</span>
         <div class="btn-group btn-group-xs flex-shrink-1" role="group">
-          <button class="btn btn-sm btn-light" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
+          <button class="btn btn-sm btn-light up" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
           <button class="btn btn-sm btn-light" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>
           <button class="btn btn-sm btn-light" @click="edit"><font-awesome-icon icon="cog" /></button>
           <button class="btn btn-sm btn-light" @click="$emit('remove')"><font-awesome-icon icon="trash" /></button>

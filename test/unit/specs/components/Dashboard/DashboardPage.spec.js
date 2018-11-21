@@ -1,16 +1,17 @@
 import DashboardPage from '@/components/Dashboard/DashboardPage.vue'
-import Parameter from '@/store/parameter'
 import Area from '@/store/area'
 import Api from '@/store/api'
 import UserConfiguration from '@/store/userConfiguration'
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import { shallowMount } from '@vue/test-utils'
+import GeoResources from '@/store/geoResources'
 
-jest.mock('@/store/parameter', () => ({
-  getAllParameters: jest.fn(),
-  getParams: jest.fn()
+jest.mock('@/store/geoResources', () => ({
+  getAll: jest.fn(),
+  getAllResources: jest.fn()
 }))
+
 jest.mock('@/store/area', () => ({
   getSelectedArea: jest.fn(),
   setSelectedArea: jest.fn()
@@ -31,10 +32,16 @@ document.querySelector = jest.fn().mockReturnValue({
 
 describe('DashboardPage.vue', () => {
   beforeEach(() => {
-    Parameter.getAllParameters.mockClear()
-    Parameter.getAllParameters.mockReturnValue(Promise.resolve([]))
-    Parameter.getParams.mockClear()
-    Parameter.getParams.mockReturnValue([{id: 'test'}])
+    GeoResources.getAll.mockReturnValue([
+      {
+        id: 1,
+        displayName: 'displayName1'
+      }, {
+        id: 2,
+        displayName: 'displayName1'
+      }
+    ])
+    GeoResources.getAllResources.mockReturnValue(Promise.resolve([]))
     Area.getSelectedArea.mockClear()
     Area.getSelectedArea.mockReturnValue({})
     Api.setDashboard.mockClear()
@@ -62,8 +69,6 @@ describe('DashboardPage.vue', () => {
     expect(wrapper.vm.isEditing).toBe(true)
 
     const button = wrapper.find('#add-card')
-
-    // when
     button.trigger('click')
 
     // then
