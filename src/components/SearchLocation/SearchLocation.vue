@@ -62,10 +62,8 @@ export default {
     }
   },
   watch: {
-    value (val, oldVal) {
-      if (val) {
-        this.setResult(val, false)
-      }
+    value (val) {
+      this.setResult(val, false)
     }
   },
   computed: {
