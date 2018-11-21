@@ -66,15 +66,15 @@ export default {
     activePlay () {
       if (this.currentIndex < (this.times.length - 1)) {
         this.currentIndex++
-        this.onTimeChanges(this.times[this.currentIndex])
-        setTimeout(() => {
-          if (this.isPlaying) {
-            this.activePlay()
-          }
-        }, this.activeDateDuration)
       } else {
-        this.pause()
+        this.currentIndex = 0
       }
+      this.onTimeChanges(this.times[this.currentIndex])
+      setTimeout(() => {
+        if (this.isPlaying) {
+          this.activePlay()
+        }
+      }, this.activeDateDuration)
     }
   }
 }
