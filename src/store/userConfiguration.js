@@ -5,20 +5,6 @@ let configuration = {
       {
         'widthClass': 'col-md-6',
         'heightClass': 'height-medium',
-        'title': 'Air pressure at sea level',
-        'id': 1,
-        'widgetId': 'graph',
-        'parameter': {id: 2},
-        'graphType': {'value': 'BarChart', 'label': 'Bar chart'}
-      }, {'widthClass': 'col-md-6',
-        'heightClass': 'height-medium',
-        'title': 'Air pressure at sea level',
-        'id': 2,
-        'widgetId': 'map',
-        'parameter': {id: 2}
-      }, {
-        'widthClass': 'col-md-6',
-        'heightClass': 'height-medium',
         'title': 'Temperature',
         'id': 3,
         'widgetId': 'graph',
