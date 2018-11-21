@@ -140,9 +140,7 @@ export default class Dashboard {
       options: allParameters,
       value: allParameters[0],
       onChange (card) {
-        if (!card.title || this.options.map(({label}) => label).includes(card.title)) {
-          card.title = this.value.label
-        }
+        card.title = this.value.label
       }
     }
 
