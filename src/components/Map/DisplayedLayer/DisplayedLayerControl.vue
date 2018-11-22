@@ -4,7 +4,7 @@
       <h6 class="d-flex align-items-start">
         <button class="btn btn-xs btn-outline-secondary flex-shrink-1 mr-1" @click="select"><font-awesome-icon v-bind:class="{'text-white': !selected}" icon="check" /></button>
         <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoResource.opacity ? 'eye' : 'eye-slash'" /></button>
-        <span class="w-100 mx-1"> {{ layer.geoResource.name }}</span>
+        <span class="w-100 mx-1"> {{ layer.geoResource.label }}</span>
         <div class="btn-group btn-group-xs flex-shrink-1" role="group">
           <button class="btn btn-sm btn-light up" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
           <button class="btn btn-sm btn-light" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>

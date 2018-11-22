@@ -35,7 +35,7 @@
               <div v-if="searchResource">
                 <h6>Search results</h6>
                 <div class="list-group list-group-flush">
-                  <a href="#" class="list-group-item list-group-item-action" @click="selectResource(resource)" v-for="resource in foundResources" :key="resource.id">{{ resource.name }}</a>
+                  <a href="#" class="list-group-item list-group-item-action" @click="selectResource(resource)" v-for="resource in foundResources" :key="resource.id">{{ resource.label }}</a>
                 </div>
               </div>
             </div>

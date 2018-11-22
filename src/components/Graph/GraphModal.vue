@@ -1,6 +1,6 @@
 <template>
   <modal @close="close()">
-    <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.geoResource.name }}</div>
+    <div slot="header">{{ selectedArea.name + ' - ' + selectedParameter.geoResource.label }}</div>
     <div slot="body" class="graph-modal-content">
       <div class="d-flex flex-column w-100 h-100">
         <div class="px-4 mt-2">

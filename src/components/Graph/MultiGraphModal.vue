@@ -90,7 +90,7 @@ export default {
         }
         let color = Object.values(ChartUtil.colors)[key]
         let dataset = {
-          label: `${resource.geoResource.name} (${unit})`,
+          label: `${resource.geoResource.label} (${unit})`,
           fill: false,
           backgroundColor: color,
           borderColor: color,
