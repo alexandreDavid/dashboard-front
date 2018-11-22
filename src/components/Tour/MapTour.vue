@@ -29,27 +29,27 @@ export default {
       steps: [
         {
           target: '.navbar-nav',
-          content: `Changing the displayed page`
+          content: 'Access the main navigation menu.'
         },
         {
           target: '.navbar-nav.nav-item.btn-group',
-          content: 'Managing your profile'
+          content: 'Manage your profile here including preferred units of measurement and setting personalised notifications.'
         },
         {
           target: '#area-selection-control',
-          content: 'Selecting a working area'
+          content: 'Change the map area to search by district or place name or selecting a preferred area.'
         },
         {
           target: '#displayed-layers',
-          content: 'Managing the displayed layers'
+          content: 'Explore available data and manage the displayed layers. Click the "Tools" and “Play” icons to learn more about view and change settings for data layers on the map like date range, graph and opacity.'
         },
         {
           target: '#meteo-stations-control',
-          content: 'Managing the displaying of the meteorological stations'
+          content: 'View current and historical weather measurements collected from the ground at various meteorological stations.'
         },
         {
           target: '#bar-control',
-          content: 'Controlling the map',
+          content: 'Access basic map tools and customize the basemap, including the boundaries displayed and the colour of the labels.',
           params: {
             placement: 'right'
           }
