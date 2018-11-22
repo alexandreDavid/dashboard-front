@@ -21,14 +21,14 @@
             <div class="resources-list">
               <div v-for="group in groups" :key="group.id" v-if="!searchResource">
                 <button class="btn btn-light d-flex w-100" @click="toggleGroup(group)">
-                  <div class="w-100 text-left font-weight-bold">{{ group.friendly_name }}</div>
+                  <div class="w-100 text-left font-weight-bold">{{ group.label }}</div>
                   <div class="flex-shrink-1">
                     <font-awesome-icon v-bind:class="{'fa-rotate-90': displayedGroups.indexOf(group) > -1}" icon="caret-right" />
                   </div>
                 </button>
                 <div class="list-group list-group-flush" v-show="displayedGroups.indexOf(group) > -1">
                   <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" @click="selectResource(resource)" v-for="resource in getResourceByGroup(group)" :key="resource.id">
-                    {{ resource.name }}
+                    {{ resource.label }}
                   </a>
                 </div>
               </div>
@@ -46,7 +46,7 @@
             <button class="btn btn-link d-lg-none" @click="backToList"><font-awesome-icon icon="caret-left" /> Back</button>
             <div class="container">
               <div id="preview-map" class="w-100 mb-2" style="height:200px"></div>
-              <h5>{{ selectedResource.name }}</h5>
+              <h5>{{ selectedResource.label }}</h5>
               <span v-for="(tag, key) in selectedResource.tags" :key="key" class="badge badge-secondary badge-pill mr-1 mb-2">{{ tag }}</span>
               <h6>Description</h6>
               <div class="mb-2">{{ selectedResource.description }}</div>
@@ -87,7 +87,7 @@ export default {
   computed: {
     foundResources () {
       return this.resources.filter(resource => {
-        return resource.name.toLowerCase().includes(this.searchResource.toLowerCase())
+        return resource.label.toLowerCase().includes(this.searchResource.toLowerCase())
       })
     }
   },

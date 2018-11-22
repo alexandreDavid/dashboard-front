@@ -5,7 +5,7 @@ const urlRoot = process.env.CATALOGUE_API_URL
 export default {
   async getAllGroups () {
     const response = await axios.get(
-      `${urlRoot}/su-groups`
+      `${urlRoot}/groups`
     )
     return response.data
   }

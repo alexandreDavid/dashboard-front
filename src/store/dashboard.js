@@ -130,7 +130,7 @@ export default class Dashboard {
     let allParameters = GeoResources.getAll().map(p => {
       return {
         id: p.id,
-        label: p.name
+        label: p.label
       }
     })
     let fieldParameter = {
