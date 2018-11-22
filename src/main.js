@@ -9,7 +9,7 @@ import '@/utils/fontAwesome'
 import VueTour from 'vue-tour'
 import VueMq from 'vue-mq'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = (process.env.NODE_ENV === 'production')
 
 if (process.env.TRACKER_URL && process.env.TRACKER_SITE_ID) {
   Tracking.init(process.env.TRACKER_URL, process.env.TRACKER_SITE_ID)
