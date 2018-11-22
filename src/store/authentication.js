@@ -70,7 +70,6 @@ export default {
           reject(err)
         } else if (authResult && authResult.accessToken && authResult.idToken) {
           this.setSession(authResult)
-          router.go()
           resolve(true)
         } else {
           resolve(false)
@@ -95,7 +94,7 @@ export default {
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
     // navigate to the home route
-    router.go()
+    router.push({ name: 'login' })
   },
 
   isAuthenticated () {
