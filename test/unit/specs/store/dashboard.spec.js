@@ -62,11 +62,5 @@ describe('dashboard.js', () => {
     expect(fieldForecastParameter.value.label).toBe(fieldForecastParameter.options[1].label)
     fieldForecastParameter.onChange(card)
     expect(card.title).toBe(fieldForecastParameter.value.label)
-
-    fieldForecastParameter.value = fieldForecastParameter.options[0]
-    card.title = 'title'
-    expect(fieldForecastParameter.value.label).toBe(fieldForecastParameter.options[0].label)
-    fieldForecastParameter.onChange(card)
-    expect(card.title).toBe('title')
   })
 })

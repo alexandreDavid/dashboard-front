@@ -229,8 +229,8 @@ describe('SearchLocation.vue', () => {
       value: false
     })
 
-    expect(wrapper.vm.search).toBe('name')
-    expect(wrapper.find('input').element.value).toBe('name')
+    expect(wrapper.vm.search).toBeFalsy()
+    expect(wrapper.find('input').element.value).toBe('')
   })
 
   it('On click outside and reinit value', async () => {
