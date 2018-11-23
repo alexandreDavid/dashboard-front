@@ -41,7 +41,13 @@ export default {
         user_metadata: metadata
       }, function (err, resp) {
         if (err) {
-          reject(err.policy || err.description)
+          let errorMessage
+          if (err.policy) {
+            errorMessage = `Password is too weak: ${err.policy}`
+          } else {
+            errorMessage = err.description
+          }
+          reject(errorMessage)
         } else {
           resolve(resp)
         }

@@ -45,11 +45,11 @@
                       <input type="text" class="form-control" v-model="organisation" id="signup-organisation" placeholder="Organisation" required>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="signup-type-government" v-model="organisationType" value="organisation" class="custom-control-input" required>
+                      <input type="radio" id="signup-type-government" v-model="organisationType" name="organisation" value="organisation" class="custom-control-input" required>
                       <label class="custom-control-label" for="signup-type-government">Government</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="signup-type-other" v-model="organisationType" value="other" class="custom-control-input" required>
+                      <input type="radio" id="signup-type-other" v-model="organisationType" name="other" value="other" class="custom-control-input" required>
                       <label class="custom-control-label" for="signup-type-other">Other</label>
                     </div>
                     <div class="form-group mb-2">
@@ -120,7 +120,7 @@ export default {
       name: '',
       organisation: '',
       position: '',
-      organisationType: '',
+      organisationType: false,
       displayReset: false,
       connectTab: 'login',
       message: false,
