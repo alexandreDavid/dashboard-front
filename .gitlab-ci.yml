@@ -10,7 +10,7 @@ build prod:
   image: adexlavid/npmpython:latest
   script:
   - npm install
-  - npm run build
+  - npm run build-dev
   - pip install awscli
   - aws s3 rm s3://$S3_PROD_BUCKET_NAME/static/ --recursive
   - aws s3 cp ./dist s3://$S3_PROD_BUCKET_NAME/ --recursive
