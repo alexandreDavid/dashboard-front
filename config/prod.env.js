@@ -6,8 +6,8 @@ module.exports = {
   CATALOGUE_API_URL: '"http://a4255e5baee6011e8bd850258108f7fd-1365817557.eu-west-1.elb.amazonaws.com"',
   GEOSERVER_URL: '"http://35.178.230.72:8180/geoserver"',
   AUTH: {
-    domain: '"testada.eu.auth0.com"',
-    clientID: '"lx8Y6DigIFeBaWZ1qJI5CTnyMT2a1k0N"'
+    domain: '"dfms.eu.auth0.com"',
+    clientID: '"3If6sQMIem0XvkRZzc10rOn6p-94YjUU"'
   },
   GOOGLE_ANALYTICS_KEY: '"UA-129728715-2"'
 }
