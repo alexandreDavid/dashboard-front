@@ -17,12 +17,10 @@ if (process.env.AUTH.domain && process.env.AUTH.clientID) {
 
 Vue.use(VueTour)
 
-if (process.env.GOOGLE_ANALYTICS_KEY) {
-  Vue.use(VueAnalytics, {
-    id: process.env.GOOGLE_ANALYTICS_KEY,
-    router
-  })
-}
+Vue.use(VueAnalytics, {
+  id: process.env.GOOGLE_ANALYTICS_KEY,
+  router
+})
 
 // Based on Bootstrap grid breakpoints
 Vue.use(VueMq, {
