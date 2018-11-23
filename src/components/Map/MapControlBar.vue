@@ -64,6 +64,7 @@ export default {
       SelectedLayers.updateArea(this.getAreaLayer().toGeoJSON())
     },
     async onSelectedResource (resource) {
+      this.$ga.event('resource', 'add', resource.name)
       const newLayer = await SelectedLayers.add(resource, this.getAreaLayer().toGeoJSON())
       newLayer.addTo(this.getMap())
     },

@@ -3,23 +3,26 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Tracking from './tracking'
 import Authentication from './store/authentication'
 import '@/utils/fontAwesome'
 import VueTour from 'vue-tour'
 import VueMq from 'vue-mq'
+import VueAnalytics from 'vue-analytics'
 
 Vue.config.productionTip = (process.env.NODE_ENV === 'production')
-
-if (process.env.TRACKER_URL && process.env.TRACKER_SITE_ID) {
-  Tracking.init(process.env.TRACKER_URL, process.env.TRACKER_SITE_ID)
-}
 
 if (process.env.AUTH.domain && process.env.AUTH.clientID) {
   Authentication.init(process.env.AUTH.domain, process.env.AUTH.clientID)
 }
 
 Vue.use(VueTour)
+
+if (process.env.GOOGLE_ANALYTICS_KEY) {
+  Vue.use(VueAnalytics, {
+    id: process.env.GOOGLE_ANALYTICS_KEY,
+    router
+  })
+}
 
 // Based on Bootstrap grid breakpoints
 Vue.use(VueMq, {

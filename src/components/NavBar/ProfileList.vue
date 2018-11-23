@@ -23,15 +23,18 @@ export default {
   },
   methods: {
     goTo (page) {
+      this.$ga.event('profile', page)
       this.$emit('openSideBar', page)
       this.displayDropDownMenu = false
     },
     openHelp () {
+      this.$ga.event('profile', 'help')
       this.displayDropDownMenu = false
       this.$router.push({ name: 'map' })
       this.$tours['MapTour'].start()
     },
     logout () {
+      this.$ga.event('profile', 'logout')
       Authentication.logout()
     },
     handleClickOutside (evt) {

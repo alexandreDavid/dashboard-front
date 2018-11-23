@@ -49,6 +49,7 @@ export default {
       this.edit = true
     },
     remove () {
+      this.$ga.event('area', 'custom delete')
       this.onSearchLocationSelected(false)
     },
     toggleEdit () {
@@ -60,6 +61,7 @@ export default {
       await this.getAreaLayer().setSelectedArea(val)
       this.$emit('change', val)
       this.edit = !this.val || this.val.type !== 'custom'
+      this.$ga.event('area', 'change', this.val.name)
     },
     switchDrawMode (mode) {
       this.drawMode = mode

@@ -8,5 +8,6 @@ module.exports = {
   AUTH: {
     domain: '"testada.eu.auth0.com"',
     clientID: '"lx8Y6DigIFeBaWZ1qJI5CTnyMT2a1k0N"'
-  }
+  },
+  GOOGLE_ANALYTICS_KEY: '"UA-129728715-2"'
 }

@@ -85,6 +85,7 @@ export default {
           })
         }, 0)
       })
+      this.$ga.event('dashboard', 'addCard')
     },
     editCard (card) {
       this.editedCard = card
@@ -93,18 +94,22 @@ export default {
     closeEditCardModal () {
       this.dashboard.setCard(this.editedCard)
       this.showCardModal = false
+      this.$ga.event('dashboard', 'editCard', `${this.editedCard.title}: ${this.editedCard.widget.id}`)
     },
     removeCard (card) {
       this.dashboard.removeCard(card)
       this.showCardModal = false
+      this.$ga.event('dashboard', 'removeCard')
     },
     edit () {
+      this.$ga.event('dashboard', 'edit')
       this.isEditing = true
     },
     save () {
       Api.setDashboard(this.dashboard)
       this.dashboard.save()
       this.isEditing = false
+      this.$ga.event('dashboard', 'save')
     }
   }
 }

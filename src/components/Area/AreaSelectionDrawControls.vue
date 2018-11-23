@@ -88,6 +88,7 @@ export default {
       this.message = 'Click and drag to draw circle'
     },
     startDraw (mode) {
+      this.$ga.event('area', 'custom startDraw', mode)
       this.isDrawing = true
       this.canValidateDraw = false
       if (this.customLayer) {
@@ -118,6 +119,7 @@ export default {
       this.getMap().on(L.Draw.Event.CREATED, onCreated)
     },
     stopDraw () {
+      this.$ga.event('area', 'custom stopDraw', this.mode)
       this.drawPolygon.completeShape()
     },
     deleteLastPoint () {
@@ -165,6 +167,7 @@ export default {
       if (this.customLayer) {
         this.customLayer.remove()
       }
+      this.$ga.event('area', 'custom validate', this.mode)
       this.$emit('validate', this.customLayer)
     }
   }
