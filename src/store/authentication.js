@@ -32,15 +32,16 @@ export default {
     })
   },
 
-  signUp (email, password) {
+  signUp (email, password, metadata) {
     return new Promise((resolve, reject) => {
       webAuth.signup({
         connection: 'Username-Password-Authentication',
         email,
-        password
+        password,
+        user_metadata: metadata
       }, function (err, resp) {
         if (err) {
-          reject(err.description)
+          reject(err.policy || err.description)
         } else {
           resolve(resp)
         }
