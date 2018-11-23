@@ -10,7 +10,30 @@
     <div class="tour-mask" v-show="displayMask && !showModalHelp">
       <div class="tour-focus-container" v-bind:style="styleFocusContainer"></div>
     </div>
-    <v-tour name="MapTour" :steps="steps" :callbacks="myCallbacks"></v-tour>
+    <v-tour name="MapTour" :steps="steps" :callbacks="myCallbacks">
+      <template slot-scope="tour">
+        <transition name="fade">
+          <v-step
+            v-if="tour.currentStep === index"
+            v-for="(step, index) of tour.steps"
+            :key="index"
+            :step="step"
+            :previous-step="tour.previousStep"
+            :next-step="tour.nextStep"
+            :stop="tour.stop"
+            :is-first="tour.isFirst"
+            :is-last="tour.isLast"
+            :labels="tour.labels"
+          >
+            <template v-if="tour.currentStep === 3">
+              <div slot="content">
+                Explore available data and manage the displayed layers. Click the <font-awesome-icon icon="cog" /> and <font-awesome-icon icon="play" /> icons to learn more about view and change settings for data layers on the map like date range, graph and opacity.
+              </div>
+            </template>
+          </v-step>
+        </transition>
+      </template>
+    </v-tour>
   </div>
 </template>
 
