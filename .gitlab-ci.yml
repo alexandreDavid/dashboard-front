@@ -1,5 +1,6 @@
 variables:
-  S3_BUCKET_NAME: "beta.dfms.co.uk"
+  S3_PROD_BUCKET_NAME: "beta.dfms.co.uk"
+  S3_DEV_BUCKET_NAME: "inte.dfms.co.uk"
 launch tests:
   image: adexlavid/npmpython:latest
   script:
@@ -11,7 +12,17 @@ build prod:
   - npm install
   - npm run build
   - pip install awscli
-  - aws s3 rm s3://$S3_BUCKET_NAME/static/ --recursive
-  - aws s3 cp ./dist s3://$S3_BUCKET_NAME/ --recursive
+  - aws s3 rm s3://$S3_PROD_BUCKET_NAME/static/ --recursive
+  - aws s3 cp ./dist s3://$S3_PROD_BUCKET_NAME/ --recursive
+  only:
+    - master
+build dev:
+  image: adexlavid/npmpython:latest
+  script:
+  - npm install
+  - npm run build
+  - pip install awscli
+  - aws s3 rm s3://$S3_DEV_BUCKET_NAME/static/ --recursive
+  - aws s3 cp ./dist s3://$S3_DEV_BUCKET_NAME/ --recursive
   only:
     - dev
