@@ -95,13 +95,13 @@ export default {
     localStorage.setItem('expires_at', expiresAt)
   },
 
-  logout () {
+  logout (error) {
     // Clear Access Token and ID Token from local storage
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
     // navigate to the home route
-    router.push({ name: 'login' })
+    router.push({ name: 'login', params: {error} })
   },
 
   isAuthenticated () {

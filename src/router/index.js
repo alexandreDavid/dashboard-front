@@ -14,15 +14,19 @@ import AuthentifiedRoot from '@/components/AuthentifiedRoot/AuthentifiedRoot'
 Vue.use(Router)
 
 async function checkAuth (to, from, next) {
-  if (!Auth.isAuthenticated()) {
-    const isAuthenticated = await Auth.handleAuthentication()
-    if (isAuthenticated) {
-      next()
+  try {
+    if (!Auth.isAuthenticated()) {
+      const isAuthenticated = await Auth.handleAuthentication()
+      if (isAuthenticated) {
+        next()
+      } else {
+        Auth.logout()
+      }
     } else {
-      Auth.logout()
+      next()
     }
-  } else {
-    next()
+  } catch (e) {
+    Auth.logout(e.errorDescription)
   }
 }
 
@@ -79,7 +83,8 @@ export default new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      props: true
     },
     {
       path: '/error',

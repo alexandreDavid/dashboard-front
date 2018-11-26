@@ -5,7 +5,7 @@
           <div class="modal-header">
             <img src="@/assets/logo.png" style="width: 100px">
           </div>
-          <div class="modal-body bg-white">
+          <div id="login-content" class="modal-body bg-white">
             <div class="alert alert-info" v-if="message" role="alert">{{ message }}</div>
             <div v-show="!displayReset">
               <ul class="nav nav-tabs">
@@ -128,6 +128,11 @@ export default {
       showLicenseAgreement: false
     }
   },
+  created () {
+    if (this.error) {
+      this.messageError = this.error
+    }
+  },
   methods: {
     async login () {
       this.messageError = false
@@ -159,7 +164,6 @@ export default {
           metadata.agreementDate = new Date()
         }
         await auth.signUp(this.email, this.pass, metadata)
-        await auth.login(this.email, this.pass)
         this.connectTab = 'login'
         this.message = 'You are successfully signed up. Please verify your email before logging in.'
       } catch (error) {
@@ -183,3 +187,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+#login-content {
+  max-height: 60vh;
+  overflow: auto;
+}
+</style>
