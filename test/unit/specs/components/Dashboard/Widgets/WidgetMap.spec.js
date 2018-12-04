@@ -25,7 +25,8 @@ jest.mock('@/store/areaLayer', () => {
 
 const mockSelectedLayer = {
   setLayer: jest.fn(),
-  addTo: jest.fn()
+  addTo: jest.fn(),
+  hasTime: jest.fn()
 }
 jest.mock('@/store/selectedLayer', () => {
   return jest.fn().mockImplementation(() => {
