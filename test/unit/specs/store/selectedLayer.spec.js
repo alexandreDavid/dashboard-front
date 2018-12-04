@@ -10,6 +10,7 @@ let mockTileLayer = {
   setParams: jest.fn(),
   setOpacity: jest.fn(),
   redraw: jest.fn(),
+  setZIndex: jest.fn(),
   wmsParams: {
     time: 'time'
   },
@@ -18,6 +19,7 @@ let mockTileLayer = {
 }
 
 const mockGeoResource = {
+  zIndex: 1,
   config: {
     layer_creation: {
       link: 'link',
@@ -35,6 +37,9 @@ const mockGeoResource = {
     },
     units: {
       default: 'default'
+    },
+    statistics: {
+      link: 'statisticsLink'
     }
   }
 }
@@ -64,7 +69,7 @@ jest.mock('@/store/settings', () => ({
 describe('selectedLayer.js', () => {
   let selectedLayer
   beforeEach(function () {
-    selectedLayer = new SelectedLayer(mockMap)
+    selectedLayer = new SelectedLayer()
     mockTileLayer.remove.mockClear()
     mockMap.getBounds.mockClear()
     mockMap.getSize.mockClear()
@@ -171,10 +176,76 @@ describe('selectedLayer.js', () => {
 
   it('Set units', async () => {
     Unit.getFamilyUnit.mockReturnValue('getFamilyUnit')
-    Settings.getActiveKeyById.mockReturnValue('getUnitByFamily')
+    Settings.getActiveKeyById.mockReturnValue('getActiveKeyById')
     await selectedLayer.setLayer(mockGeoResource)
-    expect(selectedLayer.getUnit()).toBe('getUnitByFamily')
+    expect(selectedLayer.getUnit()).toBe('getActiveKeyById')
     await selectedLayer.setUnit('newUnit')
     expect(selectedLayer.getUnit()).toBe('newUnit')
+  })
+
+  it('getStatistics valid', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    axios.post.mockClear()
+    axios.post.mockReturnValue(Promise.resolve({ data: 'ok' }))
+    const res = await selectedLayer.getStatistics('dateStart', 'dateEnd')
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'})
+    expect(res).toBe('ok')
+  })
+
+  it('setZIndex', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    selectedLayer.geoResource = {}
+    const zIndex = 'zIndex'
+    selectedLayer.setZIndex(zIndex)
+    expect(mockTileLayer.setZIndex).toHaveBeenCalledWith(zIndex)
+    expect(selectedLayer.geoResource.zIndex).toBe(zIndex)
+  })
+
+  it('remove', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    selectedLayer.remove()
+    expect(mockTileLayer.remove).toHaveBeenCalledTimes(1)
+  })
+
+  it('selected', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    expect(selectedLayer.isSelected()).toBe(false)
+    selectedLayer.setSelected(true)
+    expect(selectedLayer.isSelected()).toBe(true)
+  })
+
+  it('getUnitFamily', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    expect(selectedLayer.getUnitFamily()).toBe('getFamilyUnit')
+  })
+
+  it('getLayerId fail', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    axios.post.mockClear()
+    axios.post.mockResolvedValue({ data: {layer_id: 'layer_id ok'} })
+    axios.post.mockRejectedValueOnce(new Error('ok'))
+    const layerId = await selectedLayer.getLayerId({area: 'area', param1: 'param1'})
+    expect(axios.post).toHaveBeenCalledTimes(2)
+    expect(layerId).toBe('layer_id ok')
+  })
+
+  it('getStatistics valid', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    axios.post.mockClear()
+    axios.get.mockClear()
+    axios.post.mockRejectedValueOnce(new Error())
+    axios.get.mockResolvedValueOnce({ data: 'ok 2' })
+    const res = await selectedLayer.getStatistics('dateStart', 'dateEnd')
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'})
+    expect(axios.get).toHaveBeenCalledWith('statisticsLink', {params: {start_date: 'dateStart', end_date: 'dateEnd', unit: 'getActiveKeyById'}})
+    expect(res).toBe('ok 2')
+  })
+
+  it('hasGraph', async () => {
+    selectedLayer.geoResource = mockGeoResource
+    expect(selectedLayer.hasGraph()).toBe(true)
+
+    selectedLayer.geoResource.config.statistics = false
+    expect(selectedLayer.hasGraph()).toBe(false)
   })
 })

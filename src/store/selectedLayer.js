@@ -27,7 +27,9 @@ export default class {
     } catch (error) {
       console.warn('Area too complex for croping the layer')
       delete params.area
+      console.warn('ada')
       creationInfos = await axios.post(this.geoResource.config.layer_creation.link, params)
+      console.warn('ada 2')
     }
     return creationInfos.data.layer_id
   }
@@ -70,9 +72,6 @@ export default class {
   }
   addTo (map) {
     this._layer.addTo(map)
-  }
-  formatTime (time) {
-    return time && new Date(time * 1000).toISOString()
   }
   async setArea (area) {
     this._area = area
