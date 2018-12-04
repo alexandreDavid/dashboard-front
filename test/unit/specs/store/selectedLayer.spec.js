@@ -192,6 +192,28 @@ describe('selectedLayer.js', () => {
     expect(res).toBe('ok')
   })
 
+  it('getStatistics valid without dates', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    selectedLayer._unit = false
+    axios.post.mockClear()
+    axios.post.mockReturnValue(Promise.resolve({ data: 'ok' }))
+    const res = await selectedLayer.getStatistics()
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {area: undefined})
+    expect(res).toBe('ok')
+  })
+
+  it('getStatistics too complex', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    axios.post.mockClear()
+    axios.get.mockClear()
+    axios.post.mockRejectedValueOnce(new Error())
+    axios.get.mockResolvedValueOnce({ data: 'ok 2' })
+    const res = await selectedLayer.getStatistics('dateStart', 'dateEnd')
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'})
+    expect(axios.get).toHaveBeenCalledWith('statisticsLink', {params: {start_date: 'dateStart', end_date: 'dateEnd', unit: 'getActiveKeyById'}})
+    expect(res).toBe('ok 2')
+  })
+
   it('setZIndex', async () => {
     await selectedLayer.setLayer(mockGeoResource)
     selectedLayer.geoResource = {}
@@ -229,23 +251,24 @@ describe('selectedLayer.js', () => {
     expect(layerId).toBe('layer_id ok')
   })
 
-  it('getStatistics valid', async () => {
-    await selectedLayer.setLayer(mockGeoResource)
-    axios.post.mockClear()
-    axios.get.mockClear()
-    axios.post.mockRejectedValueOnce(new Error())
-    axios.get.mockResolvedValueOnce({ data: 'ok 2' })
-    const res = await selectedLayer.getStatistics('dateStart', 'dateEnd')
-    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'})
-    expect(axios.get).toHaveBeenCalledWith('statisticsLink', {params: {start_date: 'dateStart', end_date: 'dateEnd', unit: 'getActiveKeyById'}})
-    expect(res).toBe('ok 2')
-  })
-
   it('hasGraph', async () => {
     selectedLayer.geoResource = mockGeoResource
     expect(selectedLayer.hasGraph()).toBe(true)
 
     selectedLayer.geoResource.config.statistics = false
     expect(selectedLayer.hasGraph()).toBe(false)
+  })
+
+  it('addTo', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    selectedLayer.addTo(mockMap)
+    expect(mockTileLayer.addTo).toHaveBeenCalledWith(mockMap)
+  })
+
+  it('setArea', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    await selectedLayer.setArea('area')
+    expect(mockTileLayer.redraw).toHaveBeenCalled()
+    expect(selectedLayer._area).toBe('area')
   })
 })
