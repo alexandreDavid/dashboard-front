@@ -27,9 +27,7 @@ export default class {
     } catch (error) {
       console.warn('Area too complex for croping the layer')
       delete params.area
-      console.warn('ada')
       creationInfos = await axios.post(this.geoResource.config.layer_creation.link, params)
-      console.warn('ada 2')
     }
     return creationInfos.data.layer_id
   }
