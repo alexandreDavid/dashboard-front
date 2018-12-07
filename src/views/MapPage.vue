@@ -58,7 +58,13 @@ export default {
     this.map.invalidateSize()
     this.displayedLayer = new DisplayedLayer(this.map)
     this.areaLayer = new AreaLayer(this.map)
-    await this.areaLayer.setSelectedArea(Area.getSelectedArea())
+    try {
+      await this.areaLayer.setSelectedArea(Area.getSelectedArea())
+    } catch (error) {
+      console.error(error)
+      Area.setSelectedArea(false)
+      this.areaLayer.setSelectedArea(false)
+    }
     const layers = await SelectedLayers.getAllSelectedLayers(this.getAreaLayer().toGeoJSON())
     layers.forEach(l => l.addTo(this.getMap()))
     this.mapInitialised = true

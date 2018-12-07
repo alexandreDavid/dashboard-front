@@ -44,7 +44,7 @@ let AreaLayer = class {
       } else {
         areaData = ugandaArea
       }
-      await this.setSubAreas(area)
+      this.setSubAreas(area)
       this._areaLayer = new GeoJSON(areaData.data, AreaLayer.getAreaLayerStyle())
     }
     if (this._map) {
@@ -54,29 +54,33 @@ let AreaLayer = class {
     this._isReady = true
   }
   async setSubAreas (area) {
-    let areaData
-    if (area.id !== 7552 || !ugandaSubAreas) {
-      areaData = await axios.get(
-        `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
-          params: {
-            service: 'WFS',
-            version: '1.1.0',
-            request: 'GetFeature',
-            typeName: `boundaries:area`,
-            outputFormat: 'application/json',
-            cql_filter: `idparent = ${area.id}`
+    try {
+      let areaData
+      if (area.id !== 7552 || !ugandaSubAreas) {
+        areaData = await axios.get(
+          `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
+            params: {
+              service: 'WFS',
+              version: '1.1.0',
+              request: 'GetFeature',
+              typeName: `boundaries:area`,
+              outputFormat: 'application/json',
+              cql_filter: `idparent = ${area.id}`
+            }
           }
+        )
+        if (area.id === 7552) {
+          ugandaSubAreas = areaData
         }
-      )
-      if (area.id === 7552) {
-        ugandaSubAreas = areaData
+      } else {
+        areaData = ugandaSubAreas
       }
-    } else {
-      areaData = ugandaSubAreas
-    }
-    this._subAreasLayer = new GeoJSON(areaData.data, AreaLayer.getSubAreaLayerStyle())
-    if (this._map) {
-      this._subAreasLayer.addTo(this._map)
+      this._subAreasLayer = new GeoJSON(areaData.data, AreaLayer.getSubAreaLayerStyle())
+      if (this._map) {
+        this._subAreasLayer.addTo(this._map)
+      }
+    } catch (error) {
+      console.error(`Sub-area error: ${error}`)
     }
   }
   zoomToArea () {
