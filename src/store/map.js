@@ -22,10 +22,12 @@ let MapObj = Map.extend({
   },
   setBaseMapLayer (layerUrl) {
     this._baseLayerUrl = layerUrl
-    if (!this._baseLayer) {
-      this._baseLayer = new TileLayer.WMS(layerUrl).addTo(this)
-    } else {
+    if (layerUrl === ' ') {
+      this._baseLayer && this._baseLayer.remove()
+    } else if (this._baseLayer) {
       this._baseLayer.setUrl(layerUrl)
+    } else {
+      this._baseLayer = new TileLayer.WMS(layerUrl).addTo(this)
     }
   },
   getBaseMapLayerUrl () {
