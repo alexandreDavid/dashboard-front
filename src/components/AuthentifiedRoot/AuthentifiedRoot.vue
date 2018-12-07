@@ -15,7 +15,6 @@
 
 <script>
 import NavBar from '@/components/NavBar/NavBar'
-import Api from '@/store/api'
 import Area from '@/store/area'
 import UserConfiguration from '@/store/userConfiguration'
 import Settings from '@/store/settings'
@@ -34,7 +33,6 @@ export default {
     }
   },
   async created () {
-    await Api.getInitialEnvironmemt()
     await Settings.init()
     Area.setSelectedArea(UserConfiguration.getArea())
     this.isLoaded = true

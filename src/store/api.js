@@ -1,29 +1,8 @@
-import axios from 'axios'
-import Settings from '@/store/settings'
-import MapObj from '@/store/map'
-
-const urlRoot = process.env.API_URL
 let dashboard = {
   allContents: []
 }
 
 export default {
-  async getInitialEnvironmemt () {
-    try {
-      const response = await axios.get(
-        `${urlRoot}/initialEnvironmemt`
-      )
-      if (response.data.map) {
-        MapObj.setDefaultParams(response.data.map)
-      }
-      if (response.data.settings) {
-        Settings.init(response.data.settings)
-      }
-      return true
-    } catch (e) {
-      return false
-    }
-  },
   async getSettings () {
     return [
       {
