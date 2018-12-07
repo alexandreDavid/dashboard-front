@@ -60,7 +60,7 @@ let AreaLayer = class {
         `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
           params: {
             service: 'WFS',
-            version: '1.1.1',
+            version: '1.1.0',
             request: 'GetFeature',
             typeName: `boundaries:area`,
             outputFormat: 'application/json',
@@ -133,7 +133,7 @@ let AreaLayer = class {
 AreaLayer.getAreaRequestParams = (area) => {
   return {
     service: 'WFS',
-    version: '1.1.1',
+    version: '1.1.0',
     request: 'GetFeature',
     typeName: `boundaries:area`,
     outputFormat: 'application/json',
