@@ -1,5 +1,5 @@
 <template>
-  <button type="button" id="time-play" class="btn btn-secondary btn-sm" @click="toggle">
+  <button type="button" class="btn btn-secondary btn-sm" @click="toggle">
     <font-awesome-icon icon="play" v-show="!isPlaying" />
     <font-awesome-icon icon="pause" v-show="isPlaying" />
   </button>
@@ -8,16 +8,6 @@
 <script>
 export default {
   name: 'PlayButton',
-  computed: {
-    val: {
-      get () {
-        return this.value
-      },
-      set (val) {
-        this.$emit('input', val)
-      }
-    }
-  },
   props: ['value', 'times'],
   data () {
     return {
@@ -51,7 +41,7 @@ export default {
       } else {
         this.currentIndex = 0
       }
-      this.val = this.times[this.currentIndex]
+      this.$emit('input', this.times[this.currentIndex])
       this.isWaiting = true
       setTimeout(() => {
         this.isWaiting = false
