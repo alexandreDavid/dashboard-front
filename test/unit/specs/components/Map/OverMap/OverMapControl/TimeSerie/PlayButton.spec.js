@@ -24,43 +24,6 @@ describe('PlayButton.vue', () => {
     expect(wrapper.vm.isPlaying).toBe(false)
   })
 
-  // it('Check current date outside time serie', () => {
-  //   Date.now = jest.genMockFunction().mockReturnValue(10000000000000)
-  //   const wrapper = mount(TimeSlot, {
-  //     propsData: {
-  //       model: {
-  //         label: '2 days',
-  //         times: mockTimes,
-  //         type: 'interval'
-  //       }
-  //     }
-  //   })
-  //   const nowButton = wrapper.find('.now')
-  //   expect(nowButton.isVisible()).toBe(false)
-  //   expect(wrapper.vm.calculateNowPlacement()).toEqual({
-  //     display: 'none'
-  //   })
-  // })
-
-  // it('Click on play and stop at the end', () => {
-  //   expect(wrapper.vm.isPlaying).toBe(false)
-
-  //   expect(wrapper.vm.currentIndex).toBe(0)
-  //   setTimeout.mockClear()
-  //   expect(setTimeout).toHaveBeenCalledTimes(0)
-
-  //   wrapper.find('button').trigger('click')
-  //   expect(wrapper.vm.isPlaying).toBe(true)
-
-  //   for (let i = 1; i < wrapper.vm.times.length - 1; i++) {
-  //     expect(setTimeout).toHaveBeenCalledTimes(i)
-  //     expect(wrapper.vm.currentIndex).toBe(i)
-  //     jest.advanceTimersByTime(wrapper.vm.activeDateDuration)
-  //   }
-  //   jest.advanceTimersByTime(wrapper.vm.activeDateDuration)
-  //   expect(wrapper.vm.isPlaying).toBe(false)
-  // })
-
   it('Click on play and click on pause', () => {
     expect(wrapper.vm.isPlaying).toBe(false)
 

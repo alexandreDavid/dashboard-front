@@ -1,11 +1,11 @@
 <template>
-  <div id="time-slot" class="w-100" v-if="times && times.length">
+  <div class="w-100" v-if="times && times.length">
     <div class="d-flex align-items-end">
       <div class="mr-1">
-        <play-button v-model="val" @input="onChange" v-bind:times="times"></play-button>
+        <play-button v-model="val" v-bind:times="times"></play-button>
       </div>
       <div class="flex-grow-1">
-        <TimeSlider v-model="val" @input="onChange" v-bind:times="times"></TimeSlider>
+        <TimeSlider v-model="val" v-bind:times="times"></TimeSlider>
         <div class="text-center" style="font-size: 0.8em">{{ value }}</div>
       </div>
     </div>
@@ -31,11 +31,6 @@ export default {
       }
     }
   },
-  props: ['value', 'times'],
-  methods: {
-    onChange (val) {
-      this.val = val
-    }
-  }
+  props: ['value', 'times']
 }
 </script>
