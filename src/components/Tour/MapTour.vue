@@ -126,7 +126,7 @@ export default {
     },
     onStop () {
       this.displayMask = false
-      UserConfiguration.setDisplayingHelp(false)
+      UserConfiguration.setDisplayHelp(false)
     }
   }
 }
