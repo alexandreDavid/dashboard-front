@@ -68,23 +68,6 @@ export default {
         //     self.goTo(this.id)
         //   },
         //   icon: 'forward'
-        }, {
-          id: 'about',
-          label: 'About',
-          click () {
-            self.openSideBar(this.id)
-          },
-          icon: 'info-circle',
-          right: true,
-          hideOnSm: true
-        }, {
-          id: 'profile',
-          label: 'Profile',
-          click () {
-            self.openSideBar()
-          },
-          icon: 'user',
-          right: true
         }
       ],
       showSidebar: false,
@@ -103,9 +86,6 @@ export default {
     },
     leftNav (navs) {
       return navs.filter(v => !v.right)
-    },
-    rightNav (navs) {
-      return navs.filter(v => v.right)
     },
     smNav (navs) {
       return navs.filter(v => !v.hideOnSm)

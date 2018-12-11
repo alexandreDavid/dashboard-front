@@ -48,9 +48,6 @@ export default {
     }
   },
   methods: {
-    logout () {
-      Authentication.logout()
-    },
     close () {
       this.$emit('close')
     }

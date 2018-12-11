@@ -2,11 +2,11 @@
   <div class="nav-item btn-group">
     <a class="nav-link dropdown-toggle" href="#" @click="displayDropDownMenu = true"><font-awesome-icon icon="user" /> Profile</a>
     <div class="dropdown-menu dropdown-menu-right shadow" v-bind:class="{show: displayDropDownMenu}">
-      <button class="dropdown-item" type="button" @click="goTo('settings')">Settings</button>
-      <button class="dropdown-item" type="button" @click="goTo('about')">About</button>
-      <button class="dropdown-item" type="button" @click="openHelp">Help</button>
+      <button class="settings dropdown-item" type="button" @click="goTo('settings')">Settings</button>
+      <button class="about dropdown-item" type="button" @click="goTo('about')">About</button>
+      <button class="help dropdown-item" type="button" @click="openHelp">Help</button>
       <div class="dropdown-divider"></div>
-      <button class="dropdown-item" type="button" @click="logout">Sign out</button>
+      <button class="sign-out dropdown-item" type="button" @click="logout">Sign out</button>
     </div>
   </div>
 </template>
