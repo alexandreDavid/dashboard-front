@@ -34,7 +34,7 @@ export default {
   },
   async created () {
     await Settings.init()
-    Area.setSelectedArea(UserConfiguration.getArea())
+    Area.setSelectedArea(UserConfiguration.getActiveArea())
     this.isLoaded = true
   }
 }

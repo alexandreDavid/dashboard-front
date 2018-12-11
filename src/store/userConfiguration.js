@@ -33,98 +33,37 @@ let configuration = {
     floodWarning: false,
     stormWarning: false
   },
-  activeBaseMapLayer: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
+  activeBaseMapLayer: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+  selectedLayers: [],
+  displayHelp: true
 }
 
-export default {
-  getDashboardConfiguration () {
-    let dashboard
-    if (localStorage.getItem('dashboard')) {
-      try {
-        dashboard = JSON.parse(localStorage.getItem('dashboard'))
-      } catch (e) {
-        localStorage.removeItem('dashboard')
-      }
+function getConfiguration (configName) {
+  let foundConfig
+  if (localStorage.getItem(configName)) {
+    try {
+      foundConfig = JSON.parse(localStorage.getItem(configName))
+    } catch (e) {
+      localStorage.removeItem(configName)
     }
-    return dashboard || configuration.dashboard
-  },
-  setDashboardConfiguration (dashboard) {
-    const parsed = JSON.stringify(dashboard)
-    localStorage.setItem('dashboard', parsed)
-  },
-  getArea () {
-    let activeArea
-    if (localStorage.getItem('activeArea')) {
-      try {
-        activeArea = JSON.parse(localStorage.getItem('activeArea'))
-      } catch (e) {
-        localStorage.removeItem('activeArea')
-      }
-    }
-    return activeArea || configuration.activeArea
-  },
-  setActiveArea (activeArea) {
-    const parsed = JSON.stringify(activeArea)
-    localStorage.setItem('activeArea', parsed)
-  },
-  getActiveSettings () {
-    let activeSettings
-    if (localStorage.getItem('activeSettings')) {
-      try {
-        activeSettings = JSON.parse(localStorage.getItem('activeSettings'))
-      } catch (e) {
-        localStorage.removeItem('activeSettings')
-      }
-    }
-    return activeSettings || configuration.activeSettings
-  },
-  setActiveSettings (activeSettings) {
-    const parsed = JSON.stringify(activeSettings)
-    localStorage.setItem('activeSettings', parsed)
-  },
-  getActiveBaseMapLayer () {
-    let activeBaseMapLayer
-    if (localStorage.getItem('activeBaseMapLayer')) {
-      try {
-        activeBaseMapLayer = JSON.parse(localStorage.getItem('activeBaseMapLayer'))
-      } catch (e) {
-        localStorage.removeItem('activeBaseMapLayer')
-      }
-    }
-    return activeBaseMapLayer || configuration.activeBaseMapLayer
-  },
-  setActiveBaseMapLayer (activeBaseMapLayer) {
-    const parsed = JSON.stringify(activeBaseMapLayer)
-    localStorage.setItem('activeBaseMapLayer', parsed)
-  },
-  getSelectedLayers () {
-    let selectedLayers
-    if (localStorage.getItem('selectedLayers')) {
-      try {
-        selectedLayers = JSON.parse(localStorage.getItem('selectedLayers'))
-      } catch (e) {
-        localStorage.removeItem('selectedLayers')
-      }
-    }
-    return selectedLayers || []
-  },
-  setSelectedLayers (selectedLayers) {
-    const parsed = JSON.stringify(selectedLayers)
-    localStorage.setItem('selectedLayers', parsed)
-  },
-  getDisplayingHelp () {
-    let displayHelp = true
-    if (localStorage.getItem('displayHelp')) {
-      try {
-        displayHelp = JSON.parse(localStorage.getItem('displayHelp'))
-      } catch (e) {
-        localStorage.removeItem('displayHelp')
-      }
-    }
-    return displayHelp
-  },
-  setDisplayingHelp (displayHelp) {
-    const parsed = JSON.stringify(displayHelp)
-    localStorage.setItem('displayHelp', parsed)
   }
+  return (typeof foundConfig !== 'undefined') ? foundConfig : configuration[configName]
 }
+function setConfiguration (configName, value) {
+  const parsed = JSON.stringify(value)
+  localStorage.setItem(configName, parsed)
+}
+
+let userConfiguration = {}
+
+Object.keys(configuration).forEach(config => {
+  const configFuncName = config.charAt(0).toUpperCase() + config.slice(1)
+  userConfiguration[`get${configFuncName}`] = function () {
+    return getConfiguration(config)
+  }
+  userConfiguration[`set${configFuncName}`] = function (value) {
+    return setConfiguration(config, value)
+  }
+})
+
+export default userConfiguration

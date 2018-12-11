@@ -95,7 +95,7 @@ export default {
   },
   mounted: function () {
     // Check in the local storage
-    this.showModalHelp = UserConfiguration.getDisplayingHelp()
+    this.showModalHelp = UserConfiguration.getDisplayHelp()
   },
   methods: {
     start () {
@@ -104,7 +104,7 @@ export default {
     },
     closeModal () {
       this.showModalHelp = false
-      UserConfiguration.setDisplayingHelp(false)
+      UserConfiguration.setDisplayHelp(false)
     },
     myCustomPreviousStepCallback (currentStep) {
       this.calculatePlacement(this.steps[currentStep - 1])
