@@ -26,6 +26,9 @@ describe('DashboardCardModal.vue', () => {
     wrapper = mount(DashboardCardModal, {
       propsData: {
         editedCard: dashboard.cards[0]
+      },
+      stubs: {
+        Modal: Modal
       }
     })
   })

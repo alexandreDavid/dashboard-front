@@ -1,4 +1,4 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import DashboardWidget from '@/components/Dashboard/DashboardWidget.vue'
 import { WidgetGraph, WidgetMap, WidgetTable, WidgetTextArea } from '@/components/Dashboard/Widgets'
 
@@ -18,7 +18,7 @@ describe('DashboardWidget.vue', () => {
     }
     const selectedArea = {}
     const isEditing = false
-    const wrapper = mount(DashboardWidget, {
+    const wrapper = shallowMount(DashboardWidget, {
       propsData: { cardConfiguration, selectedArea, isEditing }
     })
 
@@ -58,7 +58,7 @@ describe('DashboardWidget.vue', () => {
     }
     const selectedArea = {}
     const isEditing = false
-    const wrapper = mount(DashboardWidget, {
+    const wrapper = shallowMount(DashboardWidget, {
       propsData: { cardConfiguration, selectedArea, isEditing }
     })
 
@@ -79,7 +79,7 @@ describe('DashboardWidget.vue', () => {
     }
     const selectedArea = {}
     const isEditing = false
-    const wrapper = mount(DashboardWidget, {
+    const wrapper = shallowMount(DashboardWidget, {
       propsData: { cardConfiguration, selectedArea, isEditing }
     })
 
@@ -99,7 +99,7 @@ describe('DashboardWidget.vue', () => {
     }
     const selectedArea = {}
     const isEditing = true
-    const wrapper = mount(DashboardWidget, {
+    const wrapper = shallowMount(DashboardWidget, {
       propsData: { cardConfiguration, selectedArea, isEditing }
     })
 
@@ -122,7 +122,7 @@ describe('DashboardWidget.vue', () => {
     }
     const selectedArea = {}
     const isEditing = true
-    const wrapper = mount(DashboardWidget, {
+    const wrapper = shallowMount(DashboardWidget, {
       propsData: { cardConfiguration, selectedArea, isEditing }
     })
 

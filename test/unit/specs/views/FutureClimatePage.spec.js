@@ -17,7 +17,10 @@ config.getAllTimePeriods.mockReturnValue(mockTimePeriods)
 
 describe('FutureClimatePage.vue', () => {
   it('on create', () => {
-    let wrapper = shallowMount(FutureClimatePage)
+    let wrapper = shallowMount(FutureClimatePage, {
+      stubs: {
+        FutureClimateGraph: '<div></div>'
+      }})
     expect(config.getAllTimePeriods).toHaveBeenCalled()
     expect(wrapper.vm.activeVariable).toEqual(wrapper.vm.variables[0])
     expect(wrapper.vm.timePeriods).toEqual(mockTimePeriods)

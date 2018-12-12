@@ -7,14 +7,7 @@
 <script>
 
 export default {
-  name: 'App',
-  data () {
-    return {
-      isAuthenticated: false,
-      error: false,
-      isLoading: true
-    }
-  }
+  name: 'App'
 }
 </script>
 

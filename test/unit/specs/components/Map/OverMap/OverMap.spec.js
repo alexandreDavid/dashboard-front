@@ -51,6 +51,9 @@ describe('OverMap.vue', () => {
         getMap: getMapMock(),
         getDisplayedLayer: getDisplayedLayer(),
         getAreaLayer: getAreaLayer()
+      },
+      stubs: {
+        MapControlBar: MapControlBar
       }
     })
   })
@@ -80,6 +83,6 @@ describe('OverMap.vue', () => {
     }
     wrapper.vm.showSidebar = true
     wrapper.find(MapControlBar).vm.$emit('selectedReportedLayer', selectedReportedParameter)
-    expect(wrapper.emitted().selectedReportedLayer).toEqual([[selectedReportedParameter]])
+    expect([...wrapper.emitted().selectedReportedLayer].pop()).toEqual([selectedReportedParameter])
   })
 })

@@ -40,7 +40,10 @@ function verifyClickGoTo (name) {
 async function verifyClickOpenSideBar (name) {
   const wrapper = shallowMount(NavBar, {
     localVue,
-    router
+    router,
+    stubs: {
+      ProfileAboutSidebar: ProfileAboutSidebar
+    }
   })
 
   // const button = wrapper.find(`#nav-${name} a`)
@@ -49,7 +52,7 @@ async function verifyClickOpenSideBar (name) {
   expect(wrapper.vm.sideBarTab).toBe(name)
   expect(wrapper.vm.showSidebar).toBe(true)
 
-  await wrapper.vm.$nextTick()
+  // await wrapper.vm.$nextTick()
   wrapper.find(ProfileAboutSidebar).vm.$emit('close')
   expect(wrapper.vm.showSidebar).toBe(false)
 }

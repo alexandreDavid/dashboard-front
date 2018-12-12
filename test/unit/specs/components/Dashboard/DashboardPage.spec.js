@@ -21,8 +21,8 @@ jest.mock('@/store/api', () => ({
 }))
 
 jest.mock('@/store/userConfiguration', () => ({
-  getDashboardConfiguration: jest.fn(),
-  setDashboardConfiguration: jest.fn()
+  getDashboard: jest.fn(),
+  setDashboard: jest.fn()
 }))
 
 const mockScrollBy = jest.fn()
@@ -45,7 +45,7 @@ describe('DashboardPage.vue', () => {
     Area.getSelectedArea.mockClear()
     Area.getSelectedArea.mockReturnValue({})
     Api.setDashboard.mockClear()
-    UserConfiguration.getDashboardConfiguration.mockReturnValue({title: 'title', cards: []})
+    UserConfiguration.getDashboard.mockReturnValue({title: 'title', cards: []})
   })
 
   it('has a created hook', () => {
@@ -55,7 +55,7 @@ describe('DashboardPage.vue', () => {
   it('correctly sets the values when created', async () => {
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
-    expect(UserConfiguration.getDashboardConfiguration).toHaveBeenCalledTimes(1)
+    expect(UserConfiguration.getDashboard).toHaveBeenCalledTimes(1)
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 

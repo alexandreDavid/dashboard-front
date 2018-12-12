@@ -105,7 +105,7 @@ export default class Dashboard {
     this.cards.splice(this.cards.findIndex(c => c.id === card.id), 1)
   }
   save () {
-    UserConfiguration.setDashboardConfiguration({
+    UserConfiguration.setDashboard({
       title: this.title,
       cards: this.cards.map(prepareCardForSaving)
     })
@@ -192,7 +192,7 @@ export default class Dashboard {
     ]
   }
   static getSavedDashboard () {
-    const savedDashboard = UserConfiguration.getDashboardConfiguration()
+    const savedDashboard = UserConfiguration.getDashboard()
     return new Dashboard(savedDashboard.title, savedDashboard.cards)
   }
 }
