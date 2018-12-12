@@ -30,7 +30,6 @@
 
 <script>
 import Settings from '@/components/Settings/Settings'
-import Authentication from '@/store/authentication'
 import SideBar from '@/components/SideBar/SideBar'
 
 export default {
