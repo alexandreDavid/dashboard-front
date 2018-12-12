@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative" v-if="legend">
+  <div class="position-relative legend" v-if="legend">
     <legend-gradient class="legend-type" v-if="legend.type === 'gradient'" v-bind:legend="legend"></legend-gradient>
     <legend-discrete class="legend-type" v-if="legend.type === 'discrete'" v-bind:legend="legend"></legend-discrete>
   </div>

@@ -1,0 +1,40 @@
+.legend {
+  .gradient {
+    height: 10px;
+  }
+  
+  .label {
+    font-size: 0.8em;
+  }
+  
+  .range {
+    border-left: 1px solid #888;
+    border-right: 1px solid #888;
+    height: 20px;
+  
+    .range-label {
+      font-size: 0.7em;
+      bottom: 0;
+      top: 50%;
+      width: max-content;
+  
+      .range-bar {
+        border-bottom: 1px solid #888;
+        width: 5px;
+      }
+  
+      &.min {
+        right: 100%;
+      }
+      &.max {
+        left: 100%;
+      }
+    }
+  }
+
+  .discrete-square {
+    width: 15px;
+    height: 15px;
+    margin: auto;
+  }
+}

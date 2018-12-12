@@ -11,6 +11,7 @@
       <button type="button" v-if="parameter.hasGraph()" class="btn btn-sm btn-secondary m-1" @click="openGraphModal"><font-awesome-icon icon="chart-bar" /> Open graph</button>
       <opacity-control class="m-1" v-model="parameter.geoResource.opacity" @input="setOpacity"></opacity-control>
     </div>
+    <treshold-value-control :layer="parameter"></treshold-value-control>
     <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter" @close="showModalGraph = false"></GraphModal>
   </div>
 </template>
@@ -20,6 +21,7 @@ import GraphModal from '@/components/Graph/GraphModal'
 import Area from '@/store/area'
 import OpacityControl from '@/components/Map/DisplayedLayer/OpacityControl'
 import TimeControl from '@/components/Map/DisplayedLayer/TimeControl'
+import TresholdValueControl from '@/components/Map/DisplayedLayer/TresholdValueControl'
 
 export default {
   name: 'DisplayedLayerSettingTools',
@@ -27,7 +29,8 @@ export default {
   components: {
     GraphModal,
     TimeControl,
-    OpacityControl
+    OpacityControl,
+    TresholdValueControl
   },
   data () {
     return {

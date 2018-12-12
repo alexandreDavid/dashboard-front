@@ -20,11 +20,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.discrete-square {
-  width: 15px;
-  height: 15px;
-  margin: auto;
-}
-</style>
