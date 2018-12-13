@@ -1,5 +1,5 @@
 <template>
-  <vue-slider v-bind="config" v-model="values" ref="slider" class="treshold-value-slider" @callback="onCallback">
+  <vue-slider v-bind="config" v-model="val" ref="slider" class="treshold-value-slider" @callback="onCallback">
   </vue-slider>
 </template>
 
@@ -14,7 +14,6 @@ export default {
   props: ['data', 'bgStyle'],
   data () {
     return {
-      values: [],
       config: {
         width: 5,
         height: 10,
@@ -52,9 +51,6 @@ export default {
         }
       }
     }
-  },
-  created () {
-    this.values = [this.data[0], this.data[this.data.length - 1]]
   }
 }
 </script>

@@ -40,7 +40,7 @@ export default class {
     return this.geoResource.time
   }
   async updateLayer () {
-    this._layerId = await this.getLayerId({date: this.geoResource.time, area: this._area})
+    this._layerId = await this.getLayerId({date: this.geoResource.time, area: this._area, treshold: this.geoResource.treshold})
     this._layer.options.layer_id = this._layerId
     this._layer.redraw()
     this.setLegend(this._unit)
@@ -87,6 +87,16 @@ export default class {
       this._time = time
       await this.updateLayer()
     }
+  }
+  async setTresholdValue (tresholdValue) {
+    this.geoResource.treshold = tresholdValue
+    await this.updateLayer()
+  }
+  getTresholdValue () {
+    if (this.geoResource.treshold) {
+      return [this._legend.values.find(v => v.value === this.geoResource.treshold[0].value), this._legend.values.find(v => v.value === this.geoResource.treshold[1].value)]
+    }
+    return [this._legend.values[0], [...this._legend.values].pop()]
   }
   setOpacity (opacity) {
     opacity = Number.isInteger(opacity) ? opacity : 80
