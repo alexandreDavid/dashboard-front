@@ -127,20 +127,25 @@ export default class Dashboard {
     return cardHeights
   }
   static getCardWidgets () {
-    let allParameters = GeoResources.getAll().map(p => {
+    let allResources = GeoResources.getAll()
+    let allParameters = allResources.map(p => ({
+      id: p.id,
+      label: p.label
+    }))
+    let allParametersForGraph = allResources.filter(p => p.config.statistics).map(p => ({
+      id: p.id,
+      label: p.label
+    }))
+    function getFieldParameter (allParameters) {
       return {
-        id: p.id,
-        label: p.label
-      }
-    })
-    let fieldParameter = {
-      id: 'parameter',
-      label: 'Data to display',
-      type: 'select',
-      options: allParameters,
-      value: allParameters[0],
-      onChange (card) {
-        card.title = this.value.label
+        id: 'parameter',
+        label: 'Data to display',
+        type: 'select',
+        options: allParameters,
+        value: allParameters[0],
+        onChange (card) {
+          card.title = this.value.label
+        }
       }
     }
 
@@ -163,7 +168,7 @@ export default class Dashboard {
       {
         id: 'graph',
         label: 'Graph',
-        formFields: [fieldParameter, {
+        formFields: [getFieldParameter(allParametersForGraph), {
           id: 'graphType',
           label: 'Graph type',
           type: 'select',
@@ -173,7 +178,7 @@ export default class Dashboard {
       }, {
         id: 'map',
         label: 'Map',
-        formFields: [fieldParameter]
+        formFields: [getFieldParameter(allParameters)]
       }, {
         id: 'currentmap',
         label: 'Current map'

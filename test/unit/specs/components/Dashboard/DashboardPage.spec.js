@@ -35,10 +35,16 @@ describe('DashboardPage.vue', () => {
     GeoResources.getAll.mockReturnValue([
       {
         id: 1,
-        displayName: 'displayName1'
+        displayName: 'displayName1',
+        config: {
+          statistics: true
+        }
       }, {
         id: 2,
-        displayName: 'displayName1'
+        displayName: 'displayName1',
+        config: {
+          statistics: true
+        }
       }
     ])
     GeoResources.getAllResources.mockReturnValue(Promise.resolve([]))

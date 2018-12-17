@@ -10,10 +10,16 @@ jest.mock('@/store/geoResources', () => ({
 GeoResources.getAll.mockReturnValue([
   {
     id: 1,
-    displayName: 'displayName1'
+    displayName: 'displayName1',
+    config: {
+      statistics: true
+    }
   }, {
     id: 2,
-    displayName: 'displayName1'
+    displayName: 'displayName1',
+    config: {
+      statistics: true
+    }
   }
 ])
 
