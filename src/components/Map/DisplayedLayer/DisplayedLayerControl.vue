@@ -88,7 +88,15 @@ export default {
     'fixed-position': function (el, binding) {
       el.style.position = 'fixed'
       el.style.top = `${binding.value.top}px`
-      el.style.left = `${binding.value.left + binding.value.width}px`
+      if (document.body.clientWidth < el.offsetWidth) {
+        el.style.left = 0
+        el.style.right = 0
+      } else if (document.body.clientWidth < (binding.value.left + binding.value.width + el.offsetWidth)) {
+        el.style.left = `${document.body.clientWidth - el.offsetWidth}px`
+        el.style.right = 0
+      } else {
+        el.style.left = `${binding.value.left + binding.value.width}px`
+      }
     }
   }
 }
