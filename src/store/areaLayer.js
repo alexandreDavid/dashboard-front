@@ -34,7 +34,7 @@ let AreaLayer = class {
       let areaData
       if (area.id !== 7552 || !ugandaArea) {
         areaData = await axios.get(
-          `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
+          `${process.env.GEOSERVER_URL}/boundaries/ows`, {
             params: AreaLayer.getAreaRequestParams(area)
           }
         )
@@ -58,12 +58,12 @@ let AreaLayer = class {
       let areaData
       if (area.id !== 7552 || !ugandaSubAreas) {
         areaData = await axios.get(
-          `http://18.130.18.23:8180/geoserver/boundaries/ows`, {
+          `${process.env.GEOSERVER_URL}/boundaries/ows`, {
             params: {
               service: 'WFS',
               version: '1.1.0',
               request: 'GetFeature',
-              typeName: `boundaries:area`,
+              typeName: `boundaries:boundaries_uganda`,
               outputFormat: 'application/json',
               cql_filter: `idparent = ${area.id}`
             }
@@ -139,7 +139,7 @@ AreaLayer.getAreaRequestParams = (area) => {
     service: 'WFS',
     version: '1.1.0',
     request: 'GetFeature',
-    typeName: `boundaries:area`,
+    typeName: `boundaries:boundaries_uganda`,
     outputFormat: 'application/json',
     featureid: area.id
   }
