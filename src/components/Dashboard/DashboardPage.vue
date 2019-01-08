@@ -3,14 +3,9 @@
     <div v-if="isLoaded" class="container">
       <div class="row">
         <h4 class="col-12 mt-2 mb-2 p-2">
-          <span v-if="!isEditing">{{ dashboard.title }}</span>
+          <span>{{ dashboard.title }}</span>
           <button type="button" class="btn btn-light ml-2 edit" v-if="!isEditing" @click="edit()"><font-awesome-icon icon="edit" /> Edit</button>
-          <div class="d-flex" v-if="isEditing">
-            <div class="flex-grow-1">
-            <input type="text" v-model="dashboard.title" class="form-control" id="title" placeholder="title">
-            </div>
-            <button type="button" class="btn btn-primary ml-2 save" @click="save()"><font-awesome-icon icon="save" /> Save</button>
-          </div>
+          <button type="button" class="btn btn-primary ml-2 save" v-else @click="save()"><font-awesome-icon icon="save" /> Save</button>
         </h4>
         <div class="col-12 mb-2 p-2">
           <area-selection-control @change="updateSearchLocation"></area-selection-control>
