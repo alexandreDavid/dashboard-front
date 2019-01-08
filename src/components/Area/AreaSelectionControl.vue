@@ -1,91 +1,47 @@
 <template>
-  <div class="card">
-    <div class="card-body p-2">
-      <h6>Place selection</h6>
-      <SearchLocation v-if="!drawMode" class="w-100 mb-2" v-model="val" @input="onSearchLocationSelected" @locate="zoom" />
-      <area-selection-draw-controls v-if="drawMode" :drawMode="drawMode" @cancel="cancelDrawing" @validate="saveCustomLocation" @changeMode="switchDrawMode">
-      </area-selection-draw-controls>
-      <div v-if="edit">
-        <div class="btn-group btn-group-sm" role="group" aria-label="Draw group">
-          <button type="button" class="btn btn-secondary" @click="startDrawMode('polygon')">Draw an area:</button>
-          <button type="button" class="btn btn-secondary" @click="startDrawMode('polygon')" v-bind:class="{active: drawMode === 'polygon'}"><font-awesome-icon icon="draw-polygon" /></button>
-          <button type="button" class="btn btn-secondary" @click="startDrawMode('circle')" v-bind:class="{active: drawMode === 'circle'}"><font-awesome-icon icon="circle" /></button>
-          <button type="button" class="btn btn-secondary" @click="startDrawMode('rectangle')" v-bind:class="{active: drawMode === 'rectangle'}"><font-awesome-icon icon="vector-square" /></button>
-        </div>
-        <button type="button" class="btn btn-secondary btn-sm" disabled><font-awesome-icon icon="file-import" /> Import from file</button>
-      </div>
-      <div v-else>
-        <button type="button" class="btn btn-secondary btn-sm" @click="toggleEdit"><font-awesome-icon icon="edit" /> Edit</button>
-        <button type="button" class="btn btn-secondary btn-sm" @click="remove"><font-awesome-icon icon="trash" /> Delete</button>
+  <div>
+    <div class="input-group">
+      <select class="custom-select" v-model="val" @change="change(val)" aria-label="Place selection">
+        <option v-for="(option, key) in options" :key="key" :value="option">{{ option.name }}</option>
+      </select>
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button" @click="showModalArea = true"><font-awesome-icon icon="edit" /></button>
       </div>
     </div>
+    <area-selection-modal v-if="showModalArea" @close="closeModal"></area-selection-modal>
   </div>
 </template>
 
 <script>
-import SearchLocation from '@/components/SearchLocation/SearchLocation'
-import AreaSelectionDrawControls from './AreaSelectionDrawControls'
-import Area from '@/store/area'
+import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
+import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'AreaSelectionControl',
-  inject: ['getMap', 'getAreaLayer'],
-  components: {SearchLocation, AreaSelectionDrawControls},
+  components: {AreaSelectionModal},
   data () {
     return {
-      drawMode: false,
       val: false,
-      edit: false,
-      savedLayer: false
+      options: false,
+      showModalArea: false
     }
   },
   mounted () {
-    this.val = Area.getSelectedArea()
-    this.edit = !this.val || this.val.type !== 'custom'
+    this.loadOptions()
   },
   methods: {
-    zoom () {
-      this.getAreaLayer().zoomToArea()
-      this.edit = true
-    },
-    remove () {
-      this.$ga.event('area', 'custom delete')
-      this.onSearchLocationSelected(false)
-    },
-    toggleEdit () {
-      this.edit = !this.edit
-    },
-    async onSearchLocationSelected (val) {
-      this.val = val
-      Area.setSelectedArea(val)
-      await this.getAreaLayer().setSelectedArea(val)
+    change (val) {
+      DefinedAreas.setActiveArea(val)
       this.$emit('change', val)
-      this.edit = !this.val || this.val.type !== 'custom'
-      this.$ga.event('area', 'change', this.val.name)
     },
-    switchDrawMode (mode) {
-      this.drawMode = mode
+    closeModal () {
+      this.showModalArea = false
+      this.loadOptions()
     },
-    startDrawMode (mode) {
-      this.savedLayer = this.getAreaLayer().getSelectedArea()
-      this.getAreaLayer().remove()
-      this.drawMode = mode
-    },
-    cancelDrawing () {
-      if (this.savedLayer) {
-        this.getAreaLayer().setSelectedArea(this.savedLayer)
-        this.getAreaLayer().add()
-      }
-      this.drawMode = false
-    },
-    saveCustomLocation (newArea) {
-      this.onSearchLocationSelected({
-        name: 'Custom area',
-        type: 'custom',
-        geom: newArea.toGeoJSON(),
-        radius: this.drawMode === 'circle' && newArea.getRadius()
-      })
-      this.drawMode = false
+    loadOptions () {
+      this.options = DefinedAreas.getAll()
+      this.val = DefinedAreas.getActiveArea()
+      this.change(this.val)
     }
   }
 }

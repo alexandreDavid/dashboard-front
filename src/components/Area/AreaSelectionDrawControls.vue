@@ -1,23 +1,23 @@
 <template>
   <div class="draw-control card shadow m-2">
     <div class="card-body p-2">
-      <div class="btn-group mb-3" role="group" aria-label="Draw group">
-        <button type="button" class="btn btn-secondary" @click="startDrawMode('polygon')">Draw an area:</button>
-        <button type="button" class="btn btn-secondary" @click="startDrawMode('polygon')" v-bind:class="{active: drawMode === 'polygon'}"><font-awesome-icon icon="draw-polygon" /></button>
-        <button type="button" class="btn btn-secondary" @click="startDrawMode('circle')" v-bind:class="{active: drawMode === 'circle'}"><font-awesome-icon icon="circle" /></button>
-        <button type="button" class="btn btn-secondary" @click="startDrawMode('rectangle')" v-bind:class="{active: drawMode === 'rectangle'}"><font-awesome-icon icon="vector-square" /></button>
+      <div class="btn-group mb-2" role="group" aria-label="Draw group">
+        <button type="button" class="btn btn-secondary btn-sm" @click="startDrawMode('polygon')">Draw an area:</button>
+        <button type="button" class="btn btn-secondary btn-sm" @click="startDrawMode('polygon')" v-bind:class="{active: drawMode === 'polygon'}"><font-awesome-icon icon="draw-polygon" /></button>
+        <button type="button" class="btn btn-secondary btn-sm" @click="startDrawMode('circle')" v-bind:class="{active: drawMode === 'circle'}"><font-awesome-icon icon="circle" /></button>
+        <button type="button" class="btn btn-secondary btn-sm" @click="startDrawMode('rectangle')" v-bind:class="{active: drawMode === 'rectangle'}"><font-awesome-icon icon="vector-square" /></button>
       </div>
-      <div class="alert alert-info" role="alert">
+      <div class="alert alert-info mb-0" role="alert">
         {{ message }}
       </div>
     </div>
-    <div class="card-footer">
-      <button class="btn btn-secondary" @click="(isEditing ? cancelEditing : cancelDraw)()">Cancel</button>
-      <button class="btn btn-primary" @click="stopEditing" v-if="isEditing">Save</button>
-      <button class="btn btn-secondary" @click="editDraw" v-if="!isDrawing && !isEditing">Edit</button>
-      <button class="btn btn-secondary" @click="deleteLastPoint" v-if="isDrawing && drawMode === 'polygon'" v-bind:disabled="!canDeleteLastPoint">Delete the last point</button>
-      <button class="btn btn-primary" @click="stopDraw" v-if="isDrawing" v-bind:disabled="!canValidateDraw">Finish</button>
-      <button class="btn btn-success" @click="validate" v-if="!isDrawing && !isEditing">Validate</button>
+    <div class="card-footer p-2">
+      <button class="btn btn-secondary btn-sm" @click="(isEditing ? cancelEditing : cancelDraw)()">Cancel</button>
+      <button class="btn btn-primary btn-sm" @click="stopEditing" v-if="isEditing">Save</button>
+      <button class="btn btn-secondary btn-sm" @click="editDraw" v-if="!isDrawing && !isEditing">Edit</button>
+      <button class="btn btn-secondary btn-sm" @click="deleteLastPoint" v-if="isDrawing && drawMode === 'polygon'" v-bind:disabled="!canDeleteLastPoint">Delete the last point</button>
+      <button class="btn btn-primary btn-sm" @click="stopDraw" v-if="isDrawing" v-bind:disabled="!canValidateDraw">Finish</button>
+      <button class="btn btn-success btn-sm" @click="validate" v-if="!isDrawing && !isEditing">Validate</button>
     </div>
   </div>
 </template>

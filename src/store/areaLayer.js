@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GeoJSON, Circle } from 'leaflet'
+import { GeoJSON, Circle, FeatureGroup } from 'leaflet'
 
 let ugandaArea = false
 let ugandaSubAreas = false
@@ -24,12 +24,15 @@ let AreaLayer = class {
       return
     }
     if (area.type === 'custom') {
-      if (area.radius) {
-        this._areaLayer = new Circle([area.geom.geometry.coordinates[1], area.geom.geometry.coordinates[0]], {radius: area.radius})
-        this._areaLayer.setStyle(AreaLayer.getAreaLayerStyle())
-      } else {
-        this._areaLayer = new GeoJSON(area.geom, AreaLayer.getAreaLayerStyle())
-      }
+      let featureGroup = new FeatureGroup()
+      new GeoJSON(area.geom).eachLayer((layer) => {
+        if (layer.feature.properties.radius) {
+          layer = new Circle([layer.feature.geometry.coordinates[1], layer.feature.geometry.coordinates[0]], {radius: layer.feature.properties.radius})
+        }
+        layer.setStyle(AreaLayer.getAreaLayerStyle())
+        featureGroup.addLayer(layer)
+      })
+      this._areaLayer = featureGroup
     } else {
       let areaData
       if (area.id !== 7552 || !ugandaArea) {
@@ -121,16 +124,22 @@ let AreaLayer = class {
     }
   }
   toGeoJSON () {
-    let geoJSON
+    let features = []
     if (this._areaLayer) {
-      geoJSON = this._areaLayer.toGeoJSON()
-      // Non-official GeoJSON format for the Circle: https://gist.github.com/virtualandy/1233401
-      if (this._areaLayer.getRadius) {
-        geoJSON.geometry.type = 'Circle'
-        geoJSON.geometry.radius = this._areaLayer.getRadius()
-      }
+      this._areaLayer.eachLayer((layer) => {
+        let geoJSON = layer.toGeoJSON()
+        // Non-official GeoJSON format for the Circle: https://gist.github.com/virtualandy/1233401
+        if (layer.getRadius) {
+          geoJSON.geometry.type = 'Circle'
+          geoJSON.geometry.radius = layer.getRadius()
+        }
+        features.push(geoJSON)
+      })
     }
-    return geoJSON
+    return {
+      type: 'FeatureCollection',
+      features
+    }
   }
 }
 

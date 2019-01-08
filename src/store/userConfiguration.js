@@ -35,7 +35,8 @@ let configuration = {
   },
   activeBaseMapLayer: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
   selectedLayers: [],
-  displayHelp: true
+  displayHelp: true,
+  definedAreas: []
 }
 
 function getConfiguration (configName) {

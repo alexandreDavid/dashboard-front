@@ -13,7 +13,7 @@
           </div>
         </h4>
         <div class="col-12 mb-2 p-2">
-          <SearchLocation v-model="selectedArea" @openMap="displaySearchHelper = true" @input="updateSearchLocation" />
+          <area-selection-control @change="updateSearchLocation"></area-selection-control>
         </div>
         <div class="alert alert-info col-12" role="alert" v-if="!selectedArea">
           Select a location to display the dashboard
@@ -37,19 +37,20 @@
 import DashboardWidget from './DashboardWidget'
 import DashboardCardModal from './DashboardCardModal'
 import Loading from '@/components/Loading/Loading'
-import SearchLocation from '@/components/SearchLocation/SearchLocation'
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import Area from '@/store/area.js'
 import Api from '@/store/api.js'
 import DashboardObj from '@/store/dashboard'
 import GeoResources from '@/store/geoResources'
+import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'DashboardPage',
   components: {
-    SearchLocation,
     Loading,
     DashboardWidget,
-    DashboardCardModal
+    DashboardCardModal,
+    AreaSelectionControl
   },
   data () {
     return {
@@ -57,13 +58,12 @@ export default {
       isEditing: false,
       showCardModal: false,
       selectedArea: false,
-      displaySearchHelper: false,
       dashboard: {},
       editedCard: {}
     }
   },
   async created () {
-    this.selectedArea = Area.getSelectedArea()
+    this.selectedArea = DefinedAreas.getActiveArea()
     await GeoResources.getAllResources()
     this.dashboard = DashboardObj.getSavedDashboard()
     this.isLoaded = true

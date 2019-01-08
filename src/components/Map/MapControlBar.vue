@@ -3,7 +3,12 @@
   <SideBar @close="close()" class="position-relative w-lg bg-light" :is-static="isStatic">
     <div class="container" v-if="!mapIsLoading">
       <div class="row mb-2" id="area-selection-control">
-        <area-selection-control @change="onAreaChange" class="shadow w-100"></area-selection-control>
+        <div class="card shadow w-100">
+          <div class="card-body p-2">
+            <h6>Place selection</h6>
+            <area-selection-control @change="onAreaChange"></area-selection-control>
+          </div>
+        </div>
       </div>
       <div class="row mb-2" id="displayed-layers">
         <DisplayedLayers @openAddingLayerSideBar="showModal = true"></DisplayedLayers>
@@ -57,7 +62,8 @@ export default {
     close () {
       this.$emit('close')
     },
-    onAreaChange (area) {
+    async onAreaChange (area) {
+      await this.getAreaLayer().setSelectedArea(area)
       SelectedLayers.updateArea(this.getAreaLayer().toGeoJSON())
     },
     async onSelectedResource (resource) {
