@@ -1,13 +1,6 @@
 <template>
   <div v-if="$mq !== 'sm'">
-    <modal v-if="showModalHelp" @close="closeModal">
-      <div slot="header">Welcome to the DFMS application</div>
-      <div slot="body">
-        <button class="btn btn-primary" @click="start">Start the help</button>
-        <button class="btn btn-secondary" @click="closeModal">Skip</button>
-      </div>
-    </modal>
-    <div class="tour-mask" v-show="displayMask && !showModalHelp">
+    <div class="tour-mask" v-show="displayMask">
       <div class="tour-focus-container" v-bind:style="styleFocusContainer"></div>
     </div>
     <v-tour name="MapTour" :steps="steps" :callbacks="myCallbacks">
@@ -39,7 +32,6 @@
 
 <script>
 import Modal from '@/components/Modal/Modal'
-import UserConfiguration from '@/store/userConfiguration'
 
 export default {
   name: 'MapTour',
@@ -48,7 +40,6 @@ export default {
   },
   data () {
     return {
-      showModalHelp: false,
       steps: [
         {
           target: '.navbar-nav',
@@ -93,19 +84,7 @@ export default {
       displayMask: false
     }
   },
-  mounted: function () {
-    // Check in the local storage
-    this.showModalHelp = UserConfiguration.getDisplayHelp()
-  },
   methods: {
-    start () {
-      this.showModalHelp = false
-      this.$tours['MapTour'].start()
-    },
-    closeModal () {
-      this.showModalHelp = false
-      UserConfiguration.setDisplayHelp(false)
-    },
     myCustomPreviousStepCallback (currentStep) {
       this.calculatePlacement(this.steps[currentStep - 1])
     },
@@ -126,7 +105,6 @@ export default {
     },
     onStop () {
       this.displayMask = false
-      UserConfiguration.setDisplayHelp(false)
     }
   }
 }

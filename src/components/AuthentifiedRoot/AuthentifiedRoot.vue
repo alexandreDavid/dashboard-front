@@ -8,7 +8,7 @@
         </div>
       </div>
       <map-tour></map-tour>
-      <area-selection-modal v-if="showAreaModal" @close="showAreaModal = false"></area-selection-modal>
+      <welcome-modal></welcome-modal>
     </div>
     <Loading v-else></Loading>
   </div>
@@ -20,7 +20,7 @@ import Area from '@/store/area'
 import UserConfiguration from '@/store/userConfiguration'
 import Settings from '@/store/settings'
 import MapTour from '@/components/Tour/MapTour'
-import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
+import WelcomeModal from '@/components/WelcomeModal/WelcomeModal'
 
 import DefinedAreas from '@/store/definedAreas'
 import Loading from '@/components/Loading/Loading'
@@ -28,7 +28,7 @@ import Loading from '@/components/Loading/Loading'
 export default {
   name: 'AuthentifiedRoot',
   components: {
-    NavBar, MapTour, Loading, AreaSelectionModal
+    NavBar, MapTour, Loading, WelcomeModal
   },
   data () {
     return {

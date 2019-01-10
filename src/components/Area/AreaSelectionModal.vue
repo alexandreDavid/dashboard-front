@@ -130,6 +130,7 @@ export default {
         this.areas.push(area)
       }
       DefinedAreas.setAll(this.areas)
+      this.editArea(area)
     },
     backToList () {
       this.editedArea = false
