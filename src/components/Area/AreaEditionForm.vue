@@ -83,6 +83,10 @@ export default {
       this.validateArea(this.val)
     })
 
+    this.map.on(`${L.Draw.Event.EDITED} ${L.Draw.Event.DELETED}`, () => {
+      this.validateArea(this.val)
+    })
+
     this.loadVal(this.value)
   },
   methods: {
