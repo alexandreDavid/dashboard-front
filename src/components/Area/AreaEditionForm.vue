@@ -14,7 +14,7 @@
     </div>
     <div class="row mb-3" v-else>
       <div class="form-group w-100 mb-2">
-        <label for="area-name">Name *</label>
+        <label for="area-name">Name</label>
         <input type="text" class="form-control" v-model="val.name" @change="validateArea(val)" id="area-name" placeholder="Name" required>
       </div>
       <div class="w-100">Draw your custom location on the map or upload your file (Coming soon):</div>

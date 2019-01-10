@@ -49,7 +49,9 @@ export default {
     }
   },
   mounted () {
-    document.addEventListener('click', this.handleClickOutside)
+    if (!this.$attrs.hasOwnProperty('required') || this.$attrs.required === false) {
+      document.addEventListener('click', this.handleClickOutside)
+    }
   },
   destroyed () {
     document.removeEventListener('click', this.handleClickOutside)
