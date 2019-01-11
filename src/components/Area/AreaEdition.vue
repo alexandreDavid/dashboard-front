@@ -4,8 +4,6 @@
       <h4>{{ val.name }}</h4>
     </div>
     <area-edition-form v-model="val" @input="change"></area-edition-form>
-    <button class="btn btn-secondary" @click="cancel">Cancel</button>
-    <button class="btn btn-primary" @click="validateArea(val)" :disabled="!val.valid">Save</button>
   </div>
 </template>
 
@@ -45,12 +43,7 @@ export default {
   methods: {
     change (area) {
       this.val = area
-    },
-    validateArea (area) {
       this.$emit('input', area)
-    },
-    cancel () {
-      this.val = this.value
     }
   },
   watch: {

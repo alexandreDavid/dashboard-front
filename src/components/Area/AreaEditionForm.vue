@@ -13,10 +13,6 @@
       <SearchLocation class="w-100" v-model="searchLocationSearch" @input="searchLocationSelected" />
     </div>
     <div class="row mb-3" v-else>
-      <div class="form-group w-100 mb-2">
-        <label for="area-name">Name</label>
-        <input type="text" class="form-control" v-model="val.name" @change="validateArea(val)" id="area-name" placeholder="Name" required>
-      </div>
       <div class="w-100">Draw your custom location on the map or upload your file (Coming soon):</div>
       <input class="w-100" disabled type="file" id="myFile">
     </div>
@@ -32,6 +28,9 @@ import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
 import L from 'leaflet'
 import 'leaflet-draw'
+import AreaNameInput from './AreaNameInput'
+import { CustomVueControl } from './Leaflet.customVueControl'
+import Vue from 'vue'
 
 export default {
   name: 'AreaEditionForm',
@@ -47,6 +46,7 @@ export default {
       activeAreaType: false,
       drawnItems: false,
       drawControl: false,
+      nameControl: false,
       searchLocationSearch: false,
       areaTypes: [
         {
@@ -56,12 +56,16 @@ export default {
           type: 'custom',
           label: 'Custom area'
         }
-      ]
+      ],
+      test: false
     }
   },
   mounted () {
     this.map = new MapObj('area-map')
     this.areaLayer = new AreaLayer(this.map)
+
+    this.nameControl = new CustomVueControl(Vue.extend(AreaNameInput))
+
     // FeatureGroup is to store editable layers
     this.drawnItems = new L.FeatureGroup()
     this.drawControl = new L.Control.Draw({
@@ -124,11 +128,24 @@ export default {
       this.areaLayer.add()
       this.areaLayer.zoomToArea()
       this.drawnItems.remove()
+      this.map.removeControl(this.nameControl)
       this.map.removeControl(this.drawControl)
+    },
+    addNameControl () {
+      this.map.addControl(this.nameControl)
+      this.nameControl.mountedComponent.$set(this.nameControl.mountedComponent.$props, 'value', this.val.name || '')
+      this.nameControl.mountedComponent.$on('input', (name) => {
+        this.val.name = name
+        this.validateArea(this.val)
+      })
     },
     goToCustom () {
       this.areaLayer.remove()
       this.drawnItems.addTo(this.map)
+
+      if (this.val.name) {
+        this.addNameControl()
+      }
       this.map.addControl(this.drawControl)
       if (this.drawnItems.getBounds().isValid()) {
         this.map.fitBounds(this.drawnItems.getBounds())
@@ -139,6 +156,11 @@ export default {
       this.val.name = val.name
     },
     validateArea (area) {
+      if (!area.name) {
+        this.map.removeControl(this.drawControl)
+        this.addNameControl()
+        return
+      }
       area.valid = !!area.name
       if (area.type !== 'custom') {
         this.$emit('input', Object.assign(area, this.areaLayer.getSelectedArea()))
