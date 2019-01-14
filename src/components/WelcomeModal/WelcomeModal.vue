@@ -9,8 +9,7 @@
                 <div class="text-center">
                   <img class="mx-auto d-block mb-4" alt="DFMS" src="@/assets/logo-vertical.png" style="width: 200px">
                   <h3>Welcome to the DFMS platform</h3>
-                  <p>The DFMS Project is a 3-year project to develop the Drought and Flood Mitigation Service (DFMS) for Uganda, implemented in cooperation with the Government of Uganda, led by the Ministry of Water and Environment. The project is led by the RHEA Group and receives financial support through the UK’s International Partnership Programme, administered by the UK Space Agency.</p>
-                  <a href="http://www.dfms.co.uk/" target="__blank" class="btn btn-link btn-lg">Read more</a>
+                  <p>The DFMS Project is a 3-year project to develop the Drought and Flood Mitigation Service (DFMS) for Uganda, implemented in cooperation with the Government of Uganda, led by the Ministry of Water and Environment. The project is led by the RHEA Group and receives financial support through the UK’s International Partnership Programme, administered by the UK Space Agency. <a href="http://www.dfms.co.uk/" target="__blank">Learn more...</a></p>
                 </div>
               </div>
 
