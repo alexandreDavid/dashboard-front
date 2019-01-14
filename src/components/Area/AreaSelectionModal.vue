@@ -1,10 +1,10 @@
 <template>
   <modal @close="close()">
-    <div slot="header">Area selection</div>
+    <div slot="header">Area configuration</div>
     <div slot="body" class="area-selection-modal-content catalogue-modal-content container">
       <div class="row h-100" v-bind:class="{'selected-resource': editedArea}">
         <div class="col-lg-4 h-100 resource-selection" v-bind:class="areas.length ? 'd-flex flex-column' : 'd-none'">
-          <button class="btn btn-primary mb-2" @click="editArea({})"><font-awesome-icon icon="plus" /> Add an area</button>
+          <button class="btn btn-primary mb-2" @click="editArea({})"><font-awesome-icon icon="plus" /> Add a new area</button>
           <div class="h-100 position-relative">
             <div class="resources-list list-group list-group-flush" role="tablist">
               <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" @click="editArea(area)" v-for="(area, key) in areas" :key="key" v-bind:class="{active: area.isEditing}">

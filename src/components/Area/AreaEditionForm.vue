@@ -47,6 +47,7 @@ export default {
       drawnItems: false,
       drawControl: false,
       nameControl: false,
+      searchControl: false,
       searchLocationSearch: false,
       areaTypes: [
         {
@@ -65,6 +66,7 @@ export default {
     this.areaLayer = new AreaLayer(this.map)
 
     this.nameControl = new CustomVueControl(Vue.extend(AreaNameInput))
+    this.searchControl = new CustomVueControl(Vue.extend(SearchLocation), {position: 'topright'})
 
     // FeatureGroup is to store editable layers
     this.drawnItems = new L.FeatureGroup()
@@ -130,6 +132,7 @@ export default {
       this.drawnItems.remove()
       this.map.removeControl(this.nameControl)
       this.map.removeControl(this.drawControl)
+      this.map.removeControl(this.searchControl)
     },
     addNameControl () {
       this.map.addControl(this.nameControl)
@@ -139,9 +142,17 @@ export default {
         this.validateArea(this.val)
       })
     },
+    addSearchControl () {
+      this.map.addControl(this.searchControl)
+      this.searchControl.mountedComponent.$on('input', (val) => {
+        console.log(val)
+      })
+    },
     goToCustom () {
       this.areaLayer.remove()
       this.drawnItems.addTo(this.map)
+
+      this.addSearchControl()
 
       if (this.val.name) {
         this.addNameControl()
