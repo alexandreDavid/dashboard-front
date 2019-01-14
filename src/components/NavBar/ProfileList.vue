@@ -4,7 +4,8 @@
     <div class="dropdown-menu dropdown-menu-right shadow" v-bind:class="{show: displayDropDownMenu}">
       <button class="settings dropdown-item" type="button" @click="goTo('settings')">Settings</button>
       <button class="about dropdown-item" type="button" @click="goTo('about')">About</button>
-      <button class="help dropdown-item" type="button" @click="openHelp">Help</button>
+      <button class="help dropdown-item" type="button" @click="openHelp">Discover</button>
+      <a class="dropdown-item" href="mailto:support@dfms.co.uk?subject=DFMS support">Contact us</a>
       <div class="dropdown-divider"></div>
       <button class="sign-out dropdown-item" type="button" @click="logout">Sign out</button>
     </div>
