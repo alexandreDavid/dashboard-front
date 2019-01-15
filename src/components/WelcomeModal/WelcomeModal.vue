@@ -18,7 +18,7 @@
                   Lets start to define the area of interest. A list of boundaries is available but it's also possible to draw a custom area.
                 </div>
                 <div class="col-12">
-                  <area-edition-form class="container" v-if="pos === 1" v-model="area"></area-edition-form>
+                  <area-edition class="container" v-if="pos === 1" v-model="area"></area-edition>
                 </div>
               </div>
 
@@ -45,7 +45,7 @@
 
 <script>
 import Modal from '@/components/Modal/Modal'
-import AreaEditionForm from '@/components/Area/AreaEditionForm'
+import AreaEdition from '@/components/Area/AreaEdition'
 
 import DefinedAreas from '@/store/definedAreas'
 import UserConfiguration from '@/store/userConfiguration'
@@ -66,7 +66,7 @@ const ClassName = {
 export default {
   name: 'WelcomeModal',
   components: {
-    Modal, AreaEditionForm
+    Modal, AreaEdition
   },
   data () {
     return {

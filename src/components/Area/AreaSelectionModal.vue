@@ -33,7 +33,7 @@
 <script>
 import Modal from '@/components/Modal/Modal'
 import Loading from '@/components/Loading/Loading'
-import AreaEdition from '@/components/Area/AreaEditionForm'
+import AreaEdition from '@/components/Area/AreaEdition'
 
 import DefinedAreas from '@/store/definedAreas'
 
