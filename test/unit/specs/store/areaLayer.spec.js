@@ -1,5 +1,5 @@
 import AreaLayer from '@/store/areaLayer'
-import axios from 'axios'
+import Area from '@/store/area'
 import L from 'leaflet'
 
 const mockGetBounds = {
@@ -13,10 +13,12 @@ const mockGeoJSON = {
 
 L.GeoJSON = jest.fn().mockImplementation(() => mockGeoJSON)
 
-jest.mock('axios', () => ({
-  get: jest.fn()
+jest.mock('@/store/area', () => ({
+  getArea: jest.fn(),
+  getSubAreas: jest.fn()
 }))
-axios.get.mockReturnValue(Promise.resolve({ data: 'mockAxiosData' }))
+Area.getArea.mockReturnValue({data: 'mockAxiosData'})
+Area.getSubAreas.mockReturnValue({data: 'mockAxiosData'})
 
 const mockMap = {
   fitBounds: jest.fn()
@@ -37,16 +39,13 @@ describe('areaLayer.js', () => {
   it('Create object with area', () => {
     const area = new AreaLayer(mockMap, {})
     expect(area._map).toBe(mockMap)
-    expect(axios.get).toHaveBeenCalledTimes(1)
+    expect(Area.getArea).toHaveBeenCalledTimes(1)
   })
 
   it('Calls setSelectedArea without areaLayer', async () => {
     const areaLayer = new AreaLayer(mockMap)
     await areaLayer.setSelectedArea(mockArea)
 
-    // expect(axios.get).toHaveBeenCalledWith('TEST_GEOSERVER_URL/boundaries/ows', {
-    //   params: AreaLayer.getAreaRequestParams(mockArea)
-    // })
     expect(mockGeoJSON.remove).not.toHaveBeenCalled()
     expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getAreaLayerStyle())
     expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getSubAreaLayerStyle())
@@ -79,10 +78,8 @@ describe('areaLayer.js', () => {
     expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getAreaLayerStyle())
     expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getSubAreaLayerStyle())
 
-    axios.get.mockClear()
     await areaLayer.setSelectedArea(mockArea)
     expect(mockGeoJSON.remove).toBeCalled()
-    expect(axios.get).not.toBeCalled()
   })
 
   it('Calls zoomToArea', async () => {

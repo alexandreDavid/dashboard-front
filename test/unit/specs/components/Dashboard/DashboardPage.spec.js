@@ -3,9 +3,10 @@ import Area from '@/store/area'
 import Api from '@/store/api'
 import UserConfiguration from '@/store/userConfiguration'
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
-import SearchLocation from '@/components/SearchLocation/SearchLocation'
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import { shallowMount } from '@vue/test-utils'
 import GeoResources from '@/store/geoResources'
+import DefinedAreas from '@/store/definedAreas'
 
 jest.mock('@/store/geoResources', () => ({
   getAll: jest.fn(),
@@ -23,6 +24,10 @@ jest.mock('@/store/api', () => ({
 jest.mock('@/store/userConfiguration', () => ({
   getDashboard: jest.fn(),
   setDashboard: jest.fn()
+}))
+
+jest.mock('@/store/definedAreas', () => ({
+  getActiveArea: jest.fn()
 }))
 
 const mockScrollBy = jest.fn()
@@ -52,6 +57,7 @@ describe('DashboardPage.vue', () => {
     Area.getSelectedArea.mockReturnValue({})
     Api.setDashboard.mockClear()
     UserConfiguration.getDashboard.mockReturnValue({title: 'title', cards: []})
+    DefinedAreas.getActiveArea.mockReturnValue({})
   })
 
   it('has a created hook', () => {
@@ -100,7 +106,7 @@ describe('DashboardPage.vue', () => {
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
     const inputValue = {}
-    wrapper.find(SearchLocation).vm.$emit('input', inputValue)
+    wrapper.find(AreaSelectionControl).vm.$emit('change', inputValue)
     expect(wrapper.vm.selectedArea).toBe(inputValue)
   })
 

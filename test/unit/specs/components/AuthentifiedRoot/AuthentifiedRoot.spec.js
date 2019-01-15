@@ -10,7 +10,8 @@ jest.mock('@/store/area', () => ({
 }))
 
 jest.mock('@/store/userConfiguration', () => ({
-  getActiveArea: jest.fn()
+  getActiveArea: jest.fn(),
+  getDisplayHelp: jest.fn()
 }))
 
 jest.mock('@/store/settings', () => ({
@@ -19,6 +20,7 @@ jest.mock('@/store/settings', () => ({
 
 const mockArea = 'mockArea'
 UserConfiguration.getActiveArea.mockReturnValue(mockArea)
+UserConfiguration.getDisplayHelp.mockReturnValue(mockArea)
 
 describe('App.vue', () => {
   it('On init ok', async () => {

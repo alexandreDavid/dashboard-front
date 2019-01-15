@@ -31,16 +31,22 @@ describe('area.js', () => {
   })
 
   it('Calls getAreaInfos and answers', async () => {
-    Axios.get.mockReturnValue({data: true})
-    const areaInfo = await Area.getAreaInfos(1)
+    const mockGet = {data: true}
+    Axios.get.mockReturnValue(mockGet)
+    const areaInfo = await Area.getArea({id: 1})
     expect(Axios.get).toBeCalled()
-    expect(areaInfo).toBe(true)
+    expect(areaInfo).toEqual(mockGet)
   })
 
   it('Calls getAreaInfos and throw error', async () => {
     Axios.get.mockRejectedValue(new Error('Async error'))
-    const areas = await Area.getAreaInfos(1)
+    let areas = false
+    try {
+      areas = await Area.getArea({id: 1})
+    } catch (e) {
+
+    }
     expect(Axios.get).toBeCalled()
-    expect(areas).toBe(false)
+    expect(areas).toBeFalsy()
   })
 })

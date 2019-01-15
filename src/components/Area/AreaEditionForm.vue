@@ -48,6 +48,7 @@ export default {
       drawControl: false,
       nameControl: false,
       searchControl: false,
+      searchedArea: false,
       searchLocationSearch: false,
       areaTypes: [
         {
@@ -133,6 +134,7 @@ export default {
       this.map.removeControl(this.nameControl)
       this.map.removeControl(this.drawControl)
       this.map.removeControl(this.searchControl)
+      this.searchedArea.remove()
     },
     addNameControl () {
       this.map.addControl(this.nameControl)
@@ -144,8 +146,10 @@ export default {
     },
     addSearchControl () {
       this.map.addControl(this.searchControl)
-      this.searchControl.mountedComponent.$on('input', (val) => {
-        console.log(val)
+      this.searchedArea = new AreaLayer(this.map)
+      this.searchControl.mountedComponent.$on('input', async (val) => {
+        await this.searchedArea.setSelectedArea(val)
+        this.searchedArea.addTo(this.map)
       })
     },
     goToCustom () {

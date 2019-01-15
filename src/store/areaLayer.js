@@ -1,8 +1,5 @@
-import axios from 'axios'
 import { GeoJSON, Circle, FeatureGroup } from 'leaflet'
-
-let ugandaArea = false
-let ugandaSubAreas = false
+import Area from '@/store/area'
 
 let AreaLayer = class {
   _area = false
@@ -34,19 +31,7 @@ let AreaLayer = class {
       })
       this._areaLayer = featureGroup
     } else {
-      let areaData
-      if (area.id !== 7552 || !ugandaArea) {
-        areaData = await axios.get(
-          `${process.env.GEOSERVER_URL}/boundaries/ows`, {
-            params: AreaLayer.getAreaRequestParams(area)
-          }
-        )
-        if (area.id === 7552) {
-          ugandaArea = areaData
-        }
-      } else {
-        areaData = ugandaArea
-      }
+      let areaData = await Area.getArea(area)
       this.setSubAreas(area)
       this._areaLayer = new GeoJSON(areaData.data, AreaLayer.getAreaLayerStyle())
     }
@@ -58,26 +43,7 @@ let AreaLayer = class {
   }
   async setSubAreas (area) {
     try {
-      let areaData
-      if (area.id !== 7552 || !ugandaSubAreas) {
-        areaData = await axios.get(
-          `${process.env.GEOSERVER_URL}/boundaries/ows`, {
-            params: {
-              service: 'WFS',
-              version: '1.1.0',
-              request: 'GetFeature',
-              typeName: `boundaries:boundaries_uganda`,
-              outputFormat: 'application/json',
-              cql_filter: `idparent = ${area.id}`
-            }
-          }
-        )
-        if (area.id === 7552) {
-          ugandaSubAreas = areaData
-        }
-      } else {
-        areaData = ugandaSubAreas
-      }
+      let areaData = await Area.getSubAreas(area)
       this._subAreasLayer = new GeoJSON(areaData.data, AreaLayer.getSubAreaLayerStyle())
       if (this._map) {
         this._subAreasLayer.addTo(this._map)
