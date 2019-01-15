@@ -149,7 +149,6 @@ export default {
       this.searchedArea = new AreaLayer(this.map)
       this.searchControl.mountedComponent.$on('input', async (val) => {
         await this.searchedArea.setSelectedArea(val)
-        this.searchedArea.addTo(this.map)
       })
     },
     goToCustom () {
