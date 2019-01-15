@@ -18,6 +18,7 @@
 import NavBar from '@/components/NavBar/NavBar'
 import Area from '@/store/area'
 import UserConfiguration from '@/store/userConfiguration'
+import GeoResources from '@/store/geoResources'
 import Settings from '@/store/settings'
 import MapTour from '@/components/Tour/MapTour'
 import WelcomeModal from '@/components/WelcomeModal/WelcomeModal'
@@ -38,6 +39,7 @@ export default {
   async created () {
     this.showModalWelcome = UserConfiguration.getDisplayHelp() && this.$mq !== 'sm'
     await Settings.init()
+    await GeoResources.getAllResources()
     Area.setSelectedArea(UserConfiguration.getActiveArea())
     this.isLoaded = true
   }

@@ -1,5 +1,6 @@
 import UserConfiguration from '@/store/userConfiguration'
 import SelectedLayer from '@/store/selectedLayer'
+import GeoResources from '@/store/geoResources'
 
 function move (arr, oldIndex, newIndex) {
   if (newIndex >= arr.length) {
@@ -24,7 +25,7 @@ export default {
     try {
       for (const idx in selectedLayers) {
         const newLayer = await new SelectedLayer()
-        await newLayer.setLayer(selectedLayers[idx], area)
+        await newLayer.setLayer({...selectedLayers[idx], ...GeoResources.searchById(selectedLayers[idx].id)}, area)
         this.allSelectedLayers.push(newLayer)
       }
     } catch (error) {

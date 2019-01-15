@@ -35,7 +35,11 @@ export default class {
     return (geoResource.config.layer_creation.params && geoResource.config.layer_creation.params.date && geoResource.config.layer_creation.params.date.values) || []
   }
   getTime () {
-    this.geoResource.time = this.geoResource.time || (this._availableTimes && this._availableTimes[0])
+    if (this._availableTimes) {
+      if (!this.geoResource.time || !this._availableTimes.find(a => a === this.geoResource.time)) {
+        this.geoResource.time = this._availableTimes[0]
+      }
+    }
     this._time = this.geoResource.time
     return this.geoResource.time
   }
