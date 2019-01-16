@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType"></Graph>
+    <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType" :start-date="startDate" :end-date="endDate"></Graph>
     <Loading v-else></Loading>
   </div>
 </template>
@@ -31,27 +31,35 @@ export default {
     return {
       resource: false,
       areaLayer: false,
-      isLoaded: false
+      isLoaded: false,
+      startDate: false,
+      endDate: false
     }
   },
   async mounted () {
     this.areaLayer = new AreaLayer()
     await this.areaLayer.setSelectedArea(this.area)
     this.resource = new SelectedLayer()
-    await this.resource.setLayer(GeoResources.searchById(this.parameter.id), this.areaLayer.toGeoJSON())
+    await this.getData(this.parameter)
+    
     this.isLoaded = true
   },
   methods: {
     getAreaLayer () {
       return this.areaLayer
+    },
+    async getData (param) {
+      this.isLoaded = false
+      await this.resource.setLayer(GeoResources.searchById(param.id), this.areaLayer.toGeoJSON())
+      const allTimes = this.resource._availableTimes
+      let {0 : startDate ,[allTimes.length - 1] : endDate} = allTimes
+      this.startDate = startDate
+      this.endDate = endDate
+      this.isLoaded = true
     }
   },
   watch: {
-    async parameter (newParam) {
-      this.isLoaded = false
-      await this.resource.setLayer(GeoResources.searchById(newParam.id), this.areaLayer.toGeoJSON())
-      this.isLoaded = true
-    },
+    parameter: 'getData',
     async area (newArea) {
       this.isLoaded = false
       await this.areaLayer.setSelectedArea(newArea)
