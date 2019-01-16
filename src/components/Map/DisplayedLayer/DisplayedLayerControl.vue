@@ -3,7 +3,7 @@
     <div class="card-body p-2">
       <h6 class="d-flex align-items-start">
         <button class="btn btn-xs btn-outline-secondary flex-shrink-1 mr-1" @click="select"><font-awesome-icon v-bind:class="{'text-white': !selected}" icon="check" /></button>
-        <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="layer.geoResource.opacity ? 'eye' : 'eye-slash'" /></button>
+        <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="opacity ? 'eye' : 'eye-slash'" /></button>
         <span class="w-100 mx-1"> {{ layer.geoResource.label }}</span>
         <div class="btn-group btn-group-xs flex-shrink-1" role="group">
           <button class="btn btn-sm btn-light up" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
@@ -15,7 +15,7 @@
       <Legend class="py-2" v-bind:legend="layer._legend"></Legend>
       <time-serie v-if="layer.hasTime()" v-model="layer._time" :times="layer._availableTimes" @input="setTime"></time-serie>
     </div>
-    <displayed-layer-setting-tools v-if="showSettingTools" :parameter="val" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
+    <displayed-layer-setting-tools v-if="showSettingTools" :parameter="layer" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
   </div>
 </template>
 
@@ -28,9 +28,9 @@ export default {
   name: 'DisplayedLayerControl',
   props: ['layer'],
   computed: {
-    val: {
+    opacity: {
       get () {
-        return this.layer
+        return this.layer._opacity
       },
       set (val) {}
     },
