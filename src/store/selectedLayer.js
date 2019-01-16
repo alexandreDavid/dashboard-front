@@ -73,7 +73,7 @@ export default class {
     }
   }
   addTo (map) {
-    this._layer.addTo(map)
+    this._layer && this._layer.addTo(map)
   }
   async setArea (area) {
     this._area = area
@@ -126,7 +126,7 @@ export default class {
     return this._unit
   }
   remove () {
-    this._layer.remove()
+    this._layer && this._layer.remove()
   }
   setZIndex (idx) {
     this.geoResource.zIndex = idx

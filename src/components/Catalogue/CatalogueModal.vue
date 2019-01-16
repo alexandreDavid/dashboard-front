@@ -1,9 +1,9 @@
 <template>
   <modal @close="close()">
     <div slot="header">Add coverage maps</div>
-    <div slot="body" class="catalogue-modal-content">
-      <div class="row h-100" v-if="isLoaded" v-bind:class="{'selected-resource': selectedResource}">
-        <div class="col-lg-4 h-100 d-flex flex-column resource-selection">
+    <div slot="body" class="managing-modal-content">
+      <div class="row h-100" v-if="isLoaded" v-bind:class="{'has-selection': selectedResource}">
+        <div class="col-lg-4 h-100 d-flex flex-column managing-modal-list">
           <div>
             <div class="input-group mb-2">
               <div class="input-group-prepend">
@@ -18,7 +18,7 @@
             </div>
           </div>
           <div class="h-100 position-relative">
-            <div class="resources-list">
+            <div class="managing-modal-list-container">
               <div v-for="group in groups" :key="group.id" v-if="!searchResource">
                 <button class="btn btn-light d-flex w-100" @click="toggleGroup(group)">
                   <div class="w-100 text-left font-weight-bold">{{ group.label }}</div>
@@ -41,8 +41,8 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-8 h-100 resource-info position-relative">
-          <div v-if="selectedResource" class="resource-info-container">
+        <div class="col-lg-8 h-100 managing-modal-selection position-relative">
+          <div v-if="selectedResource" class="managing-modal-selection-container">
             <button class="btn btn-link d-lg-none" @click="backToList"><font-awesome-icon icon="caret-left" /> Back</button>
             <div class="container">
               <div id="preview-map" class="w-100 mb-2" style="height:200px"></div>

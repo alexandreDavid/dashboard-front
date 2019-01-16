@@ -1,0 +1,26 @@
+.managing-modal-content {
+  height: 70vh;
+
+  .managing-modal-list-container, .managing-modal-selection-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+  }
+
+  @include media-breakpoint-down(md) {
+    .managing-modal-selection {
+      display: none;
+    }
+    .has-selection {
+      .managing-modal-list {
+        display: none !important;
+      }
+      .managing-modal-selection {
+        display: block;
+      }
+    }
+  }
+}
