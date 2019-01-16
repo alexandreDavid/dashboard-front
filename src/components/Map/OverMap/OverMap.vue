@@ -1,6 +1,6 @@
 <template>
   <div class="over-map">
-    <MapControlBar v-if="showSidebar" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" @close="showSidebar = false" class="position-relative over-map-left p-0">
+    <MapControlBar v-if="showSidebar" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" @close="showSidebar = false" class="position-relative over-map-left">
     </MapControlBar>
     <div class="over-map-bottom d-flex align-items-end">
       <div class=" mr-1 w-100 over-map-control">
@@ -9,12 +9,12 @@
       <bar-control class="flex-shrink-1 d-none d-sm-inline-flex over-map-control" @openBaseMapControl="showBaseMapSidebar = true">
       </bar-control>
     </div>
-    <div class="over-map-left d-flex d-sm-none flex-nowrap">
-      <div class="flex-grow-1 over-map-control mr-2">
-        <SearchLocation class="shadow" v-model="selectedArea" @input="onSearchLocationSelected" @locate="zoomToArea" />
-      </div>
+    <div class="over-map-left d-flex d-sm-none flex-row-reverse flex-nowrap p-2">
       <div class="d-block d-sm-none over-map-control">
         <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon icon="bars" /></button>
+      </div>
+      <div class="flex-grow-1 over-map-control mr-2">
+        <area-selection-control class="shadow" @change="onAreaChange"></area-selection-control>
       </div>
     </div>
     <base-map-sidebar class="over-map-bottom over-map-control" v-if="showBaseMapSidebar" @close="showBaseMapSidebar = false">
@@ -23,11 +23,11 @@
 </template>
 
 <script>
-import Area from '@/store/area'
 import BarControl from './OverMapControl/BarControl/BarControl'
 import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
 
-import SearchLocation from '@/components/SearchLocation/SearchLocation'
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+import SelectedLayers from '@/store/selectedLayers'
 
 export default {
   name: 'OverMap',
@@ -36,59 +36,27 @@ export default {
     BaseMapSidebar: () => import('@/components/Map/OverMap/OverMapControl/BaseMap/BaseMapSidebar'),
     BarControl,
     DisplayedLayerTimeControl,
-    SearchLocation
+    AreaSelectionControl
   },
-  inject: ['getMap', 'getDisplayedLayer', 'getAreaLayer'],
+  inject: ['getAreaLayer'],
   props: ['selectedParameter'],
   data () {
     return {
       showSidebar: false,
-      showBaseMapSidebar: false,
-      displayAreaSelectionModal: false,
-      selectedArea: false,
-      test: false
+      showBaseMapSidebar: false
     }
   },
-  mounted () {
-    this.selectedArea = Area.getSelectedArea()
-  },
   methods: {
-    onSearchLocationSelected (newValue) {
-      Area.setSelectedArea(newValue)
-      this.getAreaLayer().setSelectedArea(newValue)
+    async onAreaChange (area) {
+      await this.getAreaLayer().setSelectedArea(area)
+      SelectedLayers.updateArea(this.getAreaLayer().toGeoJSON())
     },
     onSelectedReportedLayer (selectedReportedLayer) {
       this.$emit('selectedReportedLayer', selectedReportedLayer)
     },
     onSelectedParameter (selectedParameter) {
       this.$emit('selectedParameter', selectedParameter)
-    },
-    zoomToArea () {
-      this.getAreaLayer().zoomToArea()
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-#bottom-content {
-  width: 100%;
-  bottom: 0;
-
-  .over-map-left {
-    padding: 10px;
-    left: 0;
-    bottom: 0;
-    position: absolute;
-  }
-
-  .over-map-right {
-    margin-bottom: 10px;
-    margin-right: 10px;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-  }
-}
-
-</style>

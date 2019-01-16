@@ -20,11 +20,7 @@ let configuration = {
       }
     ]
   },
-  activeArea: {
-    id: 7552,
-    name: 'Uganda',
-    type: 'country'
-  },
+  activeArea: {},
   activeSettings: {
     temperature: 'C',
     windSpeed: 'mph',

@@ -18,7 +18,7 @@
 
 <script>
 import GraphModal from '@/components/Graph/GraphModal'
-import Area from '@/store/area'
+import DefinedAreas from '@/store/definedAreas'
 import OpacityControl from '@/components/Map/DisplayedLayer/OpacityControl'
 import TimeControl from '@/components/Map/DisplayedLayer/TimeControl'
 import TresholdValueControl from '@/components/Map/DisplayedLayer/TresholdValueControl'
@@ -46,7 +46,7 @@ export default {
       this.$emit('setOpacity', val)
     },
     openGraphModal () {
-      this.selectedArea = Area.getSelectedArea()
+      this.selectedArea = DefinedAreas.getActiveArea()
       this.showModalGraph = true
     },
     onTimeChange (time) {

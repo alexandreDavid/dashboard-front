@@ -65,6 +65,7 @@ export default {
   mounted () {
     this.map = new MapObj('area-map')
     this.areaLayer = new AreaLayer(this.map)
+    this.searchedArea = new AreaLayer(this.map)
 
     this.nameControl = new CustomVueControl(Vue.extend(AreaNameInput))
     this.searchControl = new CustomVueControl(Vue.extend(SearchLocation), {position: 'topright'})
@@ -112,7 +113,7 @@ export default {
         })
         this.goToCustom()
       } else {
-        this.searchLocationSearch = val
+        this.searchLocationSearch = {...val}
         if (val.id) {
           this.areaLayer.setSelectedArea(val)
         }
@@ -146,8 +147,8 @@ export default {
     },
     addSearchControl () {
       this.map.addControl(this.searchControl)
-      this.searchedArea = new AreaLayer(this.map)
       this.searchControl.mountedComponent.$on('input', async (val) => {
+        val.idArea = val.id
         await this.searchedArea.setSelectedArea(val)
       })
     },
@@ -166,8 +167,10 @@ export default {
       }
     },
     searchLocationSelected (val) {
-      this.areaLayer.setSelectedArea(val)
+      this.val.idArea = val.id
       this.val.name = val.name
+      this.areaLayer.setSelectedArea(this.val)
+      this.validateArea(this.val)
     },
     validateArea (area) {
       if (!area.name) {

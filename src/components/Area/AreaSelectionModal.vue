@@ -17,6 +17,7 @@
           <div class="resource-info-container" v-if="editedArea">
             <button v-if="areas.length" class="btn btn-link d-lg-none" @click="backToList"><font-awesome-icon icon="caret-left" /> Back</button>
             <div class="container">
+              <h4>{{ editedArea.name || 'New area' }}</h4>
               <area-edition v-model="editedArea" @input="afterEdit" class="w-100"></area-edition>
             </div>
           </div>

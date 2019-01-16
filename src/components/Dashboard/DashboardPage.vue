@@ -33,11 +33,9 @@ import DashboardWidget from './DashboardWidget'
 import DashboardCardModal from './DashboardCardModal'
 import Loading from '@/components/Loading/Loading'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
-import Area from '@/store/area.js'
 import Api from '@/store/api.js'
 import DashboardObj from '@/store/dashboard'
 import GeoResources from '@/store/geoResources'
-import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'DashboardPage',
@@ -58,14 +56,12 @@ export default {
     }
   },
   async created () {
-    this.selectedArea = DefinedAreas.getActiveArea()
     await GeoResources.getAllResources()
     this.dashboard = DashboardObj.getSavedDashboard()
     this.isLoaded = true
   },
   methods: {
     updateSearchLocation (feature) {
-      Area.setSelectedArea(feature)
       this.selectedArea = feature
     },
     addCard () {

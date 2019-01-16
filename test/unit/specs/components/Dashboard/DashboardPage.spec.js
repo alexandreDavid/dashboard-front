@@ -1,22 +1,16 @@
 import DashboardPage from '@/components/Dashboard/DashboardPage.vue'
-import Area from '@/store/area'
 import Api from '@/store/api'
 import UserConfiguration from '@/store/userConfiguration'
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import { shallowMount } from '@vue/test-utils'
 import GeoResources from '@/store/geoResources'
-import DefinedAreas from '@/store/definedAreas'
 
 jest.mock('@/store/geoResources', () => ({
   getAll: jest.fn(),
   getAllResources: jest.fn()
 }))
 
-jest.mock('@/store/area', () => ({
-  getSelectedArea: jest.fn(),
-  setSelectedArea: jest.fn()
-}))
 jest.mock('@/store/api', () => ({
   setDashboard: jest.fn()
 }))
@@ -24,10 +18,6 @@ jest.mock('@/store/api', () => ({
 jest.mock('@/store/userConfiguration', () => ({
   getDashboard: jest.fn(),
   setDashboard: jest.fn()
-}))
-
-jest.mock('@/store/definedAreas', () => ({
-  getActiveArea: jest.fn()
 }))
 
 const mockScrollBy = jest.fn()
@@ -53,11 +43,8 @@ describe('DashboardPage.vue', () => {
       }
     ])
     GeoResources.getAllResources.mockReturnValue(Promise.resolve([]))
-    Area.getSelectedArea.mockClear()
-    Area.getSelectedArea.mockReturnValue({})
     Api.setDashboard.mockClear()
     UserConfiguration.getDashboard.mockReturnValue({title: 'title', cards: []})
-    DefinedAreas.getActiveArea.mockReturnValue({})
   })
 
   it('has a created hook', () => {
@@ -72,9 +59,9 @@ describe('DashboardPage.vue', () => {
   })
 
   it('Calls addCard when click on button', async () => {
-    Area.getSelectedArea.mockReturnValue({})
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
+    wrapper.find(AreaSelectionControl).vm.$emit('change', true)
     expect(wrapper.vm.isLoaded).toBe(true)
 
     wrapper.find('.edit').trigger('click')
@@ -113,6 +100,7 @@ describe('DashboardPage.vue', () => {
   it('Close modal when emit @close', async () => {
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
+    wrapper.find(AreaSelectionControl).vm.$emit('change', true)
     expect(wrapper.vm.isLoaded).toBe(true)
     wrapper.find('.edit').trigger('click')
     expect(wrapper.vm.isEditing).toBe(true)
@@ -127,9 +115,9 @@ describe('DashboardPage.vue', () => {
   })
 
   it('Remove card when @delete', async () => {
-    Area.getSelectedArea.mockReturnValue({})
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
+    wrapper.find(AreaSelectionControl).vm.$emit('change', true)
     expect(wrapper.vm.isLoaded).toBe(true)
     wrapper.find('.edit').trigger('click')
     expect(wrapper.vm.isEditing).toBe(true)

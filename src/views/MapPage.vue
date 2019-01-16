@@ -19,7 +19,7 @@ import Popup from '@/components/Map/Popup'
 import DisplayedLayer from '@/store/displayedLayer'
 import ReportedLayer from '@/components/Map/ReportedLayer/ReportedLayer'
 import MapControlBar from '@/components/Map/MapControlBar'
-import Area from '@/store/area'
+import DefinedAreas from '@/store/definedAreas'
 import AreaLayer from '@/store/areaLayer'
 
 import SelectedLayers from '@/store/selectedLayers'
@@ -59,10 +59,10 @@ export default {
     this.displayedLayer = new DisplayedLayer(this.map)
     this.areaLayer = new AreaLayer(this.map)
     try {
-      await this.areaLayer.setSelectedArea(Area.getSelectedArea())
+      await this.areaLayer.setSelectedArea(DefinedAreas.getActiveArea())
     } catch (error) {
       console.error(error)
-      Area.setSelectedArea(false)
+      DefinedAreas.setActiveArea(false)
       this.areaLayer.setSelectedArea(false)
     }
     const layers = await SelectedLayers.getAllSelectedLayers(this.getAreaLayer().toGeoJSON())

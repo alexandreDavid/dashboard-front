@@ -1,13 +1,13 @@
 import GraphPage from '@/components/Graph/GraphPage.vue'
 import Parameter from '@/store/parameter'
-import Area from '@/store/area'
+import DefinedAreas from '@/store/definedAreas'
 import { shallowMount } from '@vue/test-utils'
 // import flushPromises from 'flush-promises'
 jest.mock('@/store/parameter', () => ({
   getAllParameters: jest.fn()
 }))
-jest.mock('@/store/area', () => ({
-  getSelectedArea: jest.fn()
+jest.mock('@/store/definedAreas', () => ({
+  getActiveArea: jest.fn()
 }))
 
 // Here are some Jasmine 2.0 tests, though you can
@@ -16,8 +16,8 @@ describe('GraphPage.vue', () => {
   beforeEach(() => {
     Parameter.getAllParameters.mockClear()
     Parameter.getAllParameters.mockReturnValue(Promise.resolve({}))
-    Area.getSelectedArea.mockClear()
-    Area.getSelectedArea.mockReturnValue({})
+    DefinedAreas.getActiveArea.mockClear()
+    DefinedAreas.getActiveArea.mockReturnValue({})
   })
 
   // Inspect the raw component options
@@ -42,7 +42,7 @@ describe('GraphPage.vue', () => {
 
   // Mount an instance and inspect the render output
   it('renders the correct adding serie', async () => {
-    Area.getSelectedArea.mockReturnValue({})
+    DefinedAreas.getActiveArea.mockReturnValue({})
     const wrapper = shallowMount(GraphPage)
     await wrapper.vm.$nextTick()
 

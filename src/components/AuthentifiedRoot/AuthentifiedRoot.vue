@@ -16,7 +16,6 @@
 
 <script>
 import NavBar from '@/components/NavBar/NavBar'
-import Area from '@/store/area'
 import UserConfiguration from '@/store/userConfiguration'
 import GeoResources from '@/store/geoResources'
 import Settings from '@/store/settings'
@@ -40,7 +39,6 @@ export default {
     this.showModalWelcome = UserConfiguration.getDisplayHelp() && this.$mq !== 'sm'
     await Settings.init()
     await GeoResources.getAllResources()
-    Area.setSelectedArea(UserConfiguration.getActiveArea())
     this.isLoaded = true
   }
 }

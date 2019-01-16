@@ -22,7 +22,7 @@
 <script>
 import Loading from '@/components/Loading/Loading'
 import Parameter from '@/store/parameter.js'
-import Area from '@/store/area.js'
+import DefinedAreas from '@/store/definedAreas'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import GraphSerie from './GraphSerie'
 import Data from '@/store/data'
@@ -56,7 +56,7 @@ export default {
   },
   async created () {
     this.parameters = await Parameter.getAllParameters()
-    this.selectedArea = Area.getSelectedArea()
+    this.selectedArea = DefinedAreas.getActiveArea()
     this.isLoaded = true
   },
   methods: {

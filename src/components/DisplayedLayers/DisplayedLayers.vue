@@ -13,8 +13,8 @@
 
 <script>
 import SelectedLayers from '@/store/selectedLayers'
-import Area from '@/store/area'
 import Settings from '@/store/settings'
+import DefinedAreas from '@/store/definedAreas'
 
 import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 import DisplayedLayersTools from '@/components/DisplayedLayers/DisplayedLayersTools'
@@ -71,7 +71,7 @@ export default {
       this.openGraphModal(this.selectedLayers.filter(l => l.isSelected()))
     },
     openGraphModal (modalParams) {
-      this.selectedArea = Area.getSelectedArea()
+      this.selectedArea = DefinedAreas.getActiveArea()
       this.showModalGraph = true
       this.modalParams = this.selectedLayers.filter(l => l.isSelected())
     }

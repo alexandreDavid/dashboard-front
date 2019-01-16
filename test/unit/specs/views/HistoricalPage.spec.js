@@ -84,7 +84,7 @@ describe('HistoricalPage.vue', () => {
     expect(wrapper.vm.timePeriods).toEqual(mockTimePeriods)
     expect(wrapper.vm.datasets).toEqual(mockDatasets)
     expect(wrapper.vm.isLoaded).toBe(false)
-    expect(mockAreaLayer.setSelectedArea).toBeCalledWith({id: 7552})
+    expect(mockAreaLayer.setSelectedArea).toBeCalledWith({idArea: 7552})
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.isLoaded).toBe(true)
   })

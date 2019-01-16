@@ -17,8 +17,11 @@ jest.mock('@/store/area', () => ({
   getArea: jest.fn(),
   getSubAreas: jest.fn()
 }))
-Area.getArea.mockReturnValue({data: 'mockAxiosData'})
-Area.getSubAreas.mockReturnValue({data: 'mockAxiosData'})
+
+const mockAreaObj = 'mockArea'
+const mockSubAreaObj = 'mockSubArea'
+Area.getArea.mockReturnValue(mockAreaObj)
+Area.getSubAreas.mockReturnValue(mockSubAreaObj)
 
 const mockMap = {
   fitBounds: jest.fn()
@@ -47,8 +50,8 @@ describe('areaLayer.js', () => {
     await areaLayer.setSelectedArea(mockArea)
 
     expect(mockGeoJSON.remove).not.toHaveBeenCalled()
-    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getAreaLayerStyle())
-    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getSubAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith(mockAreaObj, AreaLayer.getAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith(mockSubAreaObj, AreaLayer.getSubAreaLayerStyle())
     expect(mockGeoJSON.addTo).toHaveBeenCalledWith(mockMap)
   })
 
@@ -63,8 +66,8 @@ describe('areaLayer.js', () => {
     //   params: AreaLayer.getAreaRequestParams(mockArea)
     // })
     expect(mockGeoJSON.remove).toBeCalled()
-    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getAreaLayerStyle())
-    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getSubAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith(mockAreaObj, AreaLayer.getAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith(mockSubAreaObj, AreaLayer.getSubAreaLayerStyle())
     expect(mockGeoJSON.addTo).toHaveBeenCalledWith(mockMap)
   })
   it('Calls setSelectedArea with areaLayer Uganda', async () => {
@@ -75,8 +78,8 @@ describe('areaLayer.js', () => {
     }
     const areaLayer = new AreaLayer(mockMap)
     await areaLayer.setSelectedArea(mockArea)
-    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getAreaLayerStyle())
-    expect(L.GeoJSON).toHaveBeenCalledWith('mockAxiosData', AreaLayer.getSubAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith(mockAreaObj, AreaLayer.getAreaLayerStyle())
+    expect(L.GeoJSON).toHaveBeenCalledWith(mockSubAreaObj, AreaLayer.getSubAreaLayerStyle())
 
     await areaLayer.setSelectedArea(mockArea)
     expect(mockGeoJSON.remove).toBeCalled()

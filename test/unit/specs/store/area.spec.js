@@ -24,20 +24,6 @@ describe('area.js', () => {
     expect(areas).toEqual([])
   })
 
-  it('Calls setSelectedArea, getSelectedArea', () => {
-    const selectedArea = {id: 1}
-    Area.setSelectedArea(selectedArea)
-    expect(Area.getSelectedArea()).toEqual(selectedArea)
-  })
-
-  it('Calls getAreaInfos and answers', async () => {
-    const mockGet = {data: true}
-    Axios.get.mockReturnValue(mockGet)
-    const areaInfo = await Area.getArea({id: 1})
-    expect(Axios.get).toBeCalled()
-    expect(areaInfo).toEqual(mockGet)
-  })
-
   it('Calls getAreaInfos and throw error', async () => {
     Axios.get.mockRejectedValue(new Error('Async error'))
     let areas = false

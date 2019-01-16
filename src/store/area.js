@@ -1,25 +1,25 @@
 import axios from 'axios'
-import UserConfiguration from '@/store/userConfiguration'
 
 const urlRoot = `${process.env.API_URL}/areas`
-let selectedArea
 
-let ugandaArea = false
-let ugandaSubAreas = false
+let areaCache = new Map()
+let subAreaCache = new Map()
 
-async function requestGeoserver (area, params, cacheVariable) {
+async function requestGeoserver (area, params, cache) {
+  if (!area || !area.idArea) {
+    return false
+  }
   let areaData
-  if (area.id !== 7552 || !cacheVariable) {
-    areaData = await axios.get(
+  if (cache.has(area.idArea)) {
+    areaData = cache.get(area.idArea)
+  } else {
+    const req = await axios.get(
       `${process.env.GEOSERVER_URL}/boundaries/ows`, {
         params: Area.getAreaRequestParams(params)
       }
     )
-    if (area.id === 7552) {
-      cacheVariable = areaData
-    }
-  } else {
-    areaData = ugandaArea
+    areaData = req.data
+    cache.set(area.idArea, areaData)
   }
   return areaData
 }
@@ -39,18 +39,11 @@ let Area = {
       return []
     }
   },
-  setSelectedArea (area) {
-    UserConfiguration.setActiveArea(area)
-    selectedArea = area
-  },
-  getSelectedArea () {
-    return selectedArea
-  },
   async getArea (area) {
-    return requestGeoserver(area, Area.getAreaRequestParams({featureid: area.id}), ugandaArea)
+    return requestGeoserver(area, Area.getAreaRequestParams({featureid: area.idArea}), areaCache)
   },
   async getSubAreas (area) {
-    return requestGeoserver(area, Area.getAreaRequestParams({cql_filter: `idparent = ${area.id}`}), ugandaSubAreas)
+    return requestGeoserver(area, Area.getAreaRequestParams({cql_filter: `idparent = ${area.idArea}`}), subAreaCache)
   }
 }
 
