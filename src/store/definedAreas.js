@@ -2,7 +2,17 @@ import UserConfiguration from '@/store/userConfiguration'
 
 export default {
   getAll () {
-    return UserConfiguration.getDefinedAreas()
+    let allAreas = UserConfiguration.getDefinedAreas()
+    // Migration to be removed in few months
+    if (!allAreas.length) {
+      let activeArea = UserConfiguration.getActiveArea()
+      if (activeArea) {
+        activeArea.idArea = activeArea.id
+        activeArea.id = 1
+        allAreas = [activeArea]
+      }
+    }
+    return allAreas
   },
   setAll (allAreas) {
     this.saveChanges(allAreas)
@@ -10,13 +20,15 @@ export default {
   },
   saveChanges (allAreas) {
     UserConfiguration.setDefinedAreas(allAreas)
+    // Migration to be removed in few months
+    UserConfiguration.removeActiveArea()
     this.allAreas = allAreas
   },
   hasAreas () {
     return !!this.getAll().length
   },
   getActiveArea () {
-    const allAreas = UserConfiguration.getDefinedAreas()
+    const allAreas = this.getAll()
     return allAreas && (allAreas.find(a => a.active) || allAreas[0])
   },
   setActiveArea (area) {

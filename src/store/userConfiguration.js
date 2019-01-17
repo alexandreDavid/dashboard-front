@@ -61,6 +61,9 @@ Object.keys(configuration).forEach(config => {
   userConfiguration[`set${configFuncName}`] = function (value) {
     return setConfiguration(config, value)
   }
+  userConfiguration[`remove${configFuncName}`] = function (value) {
+    return localStorage.removeItem(config)
+  }
 })
 
 export default userConfiguration
