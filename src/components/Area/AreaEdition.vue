@@ -100,7 +100,7 @@ export default {
   methods: {
     loadVal (val) {
       this.val = {...val}
-      this.activeAreaType = (val && val.type === 'existing' ? 'existing' : 'custom')
+      this.activeAreaType = (val && val.type === 'custom' ? 'custom' : 'existing')
       this.val.type = this.activeAreaType
       this.drawnItems.clearLayers()
       this.areaLayer.remove()
