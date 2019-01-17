@@ -160,6 +160,8 @@ export default {
 
       if (this.val.name) {
         this.addNameControl()
+      } else {
+        this.map.removeControl(this.nameControl)
       }
       this.map.addControl(this.drawControl)
       if (this.drawnItems.getBounds().isValid()) {
