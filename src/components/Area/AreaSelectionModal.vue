@@ -93,34 +93,8 @@ export default {
       this.editedArea = area
       this.$nextTick()
     },
-    goToExistingArea () {
-      this.areaLayer.add()
-      this.areaLayer.zoomToArea()
-      this.drawnItems.remove()
-      this.map.removeControl(this.drawControl)
-    },
-    goToCustom () {
-      this.areaLayer.remove()
-      this.drawnItems.addTo(this.map)
-      this.map.addControl(this.drawControl)
-      if (this.drawnItems.getBounds().isValid()) {
-        this.map.fitBounds(this.drawnItems.getBounds())
-      }
-    },
     close () {
       this.$emit('close')
-    },
-    validate () {
-      if (this.activeAreaType === 'existing') {
-        this.$emit('input', this.areaLayer.getSelectedArea())
-      } else {
-        this.$emit('input', {
-          name: 'Custom area',
-          type: 'custom',
-          geom: this.drawnItems.toGeoJSON()
-        })
-      }
-      this.close()
     },
     afterEdit (area) {
       let idx = this.areas.findIndex(a => a.isEditing === true)

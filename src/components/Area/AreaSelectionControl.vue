@@ -5,10 +5,10 @@
         <option v-for="(option, key) in options" :key="key" :value="option">{{ option.name }}</option>
       </select>
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" @click="showModalArea = true"><font-awesome-icon icon="edit" /></button>
+        <button class="btn btn-outline-secondary edit" type="button" @click="showModalArea = true"><font-awesome-icon icon="edit" /></button>
       </div>
     </div>
-    <area-selection-modal v-if="showModalArea" @close="closeModal"></area-selection-modal>
+    <area-selection-modal class="test" v-if="showModalArea" @close="closeModal"></area-selection-modal>
   </div>
 </template>
 
