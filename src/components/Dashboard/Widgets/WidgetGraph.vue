@@ -41,7 +41,6 @@ export default {
     await this.areaLayer.setSelectedArea(this.area)
     this.resource = new SelectedLayer()
     await this.getData(this.parameter)
-    
     this.isLoaded = true
   },
   methods: {
@@ -52,7 +51,7 @@ export default {
       this.isLoaded = false
       await this.resource.setLayer(GeoResources.searchById(param.id), this.areaLayer.toGeoJSON())
       const allTimes = this.resource._availableTimes
-      let {0 : startDate ,[allTimes.length - 1] : endDate} = allTimes
+      let {0: startDate, [allTimes.length - 1]: endDate} = allTimes
       this.startDate = startDate
       this.endDate = endDate
       this.isLoaded = true
