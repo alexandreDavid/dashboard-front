@@ -20,6 +20,7 @@ let configuration = {
       }
     ]
   },
+  dashboards: [],
   activeArea: {},
   activeSettings: {
     temperature: 'C',

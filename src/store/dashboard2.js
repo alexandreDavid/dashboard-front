@@ -1,4 +1,5 @@
 import UserConfiguration from '@/store/userConfiguration'
+import Dashboards from '@/store/dashboards'
 import GeoResources from '@/store/geoResources'
 
 const cardWidths = [
@@ -40,78 +41,41 @@ const cardHeights = [
   }
 ]
 
-function prepareCard (card) {
-  let widget = Dashboard.getCardWidgets().find(w => w.id === card.widgetId)
-  if (widget) {
-    widget.formFields && widget.formFields.map(field => {
-      if (card[field.id]) {
-        field.value = card[field.id]
-      }
-      return field
-    })
-  }
-  return {
-    widthClass: card.widthClass,
-    heightClass: card.heightClass,
-    title: card.title,
-    id: card.id,
-    widget: widget,
-    type: card.widgetId
-  }
-}
-
-function prepareCardForSaving (card) {
-  const widget = card.widget
-  let card2save = {
-    widthClass: card.widthClass,
-    heightClass: card.heightClass,
-    title: card.title,
-    id: card.id,
-    widgetId: widget.id
-  }
-  widget.formFields && widget.formFields.forEach(field => {
-    card2save[field.id] = field.value
-  })
-  return card2save
-}
-
 export default class Dashboard {
   constructor (config = {}) {
     this.id = config.id
     this.title = config.title
     this.layout = config.layout
-    this.widgets = config.widgets.map(card => prepareCard(card))
+    this.widgets = config.widgets || []
   }
-  addCard (card = {}) {
+  addWidget (widget = {}) {
     // get max id plus 1
-    card.id = Math.max(...this.cards.map(c => {
-      return c.id
+    widget.id = Math.max(...this.widgets.map(w => {
+      return w.id
     }), 0) + 1
-    card = Object.assign({}, Dashboard.getDefaultCard(), card)
-    this.cards.push(card)
-    return card
+    widget.widthClass = 'col-12'
+    widget.heightClass = 'height-medium'
+    this.widgets.push(widget)
+    return widget
   }
-  getCards () {
-    return this.cards
+  getWidgets () {
+    return this.widgets
   }
-  getCard (id) {
-    return this.cards.find((c) => c.id === id)
+  getWidget (id) {
+    return this.widgets.find((c) => c.id === id)
   }
-  setCard (card) {
-    if (card.id) {
-      Object.assign(this.getCard(card.id), card)
+  setWidget (widget) {
+    if (widget.id) {
+      Object.assign(this.getWidget(widget.id), widget)
     } else {
-      this.addCard(card)
+      this.addWidget(widget)
     }
   }
-  removeCard (card) {
-    this.cards.splice(this.cards.findIndex(c => c.id === card.id), 1)
+  removeWidget (widget) {
+    this.widgets.splice(this.widgets.findIndex(c => c.id === widget.id), 1)
   }
   save () {
-    UserConfiguration.setDashboard({
-      title: this.title,
-      cards: this.cards.map(prepareCardForSaving)
-    })
+    Dashboards.setDashboard(this)
   }
   static getDefaultTitle () {
     return 'Dashboard'

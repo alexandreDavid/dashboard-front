@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MapPage from '@/views/MapPage'
-import DashboardPage from '@/components/Dashboard/DashboardPage'
+import DashboardPage from '@/views/DashboardPage'
 import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
 import GraphPage from '@/components/Graph/GraphPage'
@@ -76,7 +76,7 @@ export default new Router({
         },
         {
           path: '*',
-          redirect: { name: 'map' }
+          redirect: { name: 'dashboard' }
         }
       ]
     },

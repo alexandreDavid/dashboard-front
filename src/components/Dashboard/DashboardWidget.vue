@@ -1,32 +1,35 @@
 <template>
   <div class="p-0" v-bind:class="cardConfiguration.widthClass">
     <div class="card m-2" v-bind:class="cardConfiguration.heightClass">
-      <div class="card-header" v-if="cardConfiguration.title">
+      <div class="card-header" v-if="cardConfiguration.title" @mouseover="showEditionButtons = true">
         <div class="d-flex align-items-center">
           <div class="flex-grow-1">
             <span class="w-100">{{cardConfiguration.title}}</span>
           </div>
-          <div v-if="isEditing">
-            <button type="button" class="btn btn-light btn-sm ml-2 edit" @click="editCard()"><font-awesome-icon icon="edit" /></button>
+          <div v-if="showEditionButtons">
+            <button type="button" class="btn btn-light btn-xs ml-2 edit" @click="editCard()"><font-awesome-icon icon="edit" /></button>
+            <button type="button" class="btn btn-light btn-xs delete" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
           </div>
         </div>
       </div>
-      <div v-if="!cardConfiguration.title && isEditing " class="position-absolute" style="right: 0; z-index: 1002; ">
+      <div v-if="!cardConfiguration.title" class="position-absolute m-2" style="right: 0; z-index: 1002; ">
         <button type="button" class="btn btn-light btn-sm edit-card edit" @click="editCard()"><font-awesome-icon icon="edit" /></button>
+        <button type="button" class="btn btn-light btn-sm delete" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
       </div>
       <div class="card-body position-relative" style="overflow: auto;">
-        <WidgetGraph v-if="cardConfiguration.widget.id === 'graph'" class="widget-graph" v-bind:area="selectedArea" v-bind:parameter="getValueForSelectedWidgetById('parameter')" v-bind:graphType="getValueForSelectedWidgetById('graphType').value"></WidgetGraph>
-        <WidgetMap v-if="cardConfiguration.widget.id === 'map'" class="widget-map" v-bind:area="selectedArea" v-bind:parameter="getValueForSelectedWidgetById('parameter')" :widgetKey="cardConfiguration.id"></WidgetMap>
-        <WidgetTextArea v-if="cardConfiguration.widget.id === 'textarea'" class="widget-textarea" v-bind:textArea="getValueForSelectedWidgetById('text')"></WidgetTextArea>
-        <WidgetTable v-if="cardConfiguration.widget.id === 'table'" class="widget-table"></WidgetTable>
-        <WidgetCurrentMap v-if="cardConfiguration.widget.id === 'currentmap'" class="widget-map" v-bind:area="selectedArea" :widgetKey="cardConfiguration.id"></WidgetCurrentMap>
+        <WidgetGraph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:area="selectedArea" v-bind:parameter="cardConfiguration.resource"></WidgetGraph>
+        <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:src="cardConfiguration.config.src"></widget-image>
+        <WidgetMap v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:area="selectedArea" v-bind:parameter="cardConfiguration.resource" :widgetKey="cardConfiguration.id"></WidgetMap>
+        <WidgetTextArea v-if="cardConfiguration.type === 'textarea'" class="widget-textarea" v-bind:textArea="cardConfiguration.config.text"></WidgetTextArea>
+        <WidgetTable v-if="cardConfiguration.type === 'table'" class="widget-table"></WidgetTable>
+        <WidgetCurrentMap v-if="cardConfiguration.type === 'currentmap'" class="widget-map" v-bind:area="selectedArea" :widgetKey="cardConfiguration.id"></WidgetCurrentMap>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { WidgetGraph, WidgetMap, WidgetTable, WidgetTextArea, WidgetCurrentMap } from '@/components/Dashboard/Widgets'
+import { WidgetGraph, WidgetImage, WidgetMap, WidgetTable, WidgetTextArea, WidgetCurrentMap } from '@/components/Dashboard/Widgets'
 import Loading from '@/components/Loading/Loading'
 
 export default {
@@ -34,6 +37,7 @@ export default {
   components: {
     Loading,
     WidgetGraph,
+    WidgetImage,
     WidgetMap,
     WidgetCurrentMap,
     WidgetTextArea,
@@ -44,12 +48,17 @@ export default {
     'cardConfiguration',
     'isEditing'
   ],
+  data () {
+    return {
+      showEditionButtons: false
+    }
+  },
   methods: {
     editCard () {
       this.$emit('edit')
     },
     getValueForSelectedWidgetById (id) {
-      return this.cardConfiguration.widget.formFields.find(f => f.id === id).value
+      return this.cardConfiguration.config.find(f => f.id === id).value
     }
   }
 }

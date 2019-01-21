@@ -55,8 +55,7 @@ function prepareCard (card) {
     heightClass: card.heightClass,
     title: card.title,
     id: card.id,
-    widget: widget,
-    type: card.widgetId
+    widget: widget
   }
 }
 
@@ -75,14 +74,11 @@ function prepareCardForSaving (card) {
   return card2save
 }
 
-export default class Dashboard {
-  constructor (config = {}) {
-    this.id = config.id
-    this.title = config.title
-    this.layout = config.layout
-    this.widgets = config.widgets.map(card => prepareCard(card))
+export default class Widget {
+  constructor (widget = {}) {
+    this.widget = widget
   }
-  addCard (card = {}) {
+  setPosition (card = {}) {
     // get max id plus 1
     card.id = Math.max(...this.cards.map(c => {
       return c.id
@@ -119,10 +115,9 @@ export default class Dashboard {
   static getDefaultCard () {
     let widthClass = Dashboard.getCardWidths()[2].class
     let heightClass = Dashboard.getCardHeights()[1].class
-    return {widthClass, heightClass}
-    // let widget = Dashboard.getCardWidgets()[0]
-    // let title = Dashboard.getCardWidgets()[0].formFields[0].value.label
-    // return {widthClass, heightClass, widget, title}
+    let widget = Dashboard.getCardWidgets()[0]
+    let title = Dashboard.getCardWidgets()[0].formFields[0].value.label
+    return {widthClass, heightClass, widget, title}
   }
   static getCardWidths () {
     return cardWidths

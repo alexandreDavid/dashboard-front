@@ -15,17 +15,10 @@ export default {
     return allAreas
   },
   setAll (allAreas) {
-    this.saveChanges(allAreas)
-    return allAreas
-  },
-  saveChanges (allAreas) {
     UserConfiguration.setDefinedAreas(allAreas)
     // Migration to be removed in few months
     UserConfiguration.removeActiveArea()
-    this.allAreas = allAreas
-  },
-  hasAreas () {
-    return !!this.getAll().length
+    return allAreas
   },
   getActiveArea () {
     const allAreas = this.getAll()
