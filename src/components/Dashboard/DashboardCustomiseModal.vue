@@ -6,13 +6,14 @@
     <div slot="body">
       <div class="form-group">
         <label>Layout</label>
-        <div class="w-100 btn-group btn-group-lg" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-secondary active">100%</button>
-          <button type="button" class="btn btn-secondary">50% | 50%</button>
-          <button type="button" class="btn btn-secondary">25% | 25% | 25% | 25%</button>
-          <button type="button" class="btn btn-secondary">30% | 70%</button>
-          <button type="button" class="btn btn-secondary">30% | 40% | 30%</button>
-          <button type="button" class="btn btn-secondary">70% | 30%</button>
+        <div class="d-flex flex-wrap">
+          <button v-for="(layout, key) in layouts" :key="key" @click="customisation.layout = layout" type="button" class="btn btn-secondary m-2" :class="{active: customisation.layout.id === layout.id}" style="width: 200px;height:100px;">
+            <div class="d-flex h-100">
+              <div v-for="(col, key) in layout.columns" :key="key" class="border p-1" :class="col.class">
+                <small class="align-middle">{{ col.name }}</small>
+              </div>
+            </div>
+          </button>
         </div>
       </div>
       <div class="form-group">
@@ -29,7 +30,7 @@
     </div>
     <div slot="footer">
       <button type="button" class="btn btn-secondary" @click="close">Cancel</button>
-      <button type="button" class="btn btn-success" @click="$emit('close')"><font-awesome-icon icon="check" /> Create</button>
+      <button type="button" class="btn btn-success" @click="validate(customisation)"><font-awesome-icon icon="check" /> Validate</button>
     </div>
   </modal>
 </template>
@@ -44,13 +45,91 @@ export default {
     Loading,
     Modal
   },
-  data () {
-    return {
+  props: {
+    dashboard: {
+      required: true,
+      type: Object
     }
   },
-  mounted () {
+  data () {
+    const sixtysix = {
+      name: '66%',
+      class: 'col-8'
+    }
+    const fifty = {
+      name: '50%',
+      class: 'col-6'
+    }
+    const thirtythree = {
+      name: '33%',
+      class: 'col-4'
+    }
+    const twentyfive = {
+      name: '25%',
+      class: 'col-3'
+    }
+    return {
+      layouts: [
+        {
+          id: '100',
+          columns: [
+            {
+              name: '100%',
+              class: 'col-12'
+            }
+          ]
+        },
+        {
+          id: '50-50',
+          columns: [
+            fifty,
+            fifty
+          ]
+        },
+        {
+          id: '25-25-25-25',
+          columns: [
+            twentyfive,
+            twentyfive,
+            twentyfive,
+            twentyfive
+          ]
+        },
+        {
+          id: '33-33-33',
+          columns: [
+            thirtythree,
+            thirtythree,
+            thirtythree
+          ]
+        },
+        {
+          id: '33-66',
+          columns: [
+            thirtythree,
+            sixtysix
+          ]
+        },
+        {
+          id: '66-33',
+          columns: [
+            sixtysix,
+            thirtythree
+          ]
+        }
+      ],
+      customisation: {}
+    }
+  },
+  created () {
+    this.customisation = {
+      layout: this.dashboard.layout || this.layouts[0]
+    }
   },
   methods: {
+    validate (customisation) {
+      this.$emit('validate', customisation)
+    },
     close () {
       this.$emit('close')
     }

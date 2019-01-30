@@ -1,11 +1,12 @@
 <template>
-  <div id="dashboard">
-    <div v-if="isLoaded" class="d-flex flex-row-reverse">
-      <div class="flex-grow-1 container-fluid">
-        <dashboard-container v-if="selectedDashboard" :config="selectedDashboard" @save="save"></dashboard-container>
+  <div id="dashboard" class="h-100">
+    <div v-if="isLoaded" class="d-flex flex-row-reverse h-100">
+      <div class="flex-grow-1 h-100 position-relative">
+        <div class="" style="position: absolute;overflow: auto;top: 0;bottom: 0;left:0;right:0;">
+          <dashboard-container v-if="selectedDashboard" :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
+        </div>
       </div>
-      <!-- <div class="d-none d-sm-block"> -->
-      <div class="d-none d-sm-block bg-light" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
+      <div class="d-none d-sm-block bg-light h-100" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
         <div class="container mt-2">
           <div class="row border-bottom">
             <div class="p-2 col-12">
@@ -72,6 +73,10 @@ export default {
       this.showNewModal = false
       this.selectedDashboard = Dashboards.addDashboard(newDashboard)
       this.dashboards = Dashboards.getAll()
+    },
+    deleteDashboard (dashboard) {
+      this.selectedDashboard = false
+      this.dashboards = Dashboards.removeDashboard(dashboard)
     },
     save () {
       this.dashboards = Dashboards.getAll()

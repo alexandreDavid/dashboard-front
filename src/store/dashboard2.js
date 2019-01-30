@@ -55,6 +55,7 @@ export default class Dashboard {
     }), 0) + 1
     widget.widthClass = 'col-12'
     widget.heightClass = 'height-medium'
+    widget.colIndex = 0
     this.widgets.push(widget)
     return widget
   }

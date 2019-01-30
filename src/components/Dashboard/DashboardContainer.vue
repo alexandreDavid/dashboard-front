@@ -1,5 +1,6 @@
 <template>
-  <div class="row">
+<div class="container-fluid pb-2 border-bottom">
+  <div class="row" v-if="isLoaded">
     <h4 class="col-12 my-3 px-3">
       <div class="input-group" v-if="editTitle">
         <input type="text" v-model="dashboard.title" class="form-control" id="title" placeholder="title" aria-label="title">
@@ -28,20 +29,28 @@
       </div>
       <div class="d-flex align-items-center">
         <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true">Customise dashboard</button>
-        <button type="button" class="btn btn-sm btn-light d-inline-block" @click="edit()">Delete dashboard</button>
+        <button type="button" class="btn btn-sm btn-light d-inline-block" @click="$emit('delete', dashboard)">Delete dashboard</button>
       </div>
     </div>
     <div class="col-12 mb-3">
       <h6>Place selection</h6>
       <area-selection-control @change="updateSearchLocation"></area-selection-control>
     </div>
-    <div class="col-12">
-      <DashboardWidget v-for="widget in dashboard.widgets" :key="widget.id" v-bind:cardConfiguration="widget" @edit="editWidget(widget)" @delete="removeWidget(widget)" v-bind:selectedArea="selectedArea"></DashboardWidget>
+    <div class="container-fluid mx-3">
+      <div class="row">
+        <div v-for="(col, key) in dashboard.layout.columns" :key="key" :class="col.class">
+        <!-- <div class="col-12"> -->
+          <div class="row">
+            <DashboardWidget v-for="widget in colFilter(dashboard.widgets, key)" :key="widget.id" v-bind:cardConfiguration="widget" @edit="editWidget(widget)" @delete="removeWidget(widget)" v-bind:selectedArea="selectedArea"></DashboardWidget>
+          </div>
+        </div>
+      </div>
     </div>
-    <Loading v-if="!isLoaded"/>
-    <dashboard-customise-modal v-if="showCustomiseModal" @close="showCustomiseModal = false"></dashboard-customise-modal>
+    <dashboard-customise-modal v-if="showCustomiseModal" @close="showCustomiseModal = false" @validate="setCustomisation" v-bind:dashboard="dashboard"></dashboard-customise-modal>
     <dashboard-card-modal v-if="showCardModal" @close="closeEditCardModal" @validate="setEditedWidget" :editedCard="editedCard"></dashboard-card-modal>
   </div>
+  <Loading v-else/>
+</div>
 </template>
 
 <script>
@@ -135,11 +144,21 @@ export default {
       this.dashboard.save()
       this.save()
     },
+    setCustomisation (customisation) {
+      this.showCustomiseModal = false
+      this.dashboard.layout = customisation.layout
+      this.dashboard.save()
+      this.save()
+    },
     save () {
-      // Api.setDashboard(this.dashboard)
-      // this.dashboard.save()
       this.$emit('save')
       this.$ga.event('dashboard', 'save')
+    },
+    colFilter (list, col) {
+      return list.filter(w => {
+        w.colIndex = w.colIndex || 0
+        return w.colIndex === col
+      })
     }
   },
   watch: {

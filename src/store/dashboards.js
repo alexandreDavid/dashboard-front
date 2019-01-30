@@ -15,21 +15,24 @@ export default {
       return d.id
     }), 0) + 1
     allDashboards.push(dashboard)
-    return this.setAll(allDashboards)
+    this.setAll(allDashboards)
+    return dashboard
   },
   getDashboard (id) {
     return this.getAll().find((c) => c.id === id)
   },
   setDashboard (dashboard) {
-    console.log(dashboard)
     if (dashboard.id) {
       let allDashboards = this.getAll()
       Object.assign(allDashboards.find((c) => c.id === dashboard.id), dashboard)
-      // Object.assign(this.getDashboard(dashboard.id), dashboard)
-      // console.log(this.getAll())
       this.setAll(allDashboards)
     } else {
       this.addDashboard(dashboard)
     }
+  },
+  removeDashboard (dashboard) {
+    let allDashboards = this.getAll()
+    allDashboards.splice(allDashboards.findIndex(d => d.id === dashboard.id), 1)
+    return this.setAll(allDashboards)
   }
 }
