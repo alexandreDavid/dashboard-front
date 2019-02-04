@@ -36,16 +36,7 @@
       <h6>Place selection</h6>
       <area-selection-control @change="updateSearchLocation"></area-selection-control>
     </div>
-    <div class="container-fluid mx-3">
-      <div class="row">
-        <div v-for="(col, key) in dashboard.layout.columns" :key="key" :class="col.class">
-        <!-- <div class="col-12"> -->
-          <div class="row">
-            <DashboardWidget v-for="widget in colFilter(dashboard.widgets, key)" :key="widget.id" v-bind:cardConfiguration="widget" @edit="editWidget(widget)" @delete="removeWidget(widget)" v-bind:selectedArea="selectedArea"></DashboardWidget>
-          </div>
-        </div>
-      </div>
-    </div>
+    <drag-drop-widgets v-bind:dashboard="dashboard" @edit="editWidget" @delete="removeWidget" v-bind:selectedArea="selectedArea"></drag-drop-widgets>
     <dashboard-customise-modal v-if="showCustomiseModal" @close="showCustomiseModal = false" @validate="setCustomisation" v-bind:dashboard="dashboard"></dashboard-customise-modal>
     <dashboard-card-modal v-if="showCardModal" @close="closeEditCardModal" @validate="setEditedWidget" :editedCard="editedCard"></dashboard-card-modal>
   </div>
@@ -63,6 +54,7 @@ import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import DashboardObj from '@/store/dashboard2'
 import GeoResources from '@/store/geoResources'
 import SideBar from '@/components/SideBar/SideBar'
+import DragDropWidgets from '@/components/Dashboard/DragDropWidgets'
 
 export default {
   name: 'DashboardContainer',
@@ -73,7 +65,8 @@ export default {
     DashboardNewModal,
     DashboardCustomiseModal,
     AreaSelectionControl,
-    SideBar
+    SideBar,
+    DragDropWidgets
   },
   props: ['config'],
   data () {
