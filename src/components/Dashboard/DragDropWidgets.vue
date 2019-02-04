@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid mx-3">
     <div class="row" :class="{'is-dragging': isDragging}">
-      <div v-for="(col, key) in dashboard.layout.columns" :key="key" :class="col.class">
-        <Container group-name="widgets" drag-handle-selector=".card-header"
+      <div class="p-0" v-for="(col, key) in dashboard.layout.columns" :key="key" :class="col.class">
+        <Container :group-name="`dashboard-${dashboard.id}`" drag-handle-selector=".card-header"
             @drag-start="onDragStart"
             @drag-end="onDragEnd"
             @drop="onDrop(key, $event)">
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { Container, Draggable } from "vue-smooth-dnd";
+import { Container, Draggable } from 'vue-smooth-dnd'
 import DashboardWidget from '@/components/Dashboard/DashboardWidget'
 
 const applyDrag = (list, colIndex, widgetId, addedIndex) => {
@@ -46,18 +46,18 @@ const applyDrag = (list, colIndex, widgetId, addedIndex) => {
 }
 
 export default {
-  name: "DragDropWidgets",
+  name: 'DragDropWidgets',
   props: ['dashboard', 'selectedArea'],
   components: { Container, Draggable, DashboardWidget },
-  data() {
+  data () {
     return {
       isEditable: true,
       isDragging: false
     }
   },
   methods: {
-    onDrop(colIndex, dropResult) {
-      const { removedIndex, addedIndex } = dropResult
+    onDrop (colIndex, dropResult) {
+      const addedIndex = dropResult.addedIndex
       if (addedIndex !== null) {
         this.dashboard.widgets = applyDrag(this.dashboard.widgets, colIndex, Number.parseInt(dropResult.droppedElement.getAttribute('widget-id')), addedIndex)
       }
@@ -75,7 +75,7 @@ export default {
       this.isDragging = false
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
