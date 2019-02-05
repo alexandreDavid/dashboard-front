@@ -52,7 +52,7 @@
     </div>
     <div slot="footer">
       <button type="button" class="btn btn-secondary" @click="close">Cancel</button>
-      <button type="button" class="btn btn-success" @click="validate"><font-awesome-icon icon="check" /> Create</button>
+      <button type="button" class="btn btn-success" @click="validate" :disabled="!title"><font-awesome-icon icon="check" /> Create</button>
     </div>
   </modal>
 </template>
