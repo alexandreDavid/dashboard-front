@@ -7,7 +7,7 @@
             @drag-end="onDragEnd"
             @drop="onDrop(key, $event)">
           <Draggable v-for="widget in colFilter(dashboard.widgets, key)" :key="widget.id">
-            <div class="draggable-item" :widget-id="`${dashboard.id}-${widget.id}`">
+            <div class="draggable-item" :widget-id="widget.id">
               <DashboardWidget v-bind:cardConfiguration="widget" :widget-id="`${dashboard.id}-${widget.id}`" @edit="$emit('edit', widget)" @delete="$emit('delete', widget)" v-bind:selectedArea="selectedArea"></DashboardWidget>
             </div>
           </Draggable>
