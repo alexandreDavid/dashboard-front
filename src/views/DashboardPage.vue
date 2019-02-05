@@ -46,6 +46,73 @@ import Loading from '@/components/Loading/Loading'
 import Dashboards from '@/store/dashboards'
 import GeoResources from '@/store/geoResources'
 
+const defaultDashboard = {
+  title: 'Starter dashboard',
+  layout: {
+    id: '50-50',
+    columns: [
+      {
+        name: '50%',
+        class: 'col-6'
+      },
+      {
+        name: '50%',
+        class: 'col-6'
+      }
+    ]
+  },
+  widgets: [
+    {
+      id: 1,
+      colIndex: 0,
+      heightClass: 'height-medium',
+      resource: {
+        id: 1,
+        label: 'Temperature (2-day)'
+      },
+      title: 'Temperature (2-day)',
+      type: 'map',
+      widthClass: 'col-12'
+    },
+    {
+      id: 2,
+      colIndex: 1,
+      heightClass: 'height-medium',
+      resource: {
+        id: 1,
+        label: 'Temperature (2-day)'
+      },
+      title: 'Temperature (2-day)',
+      type: 'graph',
+      widthClass: 'col-12'
+    },
+    {
+      id: 3,
+      colIndex: 0,
+      heightClass: 'height-medium',
+      resource: {
+        id: 2,
+        label: 'Total rainfall Rate (2-day)'
+      },
+      title: 'Total rainfall Rate (2-day)',
+      type: 'map',
+      widthClass: 'col-12'
+    },
+    {
+      id: 4,
+      colIndex: 1,
+      heightClass: 'height-medium',
+      resource: {
+        id: 2,
+        label: 'Total rainfall Rate (2-day)'
+      },
+      title: 'Total rainfall Rate (2-day)',
+      type: 'graph',
+      widthClass: 'col-12'
+    }
+  ]
+}
+
 export default {
   name: 'DashboardPage',
   components: {
@@ -68,6 +135,11 @@ export default {
   async created () {
     await GeoResources.getAllResources()
     this.dashboards = Dashboards.getAll()
+    if (!this.dashboards.length) {
+      this.addDashboard(defaultDashboard)
+    } else {
+      this.selectDashboard(this.dashboards[0])
+    }
     this.isLoaded = true
   },
   methods: {
