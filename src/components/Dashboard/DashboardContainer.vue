@@ -16,11 +16,11 @@
     <div class="col-12 mb-2 px-3 py-1 border-top border-bottom d-flex justify-content-between bg-light">
       <div class="d-flex align-items-center mr-auto">
         <span>Add a widget:</span>
-        <button type="button" class="btn btn-light" @click="addWidget('map')"><font-awesome-icon icon="map" /><br/></button>
-        <button type="button" class="btn btn-light" @click="addWidget('graph')"><font-awesome-icon icon="chart-bar" /><br/></button>
-        <button type="button" class="btn btn-light" @click="addWidget('table')"><font-awesome-icon icon="table" /><br/></button>
-        <button type="button" class="btn btn-light" @click="addWidget('textarea')"><span style="font-size: 18px;line-height: 18px;font-family: initial;font-weight: bold;">T</span></button>
-        <button type="button" class="btn btn-light" @click="addWidget('image')"><font-awesome-icon icon="image" /><br/></button>
+        <button type="button" class="btn btn-light" @click="addWidget('map')" title="Add a map"><font-awesome-icon icon="map" /><br/></button>
+        <button type="button" class="btn btn-light" @click="addWidget('graph')" title="Add a graph"><font-awesome-icon icon="chart-bar" /><br/></button>
+        <button type="button" class="btn btn-light" @click="addWidget('table')" title="Add a table"><font-awesome-icon icon="table" /><br/></button>
+        <button type="button" class="btn btn-light" @click="addWidget('textarea')" title="Add a text area"><span style="font-size: 18px;line-height: 18px;font-family: initial;font-weight: bold;">T</span></button>
+        <button type="button" class="btn btn-light" @click="addWidget('image')" title="Add an image"><font-awesome-icon icon="image" /><br/></button>
         <!-- </div> -->
         <!-- <button type="button" class="btn btn-sm btn-light d-inline-block" @click="addCard()"><font-awesome-icon icon="plus" /> Add a widget</button> -->
         <span class="border-right mx-2" style="height: 25px;"></span>
