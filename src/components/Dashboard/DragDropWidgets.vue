@@ -2,13 +2,13 @@
   <div class="container-fluid mx-3">
     <div class="row" :class="{'is-dragging': isDragging}">
       <div class="p-0" v-for="(col, key) in dashboard.layout.columns" :key="key" :class="col.class">
-        <Container :group-name="`dashboard-${dashboard.id}`" drag-handle-selector=".card-header"
+        <Container :group-name="`dashboard-${dashboard.id}`" drag-handle-selector=".drag-handler"
             @drag-start="onDragStart"
             @drag-end="onDragEnd"
             @drop="onDrop(key, $event)">
           <Draggable v-for="widget in colFilter(dashboard.widgets, key)" :key="widget.id">
-            <div class="draggable-item" :widget-id="widget.id">
-              <DashboardWidget v-bind:cardConfiguration="widget" @edit="$emit('edit', widget)" @delete="$emit('delete', widget)" v-bind:selectedArea="selectedArea"></DashboardWidget>
+            <div class="draggable-item" :widget-id="`${dashboard.id}-${widget.id}`">
+              <DashboardWidget v-bind:cardConfiguration="widget" :widget-id="`${dashboard.id}-${widget.id}`" @edit="$emit('edit', widget)" @delete="$emit('delete', widget)" v-bind:selectedArea="selectedArea"></DashboardWidget>
             </div>
           </Draggable>
         </Container>

@@ -46,6 +46,7 @@ export default class Dashboard {
     this.id = config.id
     this.title = config.title
     this.layout = config.layout
+    this.area = config.area
     this.widgets = config.widgets || []
   }
   addWidget (widget = {}) {
@@ -63,7 +64,7 @@ export default class Dashboard {
     return this.widgets
   }
   getWidget (id) {
-    return this.widgets.find((c) => c.id === id)
+    return this.widgets.find(w => w.id === id)
   }
   setWidget (widget) {
     if (widget.id) {
@@ -71,6 +72,15 @@ export default class Dashboard {
     } else {
       this.addWidget(widget)
     }
+  }
+  setLayout (layout) {
+    this.layout = layout
+    const lastColIndex = (layout.columns.length - 1)
+    this.widgets.forEach(w => {
+      if (w.colIndex > lastColIndex) {
+        w.colIndex = lastColIndex
+      }
+    })
   }
   removeWidget (widget) {
     this.widgets.splice(this.widgets.findIndex(c => c.id === widget.id), 1)

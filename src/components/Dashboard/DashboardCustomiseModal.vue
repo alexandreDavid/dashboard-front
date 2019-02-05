@@ -54,19 +54,19 @@ export default {
   data () {
     const sixtysix = {
       name: '66%',
-      class: 'col-8'
+      class: 'col-md-8'
     }
     const fifty = {
       name: '50%',
-      class: 'col-6'
+      class: 'col-md-6'
     }
     const thirtythree = {
       name: '33%',
-      class: 'col-4'
+      class: 'col-md-4'
     }
     const twentyfive = {
       name: '25%',
-      class: 'col-3'
+      class: 'col-6 col-lg-3'
     }
     return {
       layouts: [

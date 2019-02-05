@@ -1,10 +1,10 @@
 <template>
   <div class="p-0" v-bind:class="cardConfiguration.widthClass">
     <div class="card m-2" v-bind:class="cardConfiguration.heightClass">
-      <div class="card-header" v-if="cardConfiguration.title" @mouseover="showEditionButtons = true">
+      <div class="card-header drag-handler" v-if="cardConfiguration.title" @mouseover="showEditionButtons = true" @mouseleave="showEditionButtons = false">
         <div class="d-flex align-items-center">
           <div class="flex-grow-1">
-            <span class="w-100">{{cardConfiguration.title}}</span>
+            <span class="w-100" style="line-height: 26px;">{{cardConfiguration.title}}</span>
           </div>
           <div v-if="showEditionButtons">
             <button type="button" class="btn btn-light btn-xs ml-2 edit" @click="editCard()"><font-awesome-icon icon="edit" /></button>
@@ -19,10 +19,10 @@
       <div class="card-body position-relative" style="overflow: auto;">
         <WidgetGraph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:area="selectedArea" v-bind:parameter="cardConfiguration.resource"></WidgetGraph>
         <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:src="cardConfiguration.config.src"></widget-image>
-        <WidgetMap v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:area="selectedArea" v-bind:parameter="cardConfiguration.resource" :widgetKey="cardConfiguration.id"></WidgetMap>
+        <WidgetMap v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:area="selectedArea" v-bind:parameter="cardConfiguration.resource" :widgetKey="widgetId"></WidgetMap>
         <WidgetTextArea v-if="cardConfiguration.type === 'textarea'" class="widget-textarea" v-bind:textArea="cardConfiguration.config.text"></WidgetTextArea>
         <WidgetTable v-if="cardConfiguration.type === 'table'" class="widget-table"></WidgetTable>
-        <WidgetCurrentMap v-if="cardConfiguration.type === 'currentmap'" class="widget-map" v-bind:area="selectedArea" :widgetKey="cardConfiguration.id"></WidgetCurrentMap>
+        <WidgetCurrentMap v-if="cardConfiguration.type === 'currentmap'" class="widget-map" v-bind:area="selectedArea" :widgetKey="widgetId"></WidgetCurrentMap>
       </div>
     </div>
   </div>
@@ -46,7 +46,8 @@ export default {
   props: [
     'selectedArea',
     'cardConfiguration',
-    'isEditing'
+    'isEditing',
+    'widgetId'
   ],
   data () {
     return {
@@ -74,5 +75,9 @@ export default {
 }
 .height-large {
   height: 500px;
+}
+
+.drag-handler {
+  cursor: move;
 }
 </style>

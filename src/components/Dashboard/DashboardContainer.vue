@@ -84,7 +84,6 @@ export default {
   async created () {
     await GeoResources.getAllResources()
     this.loadDashboard(this.config)
-    // this.dashboard = DashboardObj.getSavedDashboard()
     this.isLoaded = true
   },
   methods: {
@@ -97,20 +96,6 @@ export default {
     addWidget (type = 'map') {
       this.editWidget({ title: '', type })
     },
-    // addCard () {
-    //   this.editCard(this.dashboard.addWidget())
-    //   // Scroll to the next graph
-    //   let container = document.querySelector('#page-container')
-    //   this.$nextTick(() => {
-    //     setTimeout(function () {
-    //       container.scrollBy({
-    //         top: container.scrollHeight,
-    //         behavior: 'smooth'
-    //       })
-    //     }, 0)
-    //   })
-    //   this.$ga.event('dashboard', 'addCard')
-    // },
     editWidget (card) {
       this.editedCard = card
       this.showCardModal = true
@@ -126,10 +111,9 @@ export default {
     },
     removeWidget (card) {
       this.dashboard.removeWidget(card)
-      this.showCardModal = false
-      this.$emit('save')
       this.$ga.event('dashboard', 'removeCard')
-      // this.dashboard.save()
+      this.dashboard.save()
+      this.save()
     },
     saveTitle (title) {
       this.editTitle = false
@@ -139,19 +123,13 @@ export default {
     },
     setCustomisation (customisation) {
       this.showCustomiseModal = false
-      this.dashboard.layout = customisation.layout
+      this.dashboard.setLayout(customisation.layout)
       this.dashboard.save()
       this.save()
     },
     save () {
       this.$emit('save')
       this.$ga.event('dashboard', 'save')
-    },
-    colFilter (list, col) {
-      return list.filter(w => {
-        w.colIndex = w.colIndex || 0
-        return w.colIndex === col
-      })
     }
   },
   watch: {
