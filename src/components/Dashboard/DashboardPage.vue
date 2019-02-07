@@ -1,106 +1,169 @@
 <template>
-  <div id="dashboard">
-    <div v-if="isLoaded" class="container">
-      <div class="row">
-        <h4 class="col-12 mt-2 mb-2 p-2">
-          <span>{{ dashboard.title }}</span>
-          <button type="button" class="btn btn-light ml-2 edit" v-if="!isEditing" @click="edit()"><font-awesome-icon icon="edit" /> Edit</button>
-          <button type="button" class="btn btn-primary ml-2 save" v-else @click="save()"><font-awesome-icon icon="save" /> Save</button>
-        </h4>
-        <div class="col-12 mb-2 p-2">
-          <area-selection-control @change="updateSearchLocation"></area-selection-control>
-        </div>
-        <div class="alert alert-info col-12" role="alert" v-if="!selectedArea">
-          Select a location to display the dashboard
-        </div>
-        <div class="alert alert-info col-12" role="alert" v-if="isEditing && selectedArea">
-          Click on <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon icon="plus" /> Add a card</button> to add a new card
-        </div>
-        <DashboardWidget v-if="selectedArea" v-for="card in dashboard.cards" :key="card.id" v-bind:cardConfiguration="card" @edit="editCard(card)" v-bind:isEditing="isEditing" v-bind:selectedArea="selectedArea"></DashboardWidget>
-        <div class="col-md-4 p-2" v-if="isEditing && selectedArea">
-          <button type="button" class="btn btn-primary" id="add-card" @click="addCard()"><font-awesome-icon icon="plus" /> Add a card</button>
-          <button type="button" class="btn btn-primary" @click="save()"><font-awesome-icon icon="save" /> Save</button>
+  <div id="dashboard" class="h-100">
+    <div v-if="isLoaded" class="d-flex flex-row-reverse h-100">
+      <div class="flex-grow-1 h-100 position-relative">
+        <div class="" style="position: absolute;overflow: auto;top: 0;bottom: 0;left:0;right:0;">
+          <dashboard-container v-for="(selectedDashboard, key) in selectedDashboards" :key="key" :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
         </div>
       </div>
-      <DashboardCardModal v-if="showCardModal" @close="closeEditCardModal()" @delete="removeCard(editedCard)" :editedCard="editedCard"></DashboardCardModal>
+      <div class="d-none d-sm-block bg-light h-100" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
+        <div class="container mt-2">
+          <div class="row border-bottom">
+            <div class="p-2 col-12">
+              <button type="button" class="btn btn-secondary col-12" @click="showNewModal = true"><font-awesome-icon icon="plus" /> Add a new dashboard</button>
+            </div>
+            <h5 class="col-12 my-2">
+              My dashboards
+            </h5>
+            <ul class="nav flex-column nav-pills col-12 px-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <li class="nav-link" v-for="dashboard in dashboards" :key="dashboard.id" @click="selectDashboard(dashboard)" v-bind:class="{active: (selectedDashboards.findIndex(d => d.id === dashboard.id) > -1)}">
+                {{ dashboard.title }}
+              </li>
+            </ul>
+          </div>
+          <div class="row border-bottom">
+            <h5 class="col-12 my-2">
+              Shared with me
+            </h5>
+            <ul class="nav flex-column nav-pills col-12 px-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <li class="nav-link">Dashboard 1</li>
+              <li class="nav-link">Dashboard 2</li>
+              <li class="nav-link">Dashboard 3</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     <Loading v-if="!isLoaded"/>
+    <dashboard-new-modal v-if="showNewModal" @close="showNewModal = false" @validate="addDashboard"></dashboard-new-modal>
   </div>
 </template>
 
 <script>
-import DashboardWidget from './DashboardWidget'
-import DashboardCardModal from './DashboardCardModal'
+import DashboardNewModal from '@/components/Dashboard/DashboardNewModal'
+import DashboardContainer from '@/components/Dashboard/DashboardContainer'
 import Loading from '@/components/Loading/Loading'
-import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
-import Api from '@/store/api.js'
-import DashboardObj from '@/store/dashboard'
+import Dashboards from '@/store/dashboards'
 import GeoResources from '@/store/geoResources'
+
+const defaultDashboard = {
+  title: 'Starter dashboard',
+  layout: {
+    id: '50-50',
+    columns: [
+      {
+        name: '50%',
+        class: 'col-6'
+      },
+      {
+        name: '50%',
+        class: 'col-6'
+      }
+    ]
+  },
+  widgets: [
+    {
+      id: 1,
+      colIndex: 0,
+      heightClass: 'height-medium',
+      resource: {
+        id: 1,
+        label: 'Temperature (2-day)'
+      },
+      title: 'Temperature (2-day)',
+      type: 'map',
+      widthClass: 'col-12'
+    },
+    {
+      id: 2,
+      colIndex: 1,
+      heightClass: 'height-medium',
+      resource: {
+        id: 1,
+        label: 'Temperature (2-day)'
+      },
+      title: 'Temperature (2-day)',
+      type: 'graph',
+      widthClass: 'col-12'
+    },
+    {
+      id: 3,
+      colIndex: 0,
+      heightClass: 'height-medium',
+      resource: {
+        id: 2,
+        label: 'Total rainfall Rate (2-day)'
+      },
+      title: 'Total rainfall Rate (2-day)',
+      type: 'map',
+      widthClass: 'col-12'
+    },
+    {
+      id: 4,
+      colIndex: 1,
+      heightClass: 'height-medium',
+      resource: {
+        id: 2,
+        label: 'Total rainfall Rate (2-day)'
+      },
+      title: 'Total rainfall Rate (2-day)',
+      type: 'graph',
+      widthClass: 'col-12'
+    }
+  ]
+}
 
 export default {
   name: 'DashboardPage',
   components: {
     Loading,
-    DashboardWidget,
-    DashboardCardModal,
-    AreaSelectionControl
+    DashboardNewModal,
+    DashboardContainer
   },
   data () {
     return {
       isLoaded: false,
       isEditing: false,
       showCardModal: false,
+      showCustomiseModal: false,
+      showNewModal: false,
       selectedArea: false,
-      dashboard: {},
-      editedCard: {}
+      dashboards: {},
+      selectedDashboards: []
     }
   },
   async created () {
     await GeoResources.getAllResources()
-    this.dashboard = DashboardObj.getSavedDashboard()
+    this.dashboards = Dashboards.getAll()
+    if (!this.dashboards.length) {
+      this.addDashboard(defaultDashboard)
+    } else {
+      this.selectDashboard(this.dashboards[0])
+    }
     this.isLoaded = true
   },
   methods: {
-    updateSearchLocation (feature) {
-      this.selectedArea = feature
+    addDashboard (newDashboard) {
+      this.showNewModal = false
+      const dashboard = Dashboards.addDashboard(newDashboard)
+      this.selectedDashboards.push(dashboard)
+      this.dashboards = Dashboards.getAll()
     },
-    addCard () {
-      this.editCard(this.dashboard.addCard())
-      // Scroll to the next graph
-      let container = document.querySelector('#page-container')
-      this.$nextTick(() => {
-        setTimeout(function () {
-          container.scrollBy({
-            top: container.scrollHeight,
-            behavior: 'smooth'
-          })
-        }, 0)
-      })
-      this.$ga.event('dashboard', 'addCard')
+    selectDashboard (dashboard) {
+      const selectDashboardIdx = this.selectedDashboards.findIndex(d => d.id === dashboard.id)
+      if (selectDashboardIdx !== -1) {
+        this.selectedDashboards.splice(selectDashboardIdx, 1)
+      } else {
+        this.selectedDashboards.push(dashboard)
+      }
     },
-    editCard (card) {
-      this.editedCard = card
-      this.showCardModal = true
-    },
-    closeEditCardModal () {
-      this.dashboard.setCard(this.editedCard)
-      this.showCardModal = false
-      this.$ga.event('dashboard', 'editCard', `${this.editedCard.title}: ${this.editedCard.widget.id}`)
-    },
-    removeCard (card) {
-      this.dashboard.removeCard(card)
-      this.showCardModal = false
-      this.$ga.event('dashboard', 'removeCard')
-    },
-    edit () {
-      this.$ga.event('dashboard', 'edit')
-      this.isEditing = true
+    deleteDashboard (dashboard) {
+      this.dashboards = Dashboards.removeDashboard(dashboard)
+      this.selectDashboard(dashboard)
     },
     save () {
-      Api.setDashboard(this.dashboard)
-      this.dashboard.save()
-      this.isEditing = false
-      this.$ga.event('dashboard', 'save')
+      this.dashboards = Dashboards.getAll()
+      Dashboards.setAll(this.dashboards)
     }
   }
 }
