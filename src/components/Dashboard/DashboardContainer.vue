@@ -1,18 +1,14 @@
 <template>
 <div class="container-fluid pb-2 border-bottom">
   <div class="row" v-if="isLoaded">
-    <h4 class="col-12 my-3 px-3">
-      <div class="input-group" v-if="editTitle">
-        <input type="text" v-model="dashboard.title" class="form-control" id="title" placeholder="title" aria-label="title">
-        <div class="input-group-append" id="button-addon4">
-          <button class="btn btn-secondary" type="button" @click="editTitle = false">Cancel</button>
-          <button class="btn btn-success" type="button" @click="saveTitle(dashboard.title)">Save</button>
-        </div>
+    <h4 class="col-12 mt-3 px-3">
+      <div class="border-bottom pb-2">
+      <editable-input v-model="dashboard.title" @input="saveTitle" placeholder="title" required></editable-input>
       </div>
-      <span @click="editTitle = true" v-else>{{ dashboard.title }}</span>
-      <!-- <button type="button" class="btn btn-light ml-2 edit" v-if="!isEditing" @click="edit()"><font-awesome-icon icon="edit" /> Edit</button>
-      <button type="button" class="btn btn-primary ml-2 save" v-else @click="save()"><font-awesome-icon icon="save" /> Save</button> -->
     </h4>
+    <div class="col-12 mb-3">
+      <editable-text-area v-model="dashboard.description" @input="saveDescription" placeholder="Description" add-button-label="Add a description"></editable-text-area>
+    </div>
     <div class="col-12 mb-2 px-3 py-1 border-top border-bottom d-flex justify-content-between bg-light">
       <div class="d-flex align-items-center mr-auto">
         <span>Add a widget:</span>
@@ -55,6 +51,8 @@ import DashboardObj from '@/store/dashboard2'
 import GeoResources from '@/store/geoResources'
 import SideBar from '@/components/SideBar/SideBar'
 import DragDropWidgets from '@/components/Dashboard/DragDropWidgets'
+import EditableInput from '@/components/EditableField/EditableInput'
+import EditableTextArea from '@/components/EditableField/EditableTextArea'
 
 export default {
   name: 'DashboardContainer',
@@ -66,7 +64,9 @@ export default {
     DashboardCustomiseModal,
     AreaSelectionControl,
     SideBar,
-    DragDropWidgets
+    DragDropWidgets,
+    EditableInput,
+    EditableTextArea
   },
   props: ['config'],
   data () {
@@ -77,8 +77,7 @@ export default {
       showNewModal: false,
       selectedArea: false,
       dashboard: {},
-      editedCard: {},
-      editTitle: false
+      editedCard: {}
     }
   },
   async created () {
@@ -116,8 +115,14 @@ export default {
       this.save()
     },
     saveTitle (title) {
-      this.editTitle = false
+      this.editedTitle = false
       this.dashboard.title = title
+      this.dashboard.save()
+      this.save()
+    },
+    saveDescription (description) {
+      this.editedDescription = false
+      this.dashboard.description = description
       this.dashboard.save()
       this.save()
     },

@@ -45,6 +45,7 @@ export default class Dashboard {
   constructor (config = {}) {
     this.id = config.id
     this.title = config.title
+    this.description = config.description
     this.layout = config.layout
     this.area = config.area
     this.widgets = config.widgets || []

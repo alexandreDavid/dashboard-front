@@ -9,6 +9,10 @@
         <input type="text" v-model="title" class="form-control" id="name" placeholder="Name">
       </div>
       <div class="form-group">
+        <label for="description">Description</label>
+        <textarea v-model="description" class="form-control" id="description" placeholder="description"></textarea>
+      </div>
+      <div class="form-group">
         <label>Template</label>
         <div class="d-flex flex-wrap">
           <button type="button" class="btn btn-secondary d-flex m-2" @click="template = 'blank'" :class="{active: template === 'blank'}" style="height: 150px;">
@@ -68,6 +72,7 @@ export default {
   data () {
     return {
       title: '',
+      description: '',
       template: 'blank'
     }
   },
@@ -77,6 +82,7 @@ export default {
     validate () {
       let config = {
         title: this.title,
+        description: this.description,
         layout: {
           id: '50-50',
           columns: [
