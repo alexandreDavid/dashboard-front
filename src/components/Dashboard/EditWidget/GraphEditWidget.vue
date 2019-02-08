@@ -6,7 +6,7 @@
     </div>
     <div class="form-group">
       <label>Data to display</label>
-      <select class="form-control" v-model="value.formFields.parameter" @change="changeResource(value.formFields.parameter)">
+      <select class="form-control" v-model="value.resource" @change="changeResource(value.resource)">
         <option v-for="resource in resources" :key="resource.id" v-bind:value="resource">
           {{ resource.label }}
         </option>
@@ -30,9 +30,6 @@ export default {
     return {
       resources: []
     }
-  },
-  created () {
-    this.value.formFields = this.value.formFields || {}
   },
   mounted () {
     const allResources = GeoResources.getAll()
