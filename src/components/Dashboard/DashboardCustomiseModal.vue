@@ -30,7 +30,7 @@
 <script>
 import Modal from '@/components/Modal/Modal'
 
-import Dashboard from '@/store/dashboard2'
+import Dashboard from '@/store/dashboard'
 
 export default {
   name: 'DashboardCostumiseModal',

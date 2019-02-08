@@ -74,12 +74,12 @@
 
 <script>
 import DashboardWidget from '@/components/Dashboard/DashboardWidget'
-import DashboardCardModal from '@/components/Dashboard/DashboardCardModal2'
+import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import DashboardNewModal from '@/components/Dashboard/DashboardNewModal'
 import DashboardCustomiseModal from '@/components/Dashboard/DashboardCustomiseModal'
 import Loading from '@/components/Loading/Loading'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
-import DashboardObj from '@/store/dashboard2'
+import DashboardObj from '@/store/dashboard'
 import GeoResources from '@/store/geoResources'
 import SideBar from '@/components/SideBar/SideBar'
 import DragDropWidgets from '@/components/Dashboard/DragDropWidgets'
