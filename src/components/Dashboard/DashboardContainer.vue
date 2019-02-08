@@ -9,25 +9,57 @@
     <div class="col-12 mb-3">
       <editable-text-area v-model="dashboard.description" @input="saveDescription" placeholder="Description" add-button-label="Add a description"></editable-text-area>
     </div>
-    <div class="col-12 mb-2 px-3 py-1 border-top border-bottom d-flex justify-content-between bg-light">
-      <div class="d-flex align-items-center mr-auto">
-        <span>Add a widget:</span>
-        <button type="button" class="btn btn-light" @click="addWidget('map')" title="Add a map"><font-awesome-icon icon="map" /><br/></button>
-        <button type="button" class="btn btn-light" @click="addWidget('graph')" title="Add a graph"><font-awesome-icon icon="chart-bar" /><br/></button>
-        <button type="button" class="btn btn-light" @click="addWidget('table')" title="Add a table"><font-awesome-icon icon="table" /><br/></button>
-        <button type="button" class="btn btn-light" @click="addWidget('textarea')" title="Add a text area"><span style="font-size: 18px;line-height: 18px;font-family: initial;font-weight: bold;">T</span></button>
-        <button type="button" class="btn btn-light" @click="addWidget('image')" title="Add an image"><font-awesome-icon icon="image" /><br/></button>
-        <!-- </div> -->
-        <!-- <button type="button" class="btn btn-sm btn-light d-inline-block" @click="addCard()"><font-awesome-icon icon="plus" /> Add a widget</button> -->
-        <span class="border-right mx-2" style="height: 25px;"></span>
-        <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Share</button>
-        <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Export</button>
+    <nav class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav d-none d-md-flex">
+          <li class="nav-item">
+            <span class="navbar-text">Add a widget:</span>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-light" @click="addWidget('map')" title="Add a map"><font-awesome-icon icon="map" /><br/></button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-light" @click="addWidget('graph')" title="Add a graph"><font-awesome-icon icon="chart-bar" /><br/></button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-light" @click="addWidget('table')" title="Add a table"><font-awesome-icon icon="table" /><br/></button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-light" @click="addWidget('textarea')" title="Add a text area"><span style="font-size: 18px;line-height: 18px;font-family: initial;font-weight: bold;">T</span></button>
+          </li>
+          <li class="nav-item">
+            <button type="button" class="btn btn-light" @click="addWidget('image')" title="Add an image"><font-awesome-icon icon="image" /><br/></button>
+          </li>
+        </ul>
+        <ul class="navbar-nav d-flex d-md-none">
+          <div class="nav-item btn-group">
+            <a class="nav-link dropdown-toggle" href="#" @click="displayDropDownWidget = true"><font-awesome-icon icon="plus" /> Add a widget</a>
+            <drop-down class="dropdown-menu shadow" v-if="displayDropDownWidget" @close="displayDropDownWidget = false">
+              <button class="dropdown-item" type="button" @click="addWidget('map')"><font-awesome-icon icon="map" /> Add a map</button>
+              <button class="dropdown-item" type="button" @click="addWidget('graph')"><font-awesome-icon icon="chart-bar" /> Add a graph</button>
+              <button class="dropdown-item" type="button" @click="addWidget('table')"><font-awesome-icon icon="table" /> Add a table</button>
+              <button class="dropdown-item" type="button" @click="addWidget('textarea')"><span style="font-size: 18px;line-height: 18px;font-family: initial;font-weight: bold;">T</span> Add a text area</button>
+              <button class="dropdown-item" type="button" @click="addWidget('image')"><font-awesome-icon icon="image" /> Add an image</button>
+            </drop-down>
+          </div>
+        </ul>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item m-auto">
+            <span class="navbar-text border-right mx-2" style="height: 24px;vertical-align:middle;"></span>
+          </li>
+          <li class="nav-item m-auto">
+            <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Share</button>
+          </li>
+          <li class="nav-item m-auto">
+            <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Export</button>
+          </li>
+        </ul>
+        <div class="my-2 my-lg-0 d-none d-lg-block">
+          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true">Customise dashboard</button>
+          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="$emit('delete', dashboard)">Delete dashboard</button>
+        </div>
       </div>
-      <div class="d-flex align-items-center">
-        <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true">Customise dashboard</button>
-        <button type="button" class="btn btn-sm btn-light d-inline-block" @click="$emit('delete', dashboard)">Delete dashboard</button>
-      </div>
-    </div>
+    </nav>
     <div class="col-12 mb-3">
       <h6>Place selection</h6>
       <area-selection-control @change="updateSearchLocation"></area-selection-control>
@@ -53,6 +85,7 @@ import SideBar from '@/components/SideBar/SideBar'
 import DragDropWidgets from '@/components/Dashboard/DragDropWidgets'
 import EditableInput from '@/components/EditableField/EditableInput'
 import EditableTextArea from '@/components/EditableField/EditableTextArea'
+import DropDown from '@/components/DropDown/DropDown'
 
 export default {
   name: 'DashboardContainer',
@@ -66,7 +99,8 @@ export default {
     SideBar,
     DragDropWidgets,
     EditableInput,
-    EditableTextArea
+    EditableTextArea,
+    DropDown
   },
   props: ['config'],
   data () {
@@ -77,7 +111,8 @@ export default {
       showNewModal: false,
       selectedArea: false,
       dashboard: {},
-      editedCard: {}
+      editedCard: {},
+      displayDropDownWidget: false
     }
   },
   async created () {
