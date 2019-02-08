@@ -1,45 +1,4 @@
-import UserConfiguration from '@/store/userConfiguration'
 import Dashboards from '@/store/dashboards'
-import GeoResources from '@/store/geoResources'
-
-const cardWidths = [
-  {
-    id: 'XS',
-    label: 'XS',
-    class: 'col-6 col-lg-3'
-  }, {
-    id: 'S',
-    label: 'S',
-    class: 'col-md-4'
-  }, {
-    id: 'M',
-    label: 'M',
-    class: 'col-md-6'
-  }, {
-    id: 'L',
-    label: 'L',
-    class: 'col-md-8'
-  }, {
-    id: 'XL',
-    label: 'XL',
-    class: 'col-12'
-  }
-]
-const cardHeights = [
-  {
-    id: 'S',
-    label: 'S',
-    class: 'heigh-small'
-  }, {
-    id: 'M',
-    label: 'M',
-    class: 'height-medium'
-  }, {
-    id: 'L',
-    label: 'L',
-    class: 'height-large'
-  }
-]
 
 export default class Dashboard {
   constructor (config = {}) {
@@ -89,95 +48,73 @@ export default class Dashboard {
   save () {
     Dashboards.setDashboard(this)
   }
-  static getDefaultTitle () {
-    return 'Dashboard'
-  }
-  static getDefaultCard () {
-    let widthClass = Dashboard.getCardWidths()[2].class
-    let heightClass = Dashboard.getCardHeights()[1].class
-    return {widthClass, heightClass}
-    // let widget = Dashboard.getCardWidgets()[0]
-    // let title = Dashboard.getCardWidgets()[0].formFields[0].value.label
-    // return {widthClass, heightClass, widget, title}
-  }
-  static getCardWidths () {
-    return cardWidths
-  }
-  static getCardHeights () {
-    return cardHeights
-  }
-  static getCardWidgets () {
-    let allResources = GeoResources.getAll()
-    let allParameters = allResources.map(p => ({
-      id: p.id,
-      label: p.label
-    }))
-    let allParametersForGraph = allResources.filter(p => p.config.statistics).map(p => ({
-      id: p.id,
-      label: p.label
-    }))
-    function getFieldParameter (allParameters) {
-      return {
-        id: 'parameter',
-        label: 'Data to display',
-        type: 'select',
-        options: allParameters,
-        value: allParameters[0],
-        onChange (card) {
-          card.title = this.value.label
-        }
-      }
+
+  static getLayouts () {
+    const sixtysix = {
+      name: '66%',
+      class: 'col-md-8'
     }
-
-    const graphTypes = [
-      {
-        value: 'BarChart',
-        label: 'Bar chart'
-      },
-      {
-        value: 'LineChart',
-        label: 'Line chart'
-      },
-      {
-        value: 'PieChart',
-        label: 'Pie chart'
-      }
-    ]
-
+    const fifty = {
+      name: '50%',
+      class: 'col-md-6'
+    }
+    const thirtythree = {
+      name: '33%',
+      class: 'col-md-4'
+    }
+    const twentyfive = {
+      name: '25%',
+      class: 'col-6 col-lg-3'
+    }
     return [
       {
-        id: 'graph',
-        label: 'Graph',
-        formFields: [getFieldParameter(allParametersForGraph), {
-          id: 'graphType',
-          label: 'Graph type',
-          type: 'select',
-          options: graphTypes,
-          value: graphTypes[0]
-        }]
-      }, {
-        id: 'map',
-        label: 'Map',
-        formFields: [getFieldParameter(allParameters)]
-      }, {
-        id: 'currentmap',
-        label: 'Current map'
-      }, {
-        id: 'textarea',
-        label: 'Text',
-        formFields: [{
-          id: 'text',
-          type: 'textarea',
-          value: ''
-        }]
-      }, {
-        id: 'table',
-        label: 'Table'
+        id: '100',
+        columns: [
+          {
+            name: '100%',
+            class: 'col-12'
+          }
+        ]
+      },
+      {
+        id: '50-50',
+        default: true,
+        columns: [
+          fifty,
+          fifty
+        ]
+      },
+      {
+        id: '25-25-25-25',
+        columns: [
+          twentyfive,
+          twentyfive,
+          twentyfive,
+          twentyfive
+        ]
+      },
+      {
+        id: '33-33-33',
+        columns: [
+          thirtythree,
+          thirtythree,
+          thirtythree
+        ]
+      },
+      {
+        id: '33-66',
+        columns: [
+          thirtythree,
+          sixtysix
+        ]
+      },
+      {
+        id: '66-33',
+        columns: [
+          sixtysix,
+          thirtythree
+        ]
       }
     ]
-  }
-  static getSavedDashboard () {
-    const savedDashboard = UserConfiguration.getDashboard()
-    return new Dashboard(savedDashboard.title, savedDashboard.cards)
   }
 }

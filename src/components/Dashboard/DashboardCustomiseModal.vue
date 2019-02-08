@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import Loading from '@/components/Loading/Loading'
 import Modal from '@/components/Modal/Modal'
+
+import Dashboard from '@/store/dashboard2'
 
 export default {
   name: 'DashboardCostumiseModal',
   components: {
-    Loading,
     Modal
   },
   props: {
@@ -44,78 +44,14 @@ export default {
     }
   },
   data () {
-    const sixtysix = {
-      name: '66%',
-      class: 'col-md-8'
-    }
-    const fifty = {
-      name: '50%',
-      class: 'col-md-6'
-    }
-    const thirtythree = {
-      name: '33%',
-      class: 'col-md-4'
-    }
-    const twentyfive = {
-      name: '25%',
-      class: 'col-6 col-lg-3'
-    }
     return {
-      layouts: [
-        {
-          id: '100',
-          columns: [
-            {
-              name: '100%',
-              class: 'col-12'
-            }
-          ]
-        },
-        {
-          id: '50-50',
-          columns: [
-            fifty,
-            fifty
-          ]
-        },
-        {
-          id: '25-25-25-25',
-          columns: [
-            twentyfive,
-            twentyfive,
-            twentyfive,
-            twentyfive
-          ]
-        },
-        {
-          id: '33-33-33',
-          columns: [
-            thirtythree,
-            thirtythree,
-            thirtythree
-          ]
-        },
-        {
-          id: '33-66',
-          columns: [
-            thirtythree,
-            sixtysix
-          ]
-        },
-        {
-          id: '66-33',
-          columns: [
-            sixtysix,
-            thirtythree
-          ]
-        }
-      ],
+      layouts: Dashboard.getLayouts(),
       customisation: {}
     }
   },
   created () {
     this.customisation = {
-      layout: this.dashboard.layout || this.layouts[0]
+      layout: this.dashboard.layout || this.layouts.find(l => l.default)
     }
   },
   methods: {

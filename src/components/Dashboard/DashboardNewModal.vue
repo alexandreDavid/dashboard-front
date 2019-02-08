@@ -64,6 +64,8 @@
 <script>
 import Modal from '@/components/Modal/Modal'
 
+import Dashboard from '@/store/dashboard2'
+
 export default {
   name: 'DashboardNewModal',
   components: {
@@ -83,19 +85,7 @@ export default {
       let config = {
         title: this.title,
         description: this.description,
-        layout: {
-          id: '50-50',
-          columns: [
-            {
-              name: '50%',
-              class: 'col-6'
-            },
-            {
-              name: '50%',
-              class: 'col-6'
-            }
-          ]
-        }
+        layout: Dashboard.getLayouts().find(l => l.default)
       }
 
       if (this.template !== 'blank') {
