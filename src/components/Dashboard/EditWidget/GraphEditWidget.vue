@@ -2,7 +2,7 @@
   <div>
     <div class="form-group">
       <label>Title</label>
-      <input type="text" v-model="value.title" class="form-control" id="title" placeholder="title">
+      <input type="text" v-model="value.title" class="form-control" id="title" placeholder="title" disabled>
     </div>
     <div class="form-group">
       <label>Data to display</label>
@@ -11,6 +11,10 @@
           {{ resource.label }}
         </option>
       </select>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea v-model="value.description" class="form-control" placeholder="Description" aria-label="Description"></textarea>
     </div>
   </div>
 </template>

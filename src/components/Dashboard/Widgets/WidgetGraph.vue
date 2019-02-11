@@ -4,6 +4,9 @@
       <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType" :start-date="startDate" :end-date="endDate"></Graph>
       <Loading v-else></Loading>
     </div>
+    <div class="border-top mx-2 mt-1" v-if="config.description">
+      <pre class="px-3 py-1 mb-0">{{ config.description }}</pre>
+    </div>
   </div>
 </template>
 
@@ -77,5 +80,6 @@ export default {
   height: 200px;
   width: 100%;
   overflow: hidden;
+  position: relative;
 }
 </style>
