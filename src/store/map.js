@@ -1,4 +1,4 @@
-import { Map, TileLayer, CircleMarker } from 'leaflet'
+import { Map, TileLayer, CircleMarker, Control } from 'leaflet'
 import UserConfiguration from '@/store/userConfiguration'
 
 let defaultParams = {
@@ -10,7 +10,8 @@ let defaultParams = {
 let MapObj = Map.extend({
   options: Object.assign({
     attributionControl: false,
-    zoomControl: false
+    zoomControl: false,
+    scaleControl: true
   }, Map.options),
   _baseLayer: false,
   _baseLayerUrl: false,
@@ -56,6 +57,10 @@ let MapObj = Map.extend({
 
 MapObj.addInitHook(function () {
   this.setDefaultMap()
+  if (this.options.scaleControl) {
+    const scale = new Control.Scale()
+    scale.addTo(this)
+  }
 })
 
 MapObj.setDefaultParams = function (params) {

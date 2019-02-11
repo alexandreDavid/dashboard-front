@@ -49,7 +49,7 @@ export default {
     }
   },
   mounted () {
-    this.map = new MapObj(this.mapId)
+    this.map = new MapObj(this.mapId, {scaleControl: this.interactive})
     this.areaLayer.addTo(this.map)
     this.displayedLayer = new DisplayedLayer(this.map)
     if (this.parameter) {
