@@ -8,7 +8,7 @@
         <button class="btn btn-success" type="button" @click="save(val)">Save</button>
       </div>
     </div>
-    <pre class="px-3 py-1" @click="editTextArea" v-else>{{ value }}</pre>
+    <pre class="px-3 py-1 mb-0" style="white-space: pre-line;" @click="editTextArea" v-else>{{ value }}</pre>
   </div>
 </template>
 

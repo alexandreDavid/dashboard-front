@@ -15,7 +15,7 @@
         <Legend v-if="displayedControl === 'legend'" v-bind:legend="displayedLayer._legend"></Legend>
         <time-serie v-if="displayedControl === 'time'" v-model="displayedLayer._time" :times="displayedLayer._availableTimes" @input="setTime"></time-serie>
         <div class="border-top mx-2 mt-1" v-if="config.description">
-          <pre class="px-3 py-1 mb-0">{{ config.description }}</pre>
+          <pre class="widget-description px-3 py-1 mb-0">{{ config.description }}</pre>
         </div>
       </div>
         <div :id="mapId" class="map-container-widget">

@@ -7,7 +7,7 @@
       </div>
     </h4>
     <div class="col-12 mb-3">
-      <editable-text-area v-model="dashboard.description" @input="saveDescription" placeholder="Description" add-button-label="Add a description"></editable-text-area>
+      <editable-text-area class="dashboard-description" v-model="dashboard.description" @input="saveDescription" placeholder="Description" add-button-label="Add a description"></editable-text-area>
     </div>
     <nav class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
