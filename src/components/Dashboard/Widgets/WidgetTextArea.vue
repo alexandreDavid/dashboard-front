@@ -1,6 +1,6 @@
 <template>
 <div class="card-body">
-  <pre class="mb-0">{{ textArea }}</pre>
+  <pre class="mb-0">{{ config.description }}</pre>
 </div>
 </template>
 
@@ -9,7 +9,7 @@
 export default {
   name: 'WidgetTextArea',
   props: [
-    'textArea'
+    'config'
   ]
 }
 </script>

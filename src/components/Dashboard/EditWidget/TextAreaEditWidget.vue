@@ -6,7 +6,7 @@
     </div>
     <div class="form-group">
       <label>Text</label>
-      <textarea class="form-control" v-model="value.config.text"></textarea>
+      <textarea class="form-control" v-model="value.description"></textarea>
     </div>
   </div>
 </template>
@@ -19,14 +19,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-  data () {
-    return {
-      resources: []
-    }
-  },
-  created () {
-    this.value.config = this.value.config || {}
   }
 }
 </script>

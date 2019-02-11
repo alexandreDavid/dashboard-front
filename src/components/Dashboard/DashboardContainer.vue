@@ -128,7 +128,7 @@ export default {
       this.selectedArea = feature
     },
     addWidget (type = 'map') {
-      this.editWidget({ title: '', type })
+      this.editWidget({ title: '', type, description: '' })
     },
     editWidget (card) {
       this.editedCard = card

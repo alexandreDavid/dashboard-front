@@ -19,7 +19,7 @@
       <widget-graph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:config="cardConfiguration" v-bind:area="selectedArea"></widget-graph>
       <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:src="cardConfiguration.config.src"></widget-image>
       <widget-map v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:config="cardConfiguration" v-bind:area="selectedArea" :widgetKey="widgetId"></widget-map>
-      <WidgetTextArea v-if="cardConfiguration.type === 'textarea'" class="widget-textarea" v-bind:textArea="cardConfiguration.config.text"></WidgetTextArea>
+      <WidgetTextArea v-if="cardConfiguration.type === 'textarea'" class="widget-textarea" v-bind:config="cardConfiguration"></WidgetTextArea>
       <WidgetTable v-if="cardConfiguration.type === 'table'" class="widget-table"></WidgetTable>
     </div>
   </div>
