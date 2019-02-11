@@ -1,5 +1,7 @@
 <template>
-  <span>{{ textArea }}</span>
+<div class="card-body">
+  <pre class="mb-0">{{ textArea }}</pre>
+</div>
 </template>
 
 <script>

@@ -1,5 +1,7 @@
 <template>
-  <img class="w-100" :src="src">
+  <div class="card-body p-0">
+    <img class="w-100" :src="src">
+  </div>
 </template>
 
 <script>

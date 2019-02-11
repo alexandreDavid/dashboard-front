@@ -27,7 +27,7 @@ export default {
   methods: {
     editTextArea () {
       // TextArea height is the number of lines (line breaks + 1) or 2
-      this.textAreaRows = ((this.value.match(/(\r\n|\n)/g) || ['']).length) + 1
+      this.textAreaRows = (((this.value && this.value.match(/(\r\n|\n)/g)) || ['']).length) + 1
       this.edit()
     }
   }

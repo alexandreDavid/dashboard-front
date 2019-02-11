@@ -1,4 +1,5 @@
 <template>
+<div class="card-body">
 <table class="table table-sm">
   <thead>
     <tr>
@@ -54,6 +55,7 @@
     </tr>
   </tbody>
 </table>
+</div>
 </template>
 
 <script>

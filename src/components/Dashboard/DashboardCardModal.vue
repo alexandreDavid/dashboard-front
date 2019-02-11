@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     validate (widget) {
-      console.log('widget', widget)
       this.$emit('validate', this.val)
     },
     close () {

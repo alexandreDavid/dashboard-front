@@ -1,6 +1,6 @@
 <template>
-  <div class="p-0" v-bind:class="cardConfiguration.widthClass">
-    <div class="card m-2" v-bind:class="cardConfiguration.heightClass">
+  <div class="p-0">
+    <div class="card m-2 overflow-hidden">
       <div class="card-header drag-handler" v-if="cardConfiguration.title" @mouseover="showEditionButtons = true" @mouseleave="showEditionButtons = false">
         <div class="d-flex align-items-center">
           <div class="flex-grow-1">
@@ -16,20 +16,17 @@
         <button type="button" class="btn btn-light btn-sm edit-card edit" @click="editCard()"><font-awesome-icon icon="edit" /></button>
         <button type="button" class="btn btn-light btn-sm delete" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
       </div>
-      <div class="card-body position-relative" style="overflow: auto;">
-        <WidgetGraph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:area="selectedArea" v-bind:parameter="cardConfiguration.resource"></WidgetGraph>
-        <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:src="cardConfiguration.config.src"></widget-image>
-        <WidgetMap v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:area="selectedArea" v-bind:parameter="cardConfiguration.resource" :widgetKey="widgetId"></WidgetMap>
-        <WidgetTextArea v-if="cardConfiguration.type === 'textarea'" class="widget-textarea" v-bind:textArea="cardConfiguration.config.text"></WidgetTextArea>
-        <WidgetTable v-if="cardConfiguration.type === 'table'" class="widget-table"></WidgetTable>
-        <WidgetCurrentMap v-if="cardConfiguration.type === 'currentmap'" class="widget-map" v-bind:area="selectedArea" :widgetKey="widgetId"></WidgetCurrentMap>
-      </div>
+      <widget-graph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:config="cardConfiguration" v-bind:area="selectedArea"></widget-graph>
+      <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:src="cardConfiguration.config.src"></widget-image>
+      <widget-map v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:config="cardConfiguration" v-bind:area="selectedArea" :widgetKey="widgetId"></widget-map>
+      <WidgetTextArea v-if="cardConfiguration.type === 'textarea'" class="widget-textarea" v-bind:textArea="cardConfiguration.config.text"></WidgetTextArea>
+      <WidgetTable v-if="cardConfiguration.type === 'table'" class="widget-table"></WidgetTable>
     </div>
   </div>
 </template>
 
 <script>
-import { WidgetGraph, WidgetImage, WidgetMap, WidgetTable, WidgetTextArea, WidgetCurrentMap } from '@/components/Dashboard/Widgets'
+import { WidgetGraph, WidgetImage, WidgetMap, WidgetTable, WidgetTextArea } from '@/components/Dashboard/Widgets'
 import Loading from '@/components/Loading/Loading'
 
 export default {
@@ -39,7 +36,6 @@ export default {
     WidgetGraph,
     WidgetImage,
     WidgetMap,
-    WidgetCurrentMap,
     WidgetTextArea,
     WidgetTable
   },

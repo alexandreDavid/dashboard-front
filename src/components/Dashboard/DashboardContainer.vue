@@ -16,19 +16,19 @@
             <span class="navbar-text">Add a widget:</span>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-light" @click="addWidget('map')" title="Add a map"><font-awesome-icon icon="map" /><br/></button>
+            <button type="button" class="btn btn-light" @click="addWidget('map')" title="Add a map"><font-awesome-icon icon="map" /></button>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-light" @click="addWidget('graph')" title="Add a graph"><font-awesome-icon icon="chart-bar" /><br/></button>
+            <button type="button" class="btn btn-light" @click="addWidget('graph')" title="Add a graph"><font-awesome-icon icon="chart-bar" /></button>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-light" @click="addWidget('table')" title="Add a table"><font-awesome-icon icon="table" /><br/></button>
+            <button type="button" class="btn btn-light" @click="addWidget('table')" title="Add a table"><font-awesome-icon icon="table" /></button>
           </li>
           <li class="nav-item">
             <button type="button" class="btn btn-light" @click="addWidget('textarea')" title="Add a text area"><span style="font-size: 18px;line-height: 18px;font-family: initial;font-weight: bold;">T</span></button>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-light" @click="addWidget('image')" title="Add an image"><font-awesome-icon icon="image" /><br/></button>
+            <button type="button" class="btn btn-light" @click="addWidget('image')" title="Add an image"><font-awesome-icon icon="image" /></button>
           </li>
         </ul>
         <ul class="navbar-nav d-flex d-md-none">

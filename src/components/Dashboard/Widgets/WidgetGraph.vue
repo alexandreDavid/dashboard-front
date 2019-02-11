@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType" :start-date="startDate" :end-date="endDate"></Graph>
-    <Loading v-else></Loading>
+  <div class="card-body p-0 position-relative">
+    <div class="graph-container-widget">
+      <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType" :start-date="startDate" :end-date="endDate"></Graph>
+      <Loading v-else></Loading>
+    </div>
   </div>
 </template>
 
@@ -19,7 +21,7 @@ export default {
   },
   props: [
     'area',
-    'parameter',
+    'config',
     'graphType'
   ],
   provide () {
@@ -40,16 +42,16 @@ export default {
     this.areaLayer = new AreaLayer()
     await this.areaLayer.setSelectedArea(this.area)
     this.resource = new SelectedLayer()
-    await this.getData(this.parameter)
+    await this.getData(this.config.resource)
     this.isLoaded = true
   },
   methods: {
     getAreaLayer () {
       return this.areaLayer
     },
-    async getData (param) {
+    async getData (resource) {
       this.isLoaded = false
-      await this.resource.setLayer(GeoResources.searchById(param.id), this.areaLayer.toGeoJSON())
+      await this.resource.setLayer(GeoResources.searchById(resource.id), this.areaLayer.toGeoJSON())
       const allTimes = this.resource._availableTimes
       let {0: startDate, [allTimes.length - 1]: endDate} = allTimes
       this.startDate = startDate
@@ -58,7 +60,7 @@ export default {
     }
   },
   watch: {
-    parameter: 'getData',
+    'config.resource': 'getData',
     async area (newArea) {
       this.isLoaded = false
       await this.areaLayer.setSelectedArea(newArea)
@@ -68,3 +70,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+.graph-container-widget {
+  height: 200px;
+  width: 100%;
+  overflow: hidden;
+}
+</style>
