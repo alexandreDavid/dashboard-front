@@ -14,11 +14,13 @@
               </div>
 
               <div ref="carousel-1" class="carousel-item">
-                <div class="alert alert-primary" role="alert">
-                  Lets start to define the area of interest. A list of boundaries is available but it's also possible to draw a custom area.
-                </div>
-                <div class="col-12">
-                  <area-edition class="container" v-if="pos === 1" v-model="area"></area-edition>
+                <div class="container h-100 d-flex flex-column">
+                  <div class="alert alert-primary flex-shrink-1" role="alert">
+                    Lets start to define the area of interest. A list of boundaries is available but it's also possible to draw a custom area.
+                  </div>
+                  <div class="position-relative h-100">
+                    <area-edition class="container" v-if="pos === 1" v-model="area"></area-edition>
+                  </div>
                 </div>
               </div>
 

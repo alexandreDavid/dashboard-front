@@ -19,7 +19,7 @@
         </div>
       </div>
       <div
-        class="loading"
+        class="loading result"
         v-show="isOpen"
         v-if="isLoading">
         Loading results...
@@ -30,7 +30,7 @@
         v-show="isOpen"
         :key="i"
         @click="setResult(result)"
-        class="list-group-item list-group-item-action list-group-item-light"
+        class="list-group-item list-group-item-action list-group-item-light result"
         :class="{ 'active': i === arrowCounter }">
         {{ result.name }}
       </div>
@@ -142,5 +142,9 @@ export default {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }
+}
+
+.result {
+  z-index: 1000;
 }
 </style>

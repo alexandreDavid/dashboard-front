@@ -15,10 +15,14 @@
         </div>
         <div class="h-100 managing-modal-selection position-relative" v-bind:class="areas.length ? 'col-lg-8' : 'w-100'">
           <div class="managing-modal-selection-container" v-if="editedArea">
-            <button v-if="areas.length" class="btn btn-link d-lg-none back-to-list" @click="backToList"><font-awesome-icon icon="caret-left" /> Back</button>
-            <div class="container">
-              <h4>{{ editedArea.name || 'New area' }}</h4>
-              <area-edition v-model="editedArea" @input="afterEdit" class="col-12"></area-edition>
+            <div class="container h-100 d-flex flex-column">
+              <div v-if="areas.length" class="row flex-shrink-1 d-lg-none">
+                <button class="btn btn-link back-to-list" @click="backToList"><font-awesome-icon icon="caret-left" /> Back</button>
+              </div>
+              <h4 class="flex-shrink-1">{{ editedArea.name || 'New area' }}</h4>
+              <div class="position-relative h-100">
+                <area-edition v-model="editedArea" @input="afterEdit" class="col-12"></area-edition>
+              </div>
             </div>
           </div>
           <div class="alert alert-info" v-else>Select an area to see a preview</div>

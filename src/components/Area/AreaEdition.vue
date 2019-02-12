@@ -1,23 +1,25 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="form-group mb-2">
-        <div class="custom-control custom-radio custom-control-inline" v-for="areaType in areaTypes" :key="areaType.type">
-          <input type="radio" @click="switchAreaType(areaType.type)" :id="`area-type-${areaType.type}`" v-model="val.type" name="type" :value="areaType.type" class="custom-control-input" required>
-          <label class="custom-control-label" :for="`area-type-${areaType.type}`">{{ areaType.label }}</label>
+  <div class="area-edition">
+    <div class="d-flex flex-column h-100">
+      <div class="row flex-shrink-1">
+        <div class="form-group mb-2">
+          <div class="custom-control custom-radio custom-control-inline" v-for="areaType in areaTypes" :key="areaType.type">
+            <input type="radio" @click="switchAreaType(areaType.type)" :id="`area-type-${areaType.type}`" v-model="val.type" name="type" :value="areaType.type" class="custom-control-input" required>
+            <label class="custom-control-label" :for="`area-type-${areaType.type}`">{{ areaType.label }}</label>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row mb-3" v-if="activeAreaType === 'existing'">
-      <div class="w-100">Select an area:</div>
-      <SearchLocation class="w-100" v-model="searchLocationSearch" @input="searchLocationSelected" />
-    </div>
-    <div class="row mb-3" v-else>
-      <div class="w-100">Draw your custom location on the map or upload your file (Coming soon):</div>
-      <input class="w-100" disabled type="file" id="myFile">
-    </div>
-    <div class="row mb-3">
-      <div id="area-map" class="col-12"></div>
+      <div class="row mb-3 flex-shrink-1" v-if="activeAreaType === 'existing'">
+        <div class="w-100">Select an area:</div>
+        <SearchLocation class="w-100" v-model="searchLocationSearch" @input="searchLocationSelected" />
+      </div>
+      <div class="row mb-3 flex-shrink-1" v-else>
+        <div class="w-100">Draw your custom location on the map or upload your file (Coming soon):</div>
+        <input class="w-100" disabled type="file" id="myFile">
+      </div>
+      <div class="row h-100">
+        <div id="area-map" class="col-12"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -209,6 +211,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.area-edition {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
 
 #area-map {
   min-height: 300px;
