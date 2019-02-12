@@ -50,3 +50,14 @@
     position: absolute;
   }
 }
+
+.leaflet-left .leaflet-north-arrow {
+  margin-left: 5px;
+}
+.leaflet-left .leaflet-north-arrow {
+  margin-bottom: 5px;
+}
+.leaflet-north-arrow svg {
+  width: 32px;
+  height: auto;
+}

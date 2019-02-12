@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     changeResource (resource) {
-      console.log('changeResource', resource)
       this.value.title = resource.label
       this.value.resource = resource
     }

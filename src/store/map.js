@@ -1,6 +1,8 @@
 import { Map, TileLayer, CircleMarker, Control } from 'leaflet'
 import UserConfiguration from '@/store/userConfiguration'
 
+import { NorthArrow } from '@/components/Map/OverMap/OverMapControl/Control.NorthArrow'
+
 let defaultParams = {
   bounds: [
     [4.23136927, 35.00105353],
@@ -60,6 +62,8 @@ MapObj.addInitHook(function () {
   if (this.options.scaleControl) {
     const scale = new Control.Scale()
     scale.addTo(this)
+    const northArrow = new NorthArrow()
+    northArrow.addTo(this)
   }
 })
 
