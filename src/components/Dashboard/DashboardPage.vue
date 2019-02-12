@@ -69,6 +69,7 @@ const defaultDashboard = {
         id: 1
       },
       title: 'Temperature (2-day)',
+      description: '',
       type: 'map'
     },
     {
@@ -78,6 +79,7 @@ const defaultDashboard = {
         id: 1
       },
       title: 'Temperature (2-day)',
+      description: '',
       type: 'graph'
     },
     {
@@ -87,6 +89,7 @@ const defaultDashboard = {
         id: 3
       },
       title: 'Relative Humidity (2-day)',
+      description: '',
       type: 'map'
     },
     {
@@ -96,6 +99,7 @@ const defaultDashboard = {
         id: 3
       },
       title: 'Relative Humidity (2-day)',
+      description: '',
       type: 'graph'
     }
   ]

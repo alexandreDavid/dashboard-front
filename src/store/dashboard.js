@@ -14,8 +14,7 @@ export default class Dashboard {
     widget.id = Math.max(...this.widgets.map(w => {
       return w.id
     }), 0) + 1
-    widget.widthClass = 'col-12'
-    widget.heightClass = 'height-medium'
+    widget.description = ''
     widget.colIndex = 0
     this.widgets.push(widget)
     return widget

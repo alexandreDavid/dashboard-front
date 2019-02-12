@@ -98,6 +98,7 @@ export default {
               label: 'Temperature (2-day)'
             },
             title: 'Temperature (2-day)',
+            description: '',
             type: 'map'
           },
           {
@@ -108,6 +109,7 @@ export default {
               label: 'Temperature (2-day)'
             },
             title: 'Temperature (2-day)',
+            description: '',
             type: 'graph'
           },
           {
@@ -117,6 +119,7 @@ export default {
               id: 3
             },
             title: 'Relative Humidity (2-day)',
+            description: '',
             type: 'map'
           },
           {
@@ -126,6 +129,7 @@ export default {
               id: 3
             },
             title: 'Relative Humidity (2-day)',
+            description: '',
             type: 'graph'
           }
         ]
