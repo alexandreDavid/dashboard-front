@@ -32,8 +32,12 @@ import Popup from '@/components/Map/Popup'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
 
+import { CustomVueControl } from '@/components/Map/Leaflet.customVueControl'
+
 import SelectedLayer from '@/store/selectedLayer'
 import GeoResources from '@/store/geoResources'
+
+import Vue from 'vue'
 
 export default {
   name: 'WidgetMap',
@@ -69,6 +73,7 @@ export default {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map)
     await this.areaLayer.setSelectedArea(this.area)
+    this.initialiseZoomAreaButton()
     this.displayedLayer = new SelectedLayer()
     await this.displayedLayer.setLayer(GeoResources.searchById(this.config.resource.id), this.areaLayer.toGeoJSON())
     this.displayedLayer.addTo(this.map)
@@ -97,6 +102,21 @@ export default {
     },
     setTime (value) {
       this.displayedLayer.setTime(value)
+    },
+    initialiseZoomAreaButton () {
+      // Mounting the component by the Leaflet control process
+      const areaZoomControl = new CustomVueControl(Vue.component('area-zoom-control', {
+        methods: {
+          zoomToArea () {
+            this.$emit('zoomToArea')
+          }
+        },
+        template: '<button type="button" class="btn btn-sm btn-secondary shadow" @click="zoomToArea"><font-awesome-icon icon="globe-africa" /></button>'
+      }), {position: 'bottomright'})
+      areaZoomControl.addTo(this.map)
+      areaZoomControl.mountedComponent.$on('zoomToArea', () => {
+        this.areaLayer.zoomToArea()
+      })
     }
   },
   destroyed () {

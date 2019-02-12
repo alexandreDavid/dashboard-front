@@ -31,7 +31,7 @@ import AreaLayer from '@/store/areaLayer'
 import L from 'leaflet'
 import 'leaflet-draw'
 import AreaNameInput from './AreaNameInput'
-import { CustomVueControl } from './Leaflet.customVueControl'
+import { CustomVueControl } from '@/components/Map/Leaflet.customVueControl'
 import Vue from 'vue'
 
 export default {
