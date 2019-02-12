@@ -65,50 +65,38 @@ const defaultDashboard = {
     {
       id: 1,
       colIndex: 0,
-      heightClass: 'height-medium',
       resource: {
-        id: 1,
-        label: 'Temperature (2-day)'
+        id: 1
       },
       title: 'Temperature (2-day)',
-      type: 'map',
-      widthClass: 'col-12'
+      type: 'map'
     },
     {
       id: 2,
-      colIndex: 1,
-      heightClass: 'height-medium',
+      colIndex: 0,
       resource: {
-        id: 1,
-        label: 'Temperature (2-day)'
+        id: 1
       },
       title: 'Temperature (2-day)',
-      type: 'graph',
-      widthClass: 'col-12'
+      type: 'graph'
     },
     {
       id: 3,
-      colIndex: 0,
-      heightClass: 'height-medium',
+      colIndex: 1,
       resource: {
-        id: 2,
-        label: 'Total rainfall Rate (2-day)'
+        id: 3
       },
-      title: 'Total rainfall Rate (2-day)',
-      type: 'map',
-      widthClass: 'col-12'
+      title: 'Relative Humidity (2-day)',
+      type: 'map'
     },
     {
       id: 4,
       colIndex: 1,
-      heightClass: 'height-medium',
       resource: {
-        id: 2,
-        label: 'Total rainfall Rate (2-day)'
+        id: 3
       },
-      title: 'Total rainfall Rate (2-day)',
-      type: 'graph',
-      widthClass: 'col-12'
+      title: 'Relative Humidity (2-day)',
+      type: 'graph'
     }
   ]
 }
