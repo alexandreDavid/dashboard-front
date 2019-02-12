@@ -66,7 +66,8 @@ const defaultDashboard = {
       id: 1,
       colIndex: 0,
       resource: {
-        id: 1
+        id: 1,
+        label: 'Temperature (2-day)'
       },
       title: 'Temperature (2-day)',
       description: '',
@@ -76,7 +77,8 @@ const defaultDashboard = {
       id: 2,
       colIndex: 0,
       resource: {
-        id: 1
+        id: 1,
+        label: 'Temperature (2-day)'
       },
       title: 'Temperature (2-day)',
       description: '',
@@ -86,7 +88,8 @@ const defaultDashboard = {
       id: 3,
       colIndex: 1,
       resource: {
-        id: 3
+        id: 3,
+        label: 'Relative Humidity (2-day)'
       },
       title: 'Relative Humidity (2-day)',
       description: '',
@@ -96,7 +99,8 @@ const defaultDashboard = {
       id: 4,
       colIndex: 1,
       resource: {
-        id: 3
+        id: 3,
+        label: 'Relative Humidity (2-day)'
       },
       title: 'Relative Humidity (2-day)',
       description: '',
