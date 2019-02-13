@@ -2,7 +2,7 @@
   <div id="dashboard" class="h-100">
     <div v-if="isLoaded" class="d-flex flex-row-reverse h-100">
       <div class="flex-grow-1 h-100 position-relative">
-        <div class="" style="position: absolute;overflow: auto;top: 0;bottom: 0;left:0;right:0;">
+        <div id="dashboards-container" style="position: absolute;overflow: auto;top: 0;bottom: 0;left:0;right:0;">
           <dashboard-container v-for="(selectedDashboard, key) in selectedDashboards" :key="key" :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
         </div>
       </div>

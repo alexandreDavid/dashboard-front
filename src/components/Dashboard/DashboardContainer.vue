@@ -1,5 +1,5 @@
 <template>
-<div class="container-fluid pb-2 border-bottom">
+<div :id="`dashboard-container-${dashboard.id}`" class="container-fluid pb-2 border-bottom">
   <div class="row" v-if="isLoaded">
     <h4 class="col-12 mt-3 px-3">
       <div class="border-bottom pb-2">
@@ -135,10 +135,33 @@ export default {
       this.showCardModal = true
     },
     setEditedWidget (card) {
+      const scrollToCard = !card.id
       this.closeEditCardModal()
       this.dashboard.setWidget(card)
       this.$ga.event('dashboard', 'editCard', `${card.title}: ${card.type}`)
       this.dashboard.save()
+      if (scrollToCard) {
+        this.$nextTick(() => {
+          let container = document.querySelector('#dashboards-container')
+          let scrollY = 0
+          let dashboardFound = false
+          // getting all the displayed dashboards and their height until the current one
+          container.childNodes.forEach(d => {
+            if (!dashboardFound) {
+              scrollY += d.offsetHeight
+              dashboardFound = d.getAttribute('id') === `dashboard-container-${this.dashboard.id}`
+            }
+          })
+          // Removing the size of the div to put it at the end of the dashboard
+          scrollY -= container.offsetHeight
+          setTimeout(function () {
+            container.scrollTo({
+              top: scrollY,
+              behavior: 'smooth'
+            })
+          }, 0)
+        })
+      }
     },
     closeEditCardModal () {
       this.showCardModal = false
