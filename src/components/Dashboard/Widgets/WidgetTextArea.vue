@@ -1,6 +1,6 @@
 <template>
 <div class="card-body">
-  <pre class="mb-0">{{ config.description }}</pre>
+  <pre class="mb-0 widget-description">{{ config.description }}</pre>
 </div>
 </template>
 
