@@ -111,7 +111,7 @@ export default {
             this.$emit('zoomToArea')
           }
         },
-        template: '<button type="button" class="btn btn-sm btn-secondary shadow" @click="zoomToArea"><font-awesome-icon icon="globe-africa" /></button>'
+        template: '<button type="button" class="btn btn-sm btn-secondary shadow" title="Zoom to area" @click="zoomToArea"><font-awesome-icon icon="globe-africa" /></button>'
       }), {position: 'bottomright'})
       areaZoomControl.addTo(this.map)
       areaZoomControl.mountedComponent.$on('zoomToArea', () => {
