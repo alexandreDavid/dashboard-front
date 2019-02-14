@@ -20,14 +20,6 @@ $btn-border-radius-xs:        $border-radius-xs !default;
 
 .btn-group-xs > .btn { @extend .btn-xs; }
 
-$modal-xl:                    1000px !default;
-@include media-breakpoint-up(lg) {
-  .modal-xl { max-width: $modal-lg; }
-}
-@include media-breakpoint-up(xl) {
-  .modal-xl { max-width: $modal-xl; }
-}
-
 .shadow-top {
   box-shadow: 0 0 1rem rgba($black, .15) !important;
 }

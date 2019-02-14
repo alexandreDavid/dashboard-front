@@ -1,9 +1,8 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-dialog modal-xl" role="dialog">
+      <div class="modal-dialog modal-dialog-scrollable modal-xl" role="dialog">
         <div class="modal-content shadow">
-
           <div class="modal-header" v-if="hasHeaderSlot">
             <slot name="header"></slot>
             <button type="button" class="close" aria-label="Close" @click="$emit('close')">
@@ -12,13 +11,11 @@
           </div>
 
           <div class="modal-body" v-if="hasBodySlot">
-            <slot name="body">
-            </slot>
+            <slot name="body"></slot>
           </div>
 
           <div class="modal-footer" v-if="hasFooterSlot">
-            <slot name="footer">
-            </slot>
+            <slot name="footer"></slot>
           </div>
         </div>
       </div>
@@ -27,7 +24,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Modal',
   computed: {
