@@ -18,10 +18,10 @@
           <pre class="widget-description px-3 py-1 mb-0">{{ config.description }}</pre>
         </div>
       </div>
-        <div :id="mapId" class="map-container-widget">
-          <Popup v-if="isLoaded"/>
-        </div>
+      <div :id="mapId" class="w-100" v-bind:style="{height: `${mapHeight}px`}">
+        <Popup v-if="isLoaded"/>
       </div>
+    </div>
   </div>
 </template>
 
@@ -55,7 +55,8 @@ export default {
       map: false,
       displayedLayer: false,
       areaLayer: false,
-      displayedControl: false
+      displayedControl: false,
+      mapHeight: 200
     }
   },
   computed: {
@@ -69,6 +70,11 @@ export default {
       getDisplayedLayer: this.getDisplayedLayer
     }
   },
+  created () {
+    if (this.config.advancedConfig) {
+      this.setHeight()
+    }
+  },
   async mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map)
@@ -76,22 +82,9 @@ export default {
     this.initialiseZoomAreaButton()
     this.displayedLayer = new SelectedLayer()
     await this.displayedLayer.setLayer(GeoResources.searchById(this.config.resource.id), this.areaLayer.toGeoJSON())
+    this.config.advancedConfig && this.displayedLayer.setOpacity(this.config.advancedOpacity)
     this.displayedLayer.addTo(this.map)
     this.isLoaded = true
-  },
-  watch: {
-    async 'config.resource' (newResource) {
-      this.isLoaded = false
-      await this.displayedLayer.setLayer(GeoResources.searchById(newResource.id), this.areaLayer.toGeoJSON())
-      this.displayedLayer.addTo(this.map)
-      this.$nextTick(() => {
-        this.isLoaded = true
-      })
-    },
-    async area (newArea) {
-      await this.areaLayer.setSelectedArea(newArea)
-      this.displayedLayer.setArea(this.areaLayer.toGeoJSON())
-    }
   },
   methods: {
     getMap () {
@@ -117,6 +110,40 @@ export default {
       areaZoomControl.mountedComponent.$on('zoomToArea', () => {
         this.areaLayer.zoomToArea()
       })
+    },
+    setHeight () {
+      if (this.config.advancedHeight === 'custom') {
+        this.mapHeight = this.config.advancedCustomHeight
+      } else if (this.config.advancedHeight === 'large') {
+        this.mapHeight = 300
+      } else {
+        this.mapHeight = 200
+      }
+      this.$nextTick(() => {
+        if (this.map && this.areaLayer.isReady()) {
+          this.map.invalidateSize()
+          this.areaLayer.zoomTo(this.map)
+        }
+      })
+    }
+  },
+  watch: {
+    async 'config.resource' (newResource) {
+      this.isLoaded = false
+      await this.displayedLayer.setLayer(GeoResources.searchById(newResource.id), this.areaLayer.toGeoJSON())
+      this.displayedLayer.addTo(this.map)
+      this.$nextTick(() => {
+        this.isLoaded = true
+      })
+    },
+    async area (newArea) {
+      await this.areaLayer.setSelectedArea(newArea)
+      this.displayedLayer.setArea(this.areaLayer.toGeoJSON())
+    },
+    'config.advancedHeight': 'setHeight',
+    'config.advancedCustomHeight': 'setHeight',
+    'config.advancedOpacity' (opacity) {
+      this.displayedLayer.setOpacity(opacity)
     }
   },
   destroyed () {
@@ -126,11 +153,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.map-container-widget {
-  height: 200px;
-  width: 100%;
-}
 
 .legend-container {
   z-index: 1000;

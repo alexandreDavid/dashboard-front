@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" v-model="value.title" class="form-control" id="title" placeholder="title" disabled>
@@ -16,14 +16,49 @@
       <label for="description">Description</label>
       <textarea v-model="value.description" class="form-control" placeholder="Description" aria-label="Description"></textarea>
     </div>
+    <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
+    <div v-if="showAdvancedConfig">
+      <div class="form-group">
+        <label for="opacity">Opacity</label>
+        <div class="form-inline">
+          <div class="input-group">
+            <input type="number" id="opacity" min="0" max="100" style="width: 70px;" class="form-control" v-model="value.advancedOpacity" placeholder="Opacity" aria-label="Opacity">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">%</span>
+            </div>
+          </div>
+          <opacity-slider class="ml-2" style="width: 200px;" v-model="value.advancedOpacity"></opacity-slider>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="w-100" for="title">Height</label>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-sm btn-secondary" @click="setAdvancedHeight('default')" v-bind:class="{active: advancedHeight === 'default'}">Default</button>
+          <button type="button" class="btn btn-sm btn-secondary" @click="setAdvancedHeight('large')" :class="{active: advancedHeight === 'large'}">Large</button>
+          <button type="button" class="btn btn-sm btn-secondary" @click="setAdvancedHeight('custom')" :class="{active: advancedHeight === 'custom'}">
+            <div class="form-inline">
+              <label for="custom-height" class="mr-1">Custom</label>
+              <div class="input-group input-group-sm">
+                <input id="custom-height" type="number" :disabled="advancedHeight !== 'custom'" v-model="value.advancedCustomHeight" class="form-control" placeholder="Height" aria-label="Height">
+                <div class="input-group-append">
+                  <span class="input-group-text">px</span>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import GeoResources from '@/store/geoResources'
+import OpacitySlider from '@/components/Slider/OpacitySlider'
 
 export default {
   name: 'MapEditWidget',
+  components: { OpacitySlider },
   props: {
     value: {
       type: Object,
@@ -32,10 +67,23 @@ export default {
   },
   data () {
     return {
-      resources: []
+      resources: [],
+      showAdvancedConfig: false,
+      advancedHeight: 'default'
     }
   },
   mounted () {
+    this.showAdvancedConfig = this.value.advancedConfig
+    if (!this.showAdvancedConfig) {
+      this.value.advanced = {
+        height: 'default'
+      }
+      this.value.advancedOpacity = 80
+      this.value.advancedHeight = 'default'
+      this.value.advancedCustomHeight = ''
+    }
+    this.advancedHeight = this.value.advancedHeight
+
     const allResources = GeoResources.getAll()
     this.resources = allResources.map(p => ({
       id: p.id,
@@ -46,6 +94,15 @@ export default {
     changeResource (resource) {
       this.$set(this.value, 'title', resource.label)
       this.value.resource = resource
+    },
+    setShowAdvancedSettings (val) {
+      this.showAdvancedConfig = val
+      this.value.advancedConfig = val
+    },
+    setAdvancedHeight (type) {
+      this.value.advancedHeight = type
+      this.value.advanced.height = type
+      this.advancedHeight = type
     }
   }
 }
