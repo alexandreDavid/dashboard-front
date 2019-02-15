@@ -71,9 +71,7 @@ export default {
     }
   },
   created () {
-    if (this.config.advancedConfig) {
-      this.setHeight()
-    }
+    this.setHeight()
   },
   async mounted () {
     this.map = new MapObj(this.mapId)
@@ -112,9 +110,9 @@ export default {
       })
     },
     setHeight () {
-      if (this.config.advancedHeight === 'custom') {
+      if (this.config.advancedConfig && this.config.advancedHeight === 'custom') {
         this.mapHeight = this.config.advancedCustomHeight
-      } else if (this.config.advancedHeight === 'large') {
+      } else if (this.config.advancedConfig && this.config.advancedHeight === 'large') {
         this.mapHeight = 300
       } else {
         this.mapHeight = 200
@@ -139,6 +137,10 @@ export default {
     async area (newArea) {
       await this.areaLayer.setSelectedArea(newArea)
       this.displayedLayer.setArea(this.areaLayer.toGeoJSON())
+    },
+    'config.advancedConfig' (advancedConfig) {
+      this.setHeight()
+      this.displayedLayer.setOpacity(advancedConfig ? this.config.advancedOpacity : false)
     },
     'config.advancedHeight': 'setHeight',
     'config.advancedCustomHeight': 'setHeight',

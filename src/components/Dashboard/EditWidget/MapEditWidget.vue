@@ -75,12 +75,10 @@ export default {
   mounted () {
     this.showAdvancedConfig = this.value.advancedConfig
     if (!this.showAdvancedConfig) {
-      this.value.advanced = {
-        height: 'default'
-      }
-      this.value.advancedOpacity = 80
-      this.value.advancedHeight = 'default'
-      this.value.advancedCustomHeight = ''
+      this.$set(this.value, 'advancedConfig', false)
+      this.$set(this.value, 'advancedOpacity', 80)
+      this.$set(this.value, 'advancedHeight', 'default')
+      this.$set(this.value, 'advancedCustomHeight', '')
     }
     this.advancedHeight = this.value.advancedHeight
 
@@ -97,11 +95,10 @@ export default {
     },
     setShowAdvancedSettings (val) {
       this.showAdvancedConfig = val
-      this.value.advancedConfig = val
+      this.$set(this.value, 'advancedConfig', val)
     },
     setAdvancedHeight (type) {
-      this.value.advancedHeight = type
-      this.value.advanced.height = type
+      this.$set(this.value, 'advancedHeight', type)
       this.advancedHeight = type
     }
   }
