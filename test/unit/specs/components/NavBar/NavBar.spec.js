@@ -9,7 +9,8 @@ localVue.use(VueRouter)
 const router = new VueRouter({
   routes: [{
     path: '/dashboard',
-    name: 'dashboard'
+    name: 'dashboard',
+    component: {}
   }, {
     path: '/map',
     name: 'map'
@@ -31,6 +32,7 @@ function verifyClickGoTo (name) {
     localVue,
     router
   })
+  expect(wrapper.vm.$route).toBeInstanceOf(Object)
 
   const button = wrapper.find(`#nav-${name} a`)
   button.trigger('click')

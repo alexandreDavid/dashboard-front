@@ -46,69 +46,6 @@ import Loading from '@/components/Loading/Loading'
 import Dashboards from '@/store/dashboards'
 import GeoResources from '@/store/geoResources'
 
-const defaultDashboard = {
-  title: 'Starter dashboard',
-  layout: {
-    id: '50-50',
-    columns: [
-      {
-        name: '50%',
-        class: 'col-6'
-      },
-      {
-        name: '50%',
-        class: 'col-6'
-      }
-    ]
-  },
-  widgets: [
-    {
-      id: 1,
-      colIndex: 0,
-      resource: {
-        id: 1,
-        label: 'Temperature (2-day)'
-      },
-      title: 'Temperature (2-day)',
-      description: '',
-      type: 'map'
-    },
-    {
-      id: 2,
-      colIndex: 0,
-      resource: {
-        id: 1,
-        label: 'Temperature (2-day)'
-      },
-      title: 'Temperature (2-day)',
-      description: '',
-      type: 'graph'
-    },
-    {
-      id: 3,
-      colIndex: 1,
-      resource: {
-        id: 3,
-        label: 'Relative Humidity (2-day)'
-      },
-      title: 'Relative Humidity (2-day)',
-      description: '',
-      type: 'map'
-    },
-    {
-      id: 4,
-      colIndex: 1,
-      resource: {
-        id: 3,
-        label: 'Relative Humidity (2-day)'
-      },
-      title: 'Relative Humidity (2-day)',
-      description: '',
-      type: 'graph'
-    }
-  ]
-}
-
 export default {
   name: 'DashboardPage',
   components: {
@@ -119,11 +56,7 @@ export default {
   data () {
     return {
       isLoaded: false,
-      isEditing: false,
-      showCardModal: false,
-      showCustomiseModal: false,
       showNewModal: false,
-      selectedArea: false,
       dashboards: {},
       selectedDashboards: []
     }
@@ -132,7 +65,7 @@ export default {
     await GeoResources.getAllResources()
     this.dashboards = Dashboards.getAll()
     if (!this.dashboards.length) {
-      this.addDashboard(defaultDashboard)
+      this.addDashboard(this.getDefaultDashboard())
     } else {
       this.selectDashboard(this.dashboards[0])
     }
@@ -160,6 +93,70 @@ export default {
     save () {
       this.dashboards = Dashboards.getAll()
       Dashboards.setAll(this.dashboards)
+    },
+    getDefaultDashboard () {
+      return {
+        title: 'Starter dashboard',
+        layout: {
+          id: '50-50',
+          columns: [
+            {
+              name: '50%',
+              class: 'col-6'
+            },
+            {
+              name: '50%',
+              class: 'col-6'
+            }
+          ]
+        },
+        widgets: [
+          {
+            id: 1,
+            colIndex: 0,
+            resource: {
+              id: 1,
+              label: 'Temperature (2-day)'
+            },
+            title: 'Temperature (2-day)',
+            description: '',
+            type: 'map'
+          },
+          {
+            id: 2,
+            colIndex: 0,
+            resource: {
+              id: 1,
+              label: 'Temperature (2-day)'
+            },
+            title: 'Temperature (2-day)',
+            description: '',
+            type: 'graph'
+          },
+          {
+            id: 3,
+            colIndex: 1,
+            resource: {
+              id: 3,
+              label: 'Relative Humidity (2-day)'
+            },
+            title: 'Relative Humidity (2-day)',
+            description: '',
+            type: 'map'
+          },
+          {
+            id: 4,
+            colIndex: 1,
+            resource: {
+              id: 3,
+              label: 'Relative Humidity (2-day)'
+            },
+            title: 'Relative Humidity (2-day)',
+            description: '',
+            type: 'graph'
+          }
+        ]
+      }
     }
   }
 }

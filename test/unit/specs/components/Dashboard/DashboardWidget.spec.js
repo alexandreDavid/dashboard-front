@@ -1,90 +1,41 @@
 import { shallowMount } from '@vue/test-utils'
 import DashboardWidget from '@/components/Dashboard/DashboardWidget.vue'
-import { WidgetGraph, WidgetMap, WidgetTable, WidgetTextArea } from '@/components/Dashboard/Widgets'
+import { WidgetGraph, WidgetImage, WidgetMap, WidgetTable, WidgetTextArea } from '@/components/Dashboard/Widgets'
+
+function checkRenderType (type, widgetComponent) {
+  const cardConfiguration = {
+    title: `title-${type}`,
+    type
+  }
+  const selectedArea = {}
+  const isEditing = false
+  const wrapper = shallowMount(DashboardWidget, {
+    propsData: { cardConfiguration, selectedArea, isEditing }
+  })
+
+  expect(wrapper.is(DashboardWidget)).toBe(true)
+  expect(wrapper.contains(widgetComponent)).toBe(true)
+}
 
 describe('DashboardWidget.vue', () => {
   it('should render correct widget graph', () => {
-    const cardConfiguration = {
-      widget: {
-        id: 'graph',
-        formFields: [{
-          id: 'parameter',
-          value: ''
-        }, {
-          id: 'graphType',
-          value: ''
-        }]
-      }
-    }
-    const selectedArea = {}
-    const isEditing = false
-    const wrapper = shallowMount(DashboardWidget, {
-      propsData: { cardConfiguration, selectedArea, isEditing }
-    })
+    checkRenderType('graph', WidgetGraph)
+  })
 
-    expect(wrapper.is(DashboardWidget)).toBe(true)
-    expect(wrapper.contains(WidgetGraph)).toBe(true)
+  it('should render correct widget image', () => {
+    checkRenderType('image', WidgetImage)
   })
 
   it('should render correct widget map', () => {
-    const cardConfiguration = {
-      id: 'test',
-      widget: {
-        id: 'map',
-        formFields: [{
-          id: 'parameter',
-          value: ''
-        }, {
-          id: 'graphType',
-          value: ''
-        }]
-      }
-    }
-    const selectedArea = {}
-    const isEditing = false
-    const wrapper = shallowMount(DashboardWidget, {
-      propsData: { cardConfiguration, selectedArea, isEditing }
-    })
-
-    expect(wrapper.is(DashboardWidget)).toBe(true)
-    expect(wrapper.contains(WidgetMap)).toBe(true)
+    checkRenderType('map', WidgetMap)
   })
 
   it('should render correct widget table', () => {
-    const cardConfiguration = {
-      widget: {
-        id: 'table'
-      }
-    }
-    const selectedArea = {}
-    const isEditing = false
-    const wrapper = shallowMount(DashboardWidget, {
-      propsData: { cardConfiguration, selectedArea, isEditing }
-    })
-
-    expect(wrapper.is(DashboardWidget)).toBe(true)
-    expect(wrapper.findAll('.widget-table')).toHaveLength(1)
-    expect(wrapper.contains(WidgetTable)).toBe(true)
+    checkRenderType('table', WidgetTable)
   })
 
   it('should render correct widget textarea', () => {
-    const cardConfiguration = {
-      widget: {
-        id: 'textarea',
-        formFields: [{
-          id: 'text',
-          value: ''
-        }]
-      }
-    }
-    const selectedArea = {}
-    const isEditing = false
-    const wrapper = shallowMount(DashboardWidget, {
-      propsData: { cardConfiguration, selectedArea, isEditing }
-    })
-
-    expect(wrapper.is(DashboardWidget)).toBe(true)
-    expect(wrapper.contains(WidgetTextArea)).toBe(true)
+    checkRenderType('textarea', WidgetTextArea)
   })
 
   it('calls editCard when click on button', () => {

@@ -1,11 +1,11 @@
 import { shallowMount } from '@vue/test-utils'
 import WidgetGraph from '@/components/Dashboard/Widgets/WidgetGraph'
 
-describe('WidgetMap.vue', () => {
-  it('Without parameter load graph', async () => {
+describe('WidgetGraph.vue', () => {
+  it('Without config load graph', async () => {
     const wrapper = shallowMount(WidgetGraph, {
       propsData: {
-        parameter: false
+        config: false
       },
       stubs: { Graph: '<div class="stubbed" />' }
     })
@@ -15,7 +15,7 @@ describe('WidgetMap.vue', () => {
   it('With parameter load graph', async () => {
     const wrapper = shallowMount(WidgetGraph, {
       propsData: {
-        parameter: true
+        config: true
       },
       stubs: { Graph: '<div class="stubbed" />' }
     })

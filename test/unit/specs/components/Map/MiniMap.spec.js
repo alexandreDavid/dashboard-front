@@ -57,7 +57,7 @@ describe('MiniMap.vue', () => {
 
   it('Mounted correctly', () => {
     expect(wrapper.vm.isLoaded).toBe(true)
-    expect(MapObj).toBeCalledWith('minimap-container-minimapKey')
+    expect(MapObj).toBeCalledWith('minimap-container-minimapKey', {scaleControl: false})
     expect(mockAreaLayer.addTo).toBeCalledWith(mockMap)
     expect(DisplayedLayer).toBeCalledWith(mockMap)
     expect(mockDisplayedLayer.setDisplayedLayer).toBeCalledWith('parameter')
@@ -78,7 +78,7 @@ describe('MiniMap.vue', () => {
       }
     })
     expect(wrapper.vm.isLoaded).toBe(true)
-    expect(MapObj).toBeCalledWith('minimap-container-minimapKey')
+    expect(MapObj).toBeCalledWith('minimap-container-minimapKey', {scaleControl: false})
     expect(mockAreaLayer.addTo).toBeCalledWith(mockMap)
     expect(DisplayedLayer).toBeCalled()
     expect(mockDisplayedLayer.setDisplayedLayer).not.toBeCalled()

@@ -1,72 +1,50 @@
 import Dashboard from '@/store/dashboard'
-import GeoResources from '@/store/geoResources'
+import Dashboards from '@/store/dashboards'
 
-jest.mock('@/store/geoResources', () => ({
-  getAll: jest.fn()
+jest.mock('@/store/dashboards', () => ({
+  setDashboard: jest.fn()
 }))
-GeoResources.getAll.mockReturnValue([
-  {
-    id: 1,
-    label: 'displayName1',
-    config: {
-      statistics: true
-    }
-  }, {
-    id: 2,
-    label: 'displayName2',
-    config: {
-      statistics: true
-    }
-  }
-])
 
 describe('dashboard.js', () => {
-  it('Calls constructor, getCards', async () => {
+  it('Calls constructor, getWidgets', async () => {
     let dashboard = new Dashboard()
-    expect(dashboard.title).toBe(Dashboard.getDefaultTitle())
-    expect(dashboard.cards.length).toBe(0)
+    expect(dashboard.title).toBeFalsy()
+    expect(dashboard.widgets.length).toBe(0)
 
     const title = 'dashboard2'
-    const cards = [{}, {}]
-    let dashboard2 = new Dashboard(title, cards)
+    const widgets = [{}, {}]
+    let dashboard2 = new Dashboard({title, widgets})
     expect(dashboard2.title).toBe(title)
-    expect(dashboard2.getCards().length).toBe(cards.length)
+    expect(dashboard2.getWidgets().length).toBe(widgets.length)
   })
 
-  it('Calls addCard, setCard, getCard, removeCard', () => {
+  it('Calls addWidget, setWidget, getWidget, removeWidget', () => {
     let dashboard = new Dashboard()
 
     // add card
-    expect(dashboard.addCard().id).toBe(1)
-    expect(dashboard.addCard().id).toBe(2)
-    const adding3 = dashboard.addCard({id: 2, heightClass: 'heigh-small'})
+    expect(dashboard.addWidget().id).toBe(1)
+    expect(dashboard.addWidget().id).toBe(2)
+    const adding3 = dashboard.addWidget({id: 2, heightClass: 'heigh-small'})
     expect(adding3.id).toBe(3)
     expect(adding3.heightClass).toBe('heigh-small')
 
-    // set card
-    dashboard.setCard({id: 1, heightClass: 'heigh-small'})
-    const cardSet = dashboard.getCard(1)
+    // set widget
+    dashboard.setWidget({id: 1, heightClass: 'heigh-small'})
+    const cardSet = dashboard.getWidget(1)
     expect(cardSet.id).toBe(1)
     expect(cardSet.heightClass).toBe('heigh-small')
-    // Create new card if no id
-    dashboard.setCard({heightClass: 'heigh-large'})
-    expect(dashboard.getCard(4).heightClass).toBe('heigh-large')
+    // Create new widget if no id
+    dashboard.setWidget({heightClass: 'heigh-large'})
+    expect(dashboard.getWidget(4).heightClass).toBe('heigh-large')
 
     // remove card
-    dashboard.removeCard(4)
-    expect(dashboard.getCard(4)).toBeFalsy()
+    dashboard.removeWidget(4)
+    expect(dashboard.getWidget(4)).toBeFalsy()
   })
 
-  it('Calles field parameter callback for forecast data', () => {
-    const fieldForecastParameter = Dashboard.getCardWidgets()[0].formFields[0]
-    expect(fieldForecastParameter.value.label).toBe(fieldForecastParameter.options[0].label)
-    let card = {}
-    fieldForecastParameter.onChange(card)
-    expect(card.title).toBe(fieldForecastParameter.value.label)
-
-    fieldForecastParameter.value = fieldForecastParameter.options[1]
-    expect(fieldForecastParameter.value.label).toBe(fieldForecastParameter.options[1].label)
-    fieldForecastParameter.onChange(card)
-    expect(card.title).toBe(fieldForecastParameter.value.label)
+  it('Calls save', () => {
+    let dashboard = new Dashboard()
+    dashboard.save()
+    expect(Dashboards.setDashboard).toBeCalled()
   })
 })
