@@ -3,7 +3,7 @@
     <div v-if="isLoaded" class="d-flex flex-row-reverse h-100">
       <div class="flex-grow-1 h-100 position-relative">
         <div id="dashboards-container" style="position: absolute;overflow: auto;top: 0;bottom: 0;left:0;right:0;">
-          <dashboard-container v-for="(selectedDashboard, key) in selectedDashboards" :key="key" :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
+          <dashboard-container :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
         </div>
       </div>
       <div class="d-none d-sm-block bg-light h-100" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
@@ -15,9 +15,9 @@
             <h5 class="col-12 my-2">
               My dashboards
             </h5>
-            <ul class="nav flex-column nav-pills col-12 px-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-              <li class="nav-link" v-for="dashboard in dashboards" :key="dashboard.id" @click="selectDashboard(dashboard)" v-bind:class="{active: (selectedDashboards.findIndex(d => d.id === dashboard.id) > -1)}">
-                {{ dashboard.title }}
+            <ul class="nav flex-column nav-pills col-12 px-2 pb-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+              <li class="nav-item" v-for="dashboard in dashboards" :key="dashboard.id" @click="selectDashboard(dashboard)">
+                <a class="nav-link" href="#" v-bind:class="{active: (selectedDashboard.id === dashboard.id)}">{{ dashboard.title }}</a>
               </li>
             </ul>
           </div>
@@ -56,7 +56,7 @@ export default {
       isLoaded: false,
       showNewModal: false,
       dashboards: {},
-      selectedDashboards: []
+      selectedDashboard: false
     }
   },
   async created () {
@@ -73,16 +73,11 @@ export default {
     addDashboard (newDashboard) {
       this.showNewModal = false
       const dashboard = Dashboards.addDashboard(newDashboard)
-      this.selectedDashboards.push(dashboard)
+      this.selectedDashboard = dashboard
       this.dashboards = Dashboards.getAll()
     },
     selectDashboard (dashboard) {
-      const selectDashboardIdx = this.selectedDashboards.findIndex(d => d.id === dashboard.id)
-      if (selectDashboardIdx !== -1) {
-        this.selectedDashboards.splice(selectDashboardIdx, 1)
-      } else {
-        this.selectedDashboards.push(dashboard)
-      }
+      this.selectedDashboard = dashboard
     },
     deleteDashboard (dashboard) {
       this.dashboards = Dashboards.removeDashboard(dashboard)
