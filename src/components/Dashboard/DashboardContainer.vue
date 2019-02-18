@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav d-none d-md-flex">
           <li class="nav-item">
-            <span class="navbar-text">Add a widget:</span>
+            <span class="navbar-text">Add a card:</span>
           </li>
           <li class="nav-item">
             <button type="button" class="btn btn-light" @click="addWidget('map')" title="Add a map"><font-awesome-icon icon="map" /></button>
