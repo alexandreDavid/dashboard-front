@@ -2,24 +2,19 @@
   <div class="card-body p-0">
     <div class="d-flex flex-column-reverse widget-container">
       <div class="shadow-top p-1 legend-container">
-        <div class="d-flex">
-          <div class="flex-fill">
-            <button class="btn btn-link btn-block" v-if="displayedControl === 'legend'" @click="displayedControl = false">Hide legend</button>
-            <button class="btn btn-link btn-block" v-else @click="displayedControl = 'legend'">Show legend</button>
-          </div>
-          <div class="flex-fill" v-if="isLoaded && displayedLayer.hasTime()">
-            <button class="flex-fill btn btn-link btn-block" v-if="displayedControl === 'time'" @click="displayedControl = false">Hide time</button>
-            <button class="flex-fill btn btn-link btn-block" v-else @click="displayedControl = 'time'">Show time</button>
-          </div>
-        </div>
-        <Legend v-if="displayedControl === 'legend'" v-bind:legend="displayedLayer._legend"></Legend>
-        <time-serie v-if="displayedControl === 'time'" v-model="displayedLayer._time" :times="displayedLayer._availableTimes" @input="setTime"></time-serie>
+        <Legend v-bind:legend="displayedLayer._legend"></Legend>
         <div class="border-top mx-2 mt-1" v-if="config.description">
           <pre class="widget-description px-3 py-1 mb-0">{{ config.description }}</pre>
         </div>
       </div>
       <div :id="mapId" class="w-100" v-bind:style="{height: `${mapHeight}px`}">
-        <Popup v-if="isLoaded"/>
+        <div class="leaflet-control-container">
+          <div class="leaflet-top leaflet-left">
+            <div class="leaflet-control">
+              <time-control class="shadow" @input="setTime" v-model="displayedLayer._time" :times="displayedLayer._availableTimes"></time-control>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -28,9 +23,8 @@
 <script>
 import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
-import Popup from '@/components/Map/Popup'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
-import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
+import TimeControl from '@/components/Map/DisplayedLayer/TimeControl'
 
 import { CustomVueControl } from '@/components/Map/Leaflet.customVueControl'
 
@@ -42,7 +36,7 @@ import Vue from 'vue'
 export default {
   name: 'WidgetMap',
   components: {
-    Popup, Legend, TimeSerie
+    Legend, TimeControl
   },
   props: [
     'area',
