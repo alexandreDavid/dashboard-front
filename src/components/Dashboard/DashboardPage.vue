@@ -26,9 +26,7 @@
               Shared with me
             </h5>
             <ul class="nav flex-column nav-pills col-12 px-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-              <li class="nav-link">Dashboard 1</li>
-              <li class="nav-link">Dashboard 2</li>
-              <li class="nav-link">Dashboard 3</li>
+              <li class="nav-link">-</li>
             </ul>
           </div>
         </div>
