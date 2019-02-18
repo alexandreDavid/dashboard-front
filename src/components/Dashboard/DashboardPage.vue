@@ -113,7 +113,12 @@ export default {
             },
             title: 'Temperature (2-day)',
             description: '',
-            type: 'map'
+            type: 'map',
+            advancedConfig: false,
+            advancedOpacity: false,
+            advancedHeight: false,
+            advancedCustomHeight: false,
+            advancedArea: false
           },
           {
             id: 2,
@@ -135,7 +140,12 @@ export default {
             },
             title: 'Relative Humidity (2-day)',
             description: '',
-            type: 'map'
+            type: 'map',
+            advancedConfig: false,
+            advancedOpacity: false,
+            advancedHeight: false,
+            advancedCustomHeight: false,
+            advancedArea: false
           },
           {
             id: 4,

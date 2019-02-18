@@ -48,6 +48,10 @@
           </button>
         </div>
       </div>
+      <div class="form-group">
+        <label>Area</label>
+        <area-selection-control v-model="advancedArea" @change="setArea"></area-selection-control>
+      </div>
     </div>
   </div>
 </template>
@@ -55,10 +59,13 @@
 <script>
 import GeoResources from '@/store/geoResources'
 import OpacitySlider from '@/components/Slider/OpacitySlider'
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+
+import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'MapEditWidget',
-  components: { OpacitySlider },
+  components: { OpacitySlider, AreaSelectionControl },
   props: {
     value: {
       type: Object,
@@ -69,7 +76,8 @@ export default {
     return {
       resources: [],
       showAdvancedConfig: false,
-      advancedHeight: 'default'
+      advancedHeight: 'default',
+      advancedArea: {}
     }
   },
   mounted () {
@@ -79,8 +87,11 @@ export default {
       this.$set(this.value, 'advancedOpacity', 80)
       this.$set(this.value, 'advancedHeight', 'default')
       this.$set(this.value, 'advancedCustomHeight', '')
+      this.$set(this.value, 'advancedArea', DefinedAreas.getActiveArea())
     }
     this.advancedHeight = this.value.advancedHeight
+    this.advancedArea = this.value.advancedArea
+    this.setTitle()
 
     const allResources = GeoResources.getAll()
     this.resources = allResources.map(p => ({
@@ -95,11 +106,24 @@ export default {
     },
     setShowAdvancedSettings (val) {
       this.showAdvancedConfig = val
+      this.setTitle()
       this.$set(this.value, 'advancedConfig', val)
     },
     setAdvancedHeight (type) {
       this.$set(this.value, 'advancedHeight', type)
       this.advancedHeight = type
+    },
+    setArea (area) {
+      this.$set(this.value, 'advancedArea', area)
+      this.advancedArea = area
+      this.setTitle()
+    },
+    setTitle () {
+      let title = this.value.resource && this.value.resource.label
+      if (this.showAdvancedConfig && this.advancedArea) {
+        title += ` - ${this.advancedArea.name}`
+      }
+      this.$set(this.value, 'title', title)
     }
   }
 }

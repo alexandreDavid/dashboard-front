@@ -8,7 +8,7 @@
         <button class="btn btn-outline-secondary edit" type="button" @click="showModalArea = true"><font-awesome-icon icon="edit" /></button>
       </div>
     </div>
-    <area-selection-modal class="test" v-if="showModalArea" @close="closeModal"></area-selection-modal>
+    <area-selection-modal v-if="showModalArea" @close="closeModal"></area-selection-modal>
   </div>
 </template>
 
@@ -19,6 +19,7 @@ import DefinedAreas from '@/store/definedAreas'
 export default {
   name: 'AreaSelectionControl',
   components: {AreaSelectionModal},
+  props: [ 'value' ],
   data () {
     return {
       val: false,
@@ -31,7 +32,9 @@ export default {
   },
   methods: {
     change (val) {
-      DefinedAreas.setActiveArea(val)
+      if (!this.value) {
+        DefinedAreas.setActiveArea(val)
+      }
       this.$emit('change', val)
     },
     closeModal () {
@@ -40,9 +43,12 @@ export default {
     },
     loadOptions () {
       this.options = DefinedAreas.getAll()
-      this.val = DefinedAreas.getActiveArea()
+      this.val = this.value || DefinedAreas.getActiveArea()
       this.change(this.val)
     }
+  },
+  watch: {
+    value: 'loadOptions'
   }
 }
 </script>

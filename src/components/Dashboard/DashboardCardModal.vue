@@ -44,7 +44,7 @@ export default {
     }
   },
   mounted () {
-    this.val = { ...this.editedCard } || { title: '', type: 'map' }
+    this.val = { ...this.editedCard } || { title: '', type: 'map', description: '' }
   },
   methods: {
     validate (widget) {

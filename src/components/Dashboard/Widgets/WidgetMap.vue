@@ -123,6 +123,16 @@ export default {
           this.areaLayer.zoomTo(this.map)
         }
       })
+    },
+    async setArea () {
+      let newArea
+      if (this.config.advancedConfig) {
+        newArea = this.config.advancedArea
+      } else {
+        newArea = this.area
+      }
+      await this.areaLayer.setSelectedArea(newArea)
+      this.displayedLayer.setArea(this.areaLayer.toGeoJSON())
     }
   },
   watch: {
@@ -134,16 +144,15 @@ export default {
         this.isLoaded = true
       })
     },
-    async area (newArea) {
-      await this.areaLayer.setSelectedArea(newArea)
-      this.displayedLayer.setArea(this.areaLayer.toGeoJSON())
-    },
+    area: 'setArea',
     'config.advancedConfig' (advancedConfig) {
       this.setHeight()
+      this.setArea()
       this.displayedLayer.setOpacity(advancedConfig ? this.config.advancedOpacity : false)
     },
     'config.advancedHeight': 'setHeight',
     'config.advancedCustomHeight': 'setHeight',
+    'config.advancedArea': 'setArea',
     'config.advancedOpacity' (opacity) {
       this.displayedLayer.setOpacity(opacity)
     }
