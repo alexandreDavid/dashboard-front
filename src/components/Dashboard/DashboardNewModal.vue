@@ -65,6 +65,7 @@
 import Modal from '@/components/Modal/Modal'
 
 import Dashboard from '@/store/dashboard'
+import DashboardTemplates from '@/store/dashboardTemplates'
 
 export default {
   name: 'DashboardNewModal',
@@ -89,50 +90,7 @@ export default {
       }
 
       if (this.template !== 'blank') {
-        config.widgets = [
-          {
-            id: 1,
-            colIndex: 0,
-            resource: {
-              id: 1,
-              label: 'Temperature (2-day)'
-            },
-            title: 'Temperature (2-day)',
-            description: '',
-            type: 'map'
-          },
-          {
-            id: 2,
-            colIndex: 0,
-            resource: {
-              id: 1,
-              label: 'Temperature (2-day)'
-            },
-            title: 'Temperature (2-day)',
-            description: '',
-            type: 'graph'
-          },
-          {
-            id: 3,
-            colIndex: 1,
-            resource: {
-              id: 3
-            },
-            title: 'Relative Humidity (2-day)',
-            description: '',
-            type: 'map'
-          },
-          {
-            id: 4,
-            colIndex: 1,
-            resource: {
-              id: 3
-            },
-            title: 'Relative Humidity (2-day)',
-            description: '',
-            type: 'graph'
-          }
-        ]
+        config = Object.assign(DashboardTemplates.getStarterDashboard(), config)
       }
       this.$emit('validate', config)
     },
