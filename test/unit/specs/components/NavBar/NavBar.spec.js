@@ -23,6 +23,12 @@ const router = new VueRouter({
   }, {
     path: '/future-climate',
     name: 'future-climate'
+  }, {
+    path: '/questionnaire',
+    name: 'questionnaire'
+  }, {
+    path: '/support',
+    name: 'support'
   }]
 })
 

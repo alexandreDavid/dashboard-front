@@ -2,6 +2,7 @@ import DashboardPage from '@/components/Dashboard/DashboardPage.vue'
 import { shallowMount } from '@vue/test-utils'
 
 import Dashboards from '@/store/dashboards'
+import DashboardTemplates from '@/store/dashboardTemplates'
 import GeoResources from '@/store/geoResources'
 
 jest.mock('@/store/geoResources', () => ({
@@ -13,6 +14,10 @@ jest.mock('@/store/dashboards', () => ({
   addDashboard: jest.fn(),
   removeDashboard: jest.fn(),
   setAll: jest.fn()
+}))
+
+jest.mock('@/store/dashboardTemplates', () => ({
+  getStarterDashboard: jest.fn()
 }))
 
 describe('DashboardPage.vue', () => {
@@ -36,12 +41,18 @@ describe('DashboardPage.vue', () => {
 
   it('Create without dashboard', async () => {
     Dashboards.getAll.mockReturnValue([])
-    Dashboards.addDashboard.mockReturnValue('addDashboard')
+    const mockAddDashboard = 'addDashboard'
+    Dashboards.addDashboard.mockReturnValue(mockAddDashboard)
+    const mockStarterDashboard = 'getStarterDashboard'
+    DashboardTemplates.getStarterDashboard.mockReturnValue(mockStarterDashboard)
 
     const wrapper = shallowMount(DashboardPage)
     await wrapper.vm.$nextTick()
-    expect(Dashboards.addDashboard).toBeCalledWith(wrapper.vm.getDefaultDashboard())
-    expect(wrapper.vm.selectedDashboards).toEqual(['addDashboard'])
+    expect(GeoResources.getAllResources).toBeCalled()
+    expect(Dashboards.getAll).toBeCalled()
+    expect(DashboardTemplates.getStarterDashboard).toBeCalled()
+    expect(Dashboards.addDashboard).toBeCalledWith(mockStarterDashboard)
+    expect(wrapper.vm.selectedDashboard).toEqual(mockAddDashboard)
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 })
