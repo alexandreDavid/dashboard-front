@@ -12,10 +12,7 @@
         </option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea v-model="value.description" class="form-control" placeholder="Description" aria-label="Description"></textarea>
-    </div>
+    <edit-description-field v-model="value.description"></edit-description-field>
     <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
     <div v-if="showAdvancedConfig">
       <div class="form-group">
@@ -60,12 +57,13 @@
 import GeoResources from '@/store/geoResources'
 import OpacitySlider from '@/components/Slider/OpacitySlider'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+import EditDescriptionField from './EditDescriptionField'
 
 import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'MapEditWidget',
-  components: { OpacitySlider, AreaSelectionControl },
+  components: { OpacitySlider, AreaSelectionControl, EditDescriptionField },
   props: {
     value: {
       type: Object,

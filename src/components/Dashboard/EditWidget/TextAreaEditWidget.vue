@@ -6,7 +6,7 @@
     </div>
     <div class="form-group">
       <label>Text</label>
-      <textarea class="form-control" v-model="value.description"></textarea>
+      <textarea class="form-control" v-model="value.description" placeholder="Type here..." aria-label="Text"></textarea>
     </div>
   </div>
 </template>

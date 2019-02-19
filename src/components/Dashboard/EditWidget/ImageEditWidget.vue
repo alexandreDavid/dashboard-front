@@ -8,16 +8,16 @@
       <label>Location</label>
       <input type="text" v-model="value.src" class="form-control" id="title" placeholder="title">
     </div>
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea v-model="value.description" class="form-control" placeholder="Description" aria-label="Description"></textarea>
-    </div>
+    <edit-description-field v-model="value.description"></edit-description-field>
   </div>
 </template>
 
 <script>
+import EditDescriptionField from './EditDescriptionField'
+
 export default {
   name: 'ImageEditWidget',
+  components: { EditDescriptionField },
   props: {
     value: {
       type: Object,
