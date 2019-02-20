@@ -5,10 +5,11 @@
         <option v-for="(option, key) in options" :key="key" :value="option">{{ option.name }}</option>
       </select>
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary edit" type="button" title="manage areas" @click="showModalArea = true"><font-awesome-icon icon="edit" /></button>
+        <button class="btn btn-outline-secondary edit" type="button" title="manage the area" @click="displayModal('current')"><font-awesome-icon icon="edit" /></button>
+        <button class="btn btn-outline-secondary plus" type="button" title="add a new area" @click="displayModal('add')"><font-awesome-icon icon="plus" /></button>
       </div>
     </div>
-    <area-selection-modal v-if="showModalArea" @close="closeModal"></area-selection-modal>
+    <area-selection-modal v-if="showModalArea" @close="closeModal" :open-type="displayType" :current-val="val"></area-selection-modal>
   </div>
 </template>
 
@@ -24,13 +25,18 @@ export default {
     return {
       val: false,
       options: false,
-      showModalArea: false
+      showModalArea: false,
+      displayType: false
     }
   },
   mounted () {
     this.loadOptions()
   },
   methods: {
+    displayModal (type) {
+      this.showModalArea = true
+      this.displayType = type
+    },
     change (val) {
       if (!this.value) {
         DefinedAreas.setActiveArea(val)

@@ -47,6 +47,7 @@ export default {
     Modal,
     AreaEdition
   },
+  props: ['openType', 'currentVal'],
   data () {
     return {
       areas: [],
@@ -59,8 +60,13 @@ export default {
     this.areas.forEach(a => {
       a.isEditing = false
     })
-    if (!this.areas.length) {
+    if (!this.areas.length || this.openType === 'add') {
       this.editArea({})
+    }
+    if (this.openType === 'current' && this.currentVal) {
+      this.editArea(this.areas.find(a => {
+        return a.id === this.currentVal.id
+      }))
     }
   },
   methods: {
