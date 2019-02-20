@@ -1,16 +1,20 @@
 <template>
 <div :id="`dashboard-container-${dashboard.id}`" class="container-fluid pb-2 border-bottom">
   <div class="row" v-if="isLoaded">
-    <h4 class="col-12 mt-3 px-3">
-      <div class="border-bottom pb-2">
-      <editable-input v-model="dashboard.title" @input="saveTitle" placeholder="title" required></editable-input>
+    <h4 class="col-12 py-2 px-3 bg-light border-bottom">
+      <div class="d-flex">
+        <editable-input class="flex-grow-1" v-model="dashboard.title" @input="saveTitle" placeholder="title" required></editable-input>
+        <div class="my-2 my-lg-0 d-none d-lg-block">
+          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true">Customise dashboard</button>
+          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="$emit('delete', dashboard)">Delete dashboard</button>
+        </div>
       </div>
     </h4>
     <div class="col-12 mb-3">
       <editable-text-area class="dashboard-description" v-model="dashboard.description" @input="saveDescription" placeholder="Description" add-button-label="Add a description"></editable-text-area>
     </div>
     <nav class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="collapse navbar-collapse flex-wrap">
         <ul class="navbar-nav d-none d-md-flex">
           <li class="nav-item">
             <span class="navbar-text">Add a card:</span>
@@ -43,27 +47,27 @@
             </drop-down>
           </div>
         </ul>
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item m-auto">
+        <ul class="navbar-nav mr-3">
+          <li class="nav-item">
             <span class="navbar-text border-right mx-2" style="height: 24px;vertical-align:middle;"></span>
           </li>
-          <li class="nav-item m-auto">
+          <li class="nav-item">
             <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Share</button>
           </li>
-          <li class="nav-item m-auto">
+          <li class="nav-item">
             <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Export</button>
           </li>
         </ul>
-        <div class="my-2 my-lg-0 d-none d-lg-block">
-          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true">Customise dashboard</button>
-          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="$emit('delete', dashboard)">Delete dashboard</button>
+        <div class="navbar-nav flex-grow-1 float-right">
+          <li class="nav-item ml-auto mr-2">
+            <span class="navbar-text">Default area:</span>
+          </li>
+          <li class="nav-item flex-grow-1" style="max-width:400px; min-width: 200px">
+            <area-selection-control @change="updateSearchLocation"></area-selection-control>
+          </li>
         </div>
       </div>
     </nav>
-    <div class="col-12 mb-3">
-      <h6>Place selection</h6>
-      <area-selection-control @change="updateSearchLocation"></area-selection-control>
-    </div>
     <drag-drop-widgets v-bind:dashboard="dashboard" @edit="editWidget" @delete="removeWidget" v-bind:selectedArea="selectedArea"></drag-drop-widgets>
     <dashboard-customise-modal v-if="showCustomiseModal" @close="showCustomiseModal = false" @validate="setCustomisation" v-bind:dashboard="dashboard"></dashboard-customise-modal>
     <dashboard-card-modal v-if="showCardModal" @close="closeEditCardModal" @validate="setEditedWidget" :editedCard="editedCard"></dashboard-card-modal>
