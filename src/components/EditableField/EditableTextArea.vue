@@ -3,9 +3,12 @@
     <button class="btn btn-link" @click="editTextArea" v-if="addButtonLabel && !isEditing && !value">{{ addButtonLabel }}</button>
     <div v-else-if="isEditing">
       <textarea :rows="textAreaRows" v-model="val" class="form-control mb-1" :placeholder="placeholder" :aria-label="placeholder"></textarea>
-      <div class="float-right">
-        <button class="btn btn-secondary" type="button" @click="isEditing = false">Cancel</button>
-        <button class="btn btn-success" type="button" @click="save(val)">Save</button>
+      <div class="d-flex justify-content-between">
+        <small id="emailHelp" class="form-text text-muted">{{ limit - val.length}} characters remaining ({{ limit }} maximum)</small>
+        <div class="float-right">
+          <button class="btn btn-secondary" type="button" @click="isEditing = false">Cancel</button>
+          <button class="btn btn-success" type="button" @click="save(val)">Save</button>
+        </div>
       </div>
     </div>
     <pre class="px-3 py-1 mb-0" style="white-space: pre-line;" @click="editTextArea" v-else>{{ value }}</pre>
@@ -20,7 +23,8 @@ export default {
   props: ['addButtonLabel'],
   data () {
     return {
-      textAreaRows: 2
+      textAreaRows: 2,
+      limit: 500
     }
   },
   mixins: [EditableMixins],
