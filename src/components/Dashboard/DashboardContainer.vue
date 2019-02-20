@@ -79,7 +79,6 @@
 <script>
 import DashboardWidget from '@/components/Dashboard/DashboardWidget'
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
-import DashboardNewModal from '@/components/Dashboard/DashboardNewModal'
 import DashboardCustomiseModal from '@/components/Dashboard/DashboardCustomiseModal'
 import Loading from '@/components/Loading/Loading'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
@@ -97,7 +96,6 @@ export default {
     Loading,
     DashboardWidget,
     DashboardCardModal,
-    DashboardNewModal,
     DashboardCustomiseModal,
     AreaSelectionControl,
     SideBar,

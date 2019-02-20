@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import DashboardNewModal from '@/components/Dashboard/DashboardNewModal'
+import DashboardNewModal from '@/components/Dashboard/New/DashboardNewModal'
 import DashboardContainer from '@/components/Dashboard/DashboardContainer'
 import Loading from '@/components/Loading/Loading'
 import Dashboards from '@/store/dashboards'

@@ -25,6 +25,17 @@
               </div>
 
               <div ref="carousel-2" class="carousel-item">
+                <div class="container h-100 d-flex flex-column">
+                  <div class="alert alert-primary flex-shrink-1" role="alert">
+                    Lets create our first dashboard. You can display the information you want in a one page overview.
+                  </div>
+                  <div class="position-relative h-100">
+                    <dashboard-new-container v-model="dashboard"></dashboard-new-container>
+                  </div>
+                </div>
+              </div>
+
+              <div ref="carousel-3" class="carousel-item">
                 <div class="text-center p-5">
                   <font-awesome-icon icon="check-circle" class="text-success display-1 mb-3" />
                   <h5>Everything is ready. You can now start to use the application.</h5>
@@ -39,7 +50,7 @@
       </div>
       <div slot="footer" class="d-flex justify-content-between w-100">
         <button class="btn btn-secondary" @click="previous" :disabled="pos === 0">Previous</button>
-        <button v-if="pos < 2" class="btn btn-secondary" @click="next" :disabled="pos === 1 && !area.valid">Next</button>
+        <button v-if="pos < 3" class="btn btn-secondary" @click="next" :disabled="(pos === 1 && !area.valid) || (pos === 2 && !dashboard.title)">Next</button>
         <button v-else class="btn btn-primary" @click="closeModal">Finish</button>
       </div>
   </modal>
@@ -48,8 +59,10 @@
 <script>
 import Modal from '@/components/Modal/Modal'
 import AreaEdition from '@/components/Area/AreaEdition'
+import DashboardNewContainer from '@/components/Dashboard/New/DashboardNewContainer'
 
 import DefinedAreas from '@/store/definedAreas'
+import Dashboards from '@/store/dashboards'
 import UserConfiguration from '@/store/userConfiguration'
 
 const Direction = {
@@ -68,12 +81,13 @@ const ClassName = {
 export default {
   name: 'WelcomeModal',
   components: {
-    Modal, AreaEdition
+    Modal, AreaEdition, DashboardNewContainer
   },
   data () {
     return {
       pos: 0,
-      area: {}
+      area: {},
+      dashboard: {}
     }
   },
   methods: {
@@ -119,6 +133,7 @@ export default {
     },
     closeModal () {
       DefinedAreas.setAll([this.area])
+      Dashboards.addDashboard(this.dashboard)
       this.$emit('close')
       UserConfiguration.setDisplayHelp(false)
     }
