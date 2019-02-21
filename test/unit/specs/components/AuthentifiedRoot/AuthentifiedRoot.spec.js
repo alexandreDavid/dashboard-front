@@ -29,6 +29,9 @@ describe('AuthentifiedRoot.spec.js', () => {
     const wrapper = shallowMount(AuthentifiedRoot, {
       mocks: {
         $mq: 'notsm'
+      },
+      stubs: {
+        WelcomeModal: WelcomeModal
       }
     })
     expect(wrapper.vm.$mq).toBe('notsm')

@@ -20,14 +20,16 @@ import UserConfiguration from '@/store/userConfiguration'
 import GeoResources from '@/store/geoResources'
 import Settings from '@/store/settings'
 import MapTour from '@/components/Tour/MapTour'
-import WelcomeModal from '@/components/WelcomeModal/WelcomeModal'
 
 import Loading from '@/components/Loading/Loading'
 
 export default {
   name: 'AuthentifiedRoot',
   components: {
-    NavBar, MapTour, Loading, WelcomeModal
+    NavBar,
+    MapTour,
+    Loading,
+    'welcome-modal': () => import('@/components/WelcomeModal/WelcomeModal')
   },
   data () {
     return {
