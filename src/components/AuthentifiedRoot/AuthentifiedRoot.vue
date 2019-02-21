@@ -8,7 +8,7 @@
           <router-view />
         </div>
       </div>
-      <map-tour></map-tour>
+      <global-tour></global-tour>
     </div>
     <Loading v-else></Loading>
   </div>
@@ -19,15 +19,14 @@ import NavBar from '@/components/NavBar/NavBar'
 import UserConfiguration from '@/store/userConfiguration'
 import GeoResources from '@/store/geoResources'
 import Settings from '@/store/settings'
-import MapTour from '@/components/Tour/MapTour'
-
+import GlobalTour from '@/components/Tour/GlobalTour'
 import Loading from '@/components/Loading/Loading'
 
 export default {
   name: 'AuthentifiedRoot',
   components: {
     NavBar,
-    MapTour,
+    GlobalTour,
     Loading,
     'welcome-modal': () => import('@/components/WelcomeModal/WelcomeModal')
   },

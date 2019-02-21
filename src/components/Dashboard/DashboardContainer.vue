@@ -4,7 +4,7 @@
     <h4 class="col-12 py-2 px-3 bg-light border-bottom">
       <div class="d-flex">
         <editable-input class="flex-grow-1" v-model="dashboard.title" @input="saveTitle" placeholder="title" required></editable-input>
-        <div class="my-2 my-lg-0 d-none d-lg-block">
+        <div id="dashboard-actions" class="my-2 my-lg-0 d-none d-lg-block">
           <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true">Customise dashboard</button>
           <button type="button" class="btn btn-sm btn-light d-inline-block" @click="$emit('delete', dashboard)">Delete dashboard</button>
         </div>
@@ -13,7 +13,7 @@
     <div class="col-12 mb-3">
       <editable-text-area class="dashboard-description" v-model="dashboard.description" @input="saveDescription" placeholder="Description" add-button-label="Add a description"></editable-text-area>
     </div>
-    <nav class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom">
+    <nav id="dashboard-cards-actions" class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom">
       <div class="collapse navbar-collapse flex-wrap">
         <ul class="navbar-nav d-none d-md-flex">
           <li class="nav-item">

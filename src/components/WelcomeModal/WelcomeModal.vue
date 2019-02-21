@@ -129,7 +129,7 @@ export default {
     },
     launchDiscoveryTour () {
       this.closeModal()
-      this.$tours['MapTour'].start()
+      this.$tours['GlobalTour'].start()
     },
     closeModal () {
       DefinedAreas.setAll([this.area])

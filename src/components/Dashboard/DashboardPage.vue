@@ -7,10 +7,10 @@
         </div>
       </div>
       <div class="d-none d-sm-block bg-light h-100" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
-        <div class="container mt-2">
+        <div id="dashboard-list" class="container mt-2">
           <div class="row border-bottom">
             <div class="p-2 col-12">
-              <button type="button" class="btn btn-secondary col-12" @click="showNewModal = true"><font-awesome-icon icon="plus" /> Add a new dashboard</button>
+              <button type="button" id="add-dashboard-button" class="btn btn-secondary col-12" @click="showNewModal = true"><font-awesome-icon icon="plus" /> Add a new dashboard</button>
             </div>
             <h5 class="col-12 my-2">
               My dashboards
@@ -60,8 +60,8 @@ export default {
       selectedDashboard: false
     }
   },
-  async created () {
-    await GeoResources.getAllResources()
+  created () {
+    GeoResources.getAllResources()
     this.dashboards = Dashboards.getAll()
     if (!this.dashboards.length) {
       this.addDashboard(DashboardTemplates.getStarterDashboard())

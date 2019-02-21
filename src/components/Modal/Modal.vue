@@ -1,7 +1,7 @@
 <template>
   <transition name="modal">
     <div class="modal-mask">
-      <div class="modal-dialog modal-dialog-scrollable modal-xl" role="dialog">
+      <div class="modal-dialog modal-dialog-scrollable" :class="classWidth" role="dialog">
         <div class="modal-content shadow">
           <div class="modal-header" v-if="hasHeaderSlot">
             <slot name="header"></slot>
@@ -35,6 +35,11 @@ export default {
     },
     hasFooterSlot () {
       return !!this.$slots['footer']
+    }
+  },
+  props: {
+    classWidth: {
+      default: 'modal-xl'
     }
   },
   methods: {

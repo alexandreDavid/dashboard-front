@@ -31,8 +31,7 @@ export default {
     openHelp () {
       this.$ga.event('profile', 'help')
       this.displayDropDownMenu = false
-      this.$router.push({ name: 'map' })
-      this.$tours['MapTour'].start()
+      this.$tours['GlobalTour'].start()
     },
     logout () {
       this.$ga.event('profile', 'logout')
