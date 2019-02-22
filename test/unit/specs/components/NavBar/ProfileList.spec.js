@@ -9,7 +9,7 @@ jest.mock('@/store/authentication', () => ({
 
 const $router = []
 const $tours = {
-  MapTour: {
+  GlobalTour: {
     start: jest.fn()
   }
 }
@@ -49,8 +49,7 @@ describe('ProfileList.vue', () => {
     expect(wrapper.vm.displayDropDownMenu).toBe(true)
 
     wrapper.find('.help').trigger('click')
-    expect(wrapper.vm.$router[0]).toEqual({ name: 'map' })
-    expect(wrapper.vm.$tours.MapTour.start).toBeCalled()
+    expect(wrapper.vm.$tours.GlobalTour.start).toBeCalled()
     expect(wrapper.vm.displayDropDownMenu).toBe(false)
   })
 
