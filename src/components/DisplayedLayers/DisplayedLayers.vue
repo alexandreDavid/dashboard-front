@@ -2,8 +2,8 @@
   <div class="w-100 card shadow">
     <div class="card-body p-2">
       <button id="forecast-selection-btn" @click="$emit('openAddingLayerSideBar')" class="btn btn-secondary w-100"><font-awesome-icon icon="plus" /> Add coverage maps</button>
-      <displayed-layers-tools class="mt-2" v-if="refLayer" v-bind:time="refLayer._time" v-bind:times="refLayer._availableTimes" v-bind:opacity="refLayer._opacity" @setTime="onTimeChanges" @setOpacity="setOpacity" @openGraphModal="openGraphModalSelected"></displayed-layers-tools>
-      <div v-for="(layer, key) in selectedLayers" :key="key">
+      <displayed-layers-tools class="mt-2" v-bind:layers="getSelectedLayers()" v-if="refLayer" v-bind:time="refLayer._time" v-bind:times="refLayer._availableTimes" v-bind:opacity="refLayer._opacity" @setTime="onTimeChanges" @setOpacity="setOpacity" @openGraphModal="openGraphModalSelected"></displayed-layers-tools>
+      <div v-for="(layer, key) in allLayers" :key="key">
         <displayed-layer-control v-bind:layer="layer" @change="saveChanges" @select="select(key)" @remove="remove(key)" @up="up(key)" @down="down(key)"></displayed-layer-control>
       </div>
       <multi-graph-modal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:resources="modalParams" @close="showModalGraph = false"></multi-graph-modal>
@@ -29,7 +29,7 @@ export default {
   },
   data () {
     return {
-      selectedLayers: SelectedLayers.allSelectedLayers,
+      allLayers: SelectedLayers.allSelectedLayers,
       refLayer: false,
       showModalGraph: false,
       selectedArea: false,
@@ -52,7 +52,7 @@ export default {
       SelectedLayers.down(index)
     },
     select () {
-      const allSelectedLayers = this.selectedLayers.filter(l => l.isSelected())
+      const allSelectedLayers = this.getSelectedLayers()
       if (allSelectedLayers.length > 1) {
         this.refLayer = allSelectedLayers[0]
       } else {
@@ -60,26 +60,29 @@ export default {
       }
     },
     onTimeChanges (time) {
-      this.selectedLayers.filter(l => l.isSelected()).forEach(l => l.setTime(time))
+      this.getSelectedLayers().forEach(l => l.setTime(time))
       this.saveChanges()
     },
     setOpacity (opacity) {
-      this.selectedLayers.filter(l => l.isSelected()).forEach(l => l.setOpacity(opacity))
+      this.getSelectedLayers().forEach(l => l.setOpacity(opacity))
       this.saveChanges()
     },
     openGraphModalSelected () {
-      this.openGraphModal(this.selectedLayers.filter(l => l.isSelected()))
+      this.openGraphModal(this.getSelectedLayers())
     },
     openGraphModal (modalParams) {
       this.selectedArea = DefinedAreas.getActiveArea()
       this.showModalGraph = true
-      this.modalParams = this.selectedLayers.filter(l => l.isSelected())
+      this.modalParams = this.getSelectedLayers()
+    },
+    getSelectedLayers () {
+      return this.allLayers.filter(l => l.isSelected())
     }
   },
   watch: {
     activeUnits: {
       handler (val) {
-        this.selectedLayers.forEach(l => {
+        this.allLayers.forEach(l => {
           l.setUnit(val[l.getUnitFamily()])
         })
       },

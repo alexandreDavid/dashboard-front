@@ -2,7 +2,7 @@
   <div class="w-100" v-if="times && times.length">
     <div class="d-flex align-items-end">
       <div class="mr-1">
-        <play-button v-model="val" v-bind:times="times"></play-button>
+        <play-button v-model="val" v-bind:times="times" :wait-load="waitLoad"></play-button>
       </div>
       <div class="flex-grow-1">
         <TimeSlider v-model="val" v-bind:times="times"></TimeSlider>
@@ -31,6 +31,15 @@ export default {
       }
     }
   },
-  props: ['value', 'times']
+  props: ['value', 'times', 'layer'],
+  methods: {
+    async waitLoad () {
+      return new Promise((resolve) => {
+        this.layer._layer.once('load', () => {
+          resolve()
+        })
+      })
+    }
+  }
 }
 </script>

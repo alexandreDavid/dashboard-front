@@ -8,10 +8,10 @@
 <script>
 export default {
   name: 'PlayButton',
-  props: ['value', 'times'],
+  props: ['value', 'times', 'waitLoad'],
   data () {
     return {
-      activeDateDuration: 3000,
+      activeDateDuration: 2000,
       isPlaying: false,
       isWaiting: false,
       currentIndex: 0
@@ -31,7 +31,7 @@ export default {
       document.removeEventListener('click', this.handleClickOutside)
       this.isPlaying = false
     },
-    activePlay () {
+    async activePlay () {
       // If the user click several times during the time duration, the time is still constant
       if (this.isWaiting) {
         return
@@ -43,6 +43,7 @@ export default {
       }
       this.$emit('input', this.times[this.currentIndex])
       this.isWaiting = true
+      this.waitLoad && await this.waitLoad()
       setTimeout(() => {
         this.isWaiting = false
         if (this.isPlaying) {
