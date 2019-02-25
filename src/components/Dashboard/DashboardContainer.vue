@@ -77,14 +77,12 @@
 </template>
 
 <script>
-import DashboardWidget from '@/components/Dashboard/DashboardWidget'
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import DashboardCustomiseModal from '@/components/Dashboard/DashboardCustomiseModal'
 import Loading from '@/components/Loading/Loading'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import DashboardObj from '@/store/dashboard'
 import GeoResources from '@/store/geoResources'
-import SideBar from '@/components/SideBar/SideBar'
 import DragDropWidgets from '@/components/Dashboard/DragDropWidgets'
 import EditableInput from '@/components/EditableField/EditableInput'
 import EditableTextArea from '@/components/EditableField/EditableTextArea'
@@ -94,11 +92,9 @@ export default {
   name: 'DashboardContainer',
   components: {
     Loading,
-    DashboardWidget,
     DashboardCardModal,
     DashboardCustomiseModal,
     AreaSelectionControl,
-    SideBar,
     DragDropWidgets,
     EditableInput,
     EditableTextArea,
