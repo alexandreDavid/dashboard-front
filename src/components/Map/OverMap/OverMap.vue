@@ -8,7 +8,7 @@
     </div>
     <div class="over-map-left d-flex d-sm-none flex-row-reverse flex-nowrap p-2">
       <div class="d-block d-sm-none over-map-control">
-        <button type="button" @click="showSidebar = true" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon icon="bars" /></button>
+        <button type="button" @click="showSidebar = true" title="Manage map" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon icon="bars" /></button>
       </div>
       <div class="flex-grow-1 over-map-control mr-2">
         <area-selection-control class="shadow" @change="onAreaChange"></area-selection-control>

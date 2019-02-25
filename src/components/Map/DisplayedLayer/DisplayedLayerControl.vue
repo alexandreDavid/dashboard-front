@@ -2,14 +2,14 @@
   <div class="card mt-2 w-100" ref="layer">
     <div class="card-body p-2">
       <h6 class="d-flex align-items-start">
-        <button class="btn btn-xs btn-outline-secondary flex-shrink-1 mr-1" @click="select"><font-awesome-icon v-bind:class="{'text-white': !selected}" icon="check" /></button>
-        <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleDisplay"><font-awesome-icon v-bind:icon="opacity ? 'eye' : 'eye-slash'" /></button>
+        <button class="btn btn-xs btn-outline-secondary flex-shrink-1 mr-1" title="Select" @click="select"><font-awesome-icon v-bind:class="{'text-white': !selected}" icon="check" /></button>
+        <button class="btn btn-xs btn-secondary flex-shrink-1" :title="opacity ? 'Hide' : 'Show'" @click="toggleDisplay"><font-awesome-icon v-bind:icon="opacity ? 'eye' : 'eye-slash'" /></button>
         <span class="w-100 mx-1"> {{ layer.geoResource.label }}</span>
         <div class="btn-group btn-group-xs flex-shrink-1" role="group">
-          <button class="btn btn-sm btn-light up" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
-          <button class="btn btn-sm btn-light" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>
-          <button class="btn btn-sm btn-light" @click="edit"><font-awesome-icon icon="cog" /></button>
-          <button class="btn btn-sm btn-light" @click="$emit('remove')"><font-awesome-icon icon="trash" /></button>
+          <button class="btn btn-sm btn-light up" title="Arrange the layer to the top" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
+          <button class="btn btn-sm btn-light" title="Arrange the layer to the bottom" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>
+          <button class="btn btn-sm btn-light" title="Edit the layer" @click="edit"><font-awesome-icon icon="cog" /></button>
+          <button class="btn btn-sm btn-light" title="Remove the layer" @click="$emit('remove')"><font-awesome-icon icon="trash" /></button>
         </div>
       </h6>
       <Legend class="py-2" v-bind:legend="layer._legend"></Legend>

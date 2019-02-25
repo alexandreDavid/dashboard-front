@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="btn btn-secondary btn-sm" @click="toggle">
+  <button type="button" class="btn btn-secondary btn-sm" :title="isPlaying ? 'Stop' : 'Play'" @click="toggle">
     <font-awesome-icon icon="play" v-show="!isPlaying" />
     <font-awesome-icon icon="pause" v-show="isPlaying" />
   </button>

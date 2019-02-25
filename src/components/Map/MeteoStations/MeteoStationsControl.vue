@@ -2,7 +2,7 @@
   <div class="card shadow w-100">
     <div class="card-body p-2">
       <h6>
-          <button class="btn btn-xs btn-secondary flex-shrink-1" @click="toggleMeteorologicalStations"><font-awesome-icon v-bind:icon="displayMeteoStations ? 'eye' : 'eye-slash'" /></button>
+          <button class="btn btn-xs btn-secondary flex-shrink-1" :title="displayMeteoStations ? 'Hide' : 'Show'" @click="toggleMeteorologicalStations"><font-awesome-icon v-bind:icon="displayMeteoStations ? 'eye' : 'eye-slash'" /></button>
           <span class="form-check-label">Meteorological stations</span>
       </h6>
       <div class="pl-2">

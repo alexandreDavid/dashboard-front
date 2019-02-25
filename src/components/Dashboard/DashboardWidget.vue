@@ -7,14 +7,14 @@
             <span class="w-100" style="line-height: 26px;">{{cardConfiguration.title}}</span>
           </div>
           <div v-if="showEditionButtons">
-            <button type="button" class="btn btn-light btn-xs ml-2 edit" @click="editCard()"><font-awesome-icon icon="edit" /></button>
-            <button type="button" class="btn btn-light btn-xs delete" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
+            <button type="button" class="btn btn-light btn-xs ml-2 edit" title="Edit card" @click="editCard()"><font-awesome-icon icon="edit" /></button>
+            <button type="button" class="btn btn-light btn-xs delete" title="Delete card" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
           </div>
         </div>
       </div>
       <div v-if="!cardConfiguration.title" class="position-absolute m-2" style="right: 0; z-index: 1002; ">
-        <button type="button" class="btn btn-light btn-sm edit-card edit" @click="editCard()"><font-awesome-icon icon="edit" /></button>
-        <button type="button" class="btn btn-light btn-sm delete" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
+        <button type="button" class="btn btn-light btn-sm edit-card edit" title="Edit card" @click="editCard()"><font-awesome-icon icon="edit" /></button>
+        <button type="button" class="btn btn-light btn-sm delete" title="Delete card" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
       </div>
       <widget-graph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:config="cardConfiguration" v-bind:area="selectedArea"></widget-graph>
       <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:config="cardConfiguration"></widget-image>

@@ -1,9 +1,9 @@
 <template>
   <div class="btn-group">
-    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" @click="displayDropDownMenu = true">
+    <button type="button" title="Change time" class="btn btn-secondary btn-sm dropdown-toggle" @click="displayDropDownMenu = true">
       <font-awesome-icon icon="calendar-alt" /> {{ value }}
     </button>
-    <select class="custom-select" v-model="selectedTime">
+    <select class="custom-select" title="Change time" v-model="selectedTime">
       <option v-for="(time, key) in times" :key="key" :value="time" href="#">{{ time }}</option>
     </select>
   </div>

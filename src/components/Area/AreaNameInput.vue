@@ -2,9 +2,9 @@
   <div class="input-group input-group-sm">
     <input type="text" ref="input" v-model="val" class="form-control" placeholder="Area name" aria-label="Area name" :disabled="!editing">
     <div class="input-group-append">
-      <button class="btn btn-secondary edit" v-if="!editing" type="button" @click="edit"><font-awesome-icon icon="edit" /></button>
-      <button class="btn btn-danger cancel" v-if="editing && value" type="button" @click="cancel"><font-awesome-icon icon="times" /></button>
-      <button class="btn btn-success validate" v-if="editing" type="button" @click="validate(val)" :disabled="!val"><font-awesome-icon icon="check" /></button>
+      <button class="btn btn-secondary edit" title="Edit the name" v-if="!editing" type="button" @click="edit"><font-awesome-icon icon="edit" /></button>
+      <button class="btn btn-danger cancel" title="Cancel" v-if="editing && value" type="button" @click="cancel"><font-awesome-icon icon="times" /></button>
+      <button class="btn btn-success validate" title="Save" v-if="editing" type="button" @click="validate(val)" :disabled="!val"><font-awesome-icon icon="check" /></button>
     </div>
   </div>
 </template>

@@ -5,8 +5,8 @@
         <option v-for="(option, key) in options" :key="key" :value="option">{{ option.name }}</option>
       </select>
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary edit" type="button" title="manage the area" @click="displayModal('current')"><font-awesome-icon icon="edit" /></button>
-        <button class="btn btn-outline-secondary plus" type="button" title="add a new area" @click="displayModal('add')"><font-awesome-icon icon="plus" /></button>
+        <button class="btn btn-outline-secondary edit" type="button" title="Manage the area" @click="displayModal('current')"><font-awesome-icon icon="edit" /></button>
+        <button class="btn btn-outline-secondary plus" type="button" title="Add a new area" @click="displayModal('add')"><font-awesome-icon icon="plus" /></button>
       </div>
     </div>
     <area-selection-modal v-if="showModalArea" @close="closeModal" :open-type="displayType" :current-val="val"></area-selection-modal>

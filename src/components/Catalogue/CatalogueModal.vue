@@ -11,7 +11,7 @@
               </div>
               <input type="text" class="form-control" v-model="searchResource" placeholder="Search a resource" aria-label="Search a resource" aria-describedby="Search a resource">
               <div class="input-group-append" v-if="searchResource">
-                <button class="btn btn-outline-secondary" type="button" @click="searchResource = ''">
+                <button class="btn btn-outline-secondary" title="Reset the search" type="button" @click="searchResource = ''">
                   <font-awesome-icon icon="times" />
                 </button>
               </div>
@@ -20,7 +20,7 @@
           <div class="h-100 position-relative">
             <div class="managing-modal-list-container">
               <div v-for="group in groups" :key="group.id" v-if="!searchResource">
-                <button class="btn btn-light d-flex w-100" @click="toggleGroup(group)">
+                <button class="btn btn-light d-flex w-100" title="Toggle the group" @click="toggleGroup(group)">
                   <div class="w-100 text-left font-weight-bold">{{ group.label }}</div>
                   <div class="flex-shrink-1">
                     <font-awesome-icon v-bind:class="{'fa-rotate-90': displayedGroups.indexOf(group) > -1}" icon="caret-right" />

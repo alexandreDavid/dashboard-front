@@ -1,6 +1,6 @@
 <template>
   <div class="btn-group">
-    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" @click="displayDropDownMenu = true">
+    <button type="button" title="Change opacity" class="btn btn-secondary btn-sm dropdown-toggle" @click="displayDropDownMenu = true">
       Opacity {{ opacity }}%
     </button>
     <drop-down class="dropdown-menu-right" v-if="displayDropDownMenu" @close="displayDropDownMenu = false">
