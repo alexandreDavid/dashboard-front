@@ -47,7 +47,7 @@ export default {
   },
   async created () {
     this.areaLayer = new AreaLayer()
-    await this.areaLayer.setSelectedArea({id: 7552})
+    await this.areaLayer.setSelectedArea({idArea: 7552})
     this.activeBaseMap = this.getMap().getBaseMapLayerUrl()
     this.isLoaded = true
   },
