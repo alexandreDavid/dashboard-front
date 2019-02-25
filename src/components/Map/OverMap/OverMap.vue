@@ -2,10 +2,7 @@
   <div class="over-map">
     <MapControlBar v-if="showSidebar" @selectedReportedLayer="onSelectedReportedLayer" @selectedParameter="onSelectedParameter" @close="showSidebar = false" class="position-relative over-map-left">
     </MapControlBar>
-    <div class="over-map-bottom d-flex align-items-end">
-      <div class=" mr-1 w-100 over-map-control">
-        <displayed-layer-time-control class="d-inline-block align-bottom" v-bind:parameter="selectedParameter" v-if="selectedParameter"></displayed-layer-time-control>
-      </div>
+    <div class="over-map-bottom-right">
       <bar-control class="flex-shrink-1 d-none d-sm-inline-flex over-map-control" @openBaseMapControl="showBaseMapSidebar = true">
       </bar-control>
     </div>
@@ -24,7 +21,6 @@
 
 <script>
 import BarControl from './OverMapControl/BarControl/BarControl'
-import DisplayedLayerTimeControl from '@/components/Map/DisplayedLayer/DisplayedLayerTimeControl'
 
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import SelectedLayers from '@/store/selectedLayers'
@@ -35,11 +31,9 @@ export default {
     MapControlBar: () => import('@/components/Map/MapControlBar'),
     BaseMapSidebar: () => import('@/components/Map/OverMap/OverMapControl/BaseMap/BaseMapSidebar'),
     BarControl,
-    DisplayedLayerTimeControl,
     AreaSelectionControl
   },
   inject: ['getAreaLayer'],
-  props: ['selectedParameter'],
   data () {
     return {
       showSidebar: false,
