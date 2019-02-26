@@ -32,6 +32,7 @@ import SelectedLayer from '@/store/selectedLayer'
 import GeoResources from '@/store/geoResources'
 
 import Vue from 'vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'WidgetMap',
@@ -56,7 +57,10 @@ export default {
   computed: {
     mapId () {
       return `map-container-widget${this.widgetKey}`
-    }
+    },
+    ...mapState({
+      activeBaseMap: state => state.baseMaps.active
+    })
   },
   provide () {
     return {
@@ -149,6 +153,9 @@ export default {
     'config.advancedArea': 'setArea',
     'config.advancedOpacity' (opacity) {
       this.displayedLayer.setOpacity(opacity)
+    },
+    activeBaseMap (val) {
+      this.map.setBaseMapLayer(val)
     }
   },
   destroyed () {

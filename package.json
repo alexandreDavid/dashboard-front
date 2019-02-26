@@ -33,7 +33,8 @@
     "vue-router": "^3.0.1",
     "vue-slider-component": "^2.7.7",
     "vue-smooth-dnd": "^0.2.8",
-    "vue-tour": "^1.1.0"
+    "vue-tour": "^1.1.0",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@vue/server-test-utils": "^1.0.0-beta.27",

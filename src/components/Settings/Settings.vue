@@ -12,19 +12,24 @@
         <SettingControl v-for="setting in getSettingsByType(settingsFamily.type)" :key="setting.id" :setting="setting"></SettingControl>
       </ul>
     </div>
+    <div class="border-top p-2">
+      <h5>Base map selection</h5>
+      <base-map-control></base-map-control>
+    </div>
   </div>
 </template>
 
 <script>
 import Settings from '@/store/settings'
 import SettingControl from './SettingControl'
+import BaseMapControl from '@/components/BaseMap/BaseMapControl'
 
 export default {
   name: 'Settings',
   async created () {
     this.settings = Settings.getAllSettings()
   },
-  components: { SettingControl },
+  components: { SettingControl, BaseMapControl },
   data () {
     return {
       settings: [],

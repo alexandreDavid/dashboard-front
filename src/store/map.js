@@ -1,5 +1,5 @@
 import { Map, TileLayer, CircleMarker, Control } from 'leaflet'
-import UserConfiguration from '@/store/userConfiguration'
+import BaseMaps from '@/store/modules/baseMaps'
 
 import { NorthArrow } from '@/components/Map/OverMap/OverMapControl/Control.NorthArrow'
 
@@ -21,16 +21,17 @@ let MapObj = Map.extend({
   setDefaultMap () {
     this.fitBounds(defaultParams.bounds)
 
-    this.setBaseMapLayer(UserConfiguration.getActiveBaseMapLayer())
+    this.setBaseMapLayer(BaseMaps.state.active)
   },
-  setBaseMapLayer (layerUrl) {
-    this._baseLayerUrl = layerUrl
-    if (layerUrl === ' ') {
+  setBaseMapLayer (baseMap) {
+    this._baseLayerUrl = baseMap.url
+    if (!this._baseLayerUrl) {
       this._baseLayer && this._baseLayer.remove()
+      this._baseLayer = false
     } else if (this._baseLayer) {
-      this._baseLayer.setUrl(layerUrl)
+      this._baseLayer.setUrl(this._baseLayerUrl)
     } else {
-      this._baseLayer = new TileLayer.WMS(layerUrl).addTo(this)
+      this._baseLayer = new TileLayer.WMS(this._baseLayerUrl).addTo(this)
     }
   },
   getBaseMapLayerUrl () {

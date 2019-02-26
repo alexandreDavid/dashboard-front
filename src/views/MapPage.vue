@@ -24,6 +24,8 @@ import AreaLayer from '@/store/areaLayer'
 
 import SelectedLayers from '@/store/selectedLayers'
 
+import { mapState } from 'vuex'
+
 export default {
   name: 'MapPage',
   components: {
@@ -32,6 +34,9 @@ export default {
     ReportedLayer,
     MapControlBar
   },
+  computed: mapState({
+    activeBaseMap: state => state.baseMaps.active
+  }),
   provide () {
     return {
       getMap: this.getMap,
@@ -50,9 +55,6 @@ export default {
       selectedParameter: false
     }
   },
-  // created () {
-  //   this.areaLayer = new AreaLayer()
-  // },
   async mounted () {
     this.map = new MapObj('map-container')
     this.map.invalidateSize()
@@ -87,6 +89,11 @@ export default {
     },
     onSelectedParameter (selectedParameter) {
       this.selectedParameter = selectedParameter
+    }
+  },
+  watch: {
+    activeBaseMap (val) {
+      this.map.setBaseMapLayer(val)
     }
   }
 }

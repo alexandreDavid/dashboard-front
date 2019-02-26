@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import Authentication from './store/authentication'
 import '@/utils/fontAwesome'
 import VueTour from 'vue-tour'
@@ -37,6 +38,7 @@ Vue.use(VueMq, {
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

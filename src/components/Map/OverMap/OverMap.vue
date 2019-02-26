@@ -29,7 +29,7 @@ export default {
   name: 'OverMap',
   components: {
     MapControlBar: () => import('@/components/Map/MapControlBar'),
-    BaseMapSidebar: () => import('@/components/Map/OverMap/OverMapControl/BaseMap/BaseMapSidebar'),
+    BaseMapSidebar: () => import('@/components/BaseMap/BaseMapSidebar'),
     BarControl,
     AreaSelectionControl
   },
