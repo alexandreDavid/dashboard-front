@@ -16,15 +16,9 @@ const allBaseMaps = [
   }
 ]
 
-let active = UserConfiguration.getActiveBaseMapLayer()
-
-if (!active || !active.hasOwnProperty('url')) {
-  active = allBaseMaps[1]
-}
-
 // initial state
 const state = {
-  active
+  active: {}
 }
 
 // getters
@@ -36,6 +30,14 @@ const getters = {
 
 // actions
 const actions = {
+  init ({ dispatch }) {
+    let active = UserConfiguration.getActiveBaseMapLayer()
+
+    if (!active || !active.hasOwnProperty('url')) {
+      active = allBaseMaps[1]
+    }
+    dispatch('setActive', active)
+  },
   setActive ({ commit }, baseMap) {
     commit('setActive', baseMap)
     UserConfiguration.setActiveBaseMapLayer(baseMap)

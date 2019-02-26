@@ -1,10 +1,16 @@
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
 import WidgetMap from '@/components/Dashboard/Widgets/WidgetMap.vue'
 
 import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
 import SelectedLayer from '@/store/selectedLayer'
 import GeoResources from '@/store/geoResources'
+
+import Vuex from 'vuex'
+
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
 
 const mockMap = jest.fn()
 jest.mock('@/store/map', () => {
@@ -45,6 +51,17 @@ GeoResources.searchById.mockReturnValue({
 describe('WidgetMap.vue', () => {
   let wrapper
   beforeEach(async () => {
+    let state = {
+      active: 'activeBaseMap'
+    }
+
+    let store = new Vuex.Store({
+      modules: {
+        baseMaps: {
+          state
+        }
+      }
+    })
     wrapper = shallowMount(WidgetMap, {
       propsData: {
         config: {
@@ -54,7 +71,9 @@ describe('WidgetMap.vue', () => {
         },
         area: 'area',
         widgetKey: 'widgetKey'
-      }
+      },
+      store,
+      localVue
     })
   })
 

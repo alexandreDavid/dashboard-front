@@ -40,6 +40,7 @@ export default {
     this.showModalWelcome = UserConfiguration.getDisplayHelp() && this.$mq !== 'sm'
     await Settings.init()
     await GeoResources.getAllResources()
+    this.$store.dispatch('init')
     this.isLoaded = true
   }
 }

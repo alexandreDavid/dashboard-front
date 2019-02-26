@@ -15,7 +15,13 @@ const mockCircleMarker = {
 }
 L.CircleMarker = jest.fn().mockImplementation(() => mockCircleMarker)
 
-const defaultParams = MapObj.getDefaultParams()
+jest.mock('@/store/modules/baseMaps', () => ({
+  state: {
+    active: {
+      url: 'url'
+    }
+  }
+}))
 
 describe('map.js', () => {
   let map
@@ -37,7 +43,7 @@ describe('map.js', () => {
     // expect(map.getCenter()).toEqual(new L.LatLng(defaultParams.view.location[0], defaultParams.view.location[1]))
   })
   it('Calls setBaseMapLayer', () => {
-    map.setBaseMapLayer('layerUrl')
+    map.setBaseMapLayer({url: 'layerUrl'})
     // Called only the first time
     expect(L.TileLayer.WMS).toHaveBeenCalledTimes(1)
     expect(mockBaseLayer.addTo).toHaveBeenCalledTimes(1)
