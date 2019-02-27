@@ -12,9 +12,11 @@
           </div>
         </div>
       </div>
-      <div v-if="!cardConfiguration.title" class="position-absolute m-2" style="right: 0; z-index: 1002; ">
-        <button type="button" class="btn btn-light btn-sm edit-card edit" title="Edit card" @click="editCard()"><font-awesome-icon icon="edit" /></button>
-        <button type="button" class="btn btn-light btn-sm delete" title="Delete card" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
+      <div v-if="!cardConfiguration.title" @mouseover="showEditionButtons = true" @mouseleave="showEditionButtons = false" class="position-absolute p-2 drag-handler" style="left: 0;right: 0; height:47px; z-index: 1002;text-align: right;">
+        <div v-if="showEditionButtons">
+          <button type="button" class="btn btn-light btn-sm edit-card edit" title="Edit card" @click="editCard()"><font-awesome-icon icon="edit" /></button>
+          <button type="button" class="btn btn-light btn-sm delete" title="Delete card" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
+        </div>
       </div>
       <widget-graph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:config="cardConfiguration" v-bind:area="selectedArea"></widget-graph>
       <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:config="cardConfiguration"></widget-image>
