@@ -19,16 +19,22 @@ jest.mock('@/store/geoResources', () => ({
   getAllResources: jest.fn()
 }))
 
+const $store = {
+  dispatch: jest.fn()
+}
+
 describe('AuthentifiedRoot.spec.js', () => {
   it('Init with welcome modal', async () => {
     Settings.init.mockClear()
     Settings.init.mockReturnValue(Promise.resolve())
+    $store.dispatch.mockClear()
 
     UserConfiguration.getDisplayHelp.mockReturnValue(true)
 
     const wrapper = shallowMount(AuthentifiedRoot, {
       mocks: {
-        $mq: 'notsm'
+        $mq: 'notsm',
+        $store
       },
       stubs: {
         WelcomeModal: WelcomeModal
@@ -41,6 +47,7 @@ describe('AuthentifiedRoot.spec.js', () => {
     await wrapper.vm.$nextTick()
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
 
     expect(wrapper.vm.isLoaded).toBe(true)
     expect(wrapper.find(WelcomeModal).exists()).toBe(true)
@@ -50,16 +57,22 @@ describe('AuthentifiedRoot.spec.js', () => {
     Settings.init.mockClear()
     Settings.init.mockReturnValue(Promise.resolve())
     GeoResources.getAllResources.mockClear()
+    $store.dispatch.mockClear()
 
     UserConfiguration.getDisplayHelp.mockReturnValue(false)
 
-    const wrapper = shallowMount(AuthentifiedRoot)
+    const wrapper = shallowMount(AuthentifiedRoot, {
+      mocks: {
+        $store
+      }
+    })
 
     expect(wrapper.vm.isLoaded).toBe(false)
     expect(Settings.init).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
 
     expect(wrapper.vm.isLoaded).toBe(true)
     expect(wrapper.find(WelcomeModal).exists()).toBe(false)
@@ -70,12 +83,16 @@ describe('AuthentifiedRoot.spec.js', () => {
     Settings.init.mockClear()
     Settings.init.mockReturnValue(Promise.resolve())
     GeoResources.getAllResources.mockClear()
+    $store.dispatch.mockClear()
 
     UserConfiguration.getDisplayHelp.mockReturnValue(true)
 
     const wrapper = shallowMount(AuthentifiedRoot, {
       mocks: {
-        $mq: 'sm'
+        $mq: 'sm',
+        $store: {
+          dispatch: jest.fn()
+        }
       }
     })
 
@@ -84,6 +101,7 @@ describe('AuthentifiedRoot.spec.js', () => {
     await wrapper.vm.$nextTick()
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
+    expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
 
     expect(wrapper.find(WelcomeModal).exists()).toBe(false)
     expect(wrapper.find('router-view-stub').exists()).toBe(true)
