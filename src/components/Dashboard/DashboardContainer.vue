@@ -6,7 +6,7 @@
         <editable-input class="flex-grow-1" v-model="dashboard.title" @input="saveTitle" placeholder="title" required></editable-input>
         <div id="dashboard-actions" class="my-2 my-lg-0 d-none d-lg-block">
           <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true">Customise dashboard</button>
-          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="$emit('delete', dashboard)">Delete dashboard</button>
+          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showConfirmDeleteDashboard = true">Delete dashboard</button>
         </div>
       </div>
     </h4>
@@ -71,6 +71,7 @@
     <drag-drop-widgets v-bind:dashboard="dashboard" @edit="editWidget" @delete="removeWidget" v-bind:selectedArea="selectedArea"></drag-drop-widgets>
     <dashboard-customise-modal v-if="showCustomiseModal" @close="showCustomiseModal = false" @validate="setCustomisation" v-bind:dashboard="dashboard"></dashboard-customise-modal>
     <dashboard-card-modal v-if="showCardModal" @close="closeEditCardModal" @validate="setEditedWidget" :editedCard="editedCard"></dashboard-card-modal>
+    <confirm-modal v-if="showConfirmDeleteDashboard" content="Do you really want to delete the dashboard?" @close="showConfirmDeleteDashboard = false" @confirm="deleteDashboard"></confirm-modal>
   </div>
   <Loading v-else/>
 </div>
@@ -87,6 +88,7 @@ import DragDropWidgets from '@/components/Dashboard/DragDropWidgets'
 import EditableInput from '@/components/EditableField/EditableInput'
 import EditableTextArea from '@/components/EditableField/EditableTextArea'
 import DropDown from '@/components/DropDown/DropDown'
+import ConfirmModal from '@/components/Modal/ConfirmModal'
 
 export default {
   name: 'DashboardContainer',
@@ -98,7 +100,8 @@ export default {
     DragDropWidgets,
     EditableInput,
     EditableTextArea,
-    DropDown
+    DropDown,
+    ConfirmModal
   },
   props: ['config'],
   data () {
@@ -106,6 +109,7 @@ export default {
       isLoaded: false,
       showCardModal: false,
       showCustomiseModal: false,
+      showConfirmDeleteDashboard: false,
       showNewModal: false,
       selectedArea: false,
       dashboard: {},
@@ -191,6 +195,10 @@ export default {
     save () {
       this.$emit('save')
       this.$ga.event('dashboard', 'save')
+    },
+    deleteDashboard () {
+      this.$emit('delete', this.dashboard)
+      this.showConfirmDeleteDashboard = false
     }
   },
   watch: {

@@ -2,8 +2,11 @@
   <div id="dashboard" class="h-100">
     <div v-if="isLoaded" class="d-flex flex-row-reverse h-100">
       <div class="flex-grow-1 h-100 position-relative">
-        <div id="dashboards-container" style="position: absolute;overflow: auto;top: 0;bottom: 0;left:0;right:0;">
+        <div v-if="selectedDashboard" id="dashboards-container" style="position: absolute;overflow: auto;top: 0;bottom: 0;left:0;right:0;">
           <dashboard-container :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
+        </div>
+        <div v-else class="alert alert-info m-3" role="alert">
+          Please select a dashboard in the list or click on the button to create a new one.
         </div>
       </div>
       <div class="d-none d-sm-block bg-light h-100" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
@@ -82,7 +85,7 @@ export default {
     },
     deleteDashboard (dashboard) {
       this.dashboards = Dashboards.removeDashboard(dashboard)
-      this.selectDashboard(dashboard)
+      this.selectedDashboard = false
     },
     save () {
       this.dashboards = Dashboards.getAll()
