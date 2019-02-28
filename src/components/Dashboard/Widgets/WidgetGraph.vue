@@ -81,7 +81,7 @@ export default {
     },
     async setArea () {
       let newArea
-      if (this.config.advancedConfig) {
+      if (this.config.advancedArea) {
         newArea = DefinedAreas.getArea(this.config.advancedArea.id)
       } else {
         newArea = this.area

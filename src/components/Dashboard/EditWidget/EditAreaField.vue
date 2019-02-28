@@ -35,7 +35,7 @@ export default {
   },
   mounted () {
     if (this.valueModel) {
-      this.selectedArea = DefinedAreas.getActiveArea(this.valueModel.id)
+      this.selectedArea = DefinedAreas.getArea(this.valueModel.id)
       this.hasAdvancedArea = true
     } else {
       this.selectedArea = DefinedAreas.getActiveArea()

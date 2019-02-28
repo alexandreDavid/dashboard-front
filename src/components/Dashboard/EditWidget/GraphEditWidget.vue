@@ -40,8 +40,7 @@ export default {
   data () {
     return {
       resources: [],
-      showAdvancedConfig: false,
-      advancedArea: {}
+      showAdvancedConfig: false
     }
   },
   mounted () {

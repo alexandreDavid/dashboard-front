@@ -27,43 +27,23 @@
           <opacity-slider class="ml-2" style="width: 200px;" v-model="value.advancedOpacity"></opacity-slider>
         </div>
       </div>
-      <div class="form-group">
-        <label class="w-100" for="title">Height</label>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-sm btn-secondary" @click="setAdvancedHeight('default')" v-bind:class="{active: advancedHeight === 'default'}">Default</button>
-          <button type="button" class="btn btn-sm btn-secondary" @click="setAdvancedHeight('large')" :class="{active: advancedHeight === 'large'}">Large</button>
-          <button type="button" class="btn btn-sm btn-secondary" @click="setAdvancedHeight('custom')" :class="{active: advancedHeight === 'custom'}">
-            <div class="form-inline">
-              <label for="custom-height" class="mr-1">Custom</label>
-              <div class="input-group input-group-sm">
-                <input id="custom-height" type="number" :disabled="advancedHeight !== 'custom'" v-model="value.advancedCustomHeight" class="form-control" placeholder="Height" aria-label="Height">
-                <div class="input-group-append">
-                  <span class="input-group-text">px</span>
-                </div>
-              </div>
-            </div>
-          </button>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Area</label>
-        <area-selection-control v-model="advancedArea" @change="setArea"></area-selection-control>
-      </div>
+      <edit-height-field v-model="value.advancedHeight"></edit-height-field>
+      <edit-area-field v-model="value.advancedArea" @input="setTitle"></edit-area-field>
     </div>
   </div>
 </template>
 
 <script>
-import GeoResources from '@/store/geoResources'
-import OpacitySlider from '@/components/Slider/OpacitySlider'
-import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+import EditAreaField from './EditAreaField'
 import EditDescriptionField from './EditDescriptionField'
+import EditHeightField from './EditHeightField'
+import OpacitySlider from '@/components/Slider/OpacitySlider'
 
-import DefinedAreas from '@/store/definedAreas'
+import GeoResources from '@/store/geoResources'
 
 export default {
   name: 'MapEditWidget',
-  components: { OpacitySlider, AreaSelectionControl, EditDescriptionField },
+  components: { EditAreaField, EditDescriptionField, EditHeightField, OpacitySlider },
   props: {
     value: {
       type: Object,
@@ -73,9 +53,7 @@ export default {
   data () {
     return {
       resources: [],
-      showAdvancedConfig: false,
-      advancedHeight: 'default',
-      advancedArea: {}
+      showAdvancedConfig: false
     }
   },
   mounted () {
@@ -84,11 +62,8 @@ export default {
       this.$set(this.value, 'advancedConfig', false)
       this.$set(this.value, 'advancedOpacity', 80)
       this.$set(this.value, 'advancedHeight', 'default')
-      this.$set(this.value, 'advancedCustomHeight', '')
-      this.$set(this.value, 'advancedArea', DefinedAreas.getActiveArea())
+      this.$set(this.value, 'advancedArea', false)
     }
-    this.advancedHeight = this.value.advancedHeight
-    this.advancedArea = this.value.advancedArea
     this.setTitle()
 
     const allResources = GeoResources.getAll()
@@ -99,27 +74,18 @@ export default {
   },
   methods: {
     changeResource (resource) {
-      this.$set(this.value, 'title', resource.label)
       this.value.resource = resource
+      this.setTitle()
     },
     setShowAdvancedSettings (val) {
       this.showAdvancedConfig = val
       this.setTitle()
       this.$set(this.value, 'advancedConfig', val)
     },
-    setAdvancedHeight (type) {
-      this.$set(this.value, 'advancedHeight', type)
-      this.advancedHeight = type
-    },
-    setArea (area) {
-      this.$set(this.value, 'advancedArea', area)
-      this.advancedArea = area
-      this.setTitle()
-    },
     setTitle () {
       let title = this.value.resource && this.value.resource.label
-      if (this.showAdvancedConfig && this.advancedArea) {
-        title += ` - ${this.advancedArea.name}`
+      if (this.showAdvancedConfig && this.value.advancedArea) {
+        title += ` - ${this.value.advancedArea.name}`
       }
       this.$set(this.value, 'title', title)
     }
