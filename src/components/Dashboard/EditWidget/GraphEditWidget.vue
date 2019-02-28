@@ -25,7 +25,6 @@
 import EditAreaField from './EditAreaField'
 import EditDescriptionField from './EditDescriptionField'
 import EditHeightField from './EditHeightField'
-import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 
 import GeoResources from '@/store/geoResources'
 
