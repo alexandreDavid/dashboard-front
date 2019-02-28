@@ -13,16 +13,21 @@
       </select>
     </div>
     <edit-description-field v-model="value.description"></edit-description-field>
+    <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
+    <div v-if="showAdvancedConfig">
+      <edit-height-field v-model="value.advancedHeight"></edit-height-field>
+    </div>
   </div>
 </template>
 
 <script>
 import GeoResources from '@/store/geoResources'
 import EditDescriptionField from './EditDescriptionField'
+import EditHeightField from './EditHeightField'
 
 export default {
   name: 'GraphEditWidget',
-  components: { EditDescriptionField },
+  components: { EditDescriptionField, EditHeightField },
   props: {
     value: {
       type: Object,
@@ -31,20 +36,38 @@ export default {
   },
   data () {
     return {
-      resources: []
+      resources: [],
+      showAdvancedConfig: false
     }
   },
   mounted () {
+    this.showAdvancedConfig = this.value.advancedConfig
+    if (!this.showAdvancedConfig) {
+      this.$set(this.value, 'advancedHeight', 'default')
+    }
     const allResources = GeoResources.getAll()
     this.resources = allResources.filter(p => p.config.statistics).map(p => ({
       id: p.id,
       label: p.label
     }))
+    this.setTitle()
   },
   methods: {
     changeResource (resource) {
-      this.value.title = resource.label
       this.value.resource = resource
+      this.setTitle()
+    },
+    setShowAdvancedSettings (val) {
+      this.showAdvancedConfig = val
+      this.setTitle()
+      this.$set(this.value, 'advancedConfig', val)
+    },
+    setTitle () {
+      let title = this.value.resource && this.value.resource.label
+      if (this.showAdvancedConfig && this.advancedArea) {
+        title += ` - ${this.advancedArea.name}`
+      }
+      this.$set(this.value, 'title', title)
     }
   }
 }

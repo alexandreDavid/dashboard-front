@@ -1,16 +1,16 @@
 <template>
   <modal @close="close()">
-    <div slot="header" class="w-100">{{ val.id ? 'Configuration of the' : 'Add a' }} {{ val.type }}</div>
+    <div slot="header" class="w-100">{{ valueModel.id ? 'Configuration of the' : 'Add a' }} {{ valueModel.type }}</div>
     <div slot="body">
-      <graph-edit-widget v-if="val.type === 'graph'" v-model="val"></graph-edit-widget>
-      <image-edit-widget v-if="val.type === 'image'" v-model="val"></image-edit-widget>
-      <map-edit-widget v-if="val.type === 'map'" v-model="val"></map-edit-widget>
-      <table-edit-widget v-if="val.type === 'table'" v-model="val"></table-edit-widget>
-      <text-area-edit-widget v-if="val.type === 'textarea'" v-model="val"></text-area-edit-widget>
+      <graph-edit-widget v-if="valueModel.type === 'graph'" v-model="valueModel"></graph-edit-widget>
+      <image-edit-widget v-if="valueModel.type === 'image'" v-model="valueModel"></image-edit-widget>
+      <map-edit-widget v-if="valueModel.type === 'map'" v-model="valueModel"></map-edit-widget>
+      <table-edit-widget v-if="valueModel.type === 'table'" v-model="valueModel"></table-edit-widget>
+      <text-area-edit-widget v-if="valueModel.type === 'textarea'" v-model="valueModel"></text-area-edit-widget>
     </div>
     <div slot="footer">
       <button type="button" class="btn btn-secondary" @click="close">Cancel</button>
-      <button type="button" class="btn btn-success" @click="validate(val)">
+      <button type="button" class="btn btn-success" @click="validate(valueModel)">
         <font-awesome-icon icon="check"/>Apply
       </button>
     </div>
@@ -37,18 +37,22 @@ export default {
     TableEditWidget,
     TextAreaEditWidget
   },
-  props: ['editedCard'],
+  props: ['value'],
+  computed: {
+    valueModel: {
+      get () {
+        return this.value
+      }
+    }
+  },
   data () {
     return {
       val: false
     }
   },
-  mounted () {
-    this.val = { ...this.editedCard } || { title: '', type: 'map', description: '' }
-  },
   methods: {
-    validate (widget) {
-      this.$emit('validate', this.val)
+    validate (card) {
+      this.$emit('input', card)
     },
     close () {
       this.$emit('close')

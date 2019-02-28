@@ -70,7 +70,7 @@
     </nav>
     <drag-drop-widgets v-bind:dashboard="dashboard" @edit="editWidget" @delete="removeWidget" v-bind:selectedArea="selectedArea"></drag-drop-widgets>
     <dashboard-customise-modal v-if="showCustomiseModal" @close="showCustomiseModal = false" @validate="setCustomisation" v-bind:dashboard="dashboard"></dashboard-customise-modal>
-    <dashboard-card-modal v-if="showCardModal" @close="closeEditCardModal" @validate="setEditedWidget" :editedCard="editedCard"></dashboard-card-modal>
+    <dashboard-card-modal v-if="showCardModal" @close="closeEditCardModal" @input="setEditedWidget" v-model="editedCard"></dashboard-card-modal>
     <confirm-modal v-if="showConfirmDeleteDashboard" content="Do you really want to delete the dashboard?" @close="showConfirmDeleteDashboard = false" @confirm="deleteDashboard"></confirm-modal>
   </div>
   <Loading v-else/>
@@ -133,7 +133,8 @@ export default {
       this.editWidget({ title: '', type, description: '' })
     },
     editWidget (card) {
-      this.editedCard = card
+      this.editedCard = Object.assign({}, card)
+      // this.editedCard = card
       this.showCardModal = true
     },
     setEditedWidget (card) {

@@ -1,6 +1,6 @@
 <template>
   <div class="card-body p-0 position-relative">
-    <div class="graph-container-widget">
+    <div class="graph-container-widget" v-bind:style="{height: `${mapHeight}px`}">
       <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType" :start-date="startDate" :end-date="endDate"></Graph>
       <Loading v-else></Loading>
     </div>
@@ -38,8 +38,12 @@ export default {
       areaLayer: false,
       isLoaded: false,
       startDate: false,
-      endDate: false
+      endDate: false,
+      mapHeight: 200
     }
+  },
+  created () {
+    this.setHeight()
   },
   async mounted () {
     this.areaLayer = new AreaLayer()
@@ -60,6 +64,18 @@ export default {
       this.startDate = startDate
       this.endDate = endDate
       this.isLoaded = true
+    },
+    setHeight () {
+      this.mapHeight = 200
+      if (this.config.advancedConfig) {
+        if (isNaN(this.config.advancedHeight)) {
+          if (this.config.advancedHeight === 'large') {
+            this.mapHeight = 300
+          }
+        } else {
+          this.mapHeight = this.config.advancedHeight
+        }
+      }
     }
   },
   watch: {
@@ -69,6 +85,12 @@ export default {
       await this.areaLayer.setSelectedArea(newArea)
       await this.resource.setArea(this.areaLayer.toGeoJSON())
       this.isLoaded = true
+    },
+    config: {
+      handler (val) {
+        this.setHeight()
+      },
+      deep: true
     }
   }
 }
