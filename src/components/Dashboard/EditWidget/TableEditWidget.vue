@@ -26,7 +26,7 @@ export default {
     }
   },
   created () {
-    this.value.formFields = this.value.formFields || {}
+    this.$set(this.value, 'isValid', true)
   }
 }
 </script>

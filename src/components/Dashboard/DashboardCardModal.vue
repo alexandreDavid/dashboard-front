@@ -10,7 +10,7 @@
     </div>
     <div slot="footer">
       <button type="button" class="btn btn-secondary" @click="close">Cancel</button>
-      <button type="button" class="btn btn-success" @click="validate(valueModel)">
+      <button type="button" class="btn btn-success" @click="validate(valueModel)" :disabled="!valueModel.isValid">
         <font-awesome-icon icon="check"/>Apply
       </button>
     </div>
@@ -43,11 +43,6 @@ export default {
       get () {
         return this.value
       }
-    }
-  },
-  data () {
-    return {
-      val: false
     }
   },
   methods: {

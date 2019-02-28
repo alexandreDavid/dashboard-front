@@ -5,7 +5,7 @@
       <input type="text" v-model="value.title" class="form-control" id="title" placeholder="title" disabled>
     </div>
     <div class="form-group">
-      <label>Data to display</label>
+      <label>Data to display <small>(required)</small></label>
       <select class="form-control" v-model="value.resource" @change="changeResource(value.resource)">
         <option v-for="resource in resources" :key="resource.id" v-bind:value="resource">
           {{ resource.label }}
@@ -45,6 +45,7 @@ export default {
   },
   mounted () {
     this.showAdvancedConfig = this.value.advancedConfig
+    this.$set(this.value, 'isValid', !!this.value.resource)
     if (!this.showAdvancedConfig) {
       this.$set(this.value, 'advancedHeight', 'default')
       this.$set(this.value, 'advancedArea', false)
@@ -59,6 +60,7 @@ export default {
   methods: {
     changeResource (resource) {
       this.value.resource = resource
+      this.$set(this.value, 'isValid', !!this.value.resource)
       this.setTitle()
     },
     setShowAdvancedSettings (val) {

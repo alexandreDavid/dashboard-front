@@ -5,8 +5,8 @@
       <input type="text" v-model="value.title" class="form-control" id="title" placeholder="title">
     </div>
     <div class="form-group">
-      <label>Text</label>
-      <textarea class="form-control" v-model="value.description" placeholder="Type here..." aria-label="Text"></textarea>
+      <label>Text <small>(required)</small></label>
+      <textarea class="form-control" v-model="value.description" @input="checkValidity" placeholder="Type here..." aria-label="Text"></textarea>
     </div>
   </div>
 </template>
@@ -18,6 +18,14 @@ export default {
     value: {
       type: Object,
       required: true
+    }
+  },
+  mounted () {
+    this.checkValidity()
+  },
+  methods: {
+    checkValidity () {
+      this.$set(this.value, 'isValid', !!this.value.description)
     }
   }
 }
