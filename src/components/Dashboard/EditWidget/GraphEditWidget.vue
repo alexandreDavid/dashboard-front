@@ -16,18 +16,26 @@
     <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
     <div v-if="showAdvancedConfig">
       <edit-height-field v-model="value.advancedHeight"></edit-height-field>
+      <div class="form-group">
+        <label>Area</label>
+        <area-selection-control v-model="advancedArea" @change="setArea"></area-selection-control>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import GeoResources from '@/store/geoResources'
+
 import EditDescriptionField from './EditDescriptionField'
 import EditHeightField from './EditHeightField'
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+
+import GeoResources from '@/store/geoResources'
+import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'GraphEditWidget',
-  components: { EditDescriptionField, EditHeightField },
+  components: { EditDescriptionField, EditHeightField, AreaSelectionControl },
   props: {
     value: {
       type: Object,
@@ -37,14 +45,17 @@ export default {
   data () {
     return {
       resources: [],
-      showAdvancedConfig: false
+      showAdvancedConfig: false,
+      advancedArea: {}
     }
   },
   mounted () {
     this.showAdvancedConfig = this.value.advancedConfig
     if (!this.showAdvancedConfig) {
       this.$set(this.value, 'advancedHeight', 'default')
+      this.$set(this.value, 'advancedArea', DefinedAreas.getActiveArea())
     }
+    this.advancedArea = this.value.advancedArea
     const allResources = GeoResources.getAll()
     this.resources = allResources.filter(p => p.config.statistics).map(p => ({
       id: p.id,
@@ -68,6 +79,11 @@ export default {
         title += ` - ${this.advancedArea.name}`
       }
       this.$set(this.value, 'title', title)
+    },
+    setArea (area) {
+      this.$set(this.value, 'advancedArea', area)
+      this.advancedArea = area
+      this.setTitle()
     }
   }
 }

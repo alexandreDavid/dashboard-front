@@ -76,19 +76,28 @@ export default {
           this.mapHeight = this.config.advancedHeight
         }
       }
+    },
+    async setArea () {
+      let newArea
+      if (this.config.advancedConfig) {
+        newArea = this.config.advancedArea
+      } else {
+        newArea = this.area
+      }
+      this.isLoaded = false
+      await this.areaLayer.setSelectedArea(newArea)
+      await this.areaLayer.setSelectedArea(newArea)
+      await this.resource.setArea(this.areaLayer.toGeoJSON())
+      this.isLoaded = true
     }
   },
   watch: {
     'config.resource': 'getData',
-    async area (newArea) {
-      this.isLoaded = false
-      await this.areaLayer.setSelectedArea(newArea)
-      await this.resource.setArea(this.areaLayer.toGeoJSON())
-      this.isLoaded = true
-    },
+    area: 'setArea',
     config: {
       handler (val) {
         this.setHeight()
+        this.setArea()
       },
       deep: true
     }
