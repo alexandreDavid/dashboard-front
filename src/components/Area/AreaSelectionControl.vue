@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="input-group">
-      <select class="custom-select" v-model="val" @change="change(val)" aria-label="Place selection">
+      <select class="custom-select" v-model="val" @change="change(val)" :disabled="disabled" aria-label="Place selection">
         <option v-for="(option, key) in options" :key="key" :value="option">{{ option.name }}</option>
       </select>
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary edit" type="button" title="Manage the area" @click="displayModal('current')"><font-awesome-icon icon="edit" /></button>
-        <button class="btn btn-outline-secondary plus" type="button" title="Add a new area" @click="displayModal('add')"><font-awesome-icon icon="plus" /></button>
+        <button class="btn btn-outline-secondary edit" type="button" title="Manage the area" @click="displayModal('current')" :disabled="disabled"><font-awesome-icon icon="edit" /></button>
+        <button class="btn btn-outline-secondary plus" type="button" title="Add a new area" @click="displayModal('add')" :disabled="disabled"><font-awesome-icon icon="plus" /></button>
       </div>
     </div>
     <area-selection-modal v-if="showModalArea" @close="closeModal" :open-type="displayType" :current-val="val"></area-selection-modal>
@@ -20,7 +20,7 @@ import DefinedAreas from '@/store/definedAreas'
 export default {
   name: 'AreaSelectionControl',
   components: {AreaSelectionModal},
-  props: [ 'value' ],
+  props: [ 'value', 'disabled' ],
   data () {
     return {
       val: false,
@@ -31,6 +31,12 @@ export default {
   },
   mounted () {
     this.loadOptions()
+    if (!this.value) {
+      this.val = DefinedAreas.getActiveArea()
+      this.change(this.val)
+    } else {
+      this.val = DefinedAreas.getArea(this.value.id)
+    }
   },
   methods: {
     displayModal (type) {
@@ -48,11 +54,11 @@ export default {
     closeModal () {
       this.showModalArea = false
       this.loadOptions()
+      this.val = DefinedAreas.getArea(this.val.id)
       this.change(this.val)
     },
     loadOptions () {
       this.options = DefinedAreas.getAll()
-      this.val = this.value || DefinedAreas.getActiveArea()
     }
   },
   watch: {

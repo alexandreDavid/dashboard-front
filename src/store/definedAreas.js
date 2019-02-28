@@ -20,6 +20,9 @@ export default {
     UserConfiguration.removeActiveArea()
     return allAreas
   },
+  getArea (id) {
+    return this.getAll().find(o => o.id === id)
+  },
   getActiveArea () {
     const allAreas = this.getAll()
     return allAreas && (allAreas.find(a => a.active) || allAreas[0])

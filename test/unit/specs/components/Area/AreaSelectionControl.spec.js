@@ -38,7 +38,7 @@ describe('AreaSelectionControl.vue', () => {
     expect(wrapper.vm.showModalArea).toBe(false)
     expect(wrapper.find(AreaSelectionModal).exists()).toBe(false)
     expect(DefinedAreas.getAll).toHaveBeenCalledTimes(2)
-    expect(DefinedAreas.getActiveArea).toHaveBeenCalledTimes(2)
+    expect(DefinedAreas.getActiveArea).toHaveBeenCalledTimes(1)
     expect(DefinedAreas.setActiveArea).toHaveBeenCalledTimes(1)
     expect(wrapper.emitted().change[0]).toEqual([1])
   })

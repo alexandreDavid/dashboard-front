@@ -31,7 +31,8 @@ export default {
           },
           title: 'Temperature (2-day)',
           description: '',
-          type: 'graph'
+          type: 'graph',
+          advancedConfig: false
         },
         {
           id: 3,
@@ -58,7 +59,8 @@ export default {
           },
           title: 'Relative Humidity (2-day)',
           description: '',
-          type: 'graph'
+          type: 'graph',
+          advancedConfig: false
         }
       ]
     }

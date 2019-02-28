@@ -86,7 +86,7 @@ export default {
   data () {
     return {
       pos: 0,
-      area: {},
+      area: { id: 1 },
       dashboard: {}
     }
   },

@@ -16,6 +16,8 @@ import AreaLayer from '@/store/areaLayer'
 import SelectedLayer from '@/store/selectedLayer'
 import Loading from '@/components/Loading/Loading'
 
+import DefinedAreas from '@/store/definedAreas'
+
 export default {
   name: 'WidgetGraph',
   components: {
@@ -80,7 +82,7 @@ export default {
     async setArea () {
       let newArea
       if (this.config.advancedConfig) {
-        newArea = this.config.advancedArea
+        newArea = DefinedAreas.getArea(this.config.advancedArea.id)
       } else {
         newArea = this.area
       }
