@@ -18,7 +18,7 @@
       <edit-height-field v-model="value.advancedHeight"></edit-height-field>
       <div class="form-group">
         <label>Area</label>
-        <area-selection-control v-model="advancedArea" @change="setArea"></area-selection-control>
+        <area-selection-control v-model="value.advancedArea" @input="setTitle"></area-selection-control>
       </div>
     </div>
   </div>
@@ -55,7 +55,6 @@ export default {
       this.$set(this.value, 'advancedHeight', 'default')
       this.$set(this.value, 'advancedArea', DefinedAreas.getActiveArea())
     }
-    this.advancedArea = this.value.advancedArea
     const allResources = GeoResources.getAll()
     this.resources = allResources.filter(p => p.config.statistics).map(p => ({
       id: p.id,
@@ -75,15 +74,10 @@ export default {
     },
     setTitle () {
       let title = this.value.resource && this.value.resource.label
-      if (this.showAdvancedConfig && this.advancedArea) {
-        title += ` - ${this.advancedArea.name}`
+      if (this.showAdvancedConfig && this.value.advancedArea) {
+        title += ` - ${this.value.advancedArea.name}`
       }
       this.$set(this.value, 'title', title)
-    },
-    setArea (area) {
-      this.$set(this.value, 'advancedArea', area)
-      this.advancedArea = area
-      this.setTitle()
     }
   }
 }

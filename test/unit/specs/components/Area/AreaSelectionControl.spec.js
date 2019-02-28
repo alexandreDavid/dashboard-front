@@ -23,8 +23,6 @@ describe('AreaSelectionControl.vue', () => {
     wrapper = shallowMount(AreaSelectionControl)
     expect(DefinedAreas.getAll).toHaveBeenCalledTimes(1)
     expect(DefinedAreas.getActiveArea).toHaveBeenCalledTimes(1)
-    expect(DefinedAreas.setActiveArea).toHaveBeenCalledTimes(1)
-    expect(wrapper.emitted().change[0]).toEqual([1])
   })
 
   it('Click on edit and close modal', async () => {
@@ -41,7 +39,7 @@ describe('AreaSelectionControl.vue', () => {
     expect(wrapper.find(AreaSelectionModal).exists()).toBe(false)
     expect(DefinedAreas.getAll).toHaveBeenCalledTimes(2)
     expect(DefinedAreas.getActiveArea).toHaveBeenCalledTimes(2)
-    expect(DefinedAreas.setActiveArea).toHaveBeenCalledTimes(2)
-    expect(wrapper.emitted().change[1]).toEqual([1])
+    expect(DefinedAreas.setActiveArea).toHaveBeenCalledTimes(1)
+    expect(wrapper.emitted().change[0]).toEqual([1])
   })
 })

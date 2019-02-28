@@ -6,7 +6,7 @@ describe('DashboardCardModal.vue', () => {
   it('Emit event when modal close', () => {
     const wrapper = shallowMount(DashboardCardModal, {
       propsData: {
-        editedCard: {
+        value: {
           id: 1,
           type: 'graph'
         }

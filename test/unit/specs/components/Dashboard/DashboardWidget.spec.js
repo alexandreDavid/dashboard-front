@@ -57,6 +57,8 @@ describe('DashboardWidget.vue', () => {
     const stub = jest.fn()
     wrapper.setMethods({ editCard: stub })
 
+    wrapper.find('.drag-handler').trigger('mouseover')
+
     wrapper.find('.edit-card').trigger('click')
     expect(wrapper.vm.editCard).toBeCalled()
   })
@@ -76,6 +78,8 @@ describe('DashboardWidget.vue', () => {
     const wrapper = shallowMount(DashboardWidget, {
       propsData: { cardConfiguration, selectedArea, isEditing }
     })
+
+    wrapper.find('.drag-handler').trigger('mouseover')
 
     const button = wrapper.find('.edit')
     button.trigger('click')

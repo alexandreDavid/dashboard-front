@@ -40,21 +40,25 @@ export default {
     change (val) {
       if (!this.value) {
         DefinedAreas.setActiveArea(val)
+        this.$emit('change', val)
+      } else {
+        this.$emit('input', val)
       }
-      this.$emit('change', val)
     },
     closeModal () {
       this.showModalArea = false
       this.loadOptions()
+      this.change(this.val)
     },
     loadOptions () {
       this.options = DefinedAreas.getAll()
       this.val = this.value || DefinedAreas.getActiveArea()
-      this.change(this.val)
     }
   },
   watch: {
-    value: 'loadOptions'
+    value (val) {
+      this.val = val
+    }
   }
 }
 </script>
