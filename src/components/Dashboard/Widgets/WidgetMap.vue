@@ -35,8 +35,11 @@ import DefinedAreas from '@/store/definedAreas'
 import Vue from 'vue'
 import { mapState } from 'vuex'
 
+import HeightMixin from './HeightMixin'
+
 export default {
   name: 'WidgetMap',
+  mixins: [ HeightMixin ],
   components: {
     Legend, TimeControl
   },
@@ -51,8 +54,7 @@ export default {
       map: false,
       displayedLayer: false,
       areaLayer: false,
-      displayedControl: false,
-      mapHeight: 200
+      displayedControl: false
     }
   },
   computed: {
@@ -68,9 +70,6 @@ export default {
       getMap: this.getMap,
       getDisplayedLayer: this.getDisplayedLayer
     }
-  },
-  created () {
-    this.setHeight()
   },
   async mounted () {
     this.map = new MapObj(this.mapId)
@@ -108,18 +107,6 @@ export default {
         this.areaLayer.zoomToArea()
       })
     },
-    setHeight () {
-      this.mapHeight = 200
-      if (this.config.advancedConfig) {
-        if (isNaN(this.config.advancedHeight)) {
-          if (this.config.advancedHeight === 'large') {
-            this.mapHeight = 300
-          }
-        } else {
-          this.mapHeight = this.config.advancedHeight
-        }
-      }
-    },
     async setArea () {
       let newArea
       if (this.config.advancedArea) {
@@ -129,6 +116,14 @@ export default {
       }
       await this.areaLayer.setSelectedArea(newArea)
       this.displayedLayer.setArea(this.areaLayer.toGeoJSON())
+    },
+    setHeightCallback () {
+      this.$nextTick(() => {
+        if (this.map && this.areaLayer.isReady()) {
+          this.map.invalidateSize()
+          this.areaLayer.zoomTo(this.map)
+        }
+      })
     }
   },
   watch: {
@@ -143,22 +138,10 @@ export default {
     area: 'setArea',
     config: {
       handler (val) {
-        this.setHeight()
         this.setArea()
         this.displayedLayer.setOpacity(val.advancedConfig ? val.advancedOpacity : false)
       },
       deep: true
-    // },
-    // 'config.advancedConfig' (advancedConfig) {
-    //   this.setHeight()
-    //   this.setArea()
-    //   this.displayedLayer.setOpacity(advancedConfig ? this.config.advancedOpacity : false)
-    // },
-    // 'config.advancedHeight': 'setHeight',
-    // 'config.advancedCustomHeight': 'setHeight',
-    // 'config.advancedArea': 'setArea',
-    // 'config.advancedOpacity' (opacity) {
-    //   this.displayedLayer.setOpacity(opacity)
     },
     activeBaseMap (val) {
       this.map.setBaseMapLayer(val)

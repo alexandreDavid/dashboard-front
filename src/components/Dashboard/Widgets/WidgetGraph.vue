@@ -18,8 +18,11 @@ import Loading from '@/components/Loading/Loading'
 
 import DefinedAreas from '@/store/definedAreas'
 
+import HeightMixin from './HeightMixin'
+
 export default {
   name: 'WidgetGraph',
+  mixins: [ HeightMixin ],
   components: {
     Graph: () => import('@/components/Graph/Graph'),
     Loading
@@ -40,12 +43,8 @@ export default {
       areaLayer: false,
       isLoaded: false,
       startDate: false,
-      endDate: false,
-      mapHeight: 200
+      endDate: false
     }
-  },
-  created () {
-    this.setHeight()
   },
   async mounted () {
     this.areaLayer = new AreaLayer()
@@ -67,18 +66,6 @@ export default {
       this.endDate = endDate
       this.isLoaded = true
     },
-    setHeight () {
-      this.mapHeight = 200
-      if (this.config.advancedConfig) {
-        if (isNaN(this.config.advancedHeight)) {
-          if (this.config.advancedHeight === 'large') {
-            this.mapHeight = 300
-          }
-        } else {
-          this.mapHeight = this.config.advancedHeight
-        }
-      }
-    },
     async setArea () {
       let newArea
       if (this.config.advancedArea) {
@@ -98,7 +85,6 @@ export default {
     area: 'setArea',
     config: {
       handler (val) {
-        this.setHeight()
         this.setArea()
       },
       deep: true
