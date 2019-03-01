@@ -31,7 +31,7 @@ export default {
     columns: Array,
     filterKey: String,
     editable: Boolean,
-    sortable: Boolean,
+    sortable: Boolean
   },
   data: function () {
     var sortOrders = {}
