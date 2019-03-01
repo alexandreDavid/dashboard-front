@@ -22,7 +22,7 @@
       <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:config="cardConfiguration"></widget-image>
       <widget-map v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:config="cardConfiguration" v-bind:area="selectedArea" :widgetKey="widgetId"></widget-map>
       <WidgetTextArea v-if="cardConfiguration.type === 'textarea'" class="widget-textarea" v-bind:config="cardConfiguration"></WidgetTextArea>
-      <WidgetTable v-if="cardConfiguration.type === 'table'" class="widget-table"></WidgetTable>
+      <WidgetTable v-if="cardConfiguration.type === 'table'" v-bind:config="cardConfiguration" class="widget-table"></WidgetTable>
     </div>
   </div>
 </template>

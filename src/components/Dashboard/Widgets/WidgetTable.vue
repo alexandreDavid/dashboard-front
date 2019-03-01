@@ -1,70 +1,24 @@
 <template>
-<div class="card-body">
-<table class="table table-sm">
-  <thead>
-    <tr>
-      <th scope="col">District</th>
-      <th scope="col">Sub-county</th>
-      <th scope="col">MAIZE</th>
-      <th scope="col">EARLY SORGHUM rainfed</th>
-      <th scope="col">LATE SORGHUM</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">Abim</th>
-      <td>Morulem</td>
-      <td>0.9885</td>
-      <td>1.6110</td>
-      <td>1.8400</td>
-    </tr>
-    <tr>
-      <th scope="row">Kaabong</th>
-      <td>Karenga</td>
-      <td>2.2540</td>
-      <td>1.9017</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">Kaabong</th>
-      <td>Loyoro</td>
-      <td>0.4928</td>
-      <td>1.3866</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">Napak</th>
-      <td>Matany</td>
-      <td>0.45</td>
-      <td>2.0060</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">Napak</th>
-      <td>Ngoleriet</td>
-      <td>0.2842</td>
-      <td>2.3154</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th scope="row">Napak</th>
-      <td>Lopei</td>
-      <td></td>
-      <td>0.9853</td>
-      <td></td>
-    </tr>
-  </tbody>
-</table>
-</div>
+  <div class="card-body p-0">
+    <grid-content
+      :lines="config.lines"
+      :columns="config.columns"
+      :sortable="true">
+    </grid-content>
+    <div class="border-top mx-2 mt-1" v-if="config.description">
+      <pre class="widget-description px-3 py-1 mb-0">{{ config.description }}</pre>
+    </div>
+  </div>
 </template>
 
 <script>
+import GridContent from './../GridContent'
 
 export default {
   name: 'WidgetTable',
+  components: { GridContent },
   props: [
-    'area',
-    'parameter'
+    'config'
   ]
 }
 </script>
