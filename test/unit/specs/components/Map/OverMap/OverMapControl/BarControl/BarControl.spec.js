@@ -26,6 +26,15 @@ function getMapMock () {
   }
 }
 
+const mockAreaLayer = {
+  zoomToArea: jest.fn()
+}
+function getAreaLayer () {
+  return function () {
+    return mockAreaLayer
+  }
+}
+
 describe('BarControl.vue', () => {
   beforeEach(() => {
     mockMap.zoomIn.mockClear()
@@ -35,7 +44,8 @@ describe('BarControl.vue', () => {
   it('Click on zoomIn', () => {
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getAreaLayer: getAreaLayer()
       }
     })
     const button = wrapper.find('#zoom-in')
@@ -46,7 +56,8 @@ describe('BarControl.vue', () => {
   it('Click on zoomIn and shiftKey', () => {
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getAreaLayer: getAreaLayer()
       }
     })
     const button = wrapper.find('#zoom-in')
@@ -57,7 +68,8 @@ describe('BarControl.vue', () => {
   it('Click on zoomOut', () => {
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getAreaLayer: getAreaLayer()
       }
     })
     const button = wrapper.find('#zoom-out')
@@ -68,7 +80,8 @@ describe('BarControl.vue', () => {
   it('Click on zoomOut and shiftKey', () => {
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getAreaLayer: getAreaLayer()
       }
     })
     const button = wrapper.find('#zoom-out')
@@ -80,7 +93,8 @@ describe('BarControl.vue', () => {
     mockMap._zoom = 10
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getAreaLayer: getAreaLayer()
       }
     })
     const button = wrapper.find('#zoom-in')
@@ -92,7 +106,8 @@ describe('BarControl.vue', () => {
     mockMap._zoom = 1
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getAreaLayer: getAreaLayer()
       }
     })
     const button = wrapper.find('#zoom-out')
@@ -100,21 +115,23 @@ describe('BarControl.vue', () => {
     expect(wrapper.vm.map.zoomOut).not.toBeCalled()
   })
 
-  it('Click on go-to-global', () => {
+  it('Click on zoom-to-area', () => {
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getAreaLayer: getAreaLayer()
       }
     })
-    const buttonResetMap = wrapper.find('#go-to-global')
-    buttonResetMap.trigger('click')
-    expect(wrapper.vm.map.setDefaultMap).toBeCalled()
+    const buttonZoomToArea = wrapper.find('#zoom-to-area')
+    buttonZoomToArea.trigger('click')
+    expect(mockAreaLayer.zoomToArea).toBeCalled()
   })
 
   it('Has current location', async () => {
     const wrapper = mount(BarControl, {
       provide: {
-        getMap: getMapMock()
+        getMap: getMapMock(),
+        getAreaLayer: getAreaLayer()
       }
     })
     await wrapper.vm.$nextTick()
