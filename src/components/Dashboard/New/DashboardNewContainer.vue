@@ -11,17 +11,6 @@
     <div class="form-group">
       <label>Template</label>
       <div class="d-flex flex-wrap">
-        <button type="button" class="btn btn-secondary d-flex m-2" @click="selectTemplate('blank')" :class="{active: template === 'blank'}" style="height: 150px;">
-          <div class="d-flex border" style="width: 150px; height: 100px;">
-            <div class="p-1 col-6" style="height: 34px;">
-              <div class="border h-100" style="border-style:dotted !important;"></div>
-            </div>
-            <div class="p-1 col-6" style="height: 34px;">
-              <div class="border h-100" style="border-style:dotted !important;"></div>
-            </div>
-          </div>
-          <span class="align-self-center ml-3">Blank canvas</span>
-        </button>
         <button type="button" class="btn btn-secondary d-flex m-2" @click="selectTemplate('starter')" :class="{active: template === 'starter'}" style="height: 150px;">
           <div class="d-flex align-content-start flex-wrap border" style="width: 150px; height: 100px;">
             <div class="p-1 col-6">
@@ -47,6 +36,17 @@
           </div>
           <span class="align-self-center ml-3">Starter dashboard</span>
         </button>
+        <button type="button" class="btn btn-secondary d-flex m-2" @click="selectTemplate('blank')" :class="{active: template === 'blank'}" style="height: 150px;">
+          <div class="d-flex border" style="width: 150px; height: 100px;">
+            <div class="p-1 col-6" style="height: 34px;">
+              <div class="border h-100" style="border-style:dotted !important;"></div>
+            </div>
+            <div class="p-1 col-6" style="height: 34px;">
+              <div class="border h-100" style="border-style:dotted !important;"></div>
+            </div>
+          </div>
+          <span class="align-self-center ml-3">Blank canvas</span>
+        </button>
       </div>
     </div>
   </div>
@@ -65,11 +65,12 @@ export default {
   },
   data () {
     return {
-      template: 'blank'
+      template: 'starter'
     }
   },
   mounted () {
     this.value.layout = Dashboard.getLayouts().find(l => l.default)
+    this.selectTemplate(this.template)
   },
   methods: {
     selectTemplate (type) {
