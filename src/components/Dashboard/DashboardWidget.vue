@@ -4,7 +4,7 @@
       <div class="card-header drag-handler" v-if="cardConfiguration.title" @mouseover="showEditionButtons = true" @mouseleave="showEditionButtons = false">
         <div class="d-flex align-items-center">
           <div class="flex-grow-1">
-            <span class="w-100" style="line-height: 26px;">{{cardConfiguration.title}}</span>
+            <b class="w-100" style="line-height: 26px;">{{cardConfiguration.title}}</b>
           </div>
           <div v-if="showEditionButtons">
             <button type="button" class="btn btn-light btn-xs ml-2 edit" title="Edit card" @click="editCard()"><font-awesome-icon icon="edit" /></button>
