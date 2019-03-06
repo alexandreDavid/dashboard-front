@@ -37,20 +37,12 @@
         </transition>
       </template>
     </v-tour>
-    <modal v-if="showModalChangePage" @close="closeModal" class-width="modal-md">
-      <div slot="body">Do you want to discover the next page?</div>
-      <div slot="footer">
-        <button type="button" class="btn btn-secondary" @click="closeModal">No</button>
-        <button type="button" class="btn btn-success" @click="newPageDiscover">
-          Yes
-        </button>
-      </div>
-    </modal>
+    <confirm-modal v-if="showModalChangePage" :content="continueMessage" @close="closeModal" @confirm="newPageDiscover" confirm-label="Yes" cancel-label="No"></confirm-modal>
   </div>
 </template>
 
 <script>
-import Modal from '@/components/Modal/Modal'
+import ConfirmModal from '@/components/Modal/ConfirmModal'
 import Mixin from './MixinTour'
 
 import tourConfig from './tourConfig'
@@ -58,7 +50,7 @@ import tourConfig from './tourConfig'
 export default {
   name: 'GlobalTour',
   components: {
-    Modal
+    ConfirmModal
   },
   mixins: [ Mixin ],
   data () {
@@ -68,16 +60,17 @@ export default {
       allPages: ['dashboard', 'map'],
       curTour: false,
       curAllPages: [],
-      firstPart: true
+      firstPart: true,
+      continueMessage: false
     }
   },
   methods: {
     onStart () {
       if (this.firstPart) {
-        this.steps = [...tourConfig.global, ...tourConfig[this.$route.name]]
+        this.steps = [...tourConfig.global.steps, ...tourConfig[this.$route.name].steps]
         this.curAllPages = [...this.allPages]
       } else {
-        this.steps = tourConfig[this.$route.name]
+        this.steps = tourConfig[this.$route.name].steps
       }
       this.curAllPages = this.curAllPages.filter(p => p !== this.$route.name)
       this.calculatePlacement(this.steps[0])
@@ -92,6 +85,7 @@ export default {
       this.curTour = tour
       if (this.curAllPages.length) {
         this.showModalChangePage = true
+        this.continueMessage = tourConfig[this.$route.name].continueMessage
       }
     },
     closeModal () {

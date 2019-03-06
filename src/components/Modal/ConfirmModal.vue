@@ -7,8 +7,8 @@
       <p>{{ content }}</p>
     </div>
     <div slot="footer">
-      <button type="button" class="btn btn-secondary" @click="$emit('close')">Cancel</button>
-      <button type="button" class="btn btn-success" @click="$emit('confirm')">Confirm</button>
+      <button type="button" class="btn btn-secondary" @click="$emit('close')">{{ cancelLabel }}</button>
+      <button type="button" class="btn btn-success" @click="$emit('confirm')">{{ confirmLabel }}</button>
     </div>
   </modal>
 </template>
@@ -25,6 +25,12 @@ export default {
     },
     content: {
       type: String
+    },
+    confirmLabel: {
+      default: 'Confirm'
+    },
+    cancelLabel: {
+      default: 'Cancel'
     }
   }
 }
