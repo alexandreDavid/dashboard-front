@@ -15,6 +15,8 @@
     <edit-description-field v-model="value.description"></edit-description-field>
     <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
     <div v-if="showAdvancedConfig">
+      <edit-height-field v-model="value.advancedHeight"></edit-height-field>
+      <edit-area-field v-model="value.advancedArea" @input="setTitle"></edit-area-field>
       <div class="form-group">
         <label for="opacity">Opacity</label>
         <div class="form-inline">
@@ -27,8 +29,6 @@
           <opacity-slider class="ml-2" style="width: 200px;" v-model="value.advancedOpacity"></opacity-slider>
         </div>
       </div>
-      <edit-height-field v-model="value.advancedHeight"></edit-height-field>
-      <edit-area-field v-model="value.advancedArea" @input="setTitle"></edit-area-field>
     </div>
   </div>
 </template>
