@@ -60,6 +60,16 @@ const units = [
     }
   },
   {
+    key: 'mh',
+    label: 'm/hr',
+    family: 'precipitations'
+  },
+  {
+    key: 'mmh',
+    label: 'mm/hr',
+    family: 'precipitations'
+  },
+  {
     key: 'mm/day',
     label: 'mm/day',
     family: 'precipitations'

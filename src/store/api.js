@@ -59,16 +59,24 @@ export default {
         'type': 'unit',
         'values': [
           {
-            'key': 'Kg/m2/s',
-            'label': 'Kg/m2/s'
+            'key': 'mh',
+            'label': 'm/hr'
           },
           {
-            'key': 'mm/day',
-            'label': 'mm/day'
-          },
-          {
-            'key': 'in/day',
-            'label': 'in/day'
+            'key': 'mmh',
+            'label': 'mm/hr'
+          // },
+          // {
+          //   'key': 'Kg/m2/s',
+          //   'label': 'Kg/m2/s'
+          // },
+          // {
+          //   'key': 'mm/day',
+          //   'label': 'mm/day'
+          // },
+          // {
+          //   'key': 'in/day',
+          //   'label': 'in/day'
           }
         ]
       },

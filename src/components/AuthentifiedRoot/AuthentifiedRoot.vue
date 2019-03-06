@@ -18,7 +18,6 @@
 import NavBar from '@/components/NavBar/NavBar'
 import UserConfiguration from '@/store/userConfiguration'
 import GeoResources from '@/store/geoResources'
-import Settings from '@/store/settings'
 import GlobalTour from '@/components/Tour/GlobalTour'
 import Loading from '@/components/Loading/Loading'
 
@@ -38,7 +37,6 @@ export default {
   },
   async created () {
     this.showModalWelcome = UserConfiguration.getDisplayHelp() && this.$mq !== 'sm'
-    await Settings.init()
     await GeoResources.getAllResources()
     this.$store.dispatch('init')
     this.isLoaded = true

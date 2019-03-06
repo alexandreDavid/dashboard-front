@@ -10,21 +10,29 @@
 </template>
 
 <script>
-import Settings from '@/store/settings'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'SettingControl',
   props: ['setting'],
+  computed: {
+    ...mapGetters('settings', ['getActiveKeyById'])
+  },
   data () {
     return {
-      activeKey: Settings.activeSettings[this.setting.id]
+      activeKey: false
     }
+  },
+  mounted () {
+    this.activeKey = this.getActiveKeyById(this.setting.id)
   },
   methods: {
     changeSelectedValue (id, setting) {
       this.activeKey = setting.key
-      Settings.setActiveKeyById(id, setting.key)
-    }
+      this.setActiveKeyById({id, value: setting.key})
+      // this.$store.dispatch('settings/setActiveKeyById', {id, value: setting.key})
+    },
+    ...mapActions('settings', ['setActiveKeyById'])
   }
 }
 </script>

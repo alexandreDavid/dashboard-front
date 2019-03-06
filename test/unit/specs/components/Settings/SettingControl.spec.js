@@ -1,12 +1,10 @@
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 import SettingControl from '@/components/Settings/SettingControl'
-import { shallowMount } from '@vue/test-utils'
-import Settings from '@/store/settings'
 
-jest.mock('@/store/settings', () => ({
-  setActiveKeyById: jest.fn()
-}))
+const localVue = createLocalVue()
 
-Settings.activeSettings = {1: 1}
+localVue.use(Vuex)
 
 const setting = {
   id: 1,
@@ -23,30 +21,54 @@ const setting = {
 }
 
 describe('SettingControl.vue', () => {
-  it('Well created', async () => {
-    const wrapper = shallowMount(SettingControl, {
-      propsData: {
-        setting
+  let wrapper
+  let actions
+  let getters
+  let store
+
+  beforeEach(() => {
+    actions = {
+      setActiveKeyById: jest.fn()
+    }
+
+    getters = {
+      getActiveKeyById: (state) => (id) => {
+        return 1
+      }
+    }
+    store = new Vuex.Store({
+      modules: {
+        settings: {
+          namespaced: true,
+          actions,
+          getters
+        }
       }
     })
+    wrapper = shallowMount(SettingControl, {
+      propsData: {
+        setting
+      },
+      store,
+      localVue
+    })
+  })
+
+  it('Well created', async () => {
     expect(wrapper.find('.card-title').text()).toBe('label')
     const buttons = wrapper.findAll('.btn')
     expect(buttons.length).toBe(2)
     expect(buttons.at(0).classes()).toContain('active')
+    expect(wrapper.vm.activeKey).toBe(1)
   })
 
   it('On change selected value', async () => {
-    const wrapper = shallowMount(SettingControl, {
-      propsData: {
-        setting
-      }
-    })
     const buttons = wrapper.findAll('.btn')
     expect(buttons.at(0).classes()).toContain('active')
     expect(buttons.at(1).classes()).not.toContain('active')
 
     buttons.at(1).trigger('click')
-    expect(Settings.setActiveKeyById).toBeCalledWith(1, 2)
+    expect(actions.setActiveKeyById).toBeCalledWith(expect.any(Object), {id: 1, value: 2}, undefined)
     expect(buttons.at(0).classes()).not.toContain('active')
     expect(buttons.at(1).classes()).toContain('active')
   })

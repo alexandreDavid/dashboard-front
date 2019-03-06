@@ -1,7 +1,12 @@
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 import Graph from '@/components/Graph/Graph.vue'
 import Data from '@/store/data'
-import { shallowMount } from '@vue/test-utils'
-// import flushPromises from 'flush-promises'
+
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
+
 jest.mock('@/store/data', () => ({
   getAreaParameterData: jest.fn()
 }))
@@ -10,17 +15,51 @@ jest.mock('@/store/data', () => ({
 // use any test runner / assertion library combo you prefer
 describe('Graph.vue', () => {
   let wrapper
-  beforeEach(async () => {
+  let state
+  let getters
+  let store
+
+  beforeEach(() => {
+    state = {
+      active: {
+        curFamily: 'initVal'
+      }
+    }
+    getters = {
+      getActiveKeyById: (state) => (id) => {
+        return state.active[id]
+      }
+    }
+    store = new Vuex.Store({
+      modules: {
+        settings: {
+          namespaced: true,
+          state,
+          getters,
+          mutations: {
+            setActiveById (state, {id, value}) {
+              state.active[id] = value
+            }
+          }
+        }
+      }
+    })
     Data.getAreaParameterData.mockClear()
     Data.getAreaParameterData.mockReturnValue(Promise.resolve({
       unit: 'unit'
     }))
+    let parameter = {
+      getStatistics: jest.fn(),
+      getUnitFamily: jest.fn(),
+      setUnit: jest.fn()
+    }
+    parameter.getUnitFamily.mockReturnValue('curFamily')
     wrapper = shallowMount(Graph, {
       propsData: {
-        parameter: {
-          getStatistics: jest.fn()
-        }
-      }
+        parameter
+      },
+      store,
+      localVue
     })
   })
 
@@ -40,14 +79,23 @@ describe('Graph.vue', () => {
 
   // Inspect the component instance on mount
   it('On watch parameter', async () => {
+    const parameter = {
+      displayName: 'displayName2',
+      getStatistics: jest.fn(),
+      getUnitFamily: jest.fn(),
+      setUnit: jest.fn()
+    }
+    parameter.getUnitFamily.mockReturnValue('curFamily')
     wrapper.setProps({
-      parameter: {
-        displayName: 'displayName2',
-        getStatistics: jest.fn()
-      }
+      parameter
     })
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.parameter.getStatistics).toBeCalled()
     expect(wrapper.vm.isLoaded).toBe(true)
+  })
+
+  it('On unit changes', async () => {
+    store.commit('settings/setActiveById', {id: 'curFamily', value: 'updatedVal'})
+    expect(wrapper.vm.parameter.setUnit).toHaveBeenCalledWith('updatedVal')
   })
 })

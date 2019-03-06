@@ -2,17 +2,12 @@ import AuthentifiedRoot from '@/components/AuthentifiedRoot/AuthentifiedRoot'
 import { shallowMount } from '@vue/test-utils'
 
 import UserConfiguration from '@/store/userConfiguration'
-import Settings from '@/store/settings'
 import GeoResources from '@/store/geoResources'
 
 import WelcomeModal from '@/components/WelcomeModal/WelcomeModal'
 
 jest.mock('@/store/userConfiguration', () => ({
   getDisplayHelp: jest.fn()
-}))
-
-jest.mock('@/store/settings', () => ({
-  init: jest.fn()
 }))
 
 jest.mock('@/store/geoResources', () => ({
@@ -25,8 +20,6 @@ const $store = {
 
 describe('AuthentifiedRoot.spec.js', () => {
   it('Init with welcome modal', async () => {
-    Settings.init.mockClear()
-    Settings.init.mockReturnValue(Promise.resolve())
     $store.dispatch.mockClear()
 
     UserConfiguration.getDisplayHelp.mockReturnValue(true)
@@ -43,8 +36,6 @@ describe('AuthentifiedRoot.spec.js', () => {
     expect(wrapper.vm.$mq).toBe('notsm')
 
     expect(wrapper.vm.isLoaded).toBe(false)
-    expect(Settings.init).toHaveBeenCalledTimes(1)
-    await wrapper.vm.$nextTick()
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
@@ -54,8 +45,6 @@ describe('AuthentifiedRoot.spec.js', () => {
   })
 
   it('Init without welcome modal by user config', async () => {
-    Settings.init.mockClear()
-    Settings.init.mockReturnValue(Promise.resolve())
     GeoResources.getAllResources.mockClear()
     $store.dispatch.mockClear()
 
@@ -68,8 +57,6 @@ describe('AuthentifiedRoot.spec.js', () => {
     })
 
     expect(wrapper.vm.isLoaded).toBe(false)
-    expect(Settings.init).toHaveBeenCalledTimes(1)
-    await wrapper.vm.$nextTick()
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
@@ -80,8 +67,6 @@ describe('AuthentifiedRoot.spec.js', () => {
   })
 
   it('Init without welcome modal by mq', async () => {
-    Settings.init.mockClear()
-    Settings.init.mockReturnValue(Promise.resolve())
     GeoResources.getAllResources.mockClear()
     $store.dispatch.mockClear()
 
@@ -97,8 +82,6 @@ describe('AuthentifiedRoot.spec.js', () => {
     })
 
     expect(wrapper.vm.isLoaded).toBe(false)
-    expect(Settings.init).toHaveBeenCalledTimes(1)
-    await wrapper.vm.$nextTick()
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)

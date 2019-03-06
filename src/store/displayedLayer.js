@@ -3,7 +3,7 @@ import {
 } from 'leaflet'
 import axios from 'axios'
 import Unit from '@/utils/unit'
-import Settings from '@/store/settings'
+import store from '@/store'
 
 export default class {
   _displayedLayer = false
@@ -47,7 +47,7 @@ export default class {
         this.setZIndex(this._parameter.zIndex)
       }
       this._defaultUnit = this._parameter.unit
-      this._activeUnit = Settings.getActiveKeyById(Unit.getFamilyUnit(this._defaultUnit)) || this._defaultUnit
+      this._activeUnit = store.getters['settings/getActiveKeyById'](Unit.getFamilyUnit(this._defaultUnit)) || this._defaultUnit
       this._hasInteractiveLegend = this._parameter.interactiveLegend
       this._legendUrl = this._parameter.legendUrl
     }

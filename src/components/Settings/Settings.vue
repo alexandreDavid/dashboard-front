@@ -20,19 +20,21 @@
 </template>
 
 <script>
-import Settings from '@/store/settings'
+import { mapState } from 'vuex'
+
 import SettingControl from './SettingControl'
 import BaseMapControl from '@/components/BaseMap/BaseMapControl'
 
 export default {
   name: 'Settings',
-  async created () {
-    this.settings = Settings.getAllSettings()
-  },
   components: { SettingControl, BaseMapControl },
+  computed: {
+    ...mapState('settings', {
+      all: state => state.all
+    })
+  },
   data () {
     return {
-      settings: [],
       families: [
         {
           type: 'unit',
@@ -49,8 +51,8 @@ export default {
     toggleCollapsation (type) {
       this.openedFamilyType = type
     },
-    getSettingsByType (type) {
-      return Settings.getSettingsType(type)
+    getSettingsByType (val) {
+      return this.all.filter(s => s.type === val)
     }
   }
 }

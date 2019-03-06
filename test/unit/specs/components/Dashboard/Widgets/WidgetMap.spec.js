@@ -1,12 +1,10 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 import WidgetMap from '@/components/Dashboard/Widgets/WidgetMap.vue'
 
 import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
-import SelectedLayer from '@/store/selectedLayer'
 import GeoResources from '@/store/geoResources'
-
-import Vuex from 'vuex'
 
 const localVue = createLocalVue()
 
@@ -50,16 +48,35 @@ GeoResources.searchById.mockReturnValue({
 
 describe('WidgetMap.vue', () => {
   let wrapper
+  let baseMaps
+  let settings
+
   beforeEach(async () => {
-    let state = {
-      active: 'activeBaseMap'
+    baseMaps = {
+      namespaced: true,
+      state: {
+        active: 'activeBaseMap'
+      }
+    }
+
+    settings = {
+      namespaced: true,
+      state: {
+        active: {
+          curFamily: 'initVal'
+        }
+      },
+      getters: {
+        getActiveKeyById: (state) => (id) => {
+          return state.active[id]
+        }
+      }
     }
 
     let store = new Vuex.Store({
       modules: {
-        baseMaps: {
-          state
-        }
+        baseMaps,
+        settings
       }
     })
     wrapper = shallowMount(WidgetMap, {
@@ -84,32 +101,5 @@ describe('WidgetMap.vue', () => {
     expect(MapObj).toBeCalledWith(mapId)
     expect(AreaLayer).toBeCalledWith(mockMap)
     expect(mockAreaLayer.setSelectedArea).toBeCalledWith('area')
-    // await wrapper.vm.$nextTick()
-    // expect(SelectedLayer).toBeCalled()
-    // expect(mockSelectedLayer.setLayer).toBeCalled()
-    // expect(mockSelectedLayer.addTo).toBeCalledWith(mockMap)
-    // expect(wrapper.vm.isLoaded).toBe(true)
   })
-
-  // it('On watch parameter', () => {
-  //   const mockSearchById = {
-  //     id: 2,
-  //     displayName: 'displayName2'
-  //   }
-  //   GeoResources.searchById.mockReturnValue(mockSearchById)
-  //   wrapper.setProps({
-  //     config: {
-  //       resource: {
-  //         id: 2
-  //       }
-  //     }
-  //   })
-  //   expect(GeoResources.searchById).toBeCalledWith(2)
-  //   expect(mockSelectedLayer.setLayer).toBeCalledWith(mockSearchById, wrapper.vm.areaLayer.toGeoJSON())
-  // })
-
-  // it('Providers are correct', async () => {
-  //   expect(wrapper.vm.getMap()).toBe(mockMap)
-  //   expect(wrapper.vm.getDisplayedLayer()).toBe(mockSelectedLayer)
-  // })
 })

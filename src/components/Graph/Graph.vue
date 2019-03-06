@@ -11,12 +11,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import LineChart from './Charts/LineChart'
 import PieChart from './Charts/PieChart'
 import BarChart from './Charts/BarChart'
 import Loading from '@/components/Loading/Loading'
 import Unit from '@/utils/unit'
-import Settings from '@/store/settings'
 
 export default {
   name: 'Graph',
@@ -39,6 +40,12 @@ export default {
     startDate: {},
     endDate: {}
   },
+  computed: {
+    ...mapGetters('settings', ['getActiveKeyById']),
+    unit () {
+      return this.getActiveKeyById(this.parameter.getUnitFamily())
+    }
+  },
   data () {
     return {
       isLoaded: false,
@@ -53,9 +60,7 @@ export default {
             }
           }]
         }
-      },
-      familyUnit: false,
-      activeUnits: Settings.activeSettings
+      }
     }
   },
   async created () {
@@ -65,12 +70,9 @@ export default {
     parameter: 'getData',
     startDate: 'getData',
     endDate: 'getData',
-    activeUnits: {
-      handler (val) {
-        this.parameter.setUnit(val[this.parameter.getUnitFamily()])
-        this.getData()
-      },
-      deep: true
+    unit (val) {
+      this.parameter.setUnit(val)
+      this.getData()
     }
   },
   methods: {
@@ -82,7 +84,7 @@ export default {
         this.datacollection.activeUnit = this.parameter.getUnit()
 
         // axes Y title
-        this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.parameter.getUnit())
+        this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit)
       } catch (e) {
         this.errorMessage = true
       }
