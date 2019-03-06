@@ -6,7 +6,7 @@
         <div class="card shadow w-100">
           <div class="card-body p-2">
             <h6>Place selection</h6>
-            <area-selection-control @change="onAreaChange"></area-selection-control>
+            <area-selection-control v-model="selectedArea" @input="onAreaChange"></area-selection-control>
           </div>
         </div>
       </div>
@@ -34,6 +34,7 @@ import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import MeteoStationsControl from '@/components/Map/MeteoStations/MeteoStationsControl'
 
 import SelectedLayers from '@/store/selectedLayers'
+import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'MapControlBar',
@@ -52,17 +53,20 @@ export default {
     return {
       showModal: false,
       value: 50,
-      displayMeteoStations: true
+      displayMeteoStations: true,
+      selectedArea: false
     }
   },
   mounted () {
     this.toggleMeteorologicalStations(this.displayMeteoStations)
+    this.selectedArea = DefinedAreas.getActiveArea()
   },
   methods: {
     close () {
       this.$emit('close')
     },
     async onAreaChange (area) {
+      console.log(area)
       await this.getAreaLayer().setSelectedArea(area)
       SelectedLayers.updateArea(this.getAreaLayer().toGeoJSON())
     },

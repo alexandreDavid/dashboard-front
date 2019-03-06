@@ -44,7 +44,6 @@ export default {
     Legend, TimeControl
   },
   props: [
-    'area',
     'widgetKey',
     'config'
   ],
@@ -75,7 +74,7 @@ export default {
   async mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map)
-    await this.areaLayer.setSelectedArea(this.area)
+    await this.areaLayer.setSelectedArea(DefinedAreas.getArea(this.config.area.id))
     this.initialiseZoomAreaButton()
     this.selectedLayer = new SelectedLayer()
     await this.selectedLayer.setLayer(GeoResources.searchById(this.config.resource.id), this.areaLayer.toGeoJSON())
@@ -104,13 +103,7 @@ export default {
       })
     },
     async setArea () {
-      let newArea
-      if (this.config.advancedArea) {
-        newArea = DefinedAreas.getArea(this.config.advancedArea.id)
-      } else {
-        newArea = this.area
-      }
-      await this.areaLayer.setSelectedArea(newArea)
+      await this.areaLayer.setSelectedArea(DefinedAreas.getArea(this.config.area.id))
       this.selectedLayer.setArea(this.areaLayer.toGeoJSON())
     },
     setHeightCallback () {
@@ -132,7 +125,6 @@ export default {
         this.isLoaded = true
       })
     },
-    area: 'setArea',
     config: {
       handler (val) {
         this.setArea()

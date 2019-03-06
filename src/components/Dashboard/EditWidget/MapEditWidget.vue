@@ -1,8 +1,12 @@
 <template>
   <div class="container">
     <div class="form-group">
-      <label for="title">Title</label>
-      <input type="text" v-model="value.title" class="form-control" id="title" placeholder="title" disabled>
+      <label>Title</label>
+      <h6>{{ value.title || '-' }}</h6>
+    </div>
+    <div class="form-group">
+      <label>Area <small>(required)</small></label>
+      <area-selection-control v-model="value.area" @input="setTitle"></area-selection-control>
     </div>
     <div class="form-group">
       <label>Data to display <small>(required)</small></label>
@@ -15,8 +19,8 @@
     <edit-description-field v-model="value.description"></edit-description-field>
     <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
     <div v-if="showAdvancedConfig">
+      <edit-title-field v-model="value.customTitle" :default-title="value.title" @input="setTitle"></edit-title-field>
       <edit-height-field v-model="value.advancedHeight"></edit-height-field>
-      <edit-area-field v-model="value.advancedArea" @input="setTitle"></edit-area-field>
       <div class="form-group">
         <label for="opacity">Opacity</label>
         <div class="form-inline">
@@ -34,7 +38,9 @@
 </template>
 
 <script>
-import EditAreaField from './EditAreaField'
+import CustomTitleMixin from './CustomTitleMixin'
+
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import EditDescriptionField from './EditDescriptionField'
 import EditHeightField from './EditHeightField'
 import OpacitySlider from '@/components/Slider/OpacitySlider'
@@ -43,7 +49,8 @@ import GeoResources from '@/store/geoResources'
 
 export default {
   name: 'MapEditWidget',
-  components: { EditAreaField, EditDescriptionField, EditHeightField, OpacitySlider },
+  mixins: [ CustomTitleMixin ],
+  components: { AreaSelectionControl, EditDescriptionField, EditHeightField, OpacitySlider },
   props: {
     value: {
       type: Object,
@@ -63,7 +70,7 @@ export default {
       this.$set(this.value, 'advancedConfig', false)
       this.$set(this.value, 'advancedOpacity', 80)
       this.$set(this.value, 'advancedHeight', 'default')
-      this.$set(this.value, 'advancedArea', false)
+      this.$set(this.value, 'customTitle', false)
     }
     this.setTitle()
 
@@ -83,13 +90,6 @@ export default {
       this.showAdvancedConfig = val
       this.setTitle()
       this.$set(this.value, 'advancedConfig', val)
-    },
-    setTitle () {
-      let title = this.value.resource && this.value.resource.label
-      if (this.showAdvancedConfig && this.value.advancedArea) {
-        title += ` - ${this.value.advancedArea.name}`
-      }
-      this.$set(this.value, 'title', title)
     }
   }
 }

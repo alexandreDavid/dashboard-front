@@ -28,15 +28,9 @@ export default {
     Loading
   },
   props: [
-    'area',
     'config',
     'graphType'
   ],
-  provide () {
-    return {
-      getAreaLayer: this.getAreaLayer
-    }
-  },
   data () {
     return {
       resource: false,
@@ -48,15 +42,12 @@ export default {
   },
   async mounted () {
     this.areaLayer = new AreaLayer()
-    await this.areaLayer.setSelectedArea(this.area)
+    await this.areaLayer.setSelectedArea(DefinedAreas.getArea(this.config.area.id))
     this.resource = new SelectedLayer()
     await this.getData(this.config.resource)
     this.isLoaded = true
   },
   methods: {
-    getAreaLayer () {
-      return this.areaLayer
-    },
     async getData (resource) {
       this.isLoaded = false
       await this.resource.setLayer(GeoResources.searchById(resource.id), this.areaLayer.toGeoJSON())
@@ -67,22 +58,14 @@ export default {
       this.isLoaded = true
     },
     async setArea () {
-      let newArea
-      if (this.config.advancedArea) {
-        newArea = DefinedAreas.getArea(this.config.advancedArea.id)
-      } else {
-        newArea = this.area
-      }
       this.isLoaded = false
-      await this.areaLayer.setSelectedArea(newArea)
-      await this.areaLayer.setSelectedArea(newArea)
+      await this.areaLayer.setSelectedArea(DefinedAreas.getArea(this.config.area.id))
       await this.resource.setArea(this.areaLayer.toGeoJSON())
       this.isLoaded = true
     }
   },
   watch: {
     'config.resource': 'getData',
-    area: 'setArea',
     config: {
       handler (val) {
         this.setArea()

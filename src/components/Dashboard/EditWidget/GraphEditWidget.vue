@@ -2,7 +2,11 @@
   <div>
     <div class="form-group">
       <label>Title</label>
-      <input type="text" v-model="value.title" class="form-control" id="title" placeholder="title" disabled>
+      <h6>{{ value.title || '-' }}</h6>
+    </div>
+    <div class="form-group">
+      <label>Area <small>(required)</small></label>
+      <area-selection-control v-model="value.area" @input="setTitle"></area-selection-control>
     </div>
     <div class="form-group">
       <label>Data to display <small>(required)</small></label>
@@ -15,14 +19,16 @@
     <edit-description-field v-model="value.description"></edit-description-field>
     <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
     <div v-if="showAdvancedConfig">
+      <edit-title-field v-model="value.customTitle" :default-title="value.title" @input="setTitle"></edit-title-field>
       <edit-height-field v-model="value.advancedHeight"></edit-height-field>
-      <edit-area-field v-model="value.advancedArea" @input="setTitle"></edit-area-field>
     </div>
   </div>
 </template>
 
 <script>
-import EditAreaField from './EditAreaField'
+import CustomTitleMixin from './CustomTitleMixin'
+
+import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import EditDescriptionField from './EditDescriptionField'
 import EditHeightField from './EditHeightField'
 
@@ -30,7 +36,8 @@ import GeoResources from '@/store/geoResources'
 
 export default {
   name: 'GraphEditWidget',
-  components: { EditAreaField, EditDescriptionField, EditHeightField },
+  mixins: [ CustomTitleMixin ],
+  components: { AreaSelectionControl, EditDescriptionField, EditHeightField },
   props: {
     value: {
       type: Object,
@@ -48,7 +55,7 @@ export default {
     this.$set(this.value, 'isValid', !!this.value.resource)
     if (!this.showAdvancedConfig) {
       this.$set(this.value, 'advancedHeight', 'default')
-      this.$set(this.value, 'advancedArea', false)
+      this.$set(this.value, 'customTitle', false)
     }
     const allResources = GeoResources.getAll()
     this.resources = allResources.filter(p => p.config.statistics).map(p => ({
@@ -67,13 +74,6 @@ export default {
       this.showAdvancedConfig = val
       this.setTitle()
       this.$set(this.value, 'advancedConfig', val)
-    },
-    setTitle () {
-      let title = this.value.resource && this.value.resource.label
-      if (this.showAdvancedConfig && this.value.advancedArea) {
-        title += ` - ${this.value.advancedArea.name}`
-      }
-      this.$set(this.value, 'title', title)
     }
   }
 }

@@ -9,6 +9,7 @@ export default {
         {
           id: 1,
           colIndex: 0,
+          area: { id: 1 },
           resource: {
             id: 1,
             label: 'Temperature (2-day)'
@@ -25,6 +26,7 @@ export default {
         {
           id: 2,
           colIndex: 0,
+          area: { id: 1 },
           resource: {
             id: 1,
             label: 'Temperature (2-day)'
@@ -37,6 +39,7 @@ export default {
         {
           id: 3,
           colIndex: 1,
+          area: { id: 1 },
           resource: {
             id: 3,
             label: 'Relative Humidity (2-day)'
@@ -53,6 +56,7 @@ export default {
         {
           id: 4,
           colIndex: 1,
+          area: { id: 1 },
           resource: {
             id: 3,
             label: 'Relative Humidity (2-day)'

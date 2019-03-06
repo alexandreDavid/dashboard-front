@@ -18,9 +18,9 @@
           <button type="button" class="btn btn-light btn-sm delete" title="Delete card" @click="$emit('delete')"><font-awesome-icon icon="trash" /></button>
         </div>
       </div>
-      <widget-graph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:config="cardConfiguration" v-bind:area="selectedArea"></widget-graph>
+      <widget-graph v-if="cardConfiguration.type === 'graph'" class="widget-graph" v-bind:config="cardConfiguration"></widget-graph>
       <widget-image v-if="cardConfiguration.type === 'image'" class="widget-image" v-bind:config="cardConfiguration"></widget-image>
-      <widget-map v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:config="cardConfiguration" v-bind:area="selectedArea" :widgetKey="widgetId"></widget-map>
+      <widget-map v-if="cardConfiguration.type === 'map'" class="widget-map" v-bind:config="cardConfiguration" :widgetKey="widgetId"></widget-map>
       <WidgetTextArea v-if="cardConfiguration.type === 'textarea'" class="widget-textarea" v-bind:config="cardConfiguration"></WidgetTextArea>
       <WidgetTable v-if="cardConfiguration.type === 'table'" v-bind:config="cardConfiguration" class="widget-table"></WidgetTable>
     </div>
@@ -42,7 +42,6 @@ export default {
     WidgetTable
   },
   props: [
-    'selectedArea',
     'cardConfiguration',
     'isEditing',
     'widgetId'

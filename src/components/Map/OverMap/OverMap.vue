@@ -11,7 +11,7 @@
         <button type="button" @click="showSidebar = true" title="Manage map" class="btn btn-primary d-inline-block d-sm-none align-top shadow"><font-awesome-icon icon="bars" /></button>
       </div>
       <div class="flex-grow-1 over-map-control mr-2">
-        <area-selection-control class="shadow" @change="onAreaChange"></area-selection-control>
+        <area-selection-control class="shadow" v-model="selectedArea" @input="onAreaChange"></area-selection-control>
       </div>
     </div>
     <base-map-sidebar class="over-map-bottom over-map-control" v-if="showBaseMapSidebar" @close="showBaseMapSidebar = false">
@@ -21,9 +21,10 @@
 
 <script>
 import BarControl from './OverMapControl/BarControl/BarControl'
-
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+
 import SelectedLayers from '@/store/selectedLayers'
+import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'OverMap',
@@ -37,8 +38,12 @@ export default {
   data () {
     return {
       showSidebar: false,
-      showBaseMapSidebar: false
+      showBaseMapSidebar: false,
+      selectedArea: false
     }
+  },
+  mounted () {
+    this.selectedArea = DefinedAreas.getActiveArea()
   },
   methods: {
     async onAreaChange (area) {

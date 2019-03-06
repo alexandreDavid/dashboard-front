@@ -58,17 +58,9 @@
             <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Export</button>
           </li>
         </ul>
-        <div class="navbar-nav flex-grow-1 float-right">
-          <li class="nav-item ml-auto mr-2">
-            <span class="navbar-text">Default area:</span>
-          </li>
-          <li class="nav-item flex-grow-1" style="max-width:400px; min-width: 200px">
-            <area-selection-control @change="updateSearchLocation"></area-selection-control>
-          </li>
-        </div>
       </div>
     </nav>
-    <drag-drop-widgets v-bind:dashboard="dashboard" @edit="editWidget" @delete="removeWidget" v-bind:selectedArea="selectedArea"></drag-drop-widgets>
+    <drag-drop-widgets v-bind:dashboard="dashboard" @edit="editWidget" @delete="removeWidget"></drag-drop-widgets>
     <dashboard-customise-modal v-if="showCustomiseModal" @close="showCustomiseModal = false" @validate="setCustomisation" v-bind:dashboard="dashboard"></dashboard-customise-modal>
     <dashboard-card-modal v-if="showCardModal" @close="closeEditCardModal" @input="setEditedWidget" v-model="editedCard"></dashboard-card-modal>
     <confirm-modal v-if="showConfirmDeleteDashboard" content="Do you really want to delete the dashboard?" @close="showConfirmDeleteDashboard = false" @confirm="deleteDashboard"></confirm-modal>
@@ -81,7 +73,6 @@
 import DashboardCardModal from '@/components/Dashboard/DashboardCardModal'
 import DashboardCustomiseModal from '@/components/Dashboard/DashboardCustomiseModal'
 import Loading from '@/components/Loading/Loading'
-import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import DashboardObj from '@/store/dashboard'
 import GeoResources from '@/store/geoResources'
 import DragDropWidgets from '@/components/Dashboard/DragDropWidgets'
@@ -96,7 +87,6 @@ export default {
     Loading,
     DashboardCardModal,
     DashboardCustomiseModal,
-    AreaSelectionControl,
     DragDropWidgets,
     EditableInput,
     EditableTextArea,
@@ -111,7 +101,6 @@ export default {
       showCustomiseModal: false,
       showConfirmDeleteDashboard: false,
       showNewModal: false,
-      selectedArea: false,
       dashboard: {},
       editedCard: {},
       displayDropDownWidget: false
@@ -126,15 +115,11 @@ export default {
     loadDashboard (config) {
       this.dashboard = new DashboardObj(config)
     },
-    updateSearchLocation (feature) {
-      this.selectedArea = feature
-    },
     addWidget (type = 'map') {
       this.editWidget({ title: '', type, description: '' })
     },
     editWidget (card) {
       this.editedCard = Object.assign({}, card)
-      // this.editedCard = card
       this.showCardModal = true
     },
     setEditedWidget (card) {

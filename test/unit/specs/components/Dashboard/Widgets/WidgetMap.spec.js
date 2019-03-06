@@ -5,6 +5,7 @@ import WidgetMap from '@/components/Dashboard/Widgets/WidgetMap.vue'
 import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
 import GeoResources from '@/store/geoResources'
+import DefinedAreas from '@/store/definedAreas'
 
 const localVue = createLocalVue()
 
@@ -46,6 +47,13 @@ GeoResources.searchById.mockReturnValue({
   displayName: 'displayName1'
 })
 
+jest.mock('@/store/definedAreas', () => ({
+  getArea: jest.fn()
+}))
+
+const mockDefinedAreasGetArea = 'definedAreas/getArea'
+DefinedAreas.getArea.mockReturnValue(mockDefinedAreasGetArea)
+
 describe('WidgetMap.vue', () => {
   let wrapper
   let baseMaps
@@ -84,9 +92,11 @@ describe('WidgetMap.vue', () => {
         config: {
           resource: {
             id: 1
+          },
+          area: {
+            id: 'idArea'
           }
         },
-        area: 'area',
         widgetKey: 'widgetKey'
       },
       store,
@@ -100,6 +110,7 @@ describe('WidgetMap.vue', () => {
     expect(wrapper.find(`#${mapId}`).exists()).toBe(true)
     expect(MapObj).toBeCalledWith(mapId)
     expect(AreaLayer).toBeCalledWith(mockMap)
-    expect(mockAreaLayer.setSelectedArea).toBeCalledWith('area')
+    expect(DefinedAreas.getArea).toBeCalledWith('idArea')
+    expect(mockAreaLayer.setSelectedArea).toBeCalledWith(mockDefinedAreasGetArea)
   })
 })

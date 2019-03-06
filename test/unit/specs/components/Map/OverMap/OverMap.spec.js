@@ -35,7 +35,7 @@ describe('OverMap.vue', () => {
     const locationFound = 'SearchLocationResult'
     const mockGeoJSON = 'mockGeoJSON'
     mockAreaLayer.toGeoJSON.mockReturnValue(mockGeoJSON)
-    wrapper.find(AreaSelectionControl).vm.$emit('change', locationFound)
+    wrapper.find(AreaSelectionControl).vm.$emit('input', locationFound)
     expect(mockAreaLayer.setSelectedArea).toBeCalledWith(locationFound)
     await wrapper.vm.$nextTick()
     expect(mockAreaLayer.toGeoJSON).toHaveBeenCalledTimes(1)
@@ -43,7 +43,7 @@ describe('OverMap.vue', () => {
   })
 
   it('Display SearchLocationResult without result', () => {
-    wrapper.find(AreaSelectionControl).vm.$emit('change')
+    wrapper.find(AreaSelectionControl).vm.$emit('input')
     expect(wrapper.vm.searchLocationResult).toBeUndefined()
   })
 

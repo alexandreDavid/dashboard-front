@@ -31,10 +31,7 @@ export default {
   },
   mounted () {
     this.loadOptions()
-    if (!this.value) {
-      this.val = DefinedAreas.getActiveArea()
-      this.change(this.val)
-    } else {
+    if (this.value) {
       this.val = DefinedAreas.getArea(this.value.id)
     }
   },
@@ -44,12 +41,7 @@ export default {
       this.displayType = type
     },
     change (val) {
-      if (!this.value) {
-        DefinedAreas.setActiveArea(val)
-        this.$emit('change', val)
-      } else {
-        this.$emit('input', val)
-      }
+      this.$emit('input', val)
     },
     closeModal () {
       this.showModalArea = false
