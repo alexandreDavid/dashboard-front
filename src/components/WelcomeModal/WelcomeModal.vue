@@ -30,7 +30,7 @@
                     Lets create our first dashboard. You can display the information you want in a one page overview.
                   </div>
                   <div class="position-relative h-100">
-                    <dashboard-new-container v-model="dashboard"></dashboard-new-container>
+                    <dashboard-new-container v-if="pos === 2" v-model="dashboard"></dashboard-new-container>
                   </div>
                 </div>
               </div>
@@ -50,7 +50,7 @@
       </div>
       <div slot="footer" class="d-flex justify-content-between w-100">
         <button class="btn btn-secondary" @click="previous" :disabled="pos === 0">Previous</button>
-        <button v-if="pos < 3" class="btn btn-secondary" @click="next" :disabled="(pos === 1 && !area.valid) || (pos === 2 && !dashboard.title)">Next</button>
+        <button v-if="pos < 3" class="btn btn-secondary" @click="next(pos)" :disabled="(pos === 1 && !area.valid) || (pos === 2 && !dashboard.title)">Next</button>
         <button v-else class="btn btn-primary" @click="closeModal">Finish</button>
       </div>
   </modal>
@@ -121,7 +121,10 @@ export default {
         to.classList.remove(orderClassName, directionalClassName)
       }, 650)
     },
-    next () {
+    next (pos) {
+      if (pos === 1) {
+        DefinedAreas.setAll([this.area])
+      }
       this.slide(Direction.NEXT)
     },
     previous () {
@@ -132,7 +135,6 @@ export default {
       this.$tours['GlobalTour'].start()
     },
     closeModal () {
-      DefinedAreas.setAll([this.area])
       Dashboards.addDashboard(this.dashboard)
       this.$emit('close')
       UserConfiguration.setDisplayHelp(false)

@@ -54,13 +54,10 @@ describe('DashboardWidget.vue', () => {
       propsData: { cardConfiguration, selectedArea, isEditing }
     })
 
-    const stub = jest.fn()
-    wrapper.setMethods({ editCard: stub })
-
     wrapper.find('.drag-handler').trigger('mouseover')
 
     wrapper.find('.edit-card').trigger('click')
-    expect(wrapper.vm.editCard).toBeCalled()
+    expect(wrapper.emitted().edit).toBeTruthy()
   })
 
   it('Calls click delete', () => {
@@ -81,8 +78,8 @@ describe('DashboardWidget.vue', () => {
 
     wrapper.find('.drag-handler').trigger('mouseover')
 
-    const button = wrapper.find('.edit')
+    const button = wrapper.find('.delete')
     button.trigger('click')
-    expect(wrapper.emitted().edit).toBeTruthy()
+    expect(wrapper.emitted().delete).toBeTruthy()
   })
 })
