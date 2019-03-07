@@ -8,7 +8,7 @@
         </div>
       </div>
       <div :id="mapId" class="w-100" v-bind:style="{height: `${mapHeight}px`}">
-        <div class="leaflet-control-container">
+        <div class="leaflet-control-container" v-if="selectedLayer._time">
           <div class="leaflet-top leaflet-left">
             <div class="leaflet-control">
               <time-control class="shadow" @input="setTime" v-model="selectedLayer._time" :times="selectedLayer._availableTimes"></time-control>
