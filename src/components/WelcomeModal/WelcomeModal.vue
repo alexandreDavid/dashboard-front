@@ -15,6 +15,7 @@
 
               <div ref="carousel-1" class="carousel-item">
                 <div class="container h-100 d-flex flex-column">
+                  <h4>First area selection</h4>
                   <div class="alert alert-primary flex-shrink-1" role="alert">
                     Lets start to define the area of interest. A list of boundaries is available but it's also possible to draw a custom area.
                   </div>
@@ -26,6 +27,7 @@
 
               <div ref="carousel-2" class="carousel-item">
                 <div class="container h-100 d-flex flex-column">
+                  <h4>First dashboard configuration</h4>
                   <div class="alert alert-primary flex-shrink-1" role="alert">
                     Lets create our first dashboard. You can display the information you want in a one page overview.
                   </div>
