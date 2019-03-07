@@ -130,18 +130,9 @@ export default {
       this.dashboard.save()
       if (scrollToCard) {
         this.$nextTick(() => {
-          let container = document.querySelector('#dashboards-container')
-          let scrollY = 0
+          let container = document.querySelector('#dashboard-container')
+          let scrollY = container.offsetHeight
           let dashboardFound = false
-          // getting all the displayed dashboards and their height until the current one
-          container.childNodes.forEach(d => {
-            if (!dashboardFound) {
-              scrollY += d.offsetHeight
-              dashboardFound = d.getAttribute('id') === `dashboard-container-${this.dashboard.id}`
-            }
-          })
-          // Removing the size of the div to put it at the end of the dashboard
-          scrollY -= container.offsetHeight
           setTimeout(function () {
             container.scrollTo({
               top: scrollY,
