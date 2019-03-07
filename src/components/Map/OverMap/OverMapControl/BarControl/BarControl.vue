@@ -3,7 +3,7 @@
     <button type="button" class="btn btn-primary" title="Zoom to my location" id="zoom-current-location" @click="zoomToCurrentLocation" v-if="hasCurrentLocation"><font-awesome-icon icon="location-arrow" /></button>
     <button type="button" class="btn btn-primary" title="Zoom in" id="zoom-in" @click="zoomIn" :disabled="zoomInDisabled"><font-awesome-icon icon="plus" /></button>
     <button type="button" class="btn btn-primary" title="Zoom out" id="zoom-out" @click="zoomOut" :disabled="zoomOutDisabled"><font-awesome-icon icon="minus" /></button>
-    <button type="button" class="btn btn-primary" title="Zoom to area" id="zoom-to-area" @click="zoomToArea"><font-awesome-icon icon="globe-africa" /></button>
+    <button type="button" class="btn btn-primary" title="Zoom to area" id="zoom-to-area" @click="zoomToArea"><font-awesome-icon :icon="['far', 'square']" /></button>
     <button type="button" class="btn btn-primary" title="Manage the base map" id="open-base-map-control" @click="openBaseMapControl"><font-awesome-icon icon="layer-group" /></button>
   </div>
 </template>
