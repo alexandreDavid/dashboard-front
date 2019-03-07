@@ -1,5 +1,5 @@
 <template>
-<div id="dashboard-container" class="container-fluid pb-2 border-bottom">
+<div id="dashboard-container" class="container-fluid pb-2">
   <div class="row" v-if="isLoaded">
     <h4 class="col-12 py-2 px-3 bg-light border-bottom">
       <div class="d-flex">
