@@ -1,5 +1,5 @@
 <template>
-<div class="flex-shrink-1 order-sm-1 order-3">
+<div class="flex-shrink-1 order-sm-1 order-3 d-print-none">
   <div class="sticky-top shadow">
     <nav class="navbar navbar-dark bg-dark navbar-expand bg-light d-none d-sm-flex">
       <a class="navbar-brand p-0" href="#"><img src="@/assets/logo.png" style="height: 40px;"></a>

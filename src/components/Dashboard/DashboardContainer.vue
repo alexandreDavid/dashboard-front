@@ -1,5 +1,5 @@
 <template>
-<div :id="`dashboard-container-${dashboard.id}`" class="container-fluid pb-2 border-bottom">
+<div id="dashboard-container" class="container-fluid pb-2 border-bottom">
   <div class="row" v-if="isLoaded">
     <h4 class="col-12 py-2 px-3 bg-light border-bottom">
       <div class="d-flex">
@@ -13,7 +13,7 @@
     <div class="col-12 mb-3">
       <editable-text-area class="dashboard-description" v-model="dashboard.description" @input="saveDescription" placeholder="Description" add-button-label="Add a description"></editable-text-area>
     </div>
-    <nav id="dashboard-cards-actions" class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom">
+    <nav id="dashboard-cards-actions" class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom d-print-none">
       <div class="collapse navbar-collapse flex-wrap">
         <ul class="navbar-nav d-none d-md-flex">
           <li class="nav-item">
@@ -55,7 +55,7 @@
             <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Share</button>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Export</button>
+            <button type="button" class="btn btn-sm btn-light" @click="printDashboard()">Export</button>
           </li>
         </ul>
       </div>
@@ -185,6 +185,9 @@ export default {
     deleteDashboard () {
       this.$emit('delete', this.dashboard)
       this.showConfirmDeleteDashboard = false
+    },
+    printDashboard () {
+      window.print()
     }
   },
   watch: {
@@ -192,3 +195,31 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+
+#dashboard-container {
+  position: absolute;
+  overflow: auto;
+  top: 0;
+  bottom: 0;
+  left:0;
+  right:0;
+
+  &.is-printing {
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+@media print {
+  #dashboard-container {
+    overflow: hidden;
+    position: relative;
+
+    button {
+      display: none;
+    }
+  }
+}
+</style>

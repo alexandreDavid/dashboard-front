@@ -1,15 +1,13 @@
 <template>
   <div id="dashboard" class="h-100">
-    <div v-if="isLoaded" class="d-flex flex-row-reverse h-100">
+    <div v-if="isLoaded" class="d-flex flex-row-reverse h-100 d-print-block">
       <div class="flex-grow-1 h-100 position-relative">
-        <div v-if="selectedDashboard" id="dashboards-container" style="position: absolute;overflow: auto;top: 0;bottom: 0;left:0;right:0;">
-          <dashboard-container :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
-        </div>
+        <dashboard-container v-if="selectedDashboard" :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
         <div v-else class="alert alert-info m-3" role="alert">
           Please select a dashboard in the list or click on the button to create a new one.
         </div>
       </div>
-      <div class="d-none d-sm-block bg-light h-100" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
+      <div class="d-none d-sm-block bg-light h-100 d-print-none" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
         <div id="dashboard-list" class="container mt-2">
           <div class="row border-bottom">
             <div class="p-2 col-12">

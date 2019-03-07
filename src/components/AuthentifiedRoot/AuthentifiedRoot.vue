@@ -1,10 +1,10 @@
 <template>
   <div class="h-100">
-    <div class="d-flex flex-column h-100" v-if="isLoaded">
+    <div class="d-flex flex-column h-100 d-print-block" v-if="isLoaded">
       <NavBar />
       <welcome-modal v-if="showModalWelcome" @close="showModalWelcome = false"></welcome-modal>
       <div v-else class="position-relative h-100 order-2">
-        <div id="page-container">
+        <div id="page-container" class="d-print-block">
           <router-view />
         </div>
       </div>

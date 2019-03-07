@@ -4,7 +4,7 @@
       <div class="shadow-top p-1 legend-container">
         <Legend v-bind:legend="selectedLayer._legend"></Legend>
         <div class="border-top mx-2 mt-1" v-if="config.description">
-          <pre class="widget-description px-3 py-1 mb-0">{{ config.description }}</pre>
+          <div class="widget-description px-3 py-1 mb-0">{{ config.description }}</div>
         </div>
       </div>
       <div :id="mapId" class="w-100" v-bind:style="{height: `${mapHeight}px`}">

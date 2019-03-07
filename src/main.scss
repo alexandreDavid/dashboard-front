@@ -26,6 +26,13 @@
   }
 }
 
+@media print {
+  #app #page-container {
+    overflow: hidden;
+    position: relative;
+  }
+}
+
 .v-step {
   z-index: 2000;
   position: absolute;

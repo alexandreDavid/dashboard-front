@@ -11,7 +11,7 @@
         </div>
       </div>
     </div>
-    <pre class="px-3 py-1 mb-0" style="white-space: pre-line;" @click="editTextArea" v-else>{{ value }}</pre>
+    <div class="px-3 py-1 mb-0" style="white-space: pre-line;" @click="editTextArea" v-else>{{ value }}</div>
   </div>
 </template>
 

@@ -5,7 +5,7 @@
       <Loading v-else></Loading>
     </div>
     <div class="border-top mx-2 mt-1" v-if="config.description">
-      <pre class="widget-description px-3 py-1 mb-0">{{ config.description }}</pre>
+      <div class="widget-description px-3 py-1 mb-0">{{ config.description }}</div>
     </div>
   </div>
 </template>
