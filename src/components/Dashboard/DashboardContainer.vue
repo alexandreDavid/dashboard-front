@@ -132,7 +132,6 @@ export default {
         this.$nextTick(() => {
           let container = document.querySelector('#dashboard-container')
           let scrollY = container.offsetHeight
-          let dashboardFound = false
           setTimeout(function () {
             container.scrollTo({
               top: scrollY,
