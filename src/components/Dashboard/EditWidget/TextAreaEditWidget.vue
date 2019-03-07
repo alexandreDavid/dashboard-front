@@ -6,7 +6,10 @@
     </div>
     <div class="form-group">
       <label>Text <small>(required)</small></label>
-      <textarea class="form-control" v-model="value.description" @input="checkValidity" placeholder="Type here..." aria-label="Text"></textarea>
+      <textarea class="form-control" v-model="value.description" @input="checkValidity" placeholder="Type here..." aria-label="Text" v-bind:class="{'is-invalid': !value.description && showError}"></textarea>
+      <div class="invalid-feedback">
+        Please enter a message in the textarea.
+      </div>
     </div>
   </div>
 </template>
@@ -18,6 +21,9 @@ export default {
     value: {
       type: Object,
       required: true
+    },
+    showError: {
+      type: Boolean
     }
   },
   mounted () {

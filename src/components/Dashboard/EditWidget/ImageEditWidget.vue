@@ -6,7 +6,10 @@
     </div>
     <div class="form-group">
       <label>Location <small>(required)</small></label>
-      <input type="text" v-model="value.src" @input="checkValidity" class="form-control" id="title" placeholder="title">
+      <input type="text" v-model="value.src" @input="checkValidity" class="form-control" id="location" placeholder="location" v-bind:class="{'is-invalid': !value.src && showError}">
+      <div class="invalid-feedback">
+        Please enter a location for the image.
+      </div>
     </div>
     <edit-description-field v-model="value.description"></edit-description-field>
   </div>
@@ -22,6 +25,9 @@ export default {
     value: {
       type: Object,
       required: true
+    },
+    showError: {
+      type: Boolean
     }
   },
   mounted () {

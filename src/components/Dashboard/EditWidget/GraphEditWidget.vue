@@ -6,15 +6,18 @@
     </div>
     <div class="form-group">
       <label>Area <small>(required)</small></label>
-      <area-selection-control v-model="value.area" @input="setTitle"></area-selection-control>
+      <area-selection-control v-model="value.area" @input="areaChange" :required="showError"></area-selection-control>
     </div>
     <div class="form-group">
       <label>Data to display <small>(required)</small></label>
-      <select class="form-control" v-model="value.resource" @change="changeResource(value.resource)">
+      <select class="custom-select" v-model="value.resource" @change="changeResource(value.resource)" v-bind:class="{'is-invalid': !value.resource && showError}">
         <option v-for="resource in resources" :key="resource.id" v-bind:value="resource">
           {{ resource.label }}
         </option>
       </select>
+      <div class="invalid-feedback">
+        Please choose a data.
+      </div>
     </div>
     <edit-description-field v-model="value.description"></edit-description-field>
     <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
@@ -42,6 +45,9 @@ export default {
     value: {
       type: Object,
       required: true
+    },
+    showError: {
+      type: Boolean
     }
   },
   data () {
@@ -52,7 +58,7 @@ export default {
   },
   mounted () {
     this.showAdvancedConfig = this.value.advancedConfig
-    this.$set(this.value, 'isValid', !!this.value.resource)
+    this.checkValidity()
     if (!this.showAdvancedConfig) {
       this.$set(this.value, 'advancedHeight', 'default')
       this.$set(this.value, 'customTitle', false)
@@ -67,13 +73,20 @@ export default {
   methods: {
     changeResource (resource) {
       this.value.resource = resource
-      this.$set(this.value, 'isValid', !!this.value.resource)
+      this.checkValidity()
       this.setTitle()
     },
     setShowAdvancedSettings (val) {
       this.showAdvancedConfig = val
       this.setTitle()
       this.$set(this.value, 'advancedConfig', val)
+    },
+    checkValidity () {
+      this.$set(this.value, 'isValid', !!(this.value.resource && this.value.area))
+    },
+    areaChange () {
+      this.setTitle()
+      this.checkValidity()
     }
   }
 }
