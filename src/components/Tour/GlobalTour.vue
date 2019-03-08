@@ -26,7 +26,7 @@
             <template>
               <div slot="actions">
                 <div class="v-step__buttons">
-                  <button @click.prevent="tour.stop" v-if="!tour.isLast" class="v-step__button">{{ tour.labels.buttonSkip }}</button>
+                  <button @click.prevent="skip(tour)" v-if="!tour.isLast" class="v-step__button">{{ tour.labels.buttonSkip }}</button>
                   <button @click.prevent="tour.previousStep" v-if="!tour.isFirst" class="v-step__button">{{ tour.labels.buttonPrevious }}</button>
                   <button @click.prevent="tour.nextStep" v-if="!tour.isLast" class="v-step__button">{{ tour.labels.buttonNext }}</button>
                   <button @click.prevent="finish(tour)" v-if="tour.isLast" class="v-step__button">{{ tour.labels.buttonStop }}</button>
@@ -61,7 +61,8 @@ export default {
       curTour: false,
       curAllPages: [],
       firstPart: true,
-      continueMessage: false
+      continueMessage: false,
+      firstRoute: false
     }
   },
   methods: {
@@ -69,6 +70,7 @@ export default {
       if (this.firstPart) {
         this.steps = [...tourConfig.global.steps, ...tourConfig[this.$route.name].steps]
         this.curAllPages = [...this.allPages]
+        this.firstRoute = this.$route.name
       } else {
         this.steps = tourConfig[this.$route.name].steps
       }
@@ -80,17 +82,24 @@ export default {
       this.displayMask = false
       this.firstPart = true
     },
+    skip (tour) {
+      tour.stop()
+      this.$router.push({name: this.firstRoute})
+    },
     finish (tour) {
       tour.stop()
       this.curTour = tour
       if (this.curAllPages.length) {
         this.showModalChangePage = true
         this.continueMessage = tourConfig[this.$route.name].continueMessage
+      } else {
+        this.$router.push({name: this.firstRoute})
       }
     },
     closeModal () {
       this.showModalChangePage = false
       this.firstPart = true
+      this.$router.push({name: this.firstRoute})
     },
     newPageDiscover () {
       this.firstPart = false
