@@ -1,28 +1,59 @@
+image: docker:latest
+services:
+  - docker:dind
+
+stages:
+  - test
+  - build
+  - deploy
+
 variables:
   S3_PROD_BUCKET_NAME: "beta.dfms.co.uk"
   S3_DEV_BUCKET_NAME: "inte.dfms.co.uk"
-launch tests:
+  CI_REGISTRY_IMAGE: "dfmscloud/frontend"
+  IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
+
+test:
+  stage: test
   image: adexlavid/npmpython:latest
   script:
-  - npm install
-  - npm run unit
+    - npm install
+    - npm run unit
+
 build prod:
+  stage: build
   image: adexlavid/npmpython:latest
   script:
-  - npm install
-  - npm run build
-  - pip install awscli
-  - aws s3 rm s3://$S3_PROD_BUCKET_NAME/static/ --recursive
-  - aws s3 cp ./dist s3://$S3_PROD_BUCKET_NAME/ --recursive
+    - npm install
+    - npm run build
+    - pip install awscli
+    - aws s3 rm s3://$S3_PROD_BUCKET_NAME/static/ --recursive
+    - aws s3 cp ./dist s3://$S3_PROD_BUCKET_NAME/ --recursive
+  environment:
+    name: production
   only:
     - master
+
 build dev:
+  stage: build
   image: adexlavid/npmpython:latest
   script:
-  - npm install
-  - npm run build-dev
-  - pip install awscli
-  - aws s3 rm s3://$S3_DEV_BUCKET_NAME/static/ --recursive
-  - aws s3 cp ./dist s3://$S3_DEV_BUCKET_NAME/ --recursive
+    - npm install
+    - npm run build-dev
+    - pip install awscli
+    - aws s3 rm s3://$S3_DEV_BUCKET_NAME/static/ --recursive
+    - aws s3 cp ./dist s3://$S3_DEV_BUCKET_NAME/ --recursive
+  environment:
+    name: development
   only:
     - dev
+
+deploy docker:
+  stage: deploy
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+    - docker build --pull -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+  only:
+    - dev
+    - master
