@@ -1,7 +1,3 @@
-image: docker:latest
-services:
-  - docker:dind
-
 stages:
   - test
   - build
@@ -12,9 +8,6 @@ variables:
   S3_DEV_BUCKET_NAME: "inte.dfms.co.uk"
   CI_REGISTRY_IMAGE: "dfmscloud/frontend"
   IMAGE_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
-
-before_script:
-  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
 
 test:
   stage: test
@@ -52,9 +45,13 @@ build dev:
     - dev
 
 deploy docker:
+  image: docker:latest
+  services:
+    - docker:dind
   stage: deploy
   script:
-    - docker build --pull -t dfmscloud/frontend:dev .
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
+    - docker build --pull -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
   only:
     - dev
