@@ -1,10 +1,9 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  DATA_URL: '"http://demo.dfms.co.uk/data"',
-  API_URL: '"http://18.130.238.68/api/v1"',
-  CATALOGUE_API_URL: '"http://a4255e5baee6011e8bd850258108f7fd-1365817557.eu-west-1.elb.amazonaws.com"',
-  GEOSERVER_URL: '"http://35.178.230.72:8180/geoserver"',
+  API_URL: '"http://beta-elixir.dfms.co.uk/api/v1"',
+  CATALOGUE_API_URL: '"https://beta-catalog.dfms.co.uk"',
+  GEOSERVER_URL: '"https://beta-geoserver.dfms.co.uk/geoserver"',
   AUTH: {
     domain: '"dfms.eu.auth0.com"',
     clientID: '"3If6sQMIem0XvkRZzc10rOn6p-94YjUU"'
