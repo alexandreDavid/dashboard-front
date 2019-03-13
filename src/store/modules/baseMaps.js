@@ -6,10 +6,10 @@ const allBaseMaps = [
     url: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'
   }, {
     label: 'Grayscale',
-    url: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
-  }, {
-    label: 'Toner',
-    url: 'http://a.tile.stamen.com/toner/{z}/{x}/{y}.png'
+    url: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
+  // }, {
+  //   label: 'Toner',
+  //   url: 'http://a.tile.stamen.com/toner/{z}/{x}/{y}.png'
   }, {
     label: 'Nothing',
     url: false

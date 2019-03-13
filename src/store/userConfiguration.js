@@ -30,7 +30,7 @@ let configuration = {
     floodWarning: false,
     stormWarning: false
   },
-  activeBaseMapLayer: 'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+  activeBaseMapLayer: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
   selectedLayers: [],
   displayHelp: true,
   definedAreas: []
