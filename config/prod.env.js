@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  API_URL: '"http://beta-elixir.dfms.co.uk/api/v1"',
+  API_URL: '"https://beta-elixir.dfms.co.uk/api/v1"',
   CATALOGUE_API_URL: '"https://beta-catalog.dfms.co.uk"',
   GEOSERVER_URL: '"https://beta-geoserver.dfms.co.uk/geoserver"',
   AUTH: {
