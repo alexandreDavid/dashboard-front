@@ -21,6 +21,8 @@ import GeoResources from '@/store/geoResources'
 import GlobalTour from '@/components/Tour/GlobalTour'
 import Loading from '@/components/Loading/Loading'
 
+import updates from '@/updates'
+
 export default {
   name: 'AuthentifiedRoot',
   components: {
@@ -36,6 +38,7 @@ export default {
     }
   },
   async created () {
+    updates()
     this.showModalWelcome = UserConfiguration.getDisplayHelp() && this.$mq !== 'sm'
     await GeoResources.getAllResources()
     this.$store.dispatch('init')

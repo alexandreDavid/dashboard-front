@@ -34,7 +34,7 @@ const actions = {
     let active = UserConfiguration.getActiveBaseMapLayer()
 
     if (!active || !active.hasOwnProperty('url')) {
-      active = allBaseMaps[1]
+      active = allBaseMaps[0]
     }
     dispatch('setActive', active)
   },
