@@ -22,6 +22,8 @@ import MapTour from '@/components/Tour/MapTour'
 
 import Loading from '@/components/Loading/Loading'
 
+import updates from '@/updates'
+
 export default {
   name: 'AuthentifiedRoot',
   components: {
@@ -33,6 +35,7 @@ export default {
     }
   },
   async created () {
+    updates()
     await Settings.init()
     Area.setSelectedArea(UserConfiguration.getActiveArea())
     this.isLoaded = true

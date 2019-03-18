@@ -19,9 +19,6 @@ let MapObj = Map.extend({
     this.fitBounds(defaultParams.bounds)
 
     let baseMap = UserConfiguration.getActiveBaseMapLayer()
-    if (!baseMap.includes('https')) {
-      baseMap = 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
-    }
     this.setBaseMapLayer(baseMap)
   },
   setBaseMapLayer (layerUrl) {

@@ -33,9 +33,10 @@ let configuration = {
     floodWarning: false,
     stormWarning: false
   },
-  activeBaseMapLayer: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png',
+  activeBaseMapLayer: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
   selectedLayers: [],
-  displayHelp: true
+  displayHelp: true,
+  updateIndex: 0
 }
 
 function getConfiguration (configName) {
