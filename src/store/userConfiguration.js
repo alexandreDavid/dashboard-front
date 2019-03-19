@@ -30,7 +30,7 @@ let configuration = {
     floodWarning: false,
     stormWarning: false
   },
-  activeBaseMapLayer: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  activeBaseMapLayer: false,
   selectedLayers: [],
   displayHelp: true,
   definedAreas: [],
