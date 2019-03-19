@@ -20,9 +20,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import Loading from '@/components/Loading/Loading'
 import Parameter from '@/store/parameter.js'
-import DefinedAreas from '@/store/definedAreas'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import GraphSerie from './GraphSerie'
 import Data from '@/store/data'
@@ -37,6 +38,7 @@ export default {
     GraphSerie,
     AdvancedChart: () => import('./Charts/AdvancedChart')
   },
+  computed: mapGetters('areas', ['activeArea']),
   data () {
     return {
       isLoaded: false,
@@ -56,7 +58,7 @@ export default {
   },
   async created () {
     this.parameters = await Parameter.getAllParameters()
-    this.selectedArea = DefinedAreas.getActiveArea()
+    this.selectedArea = this.activeArea
     this.isLoaded = true
   },
   methods: {

@@ -20,11 +20,12 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import BarControl from './OverMapControl/BarControl/BarControl'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 
 import SelectedLayers from '@/store/selectedLayers'
-import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'OverMap',
@@ -35,6 +36,7 @@ export default {
     AreaSelectionControl
   },
   inject: ['getAreaLayer'],
+  computed: mapGetters('areas', ['activeArea']),
   data () {
     return {
       showSidebar: false,
@@ -43,7 +45,7 @@ export default {
     }
   },
   mounted () {
-    this.selectedArea = DefinedAreas.getActiveArea()
+    this.selectedArea = this.activeArea
   },
   methods: {
     async onAreaChange (area) {

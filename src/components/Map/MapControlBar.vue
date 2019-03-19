@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 import Modal from '@/components/Modal/Modal'
 import SideBar from '@/components/SideBar/SideBar'
 import Loading from '@/components/Loading/Loading'
@@ -34,7 +36,6 @@ import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import MeteoStationsControl from '@/components/Map/MeteoStations/MeteoStationsControl'
 
 import SelectedLayers from '@/store/selectedLayers'
-import DefinedAreas from '@/store/definedAreas'
 
 export default {
   name: 'MapControlBar',
@@ -49,6 +50,7 @@ export default {
   },
   props: ['isStatic', 'mapIsLoading'],
   inject: ['getMap', 'getDisplayedLayer', 'getAreaLayer'],
+  computed: mapGetters('areas', ['activeArea']),
   data () {
     return {
       showModal: false,
@@ -59,16 +61,16 @@ export default {
   },
   mounted () {
     this.toggleMeteorologicalStations(this.displayMeteoStations)
-    this.selectedArea = DefinedAreas.getActiveArea()
+    this.selectedArea = this.activeArea
   },
   methods: {
     close () {
       this.$emit('close')
     },
     async onAreaChange (area) {
-      console.log(area)
       await this.getAreaLayer().setSelectedArea(area)
       SelectedLayers.updateArea(this.getAreaLayer().toGeoJSON())
+      this.setActiveArea(area)
     },
     async onSelectedResource (resource) {
       this.$ga.event('resource', 'add', resource.name)
@@ -83,7 +85,8 @@ export default {
         label: 'Meteorological stations',
         name: 'meteorological_station'
       } : false))
-    }
+    },
+    ...mapActions('areas', ['setActiveArea'])
   },
   watch: {
     displayMeteoStations: 'toggleMeteorologicalStations'

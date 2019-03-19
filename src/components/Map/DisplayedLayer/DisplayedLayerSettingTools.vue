@@ -12,13 +12,14 @@
       <opacity-control class="m-1" v-model="parameter.geoResource.opacity" @input="setOpacity"></opacity-control>
     </div>
     <!-- <treshold-value-control :layer="parameter"></treshold-value-control> -->
-    <GraphModal v-if="showModalGraph" v-bind:selectedArea="selectedArea" v-bind:selectedParameter="parameter" @close="showModalGraph = false"></GraphModal>
+    <GraphModal v-if="showModalGraph" v-bind:selectedArea="activeArea" v-bind:selectedParameter="parameter" @close="showModalGraph = false"></GraphModal>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import GraphModal from '@/components/Graph/GraphModal'
-import DefinedAreas from '@/store/definedAreas'
 import OpacityControl from '@/components/Map/DisplayedLayer/OpacityControl'
 import TimeControl from '@/components/Map/DisplayedLayer/TimeControl'
 import TresholdValueControl from '@/components/Map/DisplayedLayer/TresholdValueControl'
@@ -32,10 +33,10 @@ export default {
     OpacityControl,
     TresholdValueControl
   },
+  computed: mapGetters('areas', ['activeArea']),
   data () {
     return {
-      showModalGraph: false,
-      selectedArea: false
+      showModalGraph: false
     }
   },
   mounted () {
@@ -46,7 +47,6 @@ export default {
       this.$emit('setOpacity', val)
     },
     openGraphModal () {
-      this.selectedArea = DefinedAreas.getActiveArea()
       this.showModalGraph = true
     },
     onTimeChange (time) {

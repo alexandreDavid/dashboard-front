@@ -1,9 +1,9 @@
 import Dashboard from '@/store/dashboard'
-import DefinedAreas from '@/store/definedAreas'
+import store from '@/store'
 
 export default {
   getStarterDashboard () {
-    const area = DefinedAreas.getActiveArea()
+    const area = store.getters['areas/activeArea']
     return {
       title: 'Starter dashboard',
       layout: Dashboard.getLayouts().find(l => l.default),

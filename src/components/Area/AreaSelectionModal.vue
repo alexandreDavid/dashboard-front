@@ -7,8 +7,9 @@
           <button class="btn btn-primary mb-2 new-area" @click="editArea({})"><font-awesome-icon icon="plus" /> Add a new area</button>
           <div class="h-100 position-relative">
             <div class="managing-modal-list-container list-group list-group-flush" role="tablist">
-              <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" @click="editArea(area)" v-for="(area, key) in areas" :key="key" v-bind:class="{active: area.isEditing}">
+              <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" @click="editArea(area)" v-for="(area, key) in areas" :key="key" v-bind:class="{active: area.id === editingId}">
                 {{ area.name }}
+                <a v-on:click.stop="deleteArea(area)" v-if="areas.length !== 1" title="Delete"><font-awesome-icon icon="trash" /></a>
               </a>
             </div>
           </div>
@@ -39,7 +40,7 @@
 import Modal from '@/components/Modal/Modal'
 import AreaEdition from '@/components/Area/AreaEdition'
 
-import DefinedAreas from '@/store/definedAreas'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'AreaSelectionModal',
@@ -48,18 +49,18 @@ export default {
     AreaEdition
   },
   props: ['openType', 'currentVal'],
+  computed: {
+    ...mapState({
+      areas: state => state.areas.all
+    })
+  },
   data () {
     return {
-      areas: [],
       editedArea: false,
-      drawControl: false
+      editingId: false
     }
   },
   created () {
-    this.areas = DefinedAreas.getAll()
-    this.areas.forEach(a => {
-      a.isEditing = false
-    })
     if (!this.areas.length || this.openType === 'add') {
       this.editArea({})
     }
@@ -70,26 +71,24 @@ export default {
     }
   },
   methods: {
+    ...mapActions('areas', ['removeArea', 'setArea']),
     editArea (area) {
-      this.areas.forEach(a => {
-        a.isEditing = false
-      })
-      area.isEditing = true
+      this.editingId = area.id
       this.editedArea = area
       this.$nextTick()
+    },
+    deleteArea (area) {
+      this.removeArea(area)
+      if (area.id === this.editingId) {
+        this.editingId = false
+        this.editedArea = false
+      }
     },
     close () {
       this.$emit('close')
     },
     afterEdit (area) {
-      let idx = this.areas.findIndex(a => a.isEditing === true)
-      if (idx !== -1) {
-        this.areas[idx] = area
-      } else {
-        area.id = ((this.areas.length && this.areas.sort((a, b) => b.id - a.id)[0].id) || 0) + 1
-        this.areas.push(area)
-      }
-      DefinedAreas.setAll(this.areas)
+      this.setArea(area)
       this.editArea(area)
     },
     backToList () {

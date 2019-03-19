@@ -13,18 +13,17 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex'
+
 import MapObj from '@/store/map'
 import OverMap from '@/components/Map/OverMap/OverMap'
 import Popup from '@/components/Map/Popup'
 import DisplayedLayer from '@/store/displayedLayer'
 import ReportedLayer from '@/components/Map/ReportedLayer/ReportedLayer'
 import MapControlBar from '@/components/Map/MapControlBar'
-import DefinedAreas from '@/store/definedAreas'
 import AreaLayer from '@/store/areaLayer'
 
 import SelectedLayers from '@/store/selectedLayers'
-
-import { mapState } from 'vuex'
 
 export default {
   name: 'MapPage',
@@ -34,9 +33,12 @@ export default {
     ReportedLayer,
     MapControlBar
   },
-  computed: mapState({
-    activeBaseMap: state => state.baseMaps.active
-  }),
+  computed: {
+    ...mapState({
+      activeBaseMap: state => state.baseMaps.active
+    }),
+    ...mapGetters('areas', ['activeArea'])
+  },
   provide () {
     return {
       getMap: this.getMap,
@@ -61,10 +63,10 @@ export default {
     this.displayedLayer = new DisplayedLayer(this.map)
     this.areaLayer = new AreaLayer(this.map)
     try {
-      await this.areaLayer.setSelectedArea(DefinedAreas.getActiveArea())
+      await this.areaLayer.setSelectedArea(this.activeArea)
     } catch (error) {
       console.error(error)
-      DefinedAreas.setActiveArea(false)
+      this.setActiveArea(false)
       this.areaLayer.setSelectedArea(false)
     }
     const layers = await SelectedLayers.getAllSelectedLayers(this.getAreaLayer().toGeoJSON())
@@ -89,7 +91,8 @@ export default {
     },
     onSelectedParameter (selectedParameter) {
       this.selectedParameter = selectedParameter
-    }
+    },
+    ...mapActions('areas', ['setActiveArea'])
   },
   watch: {
     activeBaseMap (val) {

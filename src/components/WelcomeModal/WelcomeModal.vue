@@ -59,11 +59,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 import Modal from '@/components/Modal/Modal'
 import AreaEdition from '@/components/Area/AreaEdition'
 import DashboardNewContainer from '@/components/Dashboard/New/DashboardNewContainer'
 
-import DefinedAreas from '@/store/definedAreas'
 import Dashboards from '@/store/dashboards'
 import UserConfiguration from '@/store/userConfiguration'
 
@@ -125,7 +126,7 @@ export default {
     },
     next (pos) {
       if (pos === 1) {
-        DefinedAreas.setAll([this.area])
+        this.setAll([this.area])
       }
       this.slide(Direction.NEXT)
     },
@@ -140,7 +141,8 @@ export default {
       Dashboards.addDashboard(this.dashboard)
       this.$emit('close')
       UserConfiguration.setDisplayHelp(false)
-    }
+    },
+    ...mapActions('areas', ['setAll'])
   }
 }
 </script>

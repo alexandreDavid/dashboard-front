@@ -16,7 +16,7 @@ import AreaLayer from '@/store/areaLayer'
 import SelectedLayer from '@/store/selectedLayer'
 import Loading from '@/components/Loading/Loading'
 
-import DefinedAreas from '@/store/definedAreas'
+import { mapGetters } from 'vuex'
 
 import HeightMixin from './HeightMixin'
 
@@ -31,6 +31,7 @@ export default {
     'config',
     'graphType'
   ],
+  computed: mapGetters('areas', ['getArea']),
   data () {
     return {
       resource: false,
@@ -42,7 +43,7 @@ export default {
   },
   async mounted () {
     this.areaLayer = new AreaLayer()
-    await this.areaLayer.setSelectedArea(DefinedAreas.getArea(this.config.area.id))
+    await this.areaLayer.setSelectedArea(this.getArea(this.config.area.id))
     this.resource = new SelectedLayer()
     await this.getData(this.config.resource)
     this.isLoaded = true
@@ -59,7 +60,7 @@ export default {
     },
     async setArea () {
       this.isLoaded = false
-      await this.areaLayer.setSelectedArea(DefinedAreas.getArea(this.config.area.id))
+      await this.areaLayer.setSelectedArea(this.getArea(this.config.area.id))
       await this.resource.setArea(this.areaLayer.toGeoJSON())
       this.isLoaded = true
     }

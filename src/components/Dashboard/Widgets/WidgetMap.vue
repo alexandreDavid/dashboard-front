@@ -33,7 +33,6 @@ import { CustomVueControl } from '@/components/Map/Leaflet.customVueControl'
 
 import SelectedLayer from '@/store/selectedLayer'
 import GeoResources from '@/store/geoResources'
-import DefinedAreas from '@/store/definedAreas'
 
 import HeightMixin from './HeightMixin'
 
@@ -69,12 +68,13 @@ export default {
     },
     ...mapState({
       activeBaseMap: state => state.baseMaps.active
-    })
+    }),
+    ...mapGetters('areas', ['getArea'])
   },
   async mounted () {
     this.map = new MapObj(this.mapId)
     this.areaLayer = new AreaLayer(this.map)
-    await this.areaLayer.setSelectedArea(DefinedAreas.getArea(this.config.area.id))
+    await this.areaLayer.setSelectedArea(this.getArea(this.config.area.id))
     this.initialiseZoomAreaButton()
     this.selectedLayer = new SelectedLayer()
     await this.selectedLayer.setLayer(GeoResources.searchById(this.config.resource.id), this.areaLayer.toGeoJSON())
@@ -103,7 +103,7 @@ export default {
       })
     },
     async setArea () {
-      await this.areaLayer.setSelectedArea(DefinedAreas.getArea(this.config.area.id))
+      await this.areaLayer.setSelectedArea(this.getArea(this.config.area.id))
       this.selectedLayer.setArea(this.areaLayer.toGeoJSON())
     },
     setHeightCallback () {

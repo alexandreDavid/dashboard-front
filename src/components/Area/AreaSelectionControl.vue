@@ -18,24 +18,28 @@
 
 <script>
 import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
-import DefinedAreas from '@/store/definedAreas'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'AreaSelectionControl',
   components: {AreaSelectionModal},
   props: [ 'value', 'disabled', 'required' ],
+  computed: {
+    ...mapState({
+      options: state => state.areas.all
+    }),
+    ...mapGetters('areas', ['getArea'])
+  },
   data () {
     return {
       val: false,
-      options: false,
       showModalArea: false,
       displayType: false
     }
   },
   mounted () {
-    this.loadOptions()
     if (this.value) {
-      this.val = DefinedAreas.getArea(this.value.id)
+      this.val = this.getArea(this.value.id)
     }
   },
   methods: {
@@ -48,12 +52,8 @@ export default {
     },
     closeModal () {
       this.showModalArea = false
-      this.loadOptions()
-      this.val = DefinedAreas.getArea(this.val.id)
+      this.val = this.getArea(this.value.id)
       this.change(this.val)
-    },
-    loadOptions () {
-      this.options = DefinedAreas.getAll()
     }
   },
   watch: {

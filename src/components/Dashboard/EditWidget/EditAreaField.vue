@@ -11,7 +11,7 @@
 <script>
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 
-import DefinedAreas from '@/store/definedAreas'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'EditAreaField',
@@ -25,7 +25,8 @@ export default {
       set (val) {
         this.$emit('input', val)
       }
-    }
+    },
+    ...mapGetters('areas', ['activeArea', 'getArea'])
   },
   data () {
     return {
@@ -35,13 +36,11 @@ export default {
   },
   mounted () {
     if (this.valueModel) {
-      this.selectedArea = DefinedAreas.getArea(this.valueModel.id)
+      this.selectedArea = this.getArea(this.valueModel.id)
       this.hasAdvancedArea = true
     } else {
-      this.selectedArea = DefinedAreas.getActiveArea()
+      this.selectedArea = this.activeArea
     }
-  },
-  methods: {
   },
   watch: {
     hasAdvancedArea (val) {

@@ -12,10 +12,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 import SelectedLayers from '@/store/selectedLayers'
-import DefinedAreas from '@/store/definedAreas'
 
 import DisplayedLayerControl from '@/components/Map/DisplayedLayer/DisplayedLayerControl'
 import DisplayedLayersTools from '@/components/DisplayedLayers/DisplayedLayersTools'
@@ -28,9 +27,12 @@ export default {
     DisplayedLayerControl,
     MultiGraphModal
   },
-  computed: mapState({
-    activeUnits: state => state.settings.active
-  }),
+  computed: {
+    ...mapState({
+      activeUnits: state => state.settings.active
+    }),
+    ...mapGetters('areas', ['activeArea'])
+  },
   data () {
     return {
       allLayers: SelectedLayers.allSelectedLayers,
@@ -74,7 +76,7 @@ export default {
       this.openGraphModal(this.getSelectedLayers())
     },
     openGraphModal (modalParams) {
-      this.selectedArea = DefinedAreas.getActiveArea()
+      this.selectedArea = this.activeArea
       this.showModalGraph = true
       this.modalParams = this.getSelectedLayers()
     },
