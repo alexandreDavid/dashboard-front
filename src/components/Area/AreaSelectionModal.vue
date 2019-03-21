@@ -49,11 +49,9 @@ export default {
     AreaEdition
   },
   props: ['openType', 'currentVal'],
-  computed: {
-    ...mapState({
-      areas: state => state.areas.all
-    })
-  },
+  computed: mapState({
+    areas: state => state.areas.all
+  }),
   data () {
     return {
       editedArea: false,

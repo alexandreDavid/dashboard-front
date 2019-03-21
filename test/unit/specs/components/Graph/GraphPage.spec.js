@@ -1,14 +1,21 @@
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
+
 import GraphPage from '@/components/Graph/GraphPage.vue'
 import Parameter from '@/store/parameter'
-import DefinedAreas from '@/store/definedAreas'
-import { shallowMount } from '@vue/test-utils'
+// import DefinedAreas from '@/store/definedAreas'
+
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
+
 // import flushPromises from 'flush-promises'
 jest.mock('@/store/parameter', () => ({
   getAllParameters: jest.fn()
 }))
-jest.mock('@/store/definedAreas', () => ({
-  getActiveArea: jest.fn()
-}))
+// jest.mock('@/store/definedAreas', () => ({
+//   getActiveArea: jest.fn()
+// }))
 
 // Here are some Jasmine 2.0 tests, though you can
 // use any test runner / assertion library combo you prefer
@@ -16,8 +23,8 @@ describe('GraphPage.vue', () => {
   beforeEach(() => {
     Parameter.getAllParameters.mockClear()
     Parameter.getAllParameters.mockReturnValue(Promise.resolve({}))
-    DefinedAreas.getActiveArea.mockClear()
-    DefinedAreas.getActiveArea.mockReturnValue({})
+    // DefinedAreas.getActiveArea.mockClear()
+    // DefinedAreas.getActiveArea.mockReturnValue({})
   })
 
   // Inspect the raw component options
@@ -35,15 +42,44 @@ describe('GraphPage.vue', () => {
 
   // Inspect the component instance on mount
   it('correctly sets the values when created', async () => {
-    const wrapper = shallowMount(GraphPage)
+    const getters = {
+      activeArea: jest.fn()
+    }
+    const store = new Vuex.Store({
+      modules: {
+        areas: {
+          namespaced: true,
+          getters
+        }
+      }
+    })
+    const wrapper = shallowMount(GraphPage, {
+      store,
+      localVue
+    })
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 
   // Mount an instance and inspect the render output
   it('renders the correct adding serie', async () => {
-    DefinedAreas.getActiveArea.mockReturnValue({})
-    const wrapper = shallowMount(GraphPage)
+    // DefinedAreas.getActiveArea.mockReturnValue({})
+    const getters = {
+      activeArea: jest.fn()
+    }
+    const store = new Vuex.Store({
+      modules: {
+        areas: {
+          namespaced: true,
+          getters
+        }
+      }
+    })
+    getters.activeArea.mockReturnValue('activeArea')
+    const wrapper = shallowMount(GraphPage, {
+      store,
+      localVue
+    })
     await wrapper.vm.$nextTick()
 
     const button = wrapper.find('#addSerie')

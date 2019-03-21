@@ -1,8 +1,14 @@
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
+
 import OverMap from '@/components/Map/OverMap/OverMap'
-import { shallowMount } from '@vue/test-utils'
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import SelectedLayers from '@/store/selectedLayers'
 import MapControlBar from '@/components/Map/MapControlBar'
+
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
 
 const mockAreaLayer = {
   setSelectedArea: jest.fn(),
@@ -18,10 +24,25 @@ jest.mock('@/store/selectedLayers', () => ({
   updateArea: jest.fn()
 }))
 
+const mockActiveArea = jest.fn()
+
 describe('OverMap.vue', () => {
   let wrapper
   beforeEach(() => {
+    const getters = {
+      activeArea: mockActiveArea
+    }
+    const store = new Vuex.Store({
+      modules: {
+        areas: {
+          namespaced: true,
+          getters
+        }
+      }
+    })
     wrapper = shallowMount(OverMap, {
+      store,
+      localVue,
       provide: {
         getAreaLayer: getAreaLayer()
       },

@@ -1,47 +1,118 @@
-import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
-import { shallowMount } from '@vue/test-utils'
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 
-import DefinedAreas from '@/store/definedAreas'
+import areasModule from '@/store/modules/areas'
+
+import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
+
+// import DefinedAreas from '@/store/definedAreas'
 import Modal from '@/components/Modal/Modal'
 import AreaEdition from '@/components/Area/AreaEdition'
 
-jest.mock('@/store/definedAreas', () => ({
-  getAll: jest.fn(),
-  setAll: jest.fn()
-}))
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
+
+// jest.mock('@/store/definedAreas', () => ({
+//   getAll: jest.fn(),
+//   setAll: jest.fn()
+// }))
 
 describe('AreaSelectionModal.vue', () => {
   let wrapper
+  let wrapperNoArea
+  let state
+  let actions
   beforeEach(async () => {
-    DefinedAreas.getAll.mockClear()
-    DefinedAreas.setAll.mockClear()
+    // DefinedAreas.getAll.mockClear()
+    // DefinedAreas.setAll.mockClear()
 
-    DefinedAreas.getAll.mockReturnValue([
-      {
-        id: 1,
-        isEditing: true
-      }, {
-        id: 2,
-        isEditing: false
-      }, {
-        id: 3,
-        isEditing: false
-      }]
-    )
+    // DefinedAreas.getAll.mockReturnValue([
+    //   {
+    //     id: 1,
+    //     isEditing: true
+    //   }, {
+    //     id: 2,
+    //     isEditing: false
+    //   }, {
+    //     id: 3,
+    //     isEditing: false
+    //   }]
+    // )
 
-    wrapper = shallowMount(AreaSelectionModal)
-    expect(DefinedAreas.getAll).toHaveBeenCalledTimes(1)
+    state = {
+      all: [
+        {
+          id: 1
+        }, {
+          id: 2
+        }, {
+          id: 3
+        }
+      ]
+    }
+
+    actions = {
+      removeArea: jest.fn(areasModule.actions.removeArea),
+      setArea: jest.fn(areasModule.actions.setArea)
+      // removeArea: areasModule.actions.removeArea,
+      // setArea: areasModule.actions.setArea
+    }
+    const store = new Vuex.Store({
+      modules: {
+        areas: {
+          namespaced: true,
+          state,
+          actions
+        }
+      }
+    })
+    wrapper = shallowMount(AreaSelectionModal, {
+      store,
+      localVue
+    })
+
+    wrapperNoArea = shallowMount(AreaSelectionModal, {
+      store: new Vuex.Store({
+        modules: {
+          areas: {
+            namespaced: true,
+            state: {
+              all: []
+            },
+            actions
+          }
+        }
+      }),
+      localVue
+    })
+
+    // wrapper = shallowMount(AreaSelectionModal)
+    // expect(DefinedAreas.getAll).toHaveBeenCalledTimes(1)
   })
 
   it('created without value', () => {
-    DefinedAreas.getAll.mockReturnValue([])
-    const wrapper = shallowMount(AreaSelectionModal)
-    expect(wrapper.vm.areas.length).toBe(0)
-    expect(wrapper.vm.editedArea.id).toBeFalsy()
+    // DefinedAreas.getAll.mockReturnValue([])
+    // const wrapper = shallowMount(AreaSelectionModal, {
+    //   store: new Vuex.Store({
+    //     modules: {
+    //       areas: {
+    //         namespaced: true,
+    //         state: {
+    //           all: []
+    //         },
+    //         actions
+    //       }
+    //     }
+    //   }),
+    //   localVue
+    // })
+    expect(wrapperNoArea.vm.areas.length).toBe(0)
+    expect(wrapperNoArea.vm.editedArea.id).toBeFalsy()
   })
 
   it('created with value', () => {
-    expect(wrapper.vm.areas.find(a => a.isEditing)).toBeUndefined()
+    expect(wrapper.vm.areas.length).toBe(3)
     expect(wrapper.vm.editedArea).toBeFalsy()
   })
 
@@ -79,22 +150,24 @@ describe('AreaSelectionModal.vue', () => {
     expect(wrapper.vm.editedArea).toBeTruthy()
     expect(wrapper.vm.editedArea.id).toBeFalsy()
     wrapper.find(AreaEdition).vm.$emit('input', { label: 'newArea' })
-    expect(wrapper.vm.areas.length).toBe(4)
-    expect(DefinedAreas.setAll).toHaveBeenLastCalledWith(wrapper.vm.areas)
-    expect(wrapper.vm.editedArea).toBe(wrapper.vm.areas[3])
-    expect(wrapper.vm.editedArea.id).toBe(4)
+    expect(actions.setArea).toHaveBeenCalled()
+    // expect(wrapper.vm.areas.length).toBe(4)
+    // // expect(DefinedAreas.setAll).toHaveBeenLastCalledWith(wrapper.vm.areas)
+    // expect(wrapper.vm.editedArea).toBe(wrapper.vm.areas[3])
+    // expect(wrapper.vm.editedArea.id).toBe(4)
   })
 
   it('created without value and new area', () => {
-    DefinedAreas.getAll.mockReturnValue([])
-    const wrapper = shallowMount(AreaSelectionModal)
-    expect(wrapper.vm.areas.length).toBe(0)
-    expect(wrapper.vm.editedArea.id).toBeFalsy()
-    wrapper.find(AreaEdition).vm.$emit('input', { label: 'newArea' })
-    expect(wrapper.vm.areas.length).toBe(1)
-    expect(DefinedAreas.setAll).toHaveBeenLastCalledWith(wrapper.vm.areas)
-    expect(wrapper.vm.editedArea).toBe(wrapper.vm.areas[0])
-    expect(wrapper.vm.editedArea.id).toBe(1)
+    // DefinedAreas.getAll.mockReturnValue([])
+    // const wrapper = shallowMount(AreaSelectionModal)
+    expect(wrapperNoArea.vm.areas.length).toBe(0)
+    expect(wrapperNoArea.vm.editedArea.id).toBeFalsy()
+    wrapperNoArea.find(AreaEdition).vm.$emit('input', { label: 'newArea' })
+    expect(actions.setArea).toHaveBeenCalled()
+    // expect(wrapperNoArea.vm.areas.length).toBe(1)
+    // expect(DefinedAreas.setAll).toHaveBeenLastCalledWith(wrapper.vm.areas)
+    // expect(wrapperNoArea.vm.editedArea).toBe(wrapperNoArea.vm.areas[0])
+    // expect(wrapperNoArea.vm.editedArea.id).toBe(1)
   })
 
   it('After edit with existing area', () => {
@@ -103,10 +176,12 @@ describe('AreaSelectionModal.vue', () => {
     expect(wrapper.vm.editedArea).toBeTruthy()
     expect(wrapper.vm.editedArea.id).toBe(1)
     wrapper.find(AreaEdition).vm.$emit('input', { id: 1, label: 'existingArea' })
-    expect(wrapper.vm.areas[0].label).toBe('existingArea')
-    expect(wrapper.vm.areas.length).toBe(3)
-    expect(DefinedAreas.setAll).toHaveBeenLastCalledWith(wrapper.vm.areas)
-    expect(wrapper.vm.editedArea).toBe(wrapper.vm.areas[0])
-    expect(wrapper.vm.editedArea.id).toBe(1)
+    expect(actions.setArea).toHaveBeenCalled()
+    // expect(wrapper.vm.areas).toBe('existingArea')
+    // expect(wrapper.vm.areas[0].label).toBe('existingArea')
+    // expect(wrapper.vm.areas.length).toBe(3)
+    // // expect(DefinedAreas.setAll).toHaveBeenLastCalledWith(wrapper.vm.areas)
+    // expect(wrapper.vm.editedArea).toBe(wrapper.vm.areas[0])
+    // expect(wrapper.vm.editedArea.id).toBe(1)
   })
 })

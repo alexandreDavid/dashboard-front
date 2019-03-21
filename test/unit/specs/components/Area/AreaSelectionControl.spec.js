@@ -1,25 +1,40 @@
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
+
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
-import { shallowMount } from '@vue/test-utils'
 
 import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
-import DefinedAreas from '@/store/definedAreas'
 
-jest.mock('@/store/definedAreas', () => ({
-  getAll: jest.fn(),
-  getArea: jest.fn()
-}))
+import areasModule from '@/store/modules/areas'
 
-DefinedAreas.getAll.mockReturnValue([1, 2, 3])
-DefinedAreas.getArea.mockReturnValue(1)
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
 
 describe('AreaSelectionControl.vue', () => {
   let wrapper
-  beforeEach(async () => {
-    DefinedAreas.getAll.mockClear()
-    DefinedAreas.getArea.mockClear()
-
-    wrapper = shallowMount(AreaSelectionControl)
-    expect(DefinedAreas.getAll).toHaveBeenCalledTimes(1)
+  let areas
+  beforeEach(() => {
+    areas = {
+      namespaced: true,
+      state: {
+        all: [{id: 1}, {id: 2}, {id: 3}]
+      },
+      getters: areasModule.getters
+    }
+    // areas.getters.getArea.mockReturnValue(1)
+    const store = new Vuex.Store({
+      modules: {
+        areas: {
+          namespaced: true,
+          areas
+        }
+      }
+    })
+    wrapper = shallowMount(AreaSelectionControl, {
+      store,
+      localVue
+    })
   })
 
   it('Click on edit and close modal', async () => {
@@ -34,6 +49,5 @@ describe('AreaSelectionControl.vue', () => {
     wrapper.find(AreaSelectionModal).vm.$emit('close')
     expect(wrapper.vm.showModalArea).toBe(false)
     expect(wrapper.find(AreaSelectionModal).exists()).toBe(false)
-    expect(DefinedAreas.getAll).toHaveBeenCalledTimes(2)
   })
 })

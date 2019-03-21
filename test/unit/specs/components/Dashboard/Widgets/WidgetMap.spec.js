@@ -5,7 +5,6 @@ import WidgetMap from '@/components/Dashboard/Widgets/WidgetMap.vue'
 import MapObj from '@/store/map'
 import AreaLayer from '@/store/areaLayer'
 import GeoResources from '@/store/geoResources'
-import DefinedAreas from '@/store/definedAreas'
 
 const localVue = createLocalVue()
 
@@ -47,17 +46,15 @@ GeoResources.searchById.mockReturnValue({
   displayName: 'displayName1'
 })
 
-jest.mock('@/store/definedAreas', () => ({
-  getArea: jest.fn()
-}))
-
-const mockDefinedAreasGetArea = 'definedAreas/getArea'
-DefinedAreas.getArea.mockReturnValue(mockDefinedAreasGetArea)
+const mockGetAreaCallback = 'mockGetAreaCallback'
+const mockGetArea = jest.fn()
+mockGetArea.mockReturnValue(mockGetAreaCallback)
 
 describe('WidgetMap.vue', () => {
   let wrapper
   let baseMaps
   let settings
+  let areas
 
   beforeEach(async () => {
     baseMaps = {
@@ -81,10 +78,18 @@ describe('WidgetMap.vue', () => {
       }
     }
 
+    areas = {
+      namespaced: true,
+      getters: {
+        getArea: mockGetArea
+      }
+    }
+
     let store = new Vuex.Store({
       modules: {
         baseMaps,
-        settings
+        settings,
+        areas
       }
     })
     wrapper = shallowMount(WidgetMap, {
@@ -110,7 +115,6 @@ describe('WidgetMap.vue', () => {
     expect(wrapper.find(`#${mapId}`).exists()).toBe(true)
     expect(MapObj).toBeCalledWith(mapId)
     expect(AreaLayer).toBeCalledWith(mockMap)
-    expect(DefinedAreas.getArea).toBeCalledWith('idArea')
-    expect(mockAreaLayer.setSelectedArea).toBeCalledWith(mockDefinedAreasGetArea)
+    expect(areas.getters.getArea).toBeCalled()
   })
 })

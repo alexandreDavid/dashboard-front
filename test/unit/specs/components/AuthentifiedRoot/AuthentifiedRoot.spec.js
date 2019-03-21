@@ -1,10 +1,18 @@
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
+
 import AuthentifiedRoot from '@/components/AuthentifiedRoot/AuthentifiedRoot'
-import { shallowMount } from '@vue/test-utils'
 
 import UserConfiguration from '@/store/userConfiguration'
 import GeoResources from '@/store/geoResources'
 
 import WelcomeModal from '@/components/WelcomeModal/WelcomeModal'
+
+import updates from '@/updates'
+
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
 
 jest.mock('@/store/userConfiguration', () => ({
   getDisplayHelp: jest.fn()
@@ -13,6 +21,10 @@ jest.mock('@/store/userConfiguration', () => ({
 jest.mock('@/store/geoResources', () => ({
   getAllResources: jest.fn()
 }))
+
+jest.mock('@/updates', () => {
+  return jest.fn()
+})
 
 const $store = {
   dispatch: jest.fn()
@@ -31,11 +43,13 @@ describe('AuthentifiedRoot.spec.js', () => {
       },
       stubs: {
         WelcomeModal: WelcomeModal
-      }
+      },
+      localVue
     })
+    expect(updates).toHaveBeenCalledTimes(1)
     expect(wrapper.vm.$mq).toBe('notsm')
-
     expect(wrapper.vm.isLoaded).toBe(false)
+    expect(wrapper.vm.showModalWelcome).toBe(true)
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
@@ -47,16 +61,22 @@ describe('AuthentifiedRoot.spec.js', () => {
   it('Init without welcome modal by user config', async () => {
     GeoResources.getAllResources.mockClear()
     $store.dispatch.mockClear()
+    updates.mockClear()
 
     UserConfiguration.getDisplayHelp.mockReturnValue(false)
 
     const wrapper = shallowMount(AuthentifiedRoot, {
       mocks: {
         $store
+      },
+      stubs: {
+        WelcomeModal: WelcomeModal
       }
     })
 
     expect(wrapper.vm.isLoaded).toBe(false)
+    expect(updates).toHaveBeenCalledTimes(1)
+    expect(wrapper.vm.showModalWelcome).toBe(false)
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
@@ -69,6 +89,7 @@ describe('AuthentifiedRoot.spec.js', () => {
   it('Init without welcome modal by mq', async () => {
     GeoResources.getAllResources.mockClear()
     $store.dispatch.mockClear()
+    updates.mockClear()
 
     UserConfiguration.getDisplayHelp.mockReturnValue(true)
 
@@ -78,10 +99,15 @@ describe('AuthentifiedRoot.spec.js', () => {
         $store: {
           dispatch: jest.fn()
         }
+      },
+      stubs: {
+        WelcomeModal: WelcomeModal
       }
     })
 
     expect(wrapper.vm.isLoaded).toBe(false)
+    expect(updates).toHaveBeenCalledTimes(1)
+    expect(wrapper.vm.showModalWelcome).toBe(false)
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
