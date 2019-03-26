@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: _APP_NAME_
+  namespace: test
   labels:
     app: _APP_NAME_
 spec:
@@ -9,34 +10,37 @@ spec:
   selector:
     matchLabels:
       app: _APP_NAME_
-  
   # Pod template
   template:
     metadata:
+      namespace: test
       labels:
         app: _APP_NAME_
     spec:
       containers:
-        - name: test
-          image: registry.gitlab.com/brunomacf/kube-test:_VERSION_
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
-      imagePullSecrets:
-        - name: gitlab-registry
+      - name: _APP_NAME_
+        image: dfmscloud/frontend:testdocker
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        - containerPort: 443
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: _APP_NAME_
+  namespace: test
   labels:
     app: _APP_NAME_
 spec:
   type: LoadBalancer
   ports:
-    - port: 80
-      targetPort: 80
-      protocol: TCP
-      name: http
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  - port: 443
+    protocol: TCP
+    name: https
   selector:
       app: _APP_NAME_
