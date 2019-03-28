@@ -16,10 +16,11 @@ spec:
       namespace: test
       labels:
         app: _APP_NAME_
+        commit: _VERSION_
     spec:
       containers:
       - name: _APP_NAME_
-        image: dfmscloud/frontend:testdocker
+        image: dfmscloud/frontend:_BRANCH_
         imagePullPolicy: Always
         ports:
         - containerPort: 80
