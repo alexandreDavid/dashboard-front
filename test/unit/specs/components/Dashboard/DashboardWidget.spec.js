@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import DashboardWidget from '@/components/Dashboard/DashboardWidget.vue'
 import { WidgetGraph, WidgetImage, WidgetMap, WidgetTable, WidgetTextArea } from '@/components/Dashboard/Widgets'
+import ConfirmModal from '@/components/Modal/ConfirmModal'
 
 function checkRenderType (type, widgetComponent) {
   const cardConfiguration = {
@@ -80,6 +81,9 @@ describe('DashboardWidget.vue', () => {
 
     const button = wrapper.find('.delete')
     button.trigger('click')
+    expect(wrapper.contains(ConfirmModal)).toBe(true)
+    expect(wrapper.vm.showConfirmDelete).toBe(true)
+    wrapper.find(ConfirmModal).vm.$emit('confirm')
     expect(wrapper.emitted().delete).toBeTruthy()
   })
 })

@@ -74,9 +74,9 @@ describe('NavBar.vue', () => {
     verifyClickGoTo('map')
   })
 
-  it('Click on historical', () => {
-    verifyClickGoTo('historical')
-  })
+  // it('Click on historical', () => {
+  //   verifyClickGoTo('historical')
+  // })
 
   // it('Click on future-climate', () => {
   //   verifyClickGoTo('future-climate')
