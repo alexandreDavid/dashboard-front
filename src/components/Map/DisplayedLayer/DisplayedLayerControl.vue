@@ -9,13 +9,14 @@
           <button class="btn btn-sm btn-light up" title="Arrange the layer to the top" @click="$emit('up')"><font-awesome-icon icon="arrow-up" /></button>
           <button class="btn btn-sm btn-light" title="Arrange the layer to the bottom" @click="$emit('down')"><font-awesome-icon icon="arrow-down" /></button>
           <button class="btn btn-sm btn-light" title="Edit the layer" @click="edit"><font-awesome-icon icon="cog" /></button>
-          <button class="btn btn-sm btn-light" title="Remove the layer" @click="$emit('remove')"><font-awesome-icon icon="trash" /></button>
+          <button class="btn btn-sm btn-light" title="Remove the layer" @click="showConfirmDelete = true"><font-awesome-icon icon="trash" /></button>
         </div>
       </h6>
       <Legend class="py-2" v-bind:legend="layer._legend"></Legend>
       <time-serie v-if="layer.hasTime()" v-model="layer._time" :layer="layer" :times="layer._availableTimes" @input="setTime"></time-serie>
     </div>
     <displayed-layer-setting-tools v-if="showSettingTools" :parameter="layer" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
+    <confirm-modal v-if="showConfirmDelete" content="Do you really want to delete the layer?" @close="showConfirmDelete = false" @confirm="$emit('remove')"></confirm-modal>
   </div>
 </template>
 
@@ -23,6 +24,7 @@
 import TimeSerie from '@/components/Map/OverMap/OverMapControl/TimeSerie/TimeSerie'
 import Legend from '@/components/Map/OverMap/OverMapControl/Legend/Legend'
 import DisplayedLayerSettingTools from '@/components/Map/DisplayedLayer/DisplayedLayerSettingTools'
+import ConfirmModal from '@/components/Modal/ConfirmModal'
 
 export default {
   name: 'DisplayedLayerControl',
@@ -47,13 +49,15 @@ export default {
   components: {
     Legend,
     DisplayedLayerSettingTools,
-    TimeSerie
+    TimeSerie,
+    ConfirmModal
   },
   data () {
     return {
       savedOpacity: false,
       displayDropDownTime: false,
       showSettingTools: false,
+      showConfirmDelete: false,
       position: false
     }
   },
