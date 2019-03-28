@@ -45,6 +45,7 @@ jest.mock('@/store/selectedLayers', () => ({
 
 describe('Map.vue', () => {
   let wrapper
+  let store
   let areas
   let baseMaps
   const mockToGeoJSON = 'mockToGeoJSON'
@@ -78,7 +79,7 @@ describe('Map.vue', () => {
         setActiveArea: jest.fn()
       }
     }
-    const store = new Vuex.Store({
+    store = new Vuex.Store({
       modules: {
         areas,
         baseMaps
@@ -107,9 +108,35 @@ describe('Map.vue', () => {
     expect(wrapper.vm.mapInitialised).toBe(true)
   })
 
+  it('Mounted with error', async () => {
+    mockAreaLayer.setSelectedArea.mockRejectedValueOnce(new Error('Async error'))
+    const wrapper = shallowMount(Map, {
+      store,
+      localVue
+    })
+    expect(MapObj).toBeCalledWith('map-container')
+    expect(wrapper.vm.map.invalidateSize).toBeCalled()
+    expect(DisplayedLayer).toBeCalledWith(mockMap)
+    expect(AreaLayer).toBeCalledWith(mockMap)
+
+    expect(wrapper.vm.areaLayer.setSelectedArea).toBeCalledWith('areas/getters/activeArea')
+    await wrapper.vm.$nextTick()
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.vm.areaLayer.setSelectedArea).toHaveBeenLastCalledWith(false)
+
+    expect(mockAreaLayer.toGeoJSON).toBeCalled()
+    expect(SelectedLayers.getAllSelectedLayers).toBeCalledWith(mockToGeoJSON)
+    await wrapper.vm.$nextTick()
+    expect(mockGetAllSelectedLayers[0].addTo).toBeCalledWith(wrapper.vm.map)
+    expect(mockGetAllSelectedLayers[1].addTo).toBeCalledWith(wrapper.vm.map)
+    expect(wrapper.vm.mapInitialised).toBe(true)
+  })
+
   it('Providers are correct', async () => {
     expect(wrapper.vm.getMap()).toBe(mockMap)
     expect(wrapper.vm.getDisplayedLayer()).toBe(mockDisplayedLayer)
+    expect(wrapper.vm.getAreaLayer()).toBe(mockAreaLayer)
     wrapper.vm.selectedReportedLayer = 'selectedReportedLayer'
     expect(wrapper.vm.getSelectedReportedLayer()).toBe('selectedReportedLayer')
   })
