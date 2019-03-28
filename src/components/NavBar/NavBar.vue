@@ -67,13 +67,13 @@ export default {
         //     self.goTo(this.id)
         //   },
         //   icon: faChartBar
-        }, {
-          id: 'historical',
-          label: 'Historical',
-          click () {
-            self.goTo(this.id)
-          },
-          icon: 'history'
+        // }, {
+        //   id: 'historical',
+        //   label: 'Historical',
+        //   click () {
+        //     self.goTo(this.id)
+        //   },
+        //   icon: 'history'
         // }, {
         //   id: 'future-climate',
         //   label: 'Future climate',
