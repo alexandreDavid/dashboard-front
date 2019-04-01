@@ -8,17 +8,7 @@
       <label>Area <small>(required)</small></label>
       <area-selection-control v-model="value.area" @input="areaChange" :required="showError"></area-selection-control>
     </div>
-    <div class="form-group">
-      <label>Data to display <small>(required)</small></label>
-      <select class="form-control" v-model="value.resource" @change="changeResource(value.resource)" v-bind:class="{'is-invalid': !value.resource && showError}">
-        <option v-for="resource in resources" :key="resource.id" v-bind:value="resource">
-          {{ resource.label }}
-        </option>
-      </select>
-      <div class="invalid-feedback">
-        Please choose a data.
-      </div>
-    </div>
+    <edit-data-field v-model="value.resource" @input="changeResource" :required="showError"></edit-data-field>
     <edit-description-field v-model="value.description"></edit-description-field>
     <button class="btn btn-link w-100" @click="setShowAdvancedSettings(!showAdvancedConfig)">Advanced <font-awesome-icon :icon="showAdvancedConfig ? 'caret-up' : 'caret-down'" /></button>
     <div v-if="showAdvancedConfig">
@@ -44,6 +34,7 @@
 import CustomTitleMixin from './CustomTitleMixin'
 
 import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
+import EditDataField from './EditDataField'
 import EditDescriptionField from './EditDescriptionField'
 import EditHeightField from './EditHeightField'
 import OpacitySlider from '@/components/Slider/OpacitySlider'
@@ -53,7 +44,7 @@ import GeoResources from '@/store/geoResources'
 export default {
   name: 'MapEditWidget',
   mixins: [ CustomTitleMixin ],
-  components: { AreaSelectionControl, EditDescriptionField, EditHeightField, OpacitySlider },
+  components: { AreaSelectionControl, EditDataField, EditDescriptionField, EditHeightField, OpacitySlider },
   props: {
     value: {
       type: Object,
