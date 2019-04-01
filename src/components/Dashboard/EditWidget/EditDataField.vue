@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     getResourcesByGroup (id) {
-      return GeoResources.getAll(id).filter(r => {
+      return GeoResources.getAll().filter(r => {
         return r.groups.indexOf(id) !== -1 && (!this.filter || this.filter(r))
       }).map(p => ({
         id: p.id,
