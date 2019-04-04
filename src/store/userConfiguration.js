@@ -21,7 +21,7 @@ let configuration = {
     ]
   },
   dashboards: [],
-  activeArea: {},
+  activeArea: false,
   activeSettings: {
     temperature: 'C',
     windSpeed: 'mph',

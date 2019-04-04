@@ -13,6 +13,8 @@ const updateAreas = () => {
       activeArea.id = 1
       activeArea.active = true
       store.dispatch('areas/setAll', [activeArea])
+    } else {
+      UserConfiguration.removeDisplayHelp()
     }
   }
   UserConfiguration.removeActiveArea()
