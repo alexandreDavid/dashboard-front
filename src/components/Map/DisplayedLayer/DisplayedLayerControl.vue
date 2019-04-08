@@ -16,7 +16,7 @@
       <time-serie v-if="layer.hasTime()" v-model="layer._time" :layer="layer" :times="layer._availableTimes" @input="setTime"></time-serie>
     </div>
     <displayed-layer-setting-tools v-if="showSettingTools" :parameter="layer" v-fixed-position="position" @setTime="setTime" @setOpacity="setOpacity" @close="showSettingTools = false"></displayed-layer-setting-tools>
-    <confirm-modal v-if="showConfirmDelete" content="Do you really want to delete the layer?" @close="showConfirmDelete = false" @confirm="$emit('remove')"></confirm-modal>
+    <confirm-modal v-if="showConfirmDelete" content="Do you really want to delete the layer?" @close="showConfirmDelete = false" @confirm="removeLayer"></confirm-modal>
   </div>
 </template>
 
@@ -86,6 +86,10 @@ export default {
         opacity = this.savedOpacity
       }
       this.setOpacity(opacity)
+    },
+    removeLayer () {
+      this.showConfirmDelete = false
+      this.$emit('remove')
     }
   },
   directives: {
