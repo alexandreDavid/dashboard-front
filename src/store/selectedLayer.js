@@ -2,6 +2,7 @@ import {
   TileLayer
 } from 'leaflet'
 import axios from 'axios'
+import Time from '@/utils/time'
 import Unit from '@/utils/unit'
 import store from '@/store'
 
@@ -37,7 +38,7 @@ export default class {
   getTime () {
     if (this._availableTimes) {
       if (!this.geoResource.time || !this._availableTimes.find(a => a === this.geoResource.time)) {
-        this.geoResource.time = this._availableTimes[0]
+        this.geoResource.time = Time.getDefaultTime(this._availableTimes)
       }
     }
     this._time = this.geoResource.time
@@ -85,7 +86,7 @@ export default class {
   async setTime (time) {
     if (this.hasTime()) {
       if (!(time && this._availableTimes.indexOf(time) > -1)) {
-        time = this._availableTimes[0]
+        time = Time.getDefaultTime(this._availableTimes)
       }
       this.geoResource.time = time
       this._time = time
