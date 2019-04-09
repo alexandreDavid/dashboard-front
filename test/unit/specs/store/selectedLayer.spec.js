@@ -48,7 +48,11 @@ L.TileLayer = jest.fn().mockImplementation(() => mockTileLayer)
 
 jest.mock('axios', () => ({
   post: jest.fn().mockReturnValue(Promise.resolve({ data: {layer_id: 'layer_id'} })),
-  get: jest.fn().mockReturnValue(Promise.resolve({ data: {features: 'features'} }))
+  get: jest.fn().mockReturnValue(Promise.resolve({ data: {features: 'features'} })),
+  CancelToken: {
+    source: jest.fn().mockReturnValue({token: 'token'})
+  },
+  isCancel: jest.fn().mockReturnValue(false)
 }))
 
 const mockMap = {
@@ -193,7 +197,7 @@ describe('selectedLayer.js', () => {
     axios.post.mockClear()
     axios.post.mockReturnValue(Promise.resolve({ data: 'ok' }))
     const res = await selectedLayer.getStatistics('dateStart', 'dateEnd')
-    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'})
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'}, {cancelToken: 'token'})
     expect(res).toBe('ok')
   })
 
@@ -203,7 +207,7 @@ describe('selectedLayer.js', () => {
     axios.post.mockClear()
     axios.post.mockReturnValue(Promise.resolve({ data: 'ok' }))
     const res = await selectedLayer.getStatistics()
-    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {area: undefined})
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {area: undefined}, {cancelToken: 'token'})
     expect(res).toBe('ok')
   })
 
@@ -214,8 +218,8 @@ describe('selectedLayer.js', () => {
     axios.post.mockRejectedValueOnce(new Error())
     axios.get.mockResolvedValueOnce({ data: 'ok 2' })
     const res = await selectedLayer.getStatistics('dateStart', 'dateEnd')
-    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'})
-    expect(axios.get).toHaveBeenCalledWith('statisticsLink', {params: {start_date: 'dateStart', end_date: 'dateEnd', unit: 'getActiveKeyById'}})
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'}, {cancelToken: 'token'})
+    expect(axios.get).toHaveBeenCalledWith('statisticsLink', {params: {start_date: 'dateStart', end_date: 'dateEnd', unit: 'getActiveKeyById'}, cancelToken: 'token'})
     expect(res).toBe('ok 2')
   })
 
