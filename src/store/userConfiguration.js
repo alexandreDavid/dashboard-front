@@ -26,7 +26,7 @@ let configuration = {
     temperature: 'C',
     windSpeed: 'mph',
     pressure: 'Pa',
-    precipitations: 'Kg/m2/s',
+    precipitations: 'mmh',
     floodWarning: false,
     stormWarning: false
   },
