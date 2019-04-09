@@ -62,11 +62,11 @@ export default {
       this.isLoaded = true
     },
     setDates () {
-      if (this.config.startDate && this.config.endDate) {
+      const allTimes = this.resource._availableTimes
+      if (this.config.startDate && this.config.endDate && allTimes.includes(this.config.startDate) && allTimes.includes(this.config.endDate)) {
         this.startDate = this.config.startDate
         this.endDate = this.config.endDate
       } else {
-        const allTimes = this.resource._availableTimes
         let {0: startDate, [allTimes.length - 1]: endDate} = allTimes
         this.startDate = startDate
         this.endDate = endDate
