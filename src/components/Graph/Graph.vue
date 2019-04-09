@@ -80,7 +80,10 @@ export default {
       this.isLoaded = false
       this.errorMessage = false
       try {
-        this.datacollection.data = await this.parameter.getStatistics(this.startDate, this.endDate)
+        this.datacollection.data = await this.parameter.getStatistics(this.startDate, this.endDate, true)
+        if (this.datacollection.data === 'cancel') {
+          return
+        }
         this.datacollection.activeUnit = this.parameter.getUnit()
 
         // axes Y title

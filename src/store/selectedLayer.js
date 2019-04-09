@@ -180,7 +180,13 @@ export default class {
   hasGraph () {
     return !!this.geoResource.config.statistics
   }
-  async getStatistics (dateStart, dateEnd) {
+  sources = []
+  async getStatistics (dateStart, dateEnd, cancelPrevious) {
+    const source = axios.CancelToken.source()
+    if (cancelPrevious) {
+      this.sources.forEach(s => s.cancel())
+      this.sources.push(source)
+    }
     let response
     let url = this.geoResource.config.statistics.link.replace('{layer_id}', this._layerId)
     let params = {}
@@ -197,11 +203,23 @@ export default class {
       response = await axios.post(
         url, {
           area: this._area, ...params
+        }, {
+          cancelToken: source.token
         }
       )
     } catch (error) {
-      console.warn('Area too complex for getting the values')
-      response = await axios.get(url, {params})
+      if (axios.isCancel(error)) {
+        response = 'cancel'
+      } else {
+        console.warn('Area too complex for getting the values')
+        try {
+          response = await axios.get(url, {params, cancelToken: source.token})
+        } catch (thrown) {
+          if (axios.isCancel(thrown)) {
+            response = 'cancel'
+          }
+        }
+      }
     }
     return response.data
   }
