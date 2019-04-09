@@ -52,10 +52,7 @@ export default {
     async getData (resource) {
       this.isLoaded = false
       await this.resource.setLayer(GeoResources.searchById(resource.id), this.areaLayer.toGeoJSON())
-      const allTimes = this.resource._availableTimes
-      let {0: startDate, [allTimes.length - 1]: endDate} = allTimes
-      this.startDate = startDate
-      this.endDate = endDate
+      this.setDates()
       this.isLoaded = true
     },
     async setArea () {
@@ -63,6 +60,17 @@ export default {
       await this.areaLayer.setSelectedArea(this.getArea(this.config.area.id))
       await this.resource.setArea(this.areaLayer.toGeoJSON())
       this.isLoaded = true
+    },
+    setDates () {
+      if (this.config.startDate && this.config.endDate) {
+        this.startDate = this.config.startDate
+        this.endDate = this.config.endDate
+      } else {
+        const allTimes = this.resource._availableTimes
+        let {0: startDate, [allTimes.length - 1]: endDate} = allTimes
+        this.startDate = startDate
+        this.endDate = endDate
+      }
     }
   },
   watch: {
@@ -70,6 +78,7 @@ export default {
     config: {
       handler (val) {
         this.setArea()
+        this.setDates()
       },
       deep: true
     }

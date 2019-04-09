@@ -18,7 +18,7 @@ export default {
   props: ['data'],
   data () {
     return {
-      dates: [this.data[0], this.data[this.data.length - 1]],
+      dates: [],
       config: {
         width: '100%',
         height: 8,
@@ -32,9 +32,23 @@ export default {
       }
     }
   },
+  mounted () {
+    if (this.val) {
+      this.dates = this.val
+    } else {
+      this.dates = [this.data[0], this.data[this.data.length - 1]]
+    }
+  },
   methods: {
     convertDate (date) {
       return ChartUtil.convertDate(date)
+    }
+  },
+  watch: {
+    data (newDates) {
+      this.dates = [newDates[0], newDates[newDates.length - 1]]
+      this.config.data = newDates
+      this.$refs.slider.refresh()
     }
   }
 }
