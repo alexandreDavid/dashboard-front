@@ -19,6 +19,8 @@ import Modal from '@/components/Modal/Modal'
 import Loading from '@/components/Loading/Loading'
 import GraphRangeSlider from '@/components/Slider/GraphRangeSlider'
 
+import Time from '@/utils/time'
+
 export default {
   name: 'GraphModal',
   components: {
@@ -49,7 +51,7 @@ export default {
   },
   created () {
     this.allDates = this.selectedParameter.geoResource.config.statistics.params.date.values
-    this.selectedDates = [this.allDates[0], this.allDates[this.allDates.length - 1]]
+    this.selectedDates = [Time.getDefaultTime(this.allDates), this.allDates[this.allDates.length - 1]]
     this.isLoaded = true
   },
   methods: {

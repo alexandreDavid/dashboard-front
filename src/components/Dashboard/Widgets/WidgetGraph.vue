@@ -59,8 +59,7 @@ export default {
     async getData (resource) {
       this.isLoaded = false
       await this.resource.setLayer(GeoResources.searchById(resource.id), this.areaLayer.toGeoJSON())
-      const defaultTime = Time.getDefaultTime(this.resource._availableTimes)
-      this.selectedDates = [defaultTime, defaultTime]
+      this.selectedDates = [Time.getDefaultTime(this.resource._availableTimes), this.resource._availableTimes[this.resource._availableTimes.length - 1]]
       this.isLoaded = true
     },
     async setArea () {
