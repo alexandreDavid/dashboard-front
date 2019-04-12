@@ -180,7 +180,7 @@ describe('selectedLayer.js', () => {
   it('Calls setTime unvalid', async () => {
     await selectedLayer.setLayer(mockGeoResource)
     await selectedLayer.setTime(1000)
-    expect(selectedLayer._time).toBe(3)
+    expect(selectedLayer._time).toBe(0)
   })
 
   it('Set units', async () => {
