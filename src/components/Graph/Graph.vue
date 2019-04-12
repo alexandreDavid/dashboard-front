@@ -37,8 +37,10 @@ export default {
         return ['LineChart', 'PieChart', 'BarChart'].indexOf(value) !== -1
       }
     },
-    startDate: {},
-    endDate: {}
+    dateRange: {
+      type: Array,
+      default: () => []
+    }
   },
   computed: {
     ...mapGetters('settings', ['getActiveKeyById']),
@@ -68,8 +70,7 @@ export default {
   },
   watch: {
     parameter: 'getData',
-    startDate: 'getData',
-    endDate: 'getData',
+    dateRange: 'getData',
     unit (val) {
       this.parameter.setUnit(val)
       this.getData()
@@ -80,7 +81,7 @@ export default {
       this.isLoaded = false
       this.errorMessage = false
       try {
-        this.datacollection.data = await this.parameter.getStatistics(this.startDate, this.endDate, true)
+        this.datacollection.data = await this.parameter.getStatistics(this.dateRange[0], this.dateRange[1], true)
         if (this.datacollection.data === 'cancel') {
           return
         }
@@ -92,9 +93,6 @@ export default {
         this.errorMessage = true
       }
       this.isLoaded = true
-    },
-    datesChange (newDates) {
-      this.getData(newDates[0], newDates[1])
     }
   }
 }

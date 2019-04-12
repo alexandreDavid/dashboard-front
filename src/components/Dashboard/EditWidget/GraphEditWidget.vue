@@ -14,10 +14,6 @@
     <div v-if="showAdvancedConfig">
       <edit-title-field v-model="value.customTitle" :default-title="value.title" @input="setTitle"></edit-title-field>
       <edit-height-field v-model="value.advancedHeight"></edit-height-field>
-      <div class="form-group" v-if="allDates.length">
-        <label>Date range</label>
-        <graph-range-slider @input="datesChange" v-model="selectedDates" v-bind:data="allDates"></graph-range-slider>
-      </div>
     </div>
   </div>
 </template>
@@ -29,14 +25,13 @@ import AreaSelectionControl from '@/components/Area/AreaSelectionControl'
 import EditDataField from './EditDataField'
 import EditDescriptionField from './EditDescriptionField'
 import EditHeightField from './EditHeightField'
-import GraphRangeSlider from '@/components/Slider/GraphRangeSlider'
 
 import GeoResources from '@/store/geoResources'
 
 export default {
   name: 'GraphEditWidget',
   mixins: [ CustomTitleMixin ],
-  components: { AreaSelectionControl, EditDataField, EditDescriptionField, EditHeightField, GraphRangeSlider },
+  components: { AreaSelectionControl, EditDataField, EditDescriptionField, EditHeightField },
   props: {
     value: {
       type: Object,
@@ -49,8 +44,6 @@ export default {
   data () {
     return {
       resources: [],
-      allDates: [],
-      selectedDates: [],
       showAdvancedConfig: false
     }
   },
@@ -67,18 +60,12 @@ export default {
       label: p.label
     }))
     this.setTitle()
-    if (this.value.resource) {
-      this.allDates = GeoResources.searchById(this.value.resource.id).config.statistics.params.date.values
-      this.selectedDates = [this.value.startDate, this.value.endDate]
-    }
   },
   methods: {
     changeResource (resource) {
       // this.value.resource = resource
       this.checkValidity()
       this.setTitle()
-      this.allDates = GeoResources.searchById(resource.id).config.statistics.params.date.values
-      this.selectedDates = [this.allDates[0], this.allDates[this.allDates.length - 1]]
     },
     setShowAdvancedSettings (val) {
       this.showAdvancedConfig = val
@@ -91,10 +78,6 @@ export default {
     areaChange () {
       this.setTitle()
       this.checkValidity()
-    },
-    datesChange (newDates) {
-      this.$set(this.value, 'startDate', newDates[0])
-      this.$set(this.value, 'endDate', newDates[1])
     }
   }
 }

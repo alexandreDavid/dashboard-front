@@ -1,11 +1,16 @@
 <template>
-  <div class="card-body p-0 position-relative">
-    <div class="graph-container-widget" v-bind:style="{height: `${mapHeight}px`}">
-      <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType" :start-date="startDate" :end-date="endDate"></Graph>
-      <Loading v-else></Loading>
-    </div>
-    <div class="border-top mx-2 mt-1" v-if="config.description">
-      <div class="widget-description px-3 py-1 mb-0">{{ config.description }}</div>
+  <div class="card-body p-0">
+    <div class="d-flex flex-column widget-container">
+      <div class="px-4 mt-2" v-if="isLoaded">
+        <graph-range-slider v-model="selectedDates" :data="resource._availableTimes"></graph-range-slider>
+      </div>
+      <div class="w-100 position-relative" v-bind:style="{height: `${mapHeight}px`}">
+        <Graph v-if="isLoaded" v-bind:parameter="resource" v-bind:graphType="graphType" :date-range="selectedDates"></Graph>
+        <Loading v-else></Loading>
+      </div>
+      <div class="border-top mx-2 mt-1" v-if="config.description">
+        <div class="widget-description px-3 py-1 mb-0">{{ config.description }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -15,17 +20,20 @@ import GeoResources from '@/store/geoResources'
 import AreaLayer from '@/store/areaLayer'
 import SelectedLayer from '@/store/selectedLayer'
 import Loading from '@/components/Loading/Loading'
+import GraphRangeSlider from '@/components/Slider/GraphRangeSlider'
 
 import { mapGetters } from 'vuex'
 
 import HeightMixin from './HeightMixin'
+import Time from '@/utils/time'
 
 export default {
   name: 'WidgetGraph',
   mixins: [ HeightMixin ],
   components: {
     Graph: () => import('@/components/Graph/Graph'),
-    Loading
+    Loading,
+    GraphRangeSlider
   },
   props: [
     'config',
@@ -37,8 +45,7 @@ export default {
       resource: false,
       areaLayer: false,
       isLoaded: false,
-      startDate: false,
-      endDate: false
+      selectedDates: []
     }
   },
   async mounted () {
@@ -52,7 +59,8 @@ export default {
     async getData (resource) {
       this.isLoaded = false
       await this.resource.setLayer(GeoResources.searchById(resource.id), this.areaLayer.toGeoJSON())
-      this.setDates()
+      const defaultTime = Time.getDefaultTime(this.resource._availableTimes)
+      this.selectedDates = [defaultTime, defaultTime]
       this.isLoaded = true
     },
     async setArea () {
@@ -60,17 +68,6 @@ export default {
       await this.areaLayer.setSelectedArea(this.getArea(this.config.area.id))
       await this.resource.setArea(this.areaLayer.toGeoJSON())
       this.isLoaded = true
-    },
-    setDates () {
-      const allTimes = this.resource._availableTimes
-      if (this.config.startDate && this.config.endDate && allTimes.includes(this.config.startDate) && allTimes.includes(this.config.endDate)) {
-        this.startDate = this.config.startDate
-        this.endDate = this.config.endDate
-      } else {
-        let {0: startDate, [allTimes.length - 1]: endDate} = allTimes
-        this.startDate = startDate
-        this.endDate = endDate
-      }
     }
   },
   watch: {
@@ -78,7 +75,6 @@ export default {
     config: {
       handler (val) {
         this.setArea()
-        this.setDates()
       },
       deep: true
     }

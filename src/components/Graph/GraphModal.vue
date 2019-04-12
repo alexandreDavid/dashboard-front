@@ -4,10 +4,10 @@
     <div slot="body" class="graph-modal-content">
       <div class="d-flex flex-column w-100 h-100">
         <div class="px-4 mt-2">
-          <graph-range-slider @input="datesChange" :data="allDates"></graph-range-slider>
+          <graph-range-slider v-model="selectedDates" :data="allDates"></graph-range-slider>
         </div>
         <div class="position-relative h-100">
-          <Graph v-if="isLoaded" v-bind:parameter="selectedParameter" :start-date="startDate" :end-date="endDate"></Graph>
+          <Graph v-if="isLoaded" v-bind:parameter="selectedParameter" :date-range="selectedDates"></Graph>
         </div>
       </div>
     </div>
@@ -43,24 +43,18 @@ export default {
   data () {
     return {
       allDates: [],
-      startDate: false,
-      endDate: false,
+      selectedDates: [],
       isLoaded: false
     }
   },
   created () {
     this.allDates = this.selectedParameter.geoResource.config.statistics.params.date.values
-    this.startDate = this.allDates[0]
-    this.endDate = this.allDates[this.allDates.length - 1]
+    this.selectedDates = [this.allDates[0], this.allDates[this.allDates.length - 1]]
     this.isLoaded = true
   },
   methods: {
     close () {
       this.$emit('close')
-    },
-    datesChange (newDates) {
-      this.startDate = newDates[0]
-      this.endDate = newDates[1]
     }
   }
 }

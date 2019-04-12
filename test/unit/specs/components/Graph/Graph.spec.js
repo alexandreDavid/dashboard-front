@@ -1,15 +1,10 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import Graph from '@/components/Graph/Graph.vue'
-import Data from '@/store/data'
 
 const localVue = createLocalVue()
 
 localVue.use(Vuex)
-
-jest.mock('@/store/data', () => ({
-  getAreaParameterData: jest.fn()
-}))
 
 // Here are some Jasmine 2.0 tests, though you can
 // use any test runner / assertion library combo you prefer
@@ -44,10 +39,7 @@ describe('Graph.vue', () => {
         }
       }
     })
-    Data.getAreaParameterData.mockClear()
-    Data.getAreaParameterData.mockReturnValue(Promise.resolve({
-      unit: 'unit'
-    }))
+
     let parameter = {
       getStatistics: jest.fn(),
       getUnitFamily: jest.fn(),
@@ -89,8 +81,8 @@ describe('Graph.vue', () => {
     wrapper.setProps({
       parameter
     })
-    await wrapper.vm.$nextTick()
     expect(wrapper.vm.parameter.getStatistics).toBeCalled()
+    await wrapper.vm.$nextTick()
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 
