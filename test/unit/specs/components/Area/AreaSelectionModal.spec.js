@@ -7,7 +7,7 @@ import AreaSelectionModal from '@/components/Area/AreaSelectionModal'
 
 // import DefinedAreas from '@/store/definedAreas'
 import Modal from '@/components/Modal/Modal'
-import AreaEdition from '@/components/Area/AreaEdition'
+import AreaDetails from '@/components/Area/AreaDetails'
 
 const localVue = createLocalVue()
 
@@ -149,7 +149,7 @@ describe('AreaSelectionModal.vue', () => {
     wrapper.find('.new-area').trigger('click')
     expect(wrapper.vm.editedArea).toBeTruthy()
     expect(wrapper.vm.editedArea.id).toBeFalsy()
-    wrapper.find(AreaEdition).vm.$emit('input', { label: 'newArea' })
+    wrapper.find(AreaDetails).vm.$emit('input', { label: 'newArea' })
     expect(actions.setArea).toHaveBeenCalled()
     // expect(wrapper.vm.areas.length).toBe(4)
     // // expect(DefinedAreas.setAll).toHaveBeenLastCalledWith(wrapper.vm.areas)
@@ -162,7 +162,7 @@ describe('AreaSelectionModal.vue', () => {
     // const wrapper = shallowMount(AreaSelectionModal)
     expect(wrapperNoArea.vm.areas.length).toBe(0)
     expect(wrapperNoArea.vm.editedArea.id).toBeFalsy()
-    wrapperNoArea.find(AreaEdition).vm.$emit('input', { label: 'newArea' })
+    wrapperNoArea.find(AreaDetails).vm.$emit('input', { label: 'newArea' })
     expect(actions.setArea).toHaveBeenCalled()
     // expect(wrapperNoArea.vm.areas.length).toBe(1)
     // expect(DefinedAreas.setAll).toHaveBeenLastCalledWith(wrapper.vm.areas)
@@ -175,7 +175,7 @@ describe('AreaSelectionModal.vue', () => {
     wrapper.find('.managing-modal-list-container a').trigger('click')
     expect(wrapper.vm.editedArea).toBeTruthy()
     expect(wrapper.vm.editedArea.id).toBe(1)
-    wrapper.find(AreaEdition).vm.$emit('input', { id: 1, label: 'existingArea' })
+    wrapper.find(AreaDetails).vm.$emit('input', { id: 1, label: 'existingArea' })
     expect(actions.setArea).toHaveBeenCalled()
     // expect(wrapper.vm.areas).toBe('existingArea')
     // expect(wrapper.vm.areas[0].label).toBe('existingArea')

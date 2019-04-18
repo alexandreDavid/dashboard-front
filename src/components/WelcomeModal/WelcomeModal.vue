@@ -20,7 +20,7 @@
                     Lets start to define the area of interest. A list of boundaries is available but it's also possible to draw a custom area.
                   </div>
                   <div class="position-relative h-100">
-                    <area-edition class="container" v-if="pos === 1" v-model="area"></area-edition>
+                    <edit-area class="container" v-if="pos === 1" v-model="area" force-new="true"></edit-area>
                   </div>
                 </div>
               </div>
@@ -62,7 +62,7 @@
 import { mapActions } from 'vuex'
 
 import Modal from '@/components/Modal/Modal'
-import AreaEdition from '@/components/Area/AreaEdition'
+import EditArea from '@/components/Area/EditArea'
 import DashboardNewContainer from '@/components/Dashboard/New/DashboardNewContainer'
 
 import Dashboards from '@/store/dashboards'
@@ -84,7 +84,7 @@ const ClassName = {
 export default {
   name: 'WelcomeModal',
   components: {
-    Modal, AreaEdition, DashboardNewContainer
+    Modal, EditArea, DashboardNewContainer
   },
   data () {
     return {
@@ -126,7 +126,7 @@ export default {
     },
     next (pos) {
       if (pos === 1) {
-        this.setAll([this.area])
+        this.setAll([{...this.area}])
       }
       this.slide(Direction.NEXT)
     },

@@ -20,9 +20,8 @@
               <div v-if="areas.length" class="row flex-shrink-1 d-lg-none">
                 <button class="btn btn-link back-to-list" @click="backToList"><font-awesome-icon icon="caret-left" /> Back</button>
               </div>
-              <h4 class="flex-shrink-1">{{ editedArea.name || 'New area' }}</h4>
               <div class="position-relative h-100">
-                <area-edition v-model="editedArea" @input="afterEdit" class="col-12"></area-edition>
+                <area-details v-model="editedArea" @input="afterEdit" class="col-12"></area-details>
               </div>
             </div>
           </div>
@@ -38,7 +37,7 @@
 
 <script>
 import Modal from '@/components/Modal/Modal'
-import AreaEdition from '@/components/Area/AreaEdition'
+import AreaDetails from '@/components/Area/AreaDetails'
 
 import { mapState, mapActions } from 'vuex'
 
@@ -46,7 +45,7 @@ export default {
   name: 'AreaSelectionModal',
   components: {
     Modal,
-    AreaEdition
+    AreaDetails
   },
   props: ['openType', 'currentVal'],
   computed: mapState({
