@@ -41,9 +41,9 @@
                 <div class="text-center p-5">
                   <font-awesome-icon icon="check-circle" class="text-success display-1 mb-3" />
                   <h5>Everything is ready. You can now start to use the application.</h5>
-                  <p>We recommand to launch the discovery tour before using the data.</p>
+                  <p>We recommend that you launch the discovery tour before using the platform/data.</p>
                   <button class="btn btn-primary mb-3" @click="launchDiscoveryTour">Launch the discovery tour</button>
-                  <p>Or click on the Finish button to access to the platform.</p>
+                  <p>Or click on the Finish button to access the platform.</p>
                 </div>
               </div>
             </div>

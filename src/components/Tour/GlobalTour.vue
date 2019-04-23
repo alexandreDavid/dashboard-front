@@ -20,7 +20,7 @@
           >
             <template v-if="steps[tour.currentStep].target === '#displayed-layers'">
               <div slot="content">
-                Explore available data and manage the displayed layers. Click the <font-awesome-icon icon="cog" /> and <font-awesome-icon icon="play" /> icons to learn more about view and change settings for data layers on the map like date range, graph and opacity.
+                Explore available data and manage the displayed layers. Click the <font-awesome-icon icon="cog" /> and <font-awesome-icon icon="play" /> icons to learn more about view and change settings for data layers on the map e.g. date range, graph or opacity.
               </div>
             </template>
             <template>
