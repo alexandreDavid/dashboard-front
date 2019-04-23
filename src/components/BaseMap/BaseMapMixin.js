@@ -2,16 +2,14 @@ import MiniMap from '@/components/Map/MiniMap'
 import AreaLayer from '@/store/areaLayer'
 import Loading from '@/components/Loading/Loading'
 
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   components: { MiniMap, Loading },
   computed: {
     ...mapState({
-      activeBaseMap: state => state.baseMaps.active
-    }),
-    ...mapGetters('baseMaps', {
-      allBaseMaps: 'all'
+      activeBaseMap: state => state.baseMaps.active,
+      allBaseMaps: state => state.baseMaps.all
     })
   },
   data () {

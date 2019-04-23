@@ -1,46 +1,35 @@
 import UserConfiguration from '@/store/userConfiguration'
-
-const allBaseMaps = [
-  {
-    label: 'Openstreetmap',
-    url: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png'
-  }, {
-    label: 'Grayscale',
-    url: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
-  // }, {
-  //   label: 'Toner',
-  //   url: 'http://a.tile.stamen.com/toner/{z}/{x}/{y}.png'
-  }, {
-    label: 'Nothing',
-    url: false
-  }
-]
+import basemaps from '@/api/basemaps'
 
 // initial state
 const state = {
+  all: [],
   active: {}
-}
-
-// getters
-const getters = {
-  all () {
-    return allBaseMaps
-  }
 }
 
 // actions
 const actions = {
-  init ({ dispatch }) {
-    dispatch('setActive', UserConfiguration.getActiveBaseMapLayer())
+  async init ({ dispatch }) {
+    dispatch('setAll')
+    const activeBasemap = await basemaps.getActive()
+    dispatch('setActive', activeBasemap)
   },
-  setActive ({ commit }, baseMap) {
+  async setAll ({ commit }) {
+    const allBasemaps = await basemaps.getAll()
+    commit('setAll', allBasemaps)
+  },
+  async setActive ({ commit }, baseMap) {
     commit('setActive', baseMap)
+    await basemaps.setActive(baseMap.id)
     UserConfiguration.setActiveBaseMapLayer(baseMap)
   }
 }
 
 // mutations
 const mutations = {
+  setAll (state, all) {
+    state.all = all
+  },
   setActive (state, baseMap) {
     state.active = baseMap
   }
@@ -49,7 +38,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  getters,
+  // getters,
   actions,
   mutations
 }

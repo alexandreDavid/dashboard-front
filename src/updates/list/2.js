@@ -25,7 +25,7 @@ const updateAreas = () => {
  */
 const updateBaseMap = () => {
   let baseMap = UserConfiguration.getActiveBaseMapLayer()
-  const allBaseMaps = store.getters['baseMaps/all']
+  const allBaseMaps = store.state.baseMaps.all
   if (typeof baseMap === 'string') {
     baseMap = allBaseMaps.find(b => b.url === baseMap)
   }
