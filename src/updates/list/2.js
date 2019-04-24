@@ -23,8 +23,9 @@ const updateAreas = () => {
 /**
  *  The active base map is now the object an not only the URL
  */
-const updateBaseMap = () => {
+const updateBaseMap = async () => {
   let baseMap = UserConfiguration.getActiveBaseMapLayer()
+  await store.dispatch('baseMaps/setAll')
   const allBaseMaps = store.state.baseMaps.all
   if (typeof baseMap === 'string') {
     baseMap = allBaseMaps.find(b => b.url === baseMap)

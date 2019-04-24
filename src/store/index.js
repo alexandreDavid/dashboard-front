@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import * as actions from './actions'
 import areas from './modules/areas'
 import baseMaps from './modules/baseMaps'
+import dashboards from './modules/dashboards'
 import settings from './modules/settings'
 
 Vue.use(Vuex)
@@ -14,6 +15,7 @@ const store = new Vuex.Store({
   modules: {
     areas,
     baseMaps,
+    dashboards,
     settings
   },
   strict: debug

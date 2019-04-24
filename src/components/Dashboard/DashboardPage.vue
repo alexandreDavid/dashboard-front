@@ -2,7 +2,7 @@
   <div id="dashboard" class="h-100">
     <div v-if="isLoaded" class="d-flex flex-row-reverse h-100 d-print-block">
       <div class="flex-grow-1 h-100 position-relative">
-        <dashboard-container v-if="selectedDashboard" :config="selectedDashboard" @save="save" @delete="deleteDashboard"></dashboard-container>
+        <dashboard-container v-if="selectedDashboard" :config="selectedDashboard" @delete="deleteDashboard"></dashboard-container>
         <div v-else class="alert alert-info m-3" role="alert">
           Please select a dashboard in the list or click on the button to create a new one.
         </div>
@@ -42,9 +42,10 @@
 import DashboardNewModal from '@/components/Dashboard/New/DashboardNewModal'
 import DashboardContainer from '@/components/Dashboard/DashboardContainer'
 import Loading from '@/components/Loading/Loading'
-import Dashboards from '@/store/dashboards'
 import DashboardTemplates from '@/store/dashboardTemplates'
 import GeoResources from '@/store/geoResources'
+
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'DashboardPage',
@@ -53,17 +54,19 @@ export default {
     DashboardNewModal,
     DashboardContainer
   },
+  computed: mapState({
+    dashboards: state => state.dashboards.all
+  }),
   data () {
     return {
       isLoaded: false,
       showNewModal: false,
-      dashboards: {},
       selectedDashboard: false
     }
   },
-  created () {
+  async created () {
     GeoResources.getAllResources()
-    this.dashboards = Dashboards.getAll()
+    await this.getAll()
     if (!this.dashboards.length) {
       this.addDashboard(DashboardTemplates.getStarterDashboard())
     } else {
@@ -74,21 +77,17 @@ export default {
   methods: {
     addDashboard (newDashboard) {
       this.showNewModal = false
-      const dashboard = Dashboards.addDashboard(newDashboard)
+      const dashboard = this.setDashboard(newDashboard)
       this.selectedDashboard = dashboard
-      this.dashboards = Dashboards.getAll()
     },
     selectDashboard (dashboard) {
       this.selectedDashboard = dashboard
     },
     deleteDashboard (dashboard) {
-      this.dashboards = Dashboards.removeDashboard(dashboard)
+      this.removeDashboard(dashboard)
       this.selectedDashboard = false
     },
-    save () {
-      this.dashboards = Dashboards.getAll()
-      Dashboards.setAll(this.dashboards)
-    }
+    ...mapActions('dashboards', ['getAll', 'setDashboard', 'removeDashboard'])
   }
 }
 </script>

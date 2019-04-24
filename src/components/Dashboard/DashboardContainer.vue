@@ -81,6 +81,8 @@ import EditableTextArea from '@/components/EditableField/EditableTextArea'
 import DropDown from '@/components/DropDown/DropDown'
 import ConfirmModal from '@/components/Modal/ConfirmModal'
 
+import { mapActions } from 'vuex'
+
 export default {
   name: 'DashboardContainer',
   components: {
@@ -112,6 +114,9 @@ export default {
     this.isLoaded = true
   },
   methods: {
+    ...mapActions('dashboards', [
+      'setDashboard'
+    ]),
     loadDashboard (config) {
       this.dashboard = new DashboardObj(config)
     },
@@ -127,7 +132,7 @@ export default {
       this.closeEditCardModal()
       this.dashboard.setWidget(card)
       this.$ga.event('dashboard', 'editCard', `${card.title}: ${card.type}`)
-      this.dashboard.save()
+      this.setDashboard(this.dashboard)
       if (scrollToCard) {
         this.$nextTick(() => {
           let container = document.querySelector('#dashboard-container')
@@ -147,29 +152,25 @@ export default {
     removeWidget (card) {
       this.dashboard.removeWidget(card)
       this.$ga.event('dashboard', 'removeCard')
-      this.dashboard.save()
       this.save()
     },
     saveTitle (title) {
       this.editedTitle = false
       this.dashboard.title = title
-      this.dashboard.save()
       this.save()
     },
     saveDescription (description) {
       this.editedDescription = false
       this.dashboard.description = description
-      this.dashboard.save()
       this.save()
     },
     setCustomisation (customisation) {
       this.showCustomiseModal = false
       this.dashboard.setLayout(customisation.layout)
-      this.dashboard.save()
       this.save()
     },
     save () {
-      this.$emit('save')
+      this.setDashboard(this.dashboard)
       this.$ga.event('dashboard', 'save')
     },
     deleteDashboard () {

@@ -1,19 +1,9 @@
-import axios from 'axios'
-
-const urlRoot = 'http://localhost:3000'
-
-const instance = axios.create({
-  baseURL: urlRoot,
-  timeout: 1000,
-  headers: {'Authorization': `Bearer ${localStorage.getItem('access_token')}`}
-})
+import securedInstance from './securedInstance'
 
 export default {
   async getAll () {
     try {
-      const response = await axios.get(
-        `${urlRoot}/basemaps`
-      )
+      const response = await securedInstance().get('/basemaps')
       return response.data
     } catch (e) {
       return false
@@ -21,9 +11,7 @@ export default {
   },
   async getActive () {
     try {
-      const response = await instance.get(
-        `${urlRoot}/basemaps/active`
-      )
+      const response = await securedInstance().get('/basemaps/active')
       return response.data
     } catch (e) {
       return false
@@ -31,9 +19,7 @@ export default {
   },
   async setActive (id) {
     try {
-      const response = await instance.put(
-        `${urlRoot}/basemaps/active/${id}`
-      )
+      const response = await securedInstance().put(`/basemaps/active/${id}`)
       return response.data
     } catch (e) {
       return false

@@ -1,5 +1,3 @@
-import Dashboards from '@/store/dashboards'
-
 export default class Dashboard {
   constructor (config = {}) {
     this.id = config.id
@@ -43,9 +41,6 @@ export default class Dashboard {
   }
   removeWidget (widget) {
     this.widgets.splice(this.widgets.findIndex(c => c.id === widget.id), 1)
-  }
-  save () {
-    Dashboards.setDashboard(this)
   }
 
   static getLayouts () {

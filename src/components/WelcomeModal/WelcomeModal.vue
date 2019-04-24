@@ -65,7 +65,6 @@ import Modal from '@/components/Modal/Modal'
 import EditArea from '@/components/Area/EditArea'
 import DashboardNewContainer from '@/components/Dashboard/New/DashboardNewContainer'
 
-import Dashboards from '@/store/dashboards'
 import UserConfiguration from '@/store/userConfiguration'
 
 const Direction = {
@@ -138,11 +137,12 @@ export default {
       this.$tours['GlobalTour'].start()
     },
     closeModal () {
-      Dashboards.addDashboard(this.dashboard)
+      this.setDashboard(this.dashboard)
       this.$emit('close')
       UserConfiguration.setDisplayHelp(false)
     },
-    ...mapActions('areas', ['setAll'])
+    ...mapActions('areas', ['setAll']),
+    ...mapActions('dashboards', ['setDashboard'])
   }
 }
 </script>
