@@ -23,13 +23,6 @@ export default class Dashboard {
   getWidget (id) {
     return this.widgets.find(w => w.id === id)
   }
-  setWidget (widget) {
-    if (widget.id) {
-      Object.assign(this.getWidget(widget.id), widget)
-    } else {
-      this.addWidget(widget)
-    }
-  }
   setLayout (layout) {
     this.layout = layout
     const lastColIndex = (layout.columns.length - 1)

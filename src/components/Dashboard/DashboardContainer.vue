@@ -81,7 +81,7 @@ import EditableTextArea from '@/components/EditableField/EditableTextArea'
 import DropDown from '@/components/DropDown/DropDown'
 import ConfirmModal from '@/components/Modal/ConfirmModal'
 
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'DashboardContainer',
@@ -95,7 +95,9 @@ export default {
     DropDown,
     ConfirmModal
   },
-  props: ['config'],
+  computed: mapState({
+    config: state => state.dashboards.active
+  }),
   data () {
     return {
       isLoaded: false,
@@ -115,7 +117,7 @@ export default {
   },
   methods: {
     ...mapActions('dashboards', [
-      'setDashboard'
+      'setDashboard', 'setWidget'
     ]),
     loadDashboard (config) {
       this.dashboard = new DashboardObj(config)
@@ -130,9 +132,8 @@ export default {
     setEditedWidget (card) {
       const scrollToCard = !card.id
       this.closeEditCardModal()
-      this.dashboard.setWidget(card)
+      this.setWidget(card)
       this.$ga.event('dashboard', 'editCard', `${card.title}: ${card.type}`)
-      this.setDashboard(this.dashboard)
       if (scrollToCard) {
         this.$nextTick(() => {
           let container = document.querySelector('#dashboard-container')

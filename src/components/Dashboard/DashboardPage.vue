@@ -45,7 +45,7 @@ import Loading from '@/components/Loading/Loading'
 import DashboardTemplates from '@/store/dashboardTemplates'
 import GeoResources from '@/store/geoResources'
 
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'DashboardPage',
@@ -82,12 +82,15 @@ export default {
     },
     selectDashboard (dashboard) {
       this.selectedDashboard = dashboard
+      this.setActive(dashboard)
     },
     deleteDashboard (dashboard) {
       this.removeDashboard(dashboard)
       this.selectedDashboard = false
+      this.setActive(false)
     },
-    ...mapActions('dashboards', ['getAll', 'setDashboard', 'removeDashboard'])
+    ...mapActions('dashboards', ['getAll', 'setDashboard', 'removeDashboard']),
+    ...mapMutations('dashboards', ['setActive'])
   }
 }
 </script>
