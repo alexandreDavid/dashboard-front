@@ -34,7 +34,7 @@
       </div>
     </div>
     <Loading v-if="!isLoaded"/>
-    <dashboard-new-modal v-if="showNewModal" @close="showNewModal = false" @validate="addDashboard"></dashboard-new-modal>
+    <dashboard-new-modal v-if="showNewModal" @close="showNewModal = false" @validate="createDashboard"></dashboard-new-modal>
   </div>
 </template>
 
@@ -55,41 +55,37 @@ export default {
     DashboardContainer
   },
   computed: mapState({
-    dashboards: state => state.dashboards.all
+    dashboards: state => state.dashboards.all,
+    selectedDashboard: state => state.dashboards.active
   }),
   data () {
     return {
       isLoaded: false,
-      showNewModal: false,
-      selectedDashboard: false
+      showNewModal: false
     }
   },
   async created () {
     GeoResources.getAllResources()
     await this.getAll()
     if (!this.dashboards.length) {
-      this.addDashboard(DashboardTemplates.getStarterDashboard())
+      this.createDashboard(DashboardTemplates.getStarterDashboard())
     } else {
       this.selectDashboard(this.dashboards[0])
     }
     this.isLoaded = true
   },
   methods: {
-    addDashboard (newDashboard) {
+    createDashboard (newDashboard) {
       this.showNewModal = false
-      const dashboard = this.setDashboard(newDashboard)
-      this.selectedDashboard = dashboard
+      this.addDashboard(newDashboard)
     },
     selectDashboard (dashboard) {
-      this.selectedDashboard = dashboard
       this.setActive(dashboard)
     },
     deleteDashboard (dashboard) {
       this.removeDashboard(dashboard)
-      this.selectedDashboard = false
-      this.setActive(false)
     },
-    ...mapActions('dashboards', ['getAll', 'setDashboard', 'removeDashboard']),
+    ...mapActions('dashboards', ['getAll', 'addDashboard', 'removeDashboard']),
     ...mapMutations('dashboards', ['setActive'])
   }
 }

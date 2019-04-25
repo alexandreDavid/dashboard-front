@@ -15,19 +15,22 @@ const actions = {
     const allDashboards = await dashboards.getAll()
     commit('setAll', allDashboards)
   },
-  async add ({ commit }, area) {
-    commit('setActive', area)
+  async addDashboard ({ state, dispatch, commit }, dashboard) {
+    const newDashboard = await dashboards.add(dashboard)
+    await dispatch('getAll')
+    commit('setActive', state.all.find(d => d.id === newDashboard.id))
   },
-  async setDashboard ({ dispatch }, dashboard) {
+  async setDashboard ({ dispatch, commit }, dashboard) {
     if (dashboard.id) {
       await dashboards.update(dashboard)
+      dispatch('getAll')
     } else {
-      await dashboards.add(dashboard)
+      commit('addDashboard', dashboard)
     }
-    dispatch('getAll')
   },
-  async removeDashboard ({ dispatch }, dashboard) {
+  async removeDashboard ({ dispatch, commit }, dashboard) {
     await dashboards.delete(dashboard)
+    commit('setActive', false)
     dispatch('getAll')
   },
   setWidget ({ state, dispatch, commit }, widget) {
