@@ -4,17 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-import Authentication from './store/authentication'
 import '@/utils/fontAwesome'
 import VueTour from 'vue-tour'
 import VueMq from 'vue-mq'
 import VueAnalytics from 'vue-analytics'
 
 Vue.config.productionTip = (process.env.NODE_ENV === 'production')
-
-if (process.env.AUTH.domain && process.env.AUTH.clientID) {
-  Authentication.init(process.env.AUTH.domain, process.env.AUTH.clientID)
-}
 
 Vue.use(VueTour)
 

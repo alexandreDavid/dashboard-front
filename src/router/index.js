@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MapPage from '@/components/Map/Map'
+import AdminPage from '@/components/Admin/AdminPage'
 import DashboardPage from '@/components/Dashboard/DashboardPage'
 import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
@@ -13,15 +14,10 @@ import AuthentifiedRoot from '@/components/AuthentifiedRoot/AuthentifiedRoot'
 
 Vue.use(Router)
 
-async function checkAuth (to, from, next) {
+async function checkAuth (_to, _from, next) {
   try {
     if (!Auth.isAuthenticated()) {
-      const isAuthenticated = await Auth.handleAuthentication()
-      if (isAuthenticated) {
-        next()
-      } else {
-        Auth.logout()
-      }
+      Auth.logout()
     } else {
       next()
     }
@@ -33,6 +29,18 @@ async function checkAuth (to, from, next) {
 export default new Router({
   // mode: 'history',
   routes: [
+    {
+      path: '/token/:hash',
+      beforeEnter: (_to, _from, next) => {
+        if (Auth.isAuthenticated()) {
+          next('/')
+        } else {
+          next()
+        }
+      },
+      component: Login,
+      props: true
+    },
     {
       path: '/',
       component: AuthentifiedRoot,
@@ -72,6 +80,12 @@ export default new Router({
           path: '/settings',
           name: 'settings',
           component: SettingsPage,
+          beforeEnter: checkAuth
+        },
+        {
+          path: '/admin',
+          name: 'admin',
+          component: AdminPage,
           beforeEnter: checkAuth
         },
         {

@@ -40,15 +40,15 @@
                       <label class="small" for="signup-name">Name</label>
                       <input type="text" class="form-control" v-model="name" id="signup-name" placeholder="Name" required>
                     </div>
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-2" v-if="!hash">
                       <label class="small" for="signup-organisation">Organisation</label>
                       <input type="text" class="form-control" v-model="organisation" id="signup-organisation" placeholder="Organisation" required>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
+                    <div class="custom-control custom-radio custom-control-inline" v-if="!hash">
                       <input type="radio" id="signup-type-government" v-model="organisationType" name="organisationType" value="organisation" class="custom-control-input" required>
                       <label class="custom-control-label" for="signup-type-government">Government</label>
                     </div>
-                    <div class="custom-control custom-radio custom-control-inline">
+                    <div class="custom-control custom-radio custom-control-inline" v-if="!hash">
                       <input type="radio" id="signup-type-other" v-model="organisationType" name="organisationType" value="other" class="custom-control-input" required>
                       <label class="custom-control-label" for="signup-type-other">Other</label>
                     </div>
@@ -105,8 +105,10 @@
 
 <script>
 import auth from '@/store/authentication'
+import organisationApi from '@/api/organisation'
+
 export default {
-  props: ['error'],
+  props: ['error', 'hash'],
   components: {
     LicenseAgreementModal: () => ({
       component: import('@/components/Login/LicenseAgreementModal'),
@@ -128,7 +130,12 @@ export default {
       showLicenseAgreement: false
     }
   },
-  created () {
+  async created () {
+    if (this.hash) {
+      this.connectTab = 'signup'
+      const orga = await organisationApi.getOrganisationByHash(this.hash)
+      this.organisation = orga.name
+    }
     if (this.error) {
       this.messageError = this.error
     }
@@ -144,10 +151,10 @@ export default {
       }
     },
     signUpCheckModal () {
-      if (this.organisationType === 'organisation') {
-        this.signUp()
-      } else {
+      if (this.organisationType === 'other') {
         this.showLicenseAgreement = true
+      } else {
+        this.signUp()
       }
     },
     async signUp (addDateAgreement) {
@@ -157,13 +164,15 @@ export default {
         let metadata = {
           name: this.name,
           organisation: this.organisation,
-          position: this.position,
-          organisationType: this.organisationType
+          position: this.position
+        }
+        if (this.organisationType) {
+          metadata.organisationType = this.organisationType
         }
         if (addDateAgreement) {
           metadata.agreementDate = new Date()
         }
-        await auth.signUp(this.email, this.pass, metadata)
+        await auth.signUp(this.email, this.pass, metadata, this.hash)
         this.connectTab = 'login'
         this.message = 'You are successfully signed up. Please verify your email before logging in.'
       } catch (error) {

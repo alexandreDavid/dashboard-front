@@ -34,6 +34,8 @@
 import ProfileList from '@/components/NavBar/ProfileList'
 import QuestionnaireModal from '@/components/Questionnaire/QuestionnaireModal'
 import SupportModal from '@/components/Support/SupportModal'
+import userApi from '@/api/user'
+
 export default {
   name: 'NavBar',
   components: {
@@ -104,6 +106,19 @@ export default {
       showQuestionnaireModal: false,
       sideBarTab: '',
       activeNavItem: this.$router.currentRoute && this.$router.currentRoute.name
+    }
+  },
+  async created () {
+    if (await userApi.isAdmin()) {
+      let self = this
+      this.navItems.push({
+        id: 'admin',
+        label: 'Admin',
+        click () {
+          self.goTo(this.id)
+        },
+        icon: 'cog'
+      })
     }
   },
   watch: {

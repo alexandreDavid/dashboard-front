@@ -1,103 +1,28 @@
-import auth0 from 'auth0-js'
 import router from '@/router'
-
-let webAuth
+import user from '@/api/user'
 
 export default {
-  init (domain, clientID) {
-    webAuth = new auth0.WebAuth({
-      domain: domain,
-      clientID: clientID,
-      redirectUri: window.location.origin + '/',
-      audience: `https://${domain}/userinfo`,
-      responseType: 'token id_token',
-      scope: 'openid'
-    })
-  },
-  login (username, password) {
-    return new Promise((resolve, reject) => {
-      webAuth.login({
-        realm: 'Username-Password-Authentication',
-        username,
-        password,
-        scope: 'openid'
-      }, function (err, resp) {
-        if (err) {
-          console.log(err)
-          reject(err.error_description)
-        } else {
-          resolve(resp)
-        }
-      })
-    })
+  async login (username, password) {
+    const response = await user.login(username, password)
+    this.setSession(response)
+    router.go('/')
   },
 
-  signUp (email, password, metadata) {
-    return new Promise((resolve, reject) => {
-      webAuth.signup({
-        connection: 'Username-Password-Authentication',
-        email,
-        password,
-        user_metadata: metadata
-      }, function (err, resp) {
-        if (err) {
-          let errorMessage
-          if (err.policy) {
-            errorMessage = `Password is too weak: ${err.policy}`
-          } else {
-            errorMessage = err.description
-          }
-          reject(errorMessage)
-        } else {
-          resolve(resp)
-        }
-      })
-    })
+  async signUp (email, password, metadata, hash) {
+    return user.signup(email, password, metadata, hash)
   },
 
-  resetPassword (email) {
-    return new Promise((resolve, reject) => {
-      webAuth.changePassword({
-        connection: 'Username-Password-Authentication',
-        email
-      }, function (err, resp) {
-        if (err) {
-          reject(err.code)
-        } else {
-          resolve(resp)
-        }
-      })
-    })
-  },
-
-  handleAuthentication () {
-    return new Promise((resolve, reject) => {
-      webAuth.parseHash((err, authResult) => {
-        if (err) {
-          reject(err)
-        } else if (authResult && authResult.accessToken && authResult.idToken) {
-          this.setSession(authResult)
-          resolve(true)
-        } else {
-          resolve(false)
-        }
-      })
-    })
+  async resetPassword (email) {
+    return user.changePassword(email)
   },
 
   setSession (authResult) {
-    // Set the time that the Access Token will expire at
-    let expiresAt = JSON.stringify(
-      authResult.expiresIn * 1000 + new Date().getTime()
-    )
-    localStorage.setItem('access_token', authResult.accessToken)
     localStorage.setItem('id_token', authResult.idToken)
-    localStorage.setItem('expires_at', expiresAt)
+    localStorage.setItem('expires_at', authResult.expiresAt)
   },
 
   logout (error) {
-    // Clear Access Token and ID Token from local storage
-    localStorage.removeItem('access_token')
+    // Clear ID Token from local storage
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
     // navigate to the home route
