@@ -209,14 +209,14 @@ export default class {
       )
     } catch (error) {
       if (axios.isCancel(error)) {
-        response = 'cancel'
+        response = {data: 'cancel'}
       } else {
         console.warn('Area too complex for getting the values')
         try {
           response = await axios.get(url, {params, cancelToken: source.token})
         } catch (thrown) {
           if (axios.isCancel(thrown)) {
-            response = 'cancel'
+            response = {data: 'cancel'}
           }
         }
       }
