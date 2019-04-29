@@ -90,7 +90,7 @@ export default {
 
       this.map.addControl(this.searchControl)
       this.searchControl.mountedComponent.$on('input', async (val) => {
-        val.idArea = val.id
+        val.id_area = val.id
         await this.searchedArea.setSelectedArea(val)
       })
 

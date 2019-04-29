@@ -6,12 +6,12 @@ let areaCache = new Map()
 let subAreaCache = new Map()
 
 async function requestGeoserver (area, params, cache) {
-  if (!area || !area.idArea) {
+  if (!area || !area.id_area) {
     return false
   }
   let areaData
-  if (cache.has(area.idArea)) {
-    areaData = cache.get(area.idArea)
+  if (cache.has(area.id_area)) {
+    areaData = cache.get(area.id_area)
   } else {
     const req = await axios.get(
       `${process.env.GEOSERVER_URL}/boundaries/ows`, {
@@ -19,7 +19,7 @@ async function requestGeoserver (area, params, cache) {
       }
     )
     areaData = req.data
-    cache.set(area.idArea, areaData)
+    cache.set(area.id_area, areaData)
   }
   return areaData
 }
@@ -40,10 +40,10 @@ let Area = {
     }
   },
   async getArea (area) {
-    return requestGeoserver(area, Area.getAreaRequestParams({featureid: area.idArea}), areaCache)
+    return requestGeoserver(area, Area.getAreaRequestParams({featureid: area.id_area}), areaCache)
   },
   async getSubAreas (area) {
-    return requestGeoserver(area, Area.getAreaRequestParams({cql_filter: `idparent = ${area.idArea}`}), subAreaCache)
+    return requestGeoserver(area, Area.getAreaRequestParams({cql_filter: `idparent = ${area.id_area}`}), subAreaCache)
   }
 }
 

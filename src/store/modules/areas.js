@@ -1,4 +1,4 @@
-import UserConfiguration from '@/store/userConfiguration'
+import areas from '@/api/areas'
 
 // initial state
 const state = {
@@ -16,22 +16,31 @@ const getters = {
 
 // actions
 const actions = {
-  async init ({ commit }) {
-    commit('setAll', UserConfiguration.getDefinedAreas())
+  async init ({ dispatch }) {
+    await dispatch('getAll')
   },
-  setAll ({ commit }, areas) {
-    commit('setAll', areas)
-    UserConfiguration.setDefinedAreas(areas)
+  async getAll ({ commit }) {
+    const allAreas = await areas.getAll()
+    commit('setAll', allAreas)
   },
   setActiveArea ({ commit }, area) {
     commit('setActive', area)
   },
-  setArea ({ state, commit }, area) {
-    commit('setArea', area)
-    UserConfiguration.setDefinedAreas(state.all)
+  async addArea ({ state, dispatch, commit }, area) {
+    await areas.add(area)
+    await dispatch('getAll')
   },
-  removeArea ({ state, dispatch }, area) {
-    dispatch('setAll', state.all.filter(a => a.id !== area.id))
+  async setArea ({ dispatch, commit }, area) {
+    if (area.id) {
+      await areas.update(area)
+      dispatch('getAll')
+    } else {
+      await dispatch('addArea', area)
+    }
+  },
+  async removeArea ({ state, commit }, area) {
+    await areas.delete(area)
+    commit('setAll', state.all.filter(a => a.id !== area.id))
   }
 }
 

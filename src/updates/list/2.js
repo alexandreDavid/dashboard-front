@@ -9,7 +9,7 @@ const updateAreas = () => {
   if (!allAreas.length) {
     let activeArea = UserConfiguration.getActiveArea()
     if (activeArea) {
-      activeArea.idArea = activeArea.id
+      activeArea.id_area = activeArea.id
       activeArea.id = 1
       activeArea.active = true
       store.dispatch('areas/setAll', [activeArea])
