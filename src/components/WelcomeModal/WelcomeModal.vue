@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 import Modal from '@/components/Modal/Modal'
 import EditArea from '@/components/Area/EditArea'
@@ -88,9 +88,14 @@ export default {
   data () {
     return {
       pos: 0,
-      area: { id: 1 },
+      area: {},
       dashboard: {}
     }
+  },
+  computed: mapGetters('areas', ['activeArea']),
+  mounted () {
+    this.area = this.activeArea
+    this.area.valid = !!this.area.name
   },
   methods: {
     reflow (element) {
@@ -123,9 +128,10 @@ export default {
         to.classList.remove(orderClassName, directionalClassName)
       }, 650)
     },
-    next (pos) {
+    async next (pos) {
       if (pos === 1) {
-        this.setAll([{...this.area}])
+        await this.setArea(this.area)
+        this.area = this.activeArea
       }
       this.slide(Direction.NEXT)
     },
@@ -141,7 +147,7 @@ export default {
       this.$emit('close')
       UserConfiguration.setDisplayHelp(false)
     },
-    ...mapActions('areas', ['setAll']),
+    ...mapActions('areas', ['setArea']),
     ...mapActions('dashboards', ['setDashboard'])
   }
 }

@@ -15,8 +15,9 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import NavBar from '@/components/NavBar/NavBar'
-import UserConfiguration from '@/store/userConfiguration'
 import GeoResources from '@/store/geoResources'
 import GlobalTour from '@/components/Tour/GlobalTour'
 import Loading from '@/components/Loading/Loading'
@@ -31,6 +32,10 @@ export default {
     Loading,
     'welcome-modal': () => import('@/components/WelcomeModal/WelcomeModal')
   },
+  computed: mapState({
+    dashboards: state => state.dashboards.all,
+    areas: state => state.areas.all
+  }),
   data () {
     return {
       showModalWelcome: false,
@@ -39,9 +44,9 @@ export default {
   },
   async created () {
     updates()
-    this.showModalWelcome = UserConfiguration.getDisplayHelp() && this.$mq !== 'sm'
+    await this.$store.dispatch('init')
+    this.showModalWelcome = !this.dashboards.length || !this.areas.length
     await GeoResources.getAllResources()
-    this.$store.dispatch('init')
     this.isLoaded = true
   }
 }

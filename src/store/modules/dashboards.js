@@ -8,8 +8,8 @@ const state = {
 
 // actions
 const actions = {
-  init ({ dispatch }) {
-    dispatch('getAll')
+  async init ({ dispatch }) {
+    await dispatch('getAll')
   },
   async getAll ({ commit }) {
     const allDashboards = await dashboards.getAll()

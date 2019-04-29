@@ -1,5 +1,6 @@
-export const init = ({ dispatch }) => {
-  dispatch('areas/init')
-  dispatch('baseMaps/init')
-  dispatch('settings/init')
+export const init = async ({ dispatch }) => {
+  await dispatch('areas/init')
+  await dispatch('baseMaps/init')
+  await dispatch('dashboards/init')
+  await dispatch('settings/init')
 }

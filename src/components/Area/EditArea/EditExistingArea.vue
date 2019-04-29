@@ -45,9 +45,6 @@ export default {
       if (val.id) {
         this.areaLayer.setSelectedArea(val)
       }
-      this.goToExistingArea()
-    },
-    goToExistingArea () {
       this.areaLayer.add()
       this.areaLayer.zoomToArea()
     },
