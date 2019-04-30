@@ -1,5 +1,4 @@
-import UserConfiguration from '@/store/userConfiguration'
-import Api from '@/store/api'
+import settings from '@/api/settings'
 
 // initial state
 const state = {
@@ -18,33 +17,34 @@ const getters = {
 
 // actions
 const actions = {
-  async init ({ dispatch, commit }) {
-    const settings = await Api.getSettings()
-    commit('setAll', settings)
-    dispatch('setActive', UserConfiguration.getActiveSettings())
+  async init ({ commit }) {
+    commit('setAll', await settings.getAll())
+    commit('setActive', await settings.getActive())
   },
-  setActive ({ commit }, settings) {
-    commit('setActive', settings)
-    UserConfiguration.setActiveSettings(settings)
-  },
-  setActiveKeyById ({ state, dispatch, commit }, payload) {
-    commit('setActiveById', payload)
-    dispatch('setActive', state.active)
-  },
-  getSettingsByType ({state}, type) {
-    console.log('getSettingsByType', type)
-    console.log(state.all.filter(s => s.type === type))
-    return state.all.filter(s => s.type === type)
+  async setActiveKeyById ({ commit }, {id, key}) {
+    await settings.setActive(id, key)
+    commit('setActiveById', {id, key})
   }
 }
 
 // mutations
 const mutations = {
   setActive (state, settings) {
-    state.active = settings
+    let activeKeys = settings.reduce((obj, item) => {
+      obj[item.setting_id] = item.key
+      return obj
+    }, {})
+    // If the value is not defined, we take the default one
+    state.all.forEach(element => {
+      if (typeof activeKeys[element.id] === 'undefined') {
+        console.log(activeKeys[element.id], element.id)
+        activeKeys[element.id] = element.values.find(v => v.isdefault === true).key
+      }
+    })
+    state.active = activeKeys
   },
-  setActiveById (state, {id, value}) {
-    state.active[id] = value
+  setActiveById (state, {id, key}) {
+    state.active[id] = key
   },
   setAll (state, all) {
     state.all = all

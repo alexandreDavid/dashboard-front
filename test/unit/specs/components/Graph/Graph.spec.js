@@ -87,7 +87,7 @@ describe('Graph.vue', () => {
   })
 
   it('On unit changes', async () => {
-    store.commit('settings/setActiveById', {id: 'curFamily', value: 'updatedVal'})
+    store.commit('settings/setActiveById', {id: 'curFamily', key: 'updatedVal'})
     expect(wrapper.vm.parameter.setUnit).toHaveBeenCalledWith('updatedVal')
   })
 })
