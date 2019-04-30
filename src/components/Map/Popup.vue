@@ -5,8 +5,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import { Popup } from 'leaflet'
-import Unit from '@/utils/unit'
 
 export default {
   name: 'Popup',
@@ -17,6 +18,7 @@ export default {
     }
   },
   inject: ['getMap', 'getDisplayedLayer'],
+  computed: mapGetters('settings', ['getLabel']),
   mounted () {
     this.getMap().on('click', this.getFeatureInfo, this)
   },
@@ -29,8 +31,8 @@ export default {
     showGetFeatureInfo (latlng, features) {
       if (features && features.length) {
         const activeUnit = this.getDisplayedLayer().getUnit()
-        this.value = Unit.convert(this.getDisplayedLayer().getDefaultUnit(), activeUnit, Object.values(features[0].properties)[0], true)
-        const unitLabel = Unit.getLabel(activeUnit) || ''
+        this.value = Object.values(features[0].properties)[0]
+        const unitLabel = this.getLabel(activeUnit) || ''
         this.popup = new Popup({
           maxWidth: 800
         })

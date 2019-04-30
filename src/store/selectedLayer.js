@@ -3,7 +3,6 @@ import {
 } from 'leaflet'
 import axios from 'axios'
 import Time from '@/utils/time'
-import Unit from '@/utils/unit'
 import store from '@/store'
 
 export default class {
@@ -61,7 +60,7 @@ export default class {
       this._availableTimes = this.getAvailableTimes(this.geoResource)
       this._layerId = await this.getLayerId({date: this.getTime(), area: this._area})
       this._layer = new TileLayer(this.geoResource.config.layer.link, {layer_id: this._layerId})
-      this._unitFamily = Unit.getFamilyUnit(this.geoResource.config.units.default)
+      this._unitFamily = store.getters['settings/getIdByKey'](this.geoResource.config.units.default)
       this._unit = this._unitFamily ? store.getters['settings/getActiveKeyById'](this._unitFamily) : this.geoResource.config.units.default
       // Opacity
       this.setOpacity(this.geoResource.opacity)

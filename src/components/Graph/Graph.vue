@@ -17,7 +17,6 @@ import LineChart from './Charts/LineChart'
 import PieChart from './Charts/PieChart'
 import BarChart from './Charts/BarChart'
 import Loading from '@/components/Loading/Loading'
-import Unit from '@/utils/unit'
 
 export default {
   name: 'Graph',
@@ -43,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('settings', ['getActiveKeyById']),
+    ...mapGetters('settings', ['getActiveKeyById', 'getLabel']),
     unit () {
       return this.getActiveKeyById(this.parameter.getUnitFamily())
     }
@@ -88,7 +87,7 @@ export default {
         this.datacollection.activeUnit = this.parameter.getUnit()
 
         // axes Y title
-        this.options.scales.yAxes[0].scaleLabel.labelString = Unit.getLabel(this.datacollection.activeUnit)
+        this.options.scales.yAxes[0].scaleLabel.labelString = this.getLabel(this.datacollection.activeUnit)
       } catch (e) {
         this.errorMessage = true
       }

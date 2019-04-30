@@ -12,6 +12,19 @@ const getters = {
   },
   getSettingsByType: (state) => (type) => {
     return state.all.filter(s => s.type === type)
+  },
+  getIdByKey: (state) => (key) => {
+    const setting = state.all.find(setting => {
+      return !!setting.values.find(v => v.key === key)
+    })
+    return setting && setting.id
+  },
+  getLabel: () => (key) => {
+    let value
+    state.all.forEach(setting => {
+      value = value || setting.values.find(v => v.key === key)
+    })
+    return value ? value.label : key
   }
 }
 
@@ -37,7 +50,6 @@ const mutations = {
     // If the value is not defined, we take the default one
     state.all.forEach(element => {
       if (typeof activeKeys[element.id] === 'undefined') {
-        console.log(activeKeys[element.id], element.id)
         activeKeys[element.id] = element.values.find(v => v.isdefault === true).key
       }
     })

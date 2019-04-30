@@ -1,6 +1,6 @@
 import { Line } from './BaseCharts'
 import ChartUtil from '@/utils/chart'
-import Unit from '@/utils/unit'
+// import Unit from '@/utils/unit'
 
 export default {
   extends: Line,
@@ -36,12 +36,12 @@ export default {
       let datasets = []
       let labels = []
 
-      let valueConversion = function (value) {
-        if (isNaN(value)) {
-          value = parseFloat(value.replace(',', '.')).toFixed(2)
-        }
-        return Unit.convert(data.unit, data.activeUnit, value)
-      }
+      // let valueConversion = function (value) {
+      //   if (isNaN(value)) {
+      //     value = parseFloat(value.replace(',', '.')).toFixed(2)
+      //   }
+      //   return Unit.convert(data.unit, data.activeUnit, value)
+      // }
 
       // Adding every datasets
       Object.keys(data.data[0].values).forEach((value, key) => {
@@ -59,7 +59,7 @@ export default {
       data.data.forEach(data => {
         labels.push(ChartUtil.convertDate(data.date))
         for (let label in data.values) {
-          datasets.find(d => d.label === label).data.push(valueConversion(data.values[label]))
+          datasets.find(d => d.label === label).data.push(data.values[label])
         }
       })
 
