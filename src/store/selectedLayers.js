@@ -1,6 +1,7 @@
 import UserConfiguration from '@/store/userConfiguration'
 import SelectedLayer from '@/store/selectedLayer'
 import GeoResources from '@/store/geoResources'
+import store from '@/store'
 
 function move (arr, oldIndex, newIndex) {
   if (newIndex >= arr.length) {
@@ -20,7 +21,8 @@ function calculateZIndex (layers) {
 export default {
   allSelectedLayers: [],
   async getAllSelectedLayers (area) {
-    const selectedLayers = UserConfiguration.getSelectedLayers()
+    await store.dispatch('displayedLayers/setAll')
+    const selectedLayers = store.state.displayedLayers.all
     this.allSelectedLayers = []
     try {
       for (const idx in selectedLayers) {
@@ -35,6 +37,7 @@ export default {
     return this.allSelectedLayers
   },
   async add (geoResource, area) {
+    await store.dispatch('displayedLayers/addDisplayed', geoResource)
     const newLayer = new SelectedLayer()
     await newLayer.setLayer(geoResource, area)
     this.allSelectedLayers.unshift(newLayer)
@@ -53,12 +56,13 @@ export default {
     this.saveChanges()
   },
   remove (index) {
+    store.dispatch('displayedLayers/deleteDisplayed', this.allSelectedLayers[index].geoResource)
     this.allSelectedLayers[index].remove()
     this.allSelectedLayers.splice(index, 1)
     this.saveChanges()
   },
   saveChanges () {
-    UserConfiguration.setSelectedLayers(this.allSelectedLayers.map(layer => layer.geoResource))
+    this.allSelectedLayers.map(layer => store.dispatch('displayedLayers/updateDisplayed', layer.geoResource))
   },
   updateArea (area) {
     this.allSelectedLayers.forEach(l => l.setArea(area))
