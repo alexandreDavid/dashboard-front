@@ -23,7 +23,6 @@
 import { mapGetters } from 'vuex'
 
 import Loading from '@/components/Loading/Loading'
-import Parameter from '@/store/parameter.js'
 import SearchLocation from '@/components/SearchLocation/SearchLocation'
 import GraphSerie from './GraphSerie'
 import Data from '@/store/data'
@@ -57,7 +56,6 @@ export default {
     }
   },
   async created () {
-    this.parameters = await Parameter.getAllParameters()
     this.selectedArea = this.activeArea
     this.isLoaded = true
   },
