@@ -61,6 +61,7 @@ deploy docker:
   only:
     - dev
     - master
+    - tags
 
 deploy kube:
   stage: deploy kube
