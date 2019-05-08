@@ -32,8 +32,8 @@ describe('Graph.vue', () => {
           state,
           getters,
           mutations: {
-            setActiveById (state, {id, value}) {
-              state.active[id] = value
+            setActiveById (state, {id, key}) {
+              state.active[id] = key
             }
           }
         }

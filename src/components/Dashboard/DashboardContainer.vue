@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     ...mapActions('dashboards', [
-      'setDashboard', 'setWidget'
+      'setDashboard', 'setWidget', 'removeWidget'
     ]),
     loadDashboard (config) {
       this.dashboard = new DashboardObj(config)
@@ -149,11 +149,6 @@ export default {
     },
     closeEditCardModal () {
       this.showCardModal = false
-    },
-    removeWidget (card) {
-      this.dashboard.removeWidget(card)
-      this.$ga.event('dashboard', 'removeCard')
-      this.save()
     },
     saveTitle (title) {
       this.editedTitle = false

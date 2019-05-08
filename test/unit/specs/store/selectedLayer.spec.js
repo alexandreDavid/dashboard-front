@@ -1,7 +1,6 @@
 import SelectedLayer from '@/store/selectedLayer'
 import axios from 'axios'
 import L from 'leaflet'
-import Unit from '@/utils/unit'
 import store from '@/store'
 
 let mockTileLayer = {
@@ -63,14 +62,9 @@ const mockMap = {
   toBBoxString: jest.fn().mockReturnValue('toBBoxString')
 }
 
-jest.mock('@/utils/unit', () => ({
-  getFamilyUnit: jest.fn()
-}))
-// const getters = {
-//   'settings/getActiveKeyById': jest.fn()
-// }
 jest.mock('@/store', () => ({
   getters: {
+    'settings/getIdByKey': jest.fn(),
     'settings/getActiveKeyById': jest.fn()
   }
 }))
@@ -85,7 +79,7 @@ describe('selectedLayer.js', () => {
     mockMap.getZoom.mockClear()
     mockMap.latLngToContainerPoint.mockClear()
     mockMap.toBBoxString.mockClear()
-    Unit.getFamilyUnit.mockClear()
+    store.getters['settings/getIdByKey'].mockClear()
     store.getters['settings/getActiveKeyById'].mockClear()
   })
   it('Calls setLayer and do nothing', () => {
@@ -184,7 +178,7 @@ describe('selectedLayer.js', () => {
   })
 
   it('Set units', async () => {
-    Unit.getFamilyUnit.mockReturnValue('getFamilyUnit')
+    store.getters['settings/getIdByKey'].mockReturnValue('getIdByKey')
     store.getters['settings/getActiveKeyById'].mockReturnValue('getActiveKeyById')
     await selectedLayer.setLayer(mockGeoResource)
     expect(selectedLayer.getUnit()).toBe('getActiveKeyById')
@@ -246,8 +240,9 @@ describe('selectedLayer.js', () => {
   })
 
   it('getUnitFamily', async () => {
+    store.getters['settings/getIdByKey'].mockReturnValue('getIdByKey')
     await selectedLayer.setLayer(mockGeoResource)
-    expect(selectedLayer.getUnitFamily()).toBe('getFamilyUnit')
+    expect(selectedLayer.getUnitFamily()).toBe('getIdByKey')
   })
 
   it('getLayerId fail', async () => {

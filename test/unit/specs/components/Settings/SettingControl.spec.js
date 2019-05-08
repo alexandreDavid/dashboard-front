@@ -55,7 +55,7 @@ describe('SettingControl.vue', () => {
   })
 
   it('Well created', async () => {
-    expect(wrapper.find('.card-title').text()).toBe('label')
+    expect(wrapper.find('.card-title').text()).toBe('label 1')
     const buttons = wrapper.findAll('.btn')
     expect(buttons.length).toBe(2)
     expect(buttons.at(0).classes()).toContain('active')
@@ -68,7 +68,7 @@ describe('SettingControl.vue', () => {
     expect(buttons.at(1).classes()).not.toContain('active')
 
     buttons.at(1).trigger('click')
-    expect(actions.setActiveKeyById).toBeCalledWith(expect.any(Object), {id: 1, value: 2}, undefined)
+    expect(actions.setActiveKeyById).toBeCalledWith(expect.any(Object), {id: 1, key: 2}, undefined)
     expect(buttons.at(0).classes()).not.toContain('active')
     expect(buttons.at(1).classes()).toContain('active')
   })

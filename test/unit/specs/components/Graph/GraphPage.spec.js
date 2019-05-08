@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 
 import GraphPage from '@/components/Graph/GraphPage.vue'
-import Parameter from '@/store/parameter'
+// import Parameter from '@/store/parameter'
 // import DefinedAreas from '@/store/definedAreas'
 
 const localVue = createLocalVue()
@@ -10,9 +10,9 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 // import flushPromises from 'flush-promises'
-jest.mock('@/store/parameter', () => ({
-  getAllParameters: jest.fn()
-}))
+// jest.mock('@/store/parameter', () => ({
+//   getAllParameters: jest.fn()
+// }))
 // jest.mock('@/store/definedAreas', () => ({
 //   getActiveArea: jest.fn()
 // }))
@@ -21,8 +21,8 @@ jest.mock('@/store/parameter', () => ({
 // use any test runner / assertion library combo you prefer
 describe('GraphPage.vue', () => {
   beforeEach(() => {
-    Parameter.getAllParameters.mockClear()
-    Parameter.getAllParameters.mockReturnValue(Promise.resolve({}))
+    // Parameter.getAllParameters.mockClear()
+    // Parameter.getAllParameters.mockReturnValue(Promise.resolve({}))
     // DefinedAreas.getActiveArea.mockClear()
     // DefinedAreas.getActiveArea.mockReturnValue({})
   })

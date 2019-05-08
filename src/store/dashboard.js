@@ -7,16 +7,6 @@ export default class Dashboard {
     this.area = config.area
     this.widgets = config.widgets || []
   }
-  addWidget (widget = {}) {
-    // get max id plus 1
-    widget.id = Math.max(...this.widgets.map(w => {
-      return w.id
-    }), 0) + 1
-    widget.description = widget.description || ''
-    widget.colIndex = 0
-    this.widgets.push(widget)
-    return widget
-  }
   getWidgets () {
     return this.widgets
   }
@@ -31,9 +21,6 @@ export default class Dashboard {
         w.colIndex = lastColIndex
       }
     })
-  }
-  removeWidget (widget) {
-    this.widgets.splice(this.widgets.findIndex(c => c.id === widget.id), 1)
   }
 
   static getLayouts () {

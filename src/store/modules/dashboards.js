@@ -40,6 +40,10 @@ const actions = {
   orderWidgets ({ state, dispatch, commit }, {colIndex, widgetId, addedIndex}) {
     commit('orderWidgets', {colIndex, widgetId, addedIndex})
     dispatch('setDashboard', state.active)
+  },
+  removeWidget ({ state, dispatch, commit }, widget) {
+    commit('removeWidget', widget)
+    dispatch('setDashboard', state.active)
   }
 }
 
@@ -84,6 +88,10 @@ const mutations = {
       }
     }
     list.splice(to, 0, list.splice(from, 1)[0])
+  },
+  removeWidget (state, widget) {
+    let dashboard = state.active
+    dashboard.widgets.splice(dashboard.widgets.findIndex(w => w.id === widget.id), 1)
   }
 }
 

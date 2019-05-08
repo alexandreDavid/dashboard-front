@@ -1,7 +1,11 @@
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 import Popup from '@/components/Map/Popup'
-import { mount } from '@vue/test-utils'
 import L from 'leaflet'
-import Unit from '@/utils/unit'
+
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
 
 const mockPopup = {
   setLatLng: jest.fn().mockReturnThis(),
@@ -10,11 +14,6 @@ const mockPopup = {
 }
 
 L.Popup = jest.fn().mockImplementation(() => mockPopup)
-
-jest.mock('@/utils/unit', () => ({
-  convert: jest.fn().mockReturnValue(42),
-  getLabel: jest.fn().mockReturnValue('getLabel')
-}))
 
 const mockMap = {
   on: jest.fn(),
@@ -41,17 +40,36 @@ function getDisplayedLayer () {
 
 describe('Popup.vue', () => {
   let wrapper
+  let getters
+  let store
+
   beforeEach(() => {
-    wrapper = mount(Popup, {
+    getters = {
+      getLabel: (state) => (id) => {
+        return `getLabel ${id}`
+      }
+    }
+
+    store = new Vuex.Store({
+      modules: {
+        settings: {
+          namespaced: true,
+          getters
+        }
+      }
+    })
+
+    wrapper = shallowMount(Popup, {
       provide: {
         getMap: getMapMock(),
         getDisplayedLayer: getDisplayedLayer()
-      }
+      },
+      store,
+      localVue
     })
     expect(wrapper.vm.value).toBe(false)
     expect(mockMap.on).toBeCalled()
     L.Popup.mockClear()
-    Unit.convert.mockClear()
     mockDisplayedLayer.getUnit.mockClear()
     mockDisplayedLayer.getDefaultUnit.mockClear()
   })
@@ -68,18 +86,16 @@ describe('Popup.vue', () => {
 
     await wrapper.vm.getFeatureInfo(mockEvt)
     expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
-    expect(Unit.convert).toBeCalledWith('getDefaultUnit', 'getUnit', 'mockGetFeatureInfo', true)
-    expect(wrapper.vm.value).toBe(42)
+    expect(wrapper.vm.value).toBe('mockGetFeatureInfo')
     expect(L.Popup).toBeCalledWith({
       maxWidth: 800
     })
     expect(mockPopup.setLatLng).toBeCalledWith('latlng')
-    expect(mockPopup.setContent).toBeCalledWith('<p>42 getLabel</p>')
+    expect(mockPopup.setContent).toBeCalledWith('<p>mockGetFeatureInfo getLabel getUnit</p>')
     expect(mockPopup.openOn).toBeCalled()
   })
 
   it('With feature and no label', async () => {
-    Unit.getLabel.mockReturnValue('')
     const mockEvt = {latlng: 'latlng'}
     mockDisplayedLayer.getFeatureInfo.mockResolvedValue([{
       properties: {
@@ -91,8 +107,7 @@ describe('Popup.vue', () => {
 
     await wrapper.vm.getFeatureInfo(mockEvt)
     expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
-    expect(Unit.convert).toBeCalledWith('getDefaultUnit', 'getUnit', 'mockGetFeatureInfo', true)
-    expect(wrapper.vm.value).toBe(42)
+    expect(wrapper.vm.value).toBe('mockGetFeatureInfo')
     expect(L.Popup).toBeCalledWith({
       maxWidth: 800
     })
@@ -106,7 +121,6 @@ describe('Popup.vue', () => {
     mockDisplayedLayer.getFeatureInfo.mockResolvedValue([])
     await wrapper.vm.getFeatureInfo(mockEvt)
     expect(mockDisplayedLayer.getFeatureInfo).toBeCalledWith(mockEvt, wrapper.vm.getMap())
-    expect(Unit.convert).not.toBeCalled()
     expect(wrapper.vm.value).toBe(false)
     expect(L.Popup).not.toBeCalled()
   })
