@@ -43,8 +43,8 @@ export default {
     }
   },
   async created () {
-    updates()
     await this.$store.dispatch('init')
+    await updates()
     this.showModalWelcome = !this.dashboards.length || !this.areas.length
     await GeoResources.getAllResources()
     this.isLoaded = true
