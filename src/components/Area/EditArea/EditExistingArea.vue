@@ -49,7 +49,7 @@ export default {
       this.areaLayer.zoomToArea()
     },
     searchLocationSelected (val) {
-      this.val.id_area = val.id
+      this.val.idArea = val.id
       this.val.name = val.name
       this.areaLayer.setSelectedArea(this.val)
       this.validateArea(this.val)

@@ -127,7 +127,7 @@ export default {
   async mounted () {
     this.onSelectVariable(this.activeVariable)
     this.areaLayer = new AreaLayer()
-    await this.areaLayer.setSelectedArea({id_area: 7552})
+    await this.areaLayer.setSelectedArea({idArea: 7552})
     this.isLoaded = true
   },
   watch: {
