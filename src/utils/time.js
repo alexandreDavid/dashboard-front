@@ -8,9 +8,9 @@ export default {
       }
     }
     // If index outside the range, we take the first value
-    if (+nowIndex === (times.length - 1)) {
-      nowIndex = 0
-    }
+    // if (+nowIndex === (times.length - 1)) {
+    //   nowIndex = 0
+    // }
     return times[nowIndex]
   }
 }
