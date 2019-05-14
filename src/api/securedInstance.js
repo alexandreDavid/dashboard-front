@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const urlRoot = 'http://localhost:3000'
+const urlRoot = process.env.MANAGEMENT_API_URL
 
 export default function () {
   return axios.create({
