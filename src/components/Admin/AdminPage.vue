@@ -26,6 +26,7 @@
         <thead>
           <tr>
             <th scope="col">Name</th>
+            <th scope="col">Email</th>
             <th scope="col">Position</th>
             <th scope="col">Role</th>
           </tr>
@@ -33,6 +34,7 @@
         <tbody>
           <tr v-for="user in users" :key="user.id">
             <td>{{user.name}}</td>
+            <td>{{user.email}}</td>
             <td>{{user.position}}</td>
             <td>{{user.role}}</td>
           </tr>
