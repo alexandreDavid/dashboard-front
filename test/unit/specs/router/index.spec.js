@@ -15,7 +15,7 @@ jest.mock('@/components/Dashboard/DashboardPage', () => ({
 
 describe('router.js', () => {
   it('Calls init', () => {
-    expect(Router.options.routes.length).toBe(3)
+    expect(Router.options.routes.length).toBe(4)
   })
 
   // it('checkAuth without authentication', () => {
