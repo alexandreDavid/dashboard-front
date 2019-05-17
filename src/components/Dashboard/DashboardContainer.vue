@@ -3,17 +3,24 @@
   <div class="row" v-if="isLoaded">
     <h4 class="col-12 py-2 px-3 bg-light border-bottom">
       <div class="d-flex">
-        <editable-input class="flex-grow-1" v-model="dashboard.title" @input="saveTitle" placeholder="title" required></editable-input>
+        <editable-input class="flex-grow-1" v-if="!config.readOnly" v-model="dashboard.title" @input="saveTitle" placeholder="title" required></editable-input>
+        <div class="flex-grow-1" v-else>
+          <span>{{ dashboard.title }}</span>
+        </div>
         <div id="dashboard-actions" class="my-2 my-lg-0 d-none d-lg-block">
-          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true">Customise dashboard</button>
-          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showConfirmDeleteDashboard = true">Delete dashboard</button>
+          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true" v-if="!config.readOnly">Customise dashboard</button>
+          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showConfirmDeleteDashboard = true" v-if="!config.readOnly">Delete dashboard</button>
+          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="printDashboard()" v-if="config.readOnly">Export</button>
         </div>
       </div>
     </h4>
-    <div class="col-12 mb-3">
+    <div class="col-12 mb-3" v-if="!config.readOnly">
       <editable-text-area class="dashboard-description" v-model="dashboard.description" @input="saveDescription" placeholder="Description" add-button-label="Add a description"></editable-text-area>
     </div>
-    <nav id="dashboard-cards-actions" class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom d-print-none">
+    <div class="col-12 mb-3" v-else-if="dashboard.description">
+      <div class="px-3 py-1 mb-0" style="white-space: pre-line;">{{ dashboard.description }}</div>
+    </div>
+    <nav id="dashboard-cards-actions" class="navbar navbar-expand navbar-light bg-light col-12 mb-2 py-1 border-top border-bottom d-print-none" v-if="!config.readOnly">
       <div class="collapse navbar-collapse flex-wrap">
         <ul class="navbar-nav d-none d-md-flex">
           <li class="nav-item">
@@ -52,7 +59,7 @@
             <span class="navbar-text border-right mx-2" style="height: 24px;vertical-align:middle;"></span>
           </li>
           <li class="nav-item">
-            <button type="button" class="btn btn-sm btn-light" disabled @click="edit()">Share</button>
+            <button type="button" class="btn btn-sm btn-light" @click="toggleSharedDashboard">{{config.shared ? 'Unshare' : 'Share' }}</button>
           </li>
           <li class="nav-item">
             <button type="button" class="btn btn-sm btn-light" @click="printDashboard()">Export</button>
@@ -60,7 +67,7 @@
         </ul>
       </div>
     </nav>
-    <drag-drop-widgets v-bind:dashboard="dashboard" @edit="editWidget" @delete="removeWidget"></drag-drop-widgets>
+    <drag-drop-widgets v-bind:dashboard="dashboard" @edit="editWidget" @delete="removeWidget" :read-only="config.readOnly"></drag-drop-widgets>
     <dashboard-customise-modal v-if="showCustomiseModal" @close="showCustomiseModal = false" @validate="setCustomisation" v-bind:dashboard="dashboard"></dashboard-customise-modal>
     <dashboard-card-modal v-if="showCardModal" @close="closeEditCardModal" @input="setEditedWidget" v-model="editedCard"></dashboard-card-modal>
     <confirm-modal v-if="showConfirmDeleteDashboard" content="Do you really want to delete the dashboard?" @close="showConfirmDeleteDashboard = false" @confirm="deleteDashboard"></confirm-modal>
@@ -117,7 +124,7 @@ export default {
   },
   methods: {
     ...mapActions('dashboards', [
-      'setDashboard', 'setWidget', 'removeWidget'
+      'setDashboard', 'setWidget', 'removeWidget', 'setSharedDashboard'
     ]),
     loadDashboard (config) {
       this.dashboard = new DashboardObj(config)
@@ -128,6 +135,9 @@ export default {
     editWidget (card) {
       this.editedCard = Object.assign({}, card)
       this.showCardModal = true
+    },
+    toggleSharedDashboard () {
+      this.setSharedDashboard(!this.config.shared)
     },
     setEditedWidget (card) {
       const scrollToCard = !card.id

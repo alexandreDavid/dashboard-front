@@ -1,12 +1,12 @@
 <template>
   <div class="p-0" @mouseover="showEditionButtons = true" @mouseleave="showEditionButtons = false">
     <div class="card m-2 overflow-hidden">
-      <div class="card-header drag-handler" v-if="cardConfiguration.title">
+      <div class="card-header" :class="!readOnly && 'drag-handler'" v-if="cardConfiguration.title">
         <div class="d-flex align-items-center">
           <div class="flex-grow-1">
             <b class="w-100" style="line-height: 26px;">{{cardConfiguration.title}}</b>
           </div>
-          <div v-if="showEditionButtons">
+          <div v-if="showEditionButtons && !readOnly">
             <button type="button" class="btn btn-light btn-xs ml-2 edit" title="Edit card" @click="$emit('edit')"><font-awesome-icon icon="edit" /></button>
             <button type="button" class="btn btn-light btn-xs delete" title="Delete card" @click="showConfirmDelete = true"><font-awesome-icon icon="trash" /></button>
           </div>
@@ -47,7 +47,8 @@ export default {
   props: [
     'cardConfiguration',
     'isEditing',
-    'widgetId'
+    'widgetId',
+    'readOnly'
   ],
   data () {
     return {

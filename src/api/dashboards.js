@@ -49,5 +49,21 @@ export default {
     } catch (e) {
       return false
     }
+  },
+  async getShared () {
+    try {
+      const response = await securedInstance().get('/dashboards/shared')
+      return response.data
+    } catch (e) {
+      return false
+    }
+  },
+  async setShared (dashboard, shared) {
+    try {
+      const response = await securedInstance().patch(`/dashboards/${dashboard.id}`, { shared })
+      return response.data
+    } catch (e) {
+      return false
+    }
   }
 }

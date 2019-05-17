@@ -27,7 +27,10 @@
               Shared with me
             </h5>
             <ul class="nav flex-column nav-pills col-12 px-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-              <li class="nav-link">-</li>
+              <li class="nav-link" v-if="!sharedDashboards.length">-</li>
+              <li class="nav-item" v-for="dashboard in sharedDashboards" :key="dashboard.id" @click="selectDashboard(dashboard)">
+                <a class="nav-link" href="#" v-bind:class="{active: (selectedDashboard.id === dashboard.id)}">{{ dashboard.title }}</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -56,6 +59,7 @@ export default {
   },
   computed: mapState({
     dashboards: state => state.dashboards.all,
+    sharedDashboards: state => state.dashboards.shared,
     selectedDashboard: state => state.dashboards.active
   }),
   data () {

@@ -2,14 +2,21 @@
   <div class="container-fluid mx-3">
     <div class="row" :class="{'is-dragging': isDragging}">
       <div class="p-0" v-for="(col, key) in dashboard.layout.columns" :key="key" :class="col.class">
+        <div v-if="readOnly">
+          <DashboardWidget v-for="widget in colFilter(dashboard.widgets, key)" :key="widget.id"
+              v-bind:cardConfiguration="widget"
+              :widget-id="`dashboard${dashboard.id}-widget${widget.id}`"
+              read-only="true">
+          </DashboardWidget>
+        </div>
         <Container :group-name="`dashboard-${dashboard.id}`" drag-handle-selector=".drag-handler"
             @drag-start="onDragStart"
             @drag-end="onDragEnd"
-            @drop="onDrop(key, $event)">
+            @drop="onDrop(key, $event)"
+            v-else>
           <Draggable v-for="widget in colFilter(dashboard.widgets, key)" :key="widget.id">
             <div class="draggable-item" :widget-id="widget.id">
               <DashboardWidget v-bind:cardConfiguration="widget" :widget-id="`dashboard${dashboard.id}-widget${widget.id}`" @edit="$emit('edit', widget)" @delete="$emit('delete', widget)"></DashboardWidget>
-              <!-- <DashboardWidget v-bind:cardConfiguration="widget" :widget-id="`dashboard${dashboard.id}-widget${widget.id}`" @edit="$emit('edit', widget)" @delete="$emit('delete', widget)" v-bind:selectedArea="selectedArea"></DashboardWidget> -->
             </div>
           </Draggable>
         </Container>
@@ -26,7 +33,7 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'DragDropWidgets',
-  props: ['dashboard'],
+  props: ['dashboard', 'readOnly'],
   components: { Container, Draggable, DashboardWidget },
   data () {
     return {

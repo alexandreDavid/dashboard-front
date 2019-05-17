@@ -3,17 +3,24 @@ import dashboards from '@/api/dashboards'
 // initial state
 const state = {
   all: [],
-  active: {}
+  active: {},
+  shared: []
 }
 
 // actions
 const actions = {
   async init ({ dispatch }) {
     await dispatch('getAll')
+    await dispatch('getShared')
   },
   async getAll ({ commit }) {
     const allDashboards = await dashboards.getAll()
     commit('setAll', allDashboards)
+  },
+  async getShared ({ commit }) {
+    const allSharedDashboards = await dashboards.getShared()
+    allSharedDashboards.forEach(element => { element.readOnly = true })
+    commit('setSharedDashboards', allSharedDashboards)
   },
   async addDashboard ({ state, dispatch, commit }, dashboard) {
     const newDashboard = await dashboards.add(dashboard)
@@ -31,6 +38,11 @@ const actions = {
   async removeDashboard ({ dispatch, commit }, dashboard) {
     await dashboards.delete(dashboard)
     commit('setActive', false)
+    dispatch('getAll')
+  },
+  async setSharedDashboard ({ state, dispatch, commit }, shared) {
+    await dashboards.setShared(state.active, shared)
+    commit('setShared', shared)
     dispatch('getAll')
   },
   setWidget ({ state, dispatch, commit }, widget) {
@@ -52,8 +64,14 @@ const mutations = {
   setAll (state, dashboards) {
     state.all = dashboards
   },
+  setSharedDashboards (state, sharedDashboards) {
+    state.shared = sharedDashboards
+  },
   setActive (state, dashboard) {
     state.active = dashboard
+  },
+  setShared (state, shared) {
+    state.active.shared = shared
   },
   setWidget (state, widget) {
     let dashboard = state.active
