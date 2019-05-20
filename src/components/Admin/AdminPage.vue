@@ -15,7 +15,7 @@
           Everyone with the link can create an account in your organisation.
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" :value="link" aria-describedby="link">
+          <input type="text" class="form-control" :value="link" aria-describedby="link" disabled>
           <div class="input-group-append">
             <button class="btn btn-secondary" type="button" @click="copyToClipboard(link)" title="Copy URL to clipboard" readonly><font-awesome-icon icon="copy" /></button>
           </div>
