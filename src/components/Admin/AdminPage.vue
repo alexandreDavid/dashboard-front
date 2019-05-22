@@ -9,6 +9,9 @@
       </div>
       <hr>
       <h5>Users</h5>
+      <div v-if="isSuperAdmin" class="mb-2">
+        <button class="btn btn-secondary" @click="exportAllUsers">Export all users</button>
+      </div>
       <div class="alert alert-primary" role="alert">
         <h6>Invite users</h6>
         <div class="form-group">
@@ -49,7 +52,7 @@
 import EditableInput from '@/components/EditableField/EditableInput'
 import Loading from '@/components/Loading/Loading'
 
-import organisationApi from '@/api/organisation'
+import { Organisation, User, Users } from '@/api'
 
 export default {
   name: 'AdminPage',
@@ -61,18 +64,20 @@ export default {
       organisation: {},
       users: [],
       link: false,
-      isLoaded: false
+      isLoaded: false,
+      isSuperAdmin: false
     }
   },
   async created () {
-    this.organisation = await organisationApi.getOrganisation()
-    this.users = await organisationApi.getOrganisationUsers()
+    this.organisation = await Organisation.getOrganisation()
+    this.users = await Organisation.getOrganisationUsers()
+    this.isSuperAdmin = await User.isSuperAdmin()
     this.link = `${window.location.href}token/${this.organisation.hash}`
     this.isLoaded = true
   },
   methods: {
     saveName () {
-      organisationApi.setOrganisation(this.organisation)
+      Organisation.setOrganisation(this.organisation)
     },
     copyToClipboard: (str) => {
       const el = document.createElement('textarea')
@@ -81,7 +86,8 @@ export default {
       el.select()
       document.execCommand('copy')
       document.body.removeChild(el)
-    }
+    },
+    exportAllUsers: Users.getAllUsersCsv
   }
 }
 </script>

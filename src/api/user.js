@@ -33,5 +33,13 @@ export default {
     } catch (e) {
       return false
     }
+  },
+  async isSuperAdmin () {
+    try {
+      const response = await securedInstance().get('/user/is_super_admin')
+      return response.data
+    } catch (e) {
+      return false
+    }
   }
 }
