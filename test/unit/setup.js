@@ -32,3 +32,7 @@ Object.defineProperty(window, 'localStorage', {
 Object.defineProperty(global, 'Node', {
   value: {firstElementChild: 'firstElementChild'}
 })
+
+jest.mock('@/api/securedInstance', () => {
+  return jest.fn().mockImplementation(() => {})
+})
