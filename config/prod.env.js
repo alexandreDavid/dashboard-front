@@ -5,9 +5,5 @@ module.exports = {
   MANAGEMENT_API_URL: '"https://managementapi.dfms.co.uk"',
   CATALOGUE_API_URL: '"https://beta-catalog.dfms.co.uk"',
   GEOSERVER_URL: '"https://beta-geoserver.dfms.co.uk/geoserver"',
-  AUTH: {
-    domain: '"dfms.eu.auth0.com"',
-    clientID: '"3If6sQMIem0XvkRZzc10rOn6p-94YjUU"'
-  },
   GOOGLE_ANALYTICS_KEY: '"UA-129728715-2"'
 }

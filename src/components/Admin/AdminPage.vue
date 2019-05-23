@@ -39,7 +39,7 @@
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.position}}</td>
-            <td>{{user.role}}</td>
+            <td><editable-list v-model="user.role" :list="rolesList" @input="saveUser(user)"></editable-list></td>
           </tr>
         </tbody>
       </table>
@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import EditableList from '@/components/EditableField/EditableList'
 import EditableInput from '@/components/EditableField/EditableInput'
 import Loading from '@/components/Loading/Loading'
 
@@ -57,7 +58,7 @@ import { Organisation, User, Users } from '@/api'
 export default {
   name: 'AdminPage',
   components: {
-    EditableInput, Loading
+    EditableList, EditableInput, Loading
   },
   data () {
     return {
@@ -65,7 +66,8 @@ export default {
       users: [],
       link: false,
       isLoaded: false,
-      isSuperAdmin: false
+      isSuperAdmin: false,
+      rolesList: ['GUEST', 'ADMIN']
     }
   },
   async created () {
@@ -74,6 +76,9 @@ export default {
     this.isSuperAdmin = await User.isSuperAdmin()
     this.link = `${window.location.href}token/${this.organisation.hash}`
     this.isLoaded = true
+    if (this.isSuperAdmin) {
+      this.rolesList.push('SUPERADMIN')
+    }
   },
   methods: {
     saveName () {
@@ -87,7 +92,10 @@ export default {
       document.execCommand('copy')
       document.body.removeChild(el)
     },
-    exportAllUsers: Users.getAllUsersCsv
+    exportAllUsers: Users.getAllUsersCsv,
+    saveUser (user) {
+      Users.setRole(user, user.role)
+    }
   }
 }
 </script>

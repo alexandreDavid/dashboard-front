@@ -9,5 +9,13 @@ export default {
     link.setAttribute('download', 'dfms-users.csv')
     document.body.appendChild(link)
     link.click()
+  },
+  async setRole (user, role) {
+    try {
+      const response = await securedInstance().patch(`/users/${user.id}`, { role })
+      return response.data
+    } catch (e) {
+      return false
+    }
   }
 }
