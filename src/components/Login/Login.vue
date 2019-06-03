@@ -80,7 +80,7 @@
             </div>
             <div v-show="displayReset">
               <button class="btn btn-link" @click="displayReset = false"><font-awesome-icon icon="caret-left" /> Back to login</button>
-              <form @submit.prevent="resetPassword" id="reset-form">
+              <form @submit.prevent="forgotPassword" id="reset-form">
                 <p class="card-text"><small class="text-muted">Please enter your email address. We will send you an email to reset your password.</small></p>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -179,10 +179,10 @@ export default {
         this.messageError = error
       }
     },
-    async resetPassword () {
+    async forgotPassword () {
       this.messageError = false
       try {
-        const callBack = await auth.resetPassword(this.email)
+        const callBack = await auth.forgotPassword(this.email)
         this.message = callBack
         this.displayReset = false
       } catch (error) {

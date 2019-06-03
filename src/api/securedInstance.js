@@ -18,7 +18,7 @@ export default function () {
     if (error.response.status === 401) {
       auth.logout(error.response.statusText)
     }
-    return error
+    throw error
   })
   return instance
 }

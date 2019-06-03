@@ -3,6 +3,10 @@ import Router from 'vue-router'
 import MapPage from '@/components/Map/Map'
 import AdminPage from '@/components/Admin/AdminPage'
 import DashboardPage from '@/components/Dashboard/DashboardPage'
+import AccountPage from '@/components/Profile/AccountPage'
+import ProfileNav from '@/components/Profile'
+import ProfilePage from '@/components/Profile/ProfilePage'
+import PasswordPage from '@/components/Profile/PasswordPage'
 import SettingsPage from '@/components/Settings/SettingsPage'
 import ErrorPage from '@/components/ErrorPage/ErrorPage'
 import GraphPage from '@/components/Graph/GraphPage'
@@ -75,6 +79,32 @@ export default new Router({
           name: 'future-climate',
           component: FutureClimatePage,
           beforeEnter: checkAuth
+        },
+        {
+          path: '/profile',
+          component: ProfileNav,
+          beforeEnter: checkAuth,
+          children: [
+            {
+              path: '',
+              name: 'profile',
+              component: ProfilePage
+            },
+            {
+              path: 'account',
+              name: 'account',
+              component: AccountPage
+            },
+            {
+              path: 'password',
+              name: 'password',
+              component: PasswordPage
+            },
+            {
+              path: '*',
+              redirect: { name: 'profile' }
+            }
+          ]
         },
         {
           path: '/settings',

@@ -17,11 +17,26 @@ async function checkResponse (url, body) {
   }
 }
 export default {
+  async getUser () {
+    const response = await securedInstance().get('/user')
+    return response.data
+  },
+  async setUser (user) {
+    const response = await securedInstance().put('/user', user)
+    return response.data
+  },
   async login (username, password) {
     return checkResponse('/user/login', { username, password })
   },
-  async changePassword (email) {
-    return checkResponse('/user/change_password', { email })
+  async forgotPassword (email) {
+    if (!email) {
+      const user = await this.getUser()
+      email = user.email
+    }
+    return checkResponse('/user/forgot_password', { email })
+  },
+  async changePassword (current, password, passwordConfirmation) {
+    return checkResponse('/user/change_password', { current, password, passwordConfirmation })
   },
   async signup (email, password, metadata, hash) {
     return checkResponse('/user/signup', { email, password, metadata, hash })
@@ -41,5 +56,9 @@ export default {
     } catch (e) {
       return false
     }
+  },
+  async deleteUser () {
+    const response = await securedInstance().delete('/user')
+    return response.data
   }
 }

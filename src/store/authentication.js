@@ -12,8 +12,17 @@ export default {
     return user.signup(email, password, metadata, hash)
   },
 
-  async resetPassword (email) {
-    return user.changePassword(email)
+  async forgotPassword (email) {
+    return user.forgotPassword(email)
+  },
+
+  async changePassword (current, password, passwordConfirmation) {
+    return user.changePassword(current, password, passwordConfirmation)
+  },
+
+  async deleteUser () {
+    await user.deleteUser()
+    this.logout()
   },
 
   setSession (authResult) {
