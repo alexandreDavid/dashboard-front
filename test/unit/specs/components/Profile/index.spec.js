@@ -16,6 +16,6 @@ describe('Profile.vue', () => {
   })
 
   it('On init', () => {
-    expect(wrapper.findAll('.list-group-item').length).toBe(4)
+    expect(wrapper.findAll('.list-group-item').length).toBe(5)
   })
 })
