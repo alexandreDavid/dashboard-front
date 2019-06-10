@@ -5,8 +5,8 @@
       <input type="text" v-model="value.title" class="form-control" id="title" placeholder="title">
     </div>
     <div class="form-group">
-      <label>Location <small>(required)</small></label>
-      <input type="text" v-model="value.src" @input="checkValidity" class="form-control" id="location" placeholder="e.g. http://somedomain.com/path/to/my_public_image.jpg" v-bind:class="{'is-invalid': !value.src && showError}">
+      <label>URL <small>(required)</small></label>
+      <input type="text" v-model="value.src" @input="checkValidity" class="form-control" id="location" placeholder="http://somedomain.com/path/to/my_public_image.jpg" v-bind:class="{'is-invalid': !value.src && showError}">
       <div class="invalid-feedback">
         Please enter a location for the image.
       </div>
