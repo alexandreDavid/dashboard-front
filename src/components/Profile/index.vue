@@ -46,6 +46,12 @@ export default {
           href: '#/profile/password',
           label: 'Password',
           icon: 'lock'
+        },
+        {
+          name: 'settings',
+          href: '#/profile/settings',
+          label: 'Settings',
+          icon: 'cog'
         }
       ]
     }

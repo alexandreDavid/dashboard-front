@@ -3,6 +3,9 @@
   <div class="row" v-if="isLoaded">
     <h4 class="col-12 py-2 px-3 bg-light border-bottom">
       <div class="d-flex">
+        <div class="d-block d-md-none border-right mr-3 ml-n3 px-1">
+          <button type="button" class="btn btn-light" @click="$emit('opensidebar')"><font-awesome-icon icon="bars" /></button>
+        </div>
         <editable-input class="flex-grow-1" v-if="!config.readOnly" v-model="dashboard.title" @input="saveTitle" placeholder="title" required></editable-input>
         <div class="flex-grow-1" v-else>
           <span>{{ dashboard.title }}</span>
@@ -124,7 +127,7 @@ export default {
   },
   methods: {
     ...mapActions('dashboards', [
-      'setDashboard', 'setWidget', 'removeWidget', 'setSharedDashboard'
+      'setDashboard', 'setWidget', 'removeWidget', 'setSharedDashboard', 'removeDashboard'
     ]),
     loadDashboard (config) {
       this.dashboard = new DashboardObj(config)
@@ -180,7 +183,7 @@ export default {
       this.$ga.event('dashboard', 'save')
     },
     deleteDashboard () {
-      this.$emit('delete', this.dashboard)
+      this.removeDashboard(this.dashboard)
       this.showConfirmDeleteDashboard = false
     },
     printDashboard () {

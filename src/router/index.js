@@ -101,16 +101,15 @@ export default new Router({
               component: PasswordPage
             },
             {
+              path: 'settings',
+              name: 'settings',
+              component: SettingsPage
+            },
+            {
               path: '*',
               redirect: { name: 'profile' }
             }
           ]
-        },
-        {
-          path: '/settings',
-          name: 'settings',
-          component: SettingsPage,
-          beforeEnter: checkAuth
         },
         {
           path: '/admin',
