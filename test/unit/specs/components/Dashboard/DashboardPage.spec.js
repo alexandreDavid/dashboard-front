@@ -31,6 +31,7 @@ describe('DashboardPage.vue', () => {
   beforeEach(() => {
     state = {
       all: [],
+      shared: [],
       active: {}
     }
     actions = {
@@ -80,6 +81,37 @@ describe('DashboardPage.vue', () => {
     await wrapper.vm.$nextTick()
     expect(DashboardTemplates.getStarterDashboard).toBeCalled()
     expect(actions.addDashboard).toBeCalled()
+    expect(wrapper.vm.isLoaded).toBe(true)
+  })
+
+  it('Create with dashboard', async () => {
+    const dashboardOne = {
+      id: 1,
+      displayName: 'displayName1'
+    }
+    state = {
+      all: [dashboardOne],
+      shared: [],
+      active: {}
+    }
+    const store = new Vuex.Store({
+      modules: {
+        dashboards: {
+          namespaced: true,
+          state,
+          actions,
+          mutations
+        }
+      }
+    })
+    const wrapper = shallowMount(DashboardPage, {
+      store,
+      localVue
+    })
+    expect(GeoResources.getAllResources).toBeCalled()
+    expect(actions.getAll).toBeCalled()
+    await wrapper.vm.$nextTick()
+    expect(mutations.setActive).toHaveBeenCalled()
     expect(wrapper.vm.isLoaded).toBe(true)
   })
 })
