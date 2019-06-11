@@ -1,6 +1,6 @@
 <template>
-  <div class="btn-group">
-    <button type="button" title="Change opacity" class="btn btn-secondary btn-sm dropdown-toggle" @click="displayDropDownMenu = true">
+  <div>
+    <button type="button" title="Change opacity" class="btn btn-secondary btn-sm btn-opacity dropdown-toggle" @click="displayDropDownMenu = true">
       Opacity {{ opacity }}%
     </button>
     <drop-down class="dropdown-menu-right" v-if="displayDropDownMenu" @close="displayDropDownMenu = false">
@@ -14,8 +14,10 @@ import DropDown from '@/components/DropDown/DropDown'
 import OpacitySlider from '@/components/Slider/OpacitySlider'
 
 export default {
-  name: 'OpacityControl',
-  props: ['value'],
+  name: 'opacity-control',
+  props: {
+    value: Number
+  },
   components: {
     DropDown,
     OpacitySlider
@@ -42,3 +44,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.btn-opacity {
+  width:120px
+}
+</style>
