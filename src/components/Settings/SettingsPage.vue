@@ -12,11 +12,6 @@ import Settings from './Settings'
 
 export default {
   name: 'SettingsPage',
-  components: { Settings },
-  methods: {
-    close () {
-      this.$router.replace(this.$route.query.redirect || '/')
-    }
-  }
+  components: { Settings }
 }
 </script>
