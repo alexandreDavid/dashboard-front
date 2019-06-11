@@ -25,15 +25,15 @@ describe('AreaSelectionControl.vue', () => {
     // areas.getters.getArea.mockReturnValue(1)
     const store = new Vuex.Store({
       modules: {
-        areas: {
-          namespaced: true,
-          areas
-        }
+        areas
       }
     })
     wrapper = shallowMount(AreaSelectionControl, {
       store,
-      localVue
+      localVue,
+      propsData: {
+        value: {id: 1}
+      }
     })
   })
 
