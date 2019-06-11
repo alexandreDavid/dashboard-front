@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
+import VueMq from 'vue-mq'
 
 import DashboardPage from '@/components/Dashboard/DashboardPage.vue'
 
@@ -9,6 +10,13 @@ import GeoResources from '@/store/geoResources'
 const localVue = createLocalVue()
 
 localVue.use(Vuex)
+localVue.use(VueMq, {
+  breakpoints: { // default breakpoints - customize this
+    sm: 450,
+    md: 1250,
+    lg: Infinity
+  }
+})
 
 jest.mock('@/store/geoResources', () => ({
   getAllResources: jest.fn()

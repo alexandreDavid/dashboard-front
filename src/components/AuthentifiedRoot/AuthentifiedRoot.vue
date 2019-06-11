@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 import NavBar from '@/components/NavBar/NavBar'
 import GeoResources from '@/store/geoResources'
@@ -43,11 +43,16 @@ export default {
     }
   },
   async created () {
-    await this.$store.dispatch('init')
+    await this.init()
     await updates()
     this.showModalWelcome = !this.dashboards.length || !this.areas.length
     await GeoResources.getAllResources()
     this.isLoaded = true
+  },
+  methods: {
+    ...mapActions([
+      'init'
+    ])
   }
 }
 </script>

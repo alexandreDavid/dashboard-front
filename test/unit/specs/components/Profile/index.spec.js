@@ -11,7 +11,8 @@ describe('Profile.vue', () => {
             name: '$router-currentRoute-name'
           }
         }
-      }
+      },
+      stubs: ['router-view']
     })
   })
 

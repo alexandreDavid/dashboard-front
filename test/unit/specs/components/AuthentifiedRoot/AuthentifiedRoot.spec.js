@@ -3,10 +3,7 @@ import Vuex from 'vuex'
 
 import AuthentifiedRoot from '@/components/AuthentifiedRoot/AuthentifiedRoot'
 
-import UserConfiguration from '@/store/userConfiguration'
 import GeoResources from '@/store/geoResources'
-
-import WelcomeModal from '@/components/WelcomeModal/WelcomeModal'
 
 import updates from '@/updates'
 
@@ -26,66 +23,97 @@ jest.mock('@/updates', () => {
   return jest.fn()
 })
 
-describe('AuthentifiedRoot.spec.js', () => {
+describe('AuthentifiedRoot.js', () => {
   it('Init with welcome modal', async () => {
-    UserConfiguration.getDisplayHelp.mockReturnValue(true)
-
-    const wrapper = shallowMount(AuthentifiedRoot, {
-      mocks: {
-        $store: {
-          dispatch: jest.fn(),
-          state: {
-            dashboards: {all: []},
-            areas: {all: []}
-          }
-        }
-      },
-      stubs: {
-        WelcomeModal: WelcomeModal
-      },
-      localVue
+    const areas = {
+      namespaced: true,
+      state: {
+        all: []
+      }
+    }
+    const dashboards = {
+      namespaced: true,
+      state: {
+        all: []
+      }
+    }
+    const actions = {
+      init: jest.fn()
+    }
+    actions.init.mockReturnValue(Promise.resolve([]))
+    const store = new Vuex.Store({
+      actions,
+      modules: {
+        areas,
+        dashboards
+      }
     })
-    expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
+    const wrapper = shallowMount(AuthentifiedRoot, {
+      store,
+      localVue,
+      stubs: {
+        WelcomeModal: '<div class=\'stub\'></div>'
+      }
+    })
+    expect(wrapper.vm.isLoaded).toBe(false)
+    expect(actions.init).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(updates).toHaveBeenCalledTimes(1)
-    expect(wrapper.vm.isLoaded).toBe(false)
+    await wrapper.vm.$nextTick()
     expect(wrapper.vm.showModalWelcome).toBe(true)
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
 
     expect(wrapper.vm.isLoaded).toBe(true)
-    expect(wrapper.find(WelcomeModal).exists()).toBe(true)
+    expect(wrapper.find('.stub').exists()).toBe(true)
   })
 
   it('Init without welcome modal', async () => {
     GeoResources.getAllResources.mockClear()
     updates.mockClear()
 
-    UserConfiguration.getDisplayHelp.mockReturnValue(false)
-
+    const areas = {
+      namespaced: true,
+      state: {
+        all: ['1']
+      }
+    }
+    const dashboards = {
+      namespaced: true,
+      state: {
+        all: ['1']
+      }
+    }
+    const actions = {
+      init: jest.fn()
+    }
+    actions.init.mockReturnValue(Promise.resolve([]))
+    const store = new Vuex.Store({
+      actions,
+      modules: {
+        areas,
+        dashboards
+      }
+    })
     const wrapper = shallowMount(AuthentifiedRoot, {
-      mocks: {
-        $store: {
-          dispatch: jest.fn(),
-          state: {
-            dashboards: {all: ['dashboard']},
-            areas: {all: ['area']}
-          }
-        }
-      },
+      store,
+      localVue,
       stubs: {
-        WelcomeModal: WelcomeModal
+        WelcomeModal: '<div class=\'stub\'></div>'
       }
     })
 
-    expect(wrapper.vm.$store.dispatch).toHaveBeenCalledTimes(1)
+    expect(wrapper.vm.isLoaded).toBe(false)
+    expect(actions.init).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
     expect(updates).toHaveBeenCalledTimes(1)
-    expect(wrapper.vm.isLoaded).toBe(false)
+    await wrapper.vm.$nextTick()
     expect(wrapper.vm.showModalWelcome).toBe(false)
     expect(GeoResources.getAllResources).toHaveBeenCalledTimes(1)
     await wrapper.vm.$nextTick()
-    expect(wrapper.find(WelcomeModal).exists()).toBe(false)
+
+    expect(wrapper.vm.isLoaded).toBe(true)
+    expect(wrapper.find('.stub').exists()).toBe(false)
     expect(wrapper.find('router-view-stub').exists()).toBe(true)
   })
 })

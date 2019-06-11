@@ -33,6 +33,15 @@ Object.defineProperty(global, 'Node', {
   value: {firstElementChild: 'firstElementChild'}
 })
 
+Object.defineProperty(window, 'matchMedia', {
+  value: jest.fn(() => {
+    return {
+      matches: true,
+      addListener: jest.fn
+    }
+  })
+})
+
 jest.mock('@/api/securedInstance', () => {
   return jest.fn().mockImplementation(() => {})
 })
