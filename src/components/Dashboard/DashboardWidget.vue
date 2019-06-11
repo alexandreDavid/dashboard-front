@@ -6,10 +6,8 @@
           <div class="flex-grow-1">
             <b class="w-100" style="line-height: 26px;">{{cardConfiguration.title}}</b>
           </div>
-          <div v-if="showEditionButtons && !readOnly">
-            <button type="button" class="btn btn-light btn-xs ml-2 edit" title="Edit card" @click="$emit('edit')"><font-awesome-icon icon="edit" /></button>
-            <button type="button" class="btn btn-light btn-xs delete" title="Delete card" @click="showConfirmDelete = true"><font-awesome-icon icon="trash" /></button>
-          </div>
+          <button v-if="showEditionButtons && !readOnly" type="button" class="btn btn-light btn-xs ml-2 edit" title="Edit card" @click="$emit('edit')"><font-awesome-icon icon="edit" /></button>
+          <button v-if="showEditionButtons && !readOnly" type="button" class="btn btn-light btn-xs delete" title="Delete card" @click="showConfirmDelete = true"><font-awesome-icon icon="trash" /></button>
         </div>
       </div>
       <div v-if="!cardConfiguration.title" class="position-absolute p-2 drag-handler" style="left: 0;right: 0; height:47px; z-index: 1002;text-align: right;">
