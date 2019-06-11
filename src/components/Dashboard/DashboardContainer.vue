@@ -183,7 +183,7 @@ export default {
       this.$ga.event('dashboard', 'save')
     },
     deleteDashboard () {
-      this.removeDashboard(dashboard)
+      this.removeDashboard(this.dashboard)
       this.showConfirmDeleteDashboard = false
     },
     printDashboard () {

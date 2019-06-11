@@ -7,9 +7,9 @@
           Please select a dashboard in the list or click on the button to create a new one.
         </div>
       </div>
-      <div class="d-none d-md-block bg-light h-100 d-print-none" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
+      <mq-layout mq="lg+" class="bg-light h-100 d-print-none" style="box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); z-index:2;width:300px;">
         <dashboard-list @newDashboard="showNewModal = true"></dashboard-list>
-      </div>
+      </mq-layout>
       <side-bar v-if="sidebarOpened" @close="sidebarOpened = false">
         <dashboard-list @newDashboard="showNewModal = true"></dashboard-list>
       </side-bar>
