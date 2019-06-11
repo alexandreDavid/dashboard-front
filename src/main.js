@@ -8,6 +8,8 @@ import '@/utils/fontAwesome'
 import VueTour from 'vue-tour'
 import VueMq from 'vue-mq'
 import VueAnalytics from 'vue-analytics'
+import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
 
 Vue.config.productionTip = (process.env.NODE_ENV === 'production')
 
@@ -28,6 +30,14 @@ Vue.use(VueMq, {
     xl: 1200
   }
 })
+
+// Logging the errors
+if (process.env.SENTRY) {
+  Sentry.init({
+    dsn: process.env.SENTRY,
+    integrations: [new Integrations.Vue({Vue, attachProps: true})]
+  })
+}
 
 /* eslint-disable no-new */
 new Vue({
