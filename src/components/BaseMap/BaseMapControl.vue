@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="h-100 d-flex flex-wrap" v-if="isLoaded">
-      <div v-for="(baseMap, key) in allBaseMaps" :key="key" class="p-1 col-6" @click="selectBaseMap(baseMap)">
+      <div v-for="(baseMap, key) in allBaseMaps" :key="key" class="card-container p-1 col-sm-4" @click="selectBaseMap(baseMap)">
         <div class="card text-center" v-bind:class="{'bg-primary text-white': activeBaseMap.url === baseMap.url}">
           <div class="card-body p-1">
             <mini-map class="w-100 border position-relative base-map" :minimapKey="`basemap-${key}`" :areaLayer="areaLayer" :baseLayer="baseMap"></mini-map>
@@ -24,6 +24,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.card-container {
+  min-width: 150px;
+}
 .card {
   cursor: pointer;
 }
