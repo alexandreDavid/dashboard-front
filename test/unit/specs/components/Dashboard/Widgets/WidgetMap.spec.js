@@ -19,7 +19,8 @@ jest.mock('@/store/map', () => {
 
 const mockAreaLayer = {
   setSelectedArea: jest.fn(),
-  toGeoJSON: jest.fn()
+  toGeoJSON: jest.fn(),
+  isReady: jest.fn()
 }
 jest.mock('@/store/areaLayer', () => {
   return jest.fn().mockImplementation(() => {

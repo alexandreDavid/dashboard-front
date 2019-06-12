@@ -8,7 +8,8 @@ module.exports = {
     'vue'
   ],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^vue$': 'vue/dist/vue.common.js'
   },
   transform: {
     '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
@@ -24,5 +25,6 @@ module.exports = {
     'src/**/*.{js,vue}',
     '!src/main.js',
     '!**/node_modules/**'
-  ]
+  ],
+  'testURL': 'http://localhost/'
 }
