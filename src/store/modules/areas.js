@@ -5,6 +5,7 @@ const state = {
   all: []
 }
 
+// getters
 const getters = {
   activeArea: (state) => {
     return state.all.find(a => a.active) || state.all[0] || {}
@@ -26,11 +27,11 @@ const actions = {
   setActiveArea ({ commit }, area) {
     commit('setActive', area)
   },
-  async addArea ({ state, dispatch, commit }, area) {
+  async addArea ({ dispatch }, area) {
     await areas.add(area)
     await dispatch('getAll')
   },
-  async setArea ({ dispatch, commit }, area) {
+  async setArea ({ dispatch }, area) {
     if (area.id) {
       await areas.update(area)
       await dispatch('getAll')
