@@ -7,7 +7,10 @@
         <button class="btn btn-success" type="button" @click="save(val)" :disabled="required && !val">Save</button>
       </div>
     </div>
-    <span @click="edit" v-else>{{ value }}</span>
+    <div v-else>
+      <span>{{ value }}</span>
+      <button class="btn btn-default float-right" type="button" @click="edit"><font-awesome-icon icon="edit" /></button>
+    </div>
   </div>
 </template>
 
