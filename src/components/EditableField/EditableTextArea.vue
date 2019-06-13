@@ -11,7 +11,10 @@
         </div>
       </div>
     </div>
-    <div class="px-3 py-1 mb-0" style="white-space: pre-line;" @click="editTextArea" v-else>{{ value }}</div>
+    <div v-else>
+      <span>{{ value }}</span>
+      <button class="btn btn-default float-right" type="button" @click="edit"><font-awesome-icon icon="edit" /></button>
+    </div>
   </div>
 </template>
 
@@ -20,7 +23,9 @@ import EditableMixins from './EditableMixins'
 
 export default {
   name: 'EditableTextArea',
-  props: ['addButtonLabel'],
+  props: {
+    addButtonLabel: String
+  },
   data () {
     return {
       textAreaRows: 2,
