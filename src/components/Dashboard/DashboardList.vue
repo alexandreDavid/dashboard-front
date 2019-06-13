@@ -31,7 +31,7 @@
 import { mapState, mapMutations } from 'vuex'
 
 export default {
-  name: 'DashboardPage',
+  name: 'DashboardList',
   computed: mapState({
     dashboards: state => state.dashboards.all,
     sharedDashboards: state => state.dashboards.shared,
