@@ -1,4 +1,3 @@
-import UserConfiguration from '@/store/userConfiguration'
 import basemaps from '@/api/basemaps'
 
 // initial state
@@ -21,7 +20,6 @@ const actions = {
   async setActive ({ commit }, baseMap) {
     commit('setActive', baseMap)
     await basemaps.setActive(baseMap.id)
-    UserConfiguration.setActiveBaseMapLayer(baseMap)
   }
 }
 
@@ -38,7 +36,6 @@ const mutations = {
 export default {
   namespaced: true,
   state,
-  // getters,
   actions,
   mutations
 }

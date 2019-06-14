@@ -19,7 +19,7 @@ const getters = {
     })
     return setting && setting.id
   },
-  getLabel: () => (key) => {
+  getLabel: (state) => (key) => {
     let value
     state.all.forEach(setting => {
       value = value || setting.values.find(v => v.key === key)
