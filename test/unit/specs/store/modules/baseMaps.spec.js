@@ -1,6 +1,6 @@
 // basemaps.spec.js
 
-import basemaps from '@/store/modules/basemaps'
+import basemaps from '@/store/modules/baseMaps'
 import api from '@/api/basemaps'
 
 jest.mock('@/api/basemaps', () => ({
