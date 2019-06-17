@@ -1,7 +1,6 @@
 import UserConfiguration from '@/store/userConfiguration'
-import store from '@/store'
 
-export default async () => {
+export default async (store) => {
   if (!store.state.displayedLayers.all.length) {
     let selectedLayers = UserConfiguration.getSelectedLayers()
     for (let i in selectedLayers) {

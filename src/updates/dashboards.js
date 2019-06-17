@@ -1,7 +1,6 @@
 import UserConfiguration from '@/store/userConfiguration'
-import store from '@/store'
 
-export default async () => {
+export default async (store) => {
   if (!store.state.dashboards.all.length) {
     let dashboards = UserConfiguration.getDashboards()
     for (let i in dashboards) {
