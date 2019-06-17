@@ -25,9 +25,9 @@ var localStorageMock = (function () {
   }
 })()
 
-// Object.defineProperty(window, 'localStorage', {
-//   value: localStorageMock
-// })
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock
+})
 
 Object.defineProperty(global, 'Node', {
   value: {firstElementChild: 'firstElementChild'}

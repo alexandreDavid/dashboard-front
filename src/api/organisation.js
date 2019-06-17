@@ -19,7 +19,7 @@ export default {
   },
   async setOrganisation (obj) {
     try {
-      const response = await securedInstance().put('organisation', obj)
+      const response = await securedInstance().put('/organisation', obj)
       return response.data
     } catch (e) {
       return false
