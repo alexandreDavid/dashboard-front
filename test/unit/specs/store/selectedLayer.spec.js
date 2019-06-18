@@ -217,6 +217,37 @@ describe('selectedLayer.js', () => {
     expect(res).toBe('ok 2')
   })
 
+  it('getStatistics error cancelled', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    axios.post.mockClear()
+    axios.isCancel.mockClear()
+    axios.get.mockClear()
+    axios.post.mockRejectedValueOnce(new Error())
+    axios.isCancel.mockReturnValueOnce(true)
+    const res = await selectedLayer.getStatistics('dateStart', 'dateEnd')
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'}, {cancelToken: 'token'})
+    expect(axios.get).not.toHaveBeenCalled()
+    expect(res).toBe('cancel')
+  })
+
+  it('getStatistics too complex cancelled', async () => {
+    await selectedLayer.setLayer(mockGeoResource)
+    axios.post.mockClear()
+    axios.isCancel.mockClear()
+    axios.get.mockClear()
+    axios.post.mockRejectedValueOnce(new Error())
+    axios.isCancel.mockReturnValueOnce(false)
+    axios.isCancel.mockReturnValueOnce(true)
+    axios.get.mockRejectedValueOnce(new Error())
+    const mockSource = { cancel: jest.fn() }
+    selectedLayer.sources.push(mockSource)
+    const res = await selectedLayer.getStatistics('dateStart', 'dateEnd', true)
+    expect(mockSource.cancel).toBeCalled()
+    expect(axios.post).toHaveBeenCalledWith('statisticsLink', {start_date: 'dateStart', end_date: 'dateEnd', area: undefined, unit: 'getActiveKeyById'}, {cancelToken: 'token'})
+    expect(axios.get).toHaveBeenCalledWith('statisticsLink', {params: {start_date: 'dateStart', end_date: 'dateEnd', unit: 'getActiveKeyById'}, cancelToken: 'token'})
+    expect(res).toBe('cancel')
+  })
+
   it('setZIndex', async () => {
     await selectedLayer.setLayer(mockGeoResource)
     selectedLayer.geoResource = {}
@@ -274,5 +305,45 @@ describe('selectedLayer.js', () => {
     await selectedLayer.setArea('area')
     expect(mockTileLayer.redraw).toHaveBeenCalled()
     expect(selectedLayer._area).toBe('area')
+  })
+
+  it('getTresholdValue', async () => {
+    axios.get.mockClear()
+    axios.get.mockResolvedValue({
+      data: {
+        values: [
+          'firstValue', 'secondValue', 'thirdValue'
+        ]
+      }
+    })
+    await selectedLayer.setLayer(mockGeoResource)
+    await selectedLayer.setLegend()
+    const treshold = selectedLayer.getTresholdValue()
+    expect(treshold.length).toBe(2)
+    expect(treshold[0]).toBe('firstValue')
+    expect(treshold[1]).toBe('thirdValue')
+  })
+
+  it('getTresholdValue with treshold from georesouce', async () => {
+    axios.get.mockClear()
+    const firstValue = {value: 1}
+    const secondValue = {value: 2}
+    axios.get.mockResolvedValue({
+      data: {
+        values: [
+          firstValue, secondValue, 'thirdValue'
+        ]
+      }
+    })
+    await selectedLayer.setLayer(mockGeoResource)
+    await selectedLayer.setLegend()
+    selectedLayer.setTresholdValue([
+      {value: 1},
+      {value: 2}
+    ])
+    const treshold = selectedLayer.getTresholdValue()
+    expect(treshold.length).toBe(2)
+    expect(treshold[0]).toBe(firstValue)
+    expect(treshold[1]).toBe(secondValue)
   })
 })
