@@ -4,7 +4,7 @@
       <h4 v-if="isEditing" class="row flex-shrink-1">{{ valueModel && valueModel.id ? 'Edit an area' : 'New area' }}</h4>
       <h4 v-else class="row flex-shrink-1">
         {{ valueModel.name }}
-        <button type="button" v-if="!isEditing" class="btn btn-light ml-2" title="Edit area" @click="edit"><font-awesome-icon icon="edit" /></button>
+        <button type="button" v-if="!isEditing" class="btn btn-light ml-2 edit" title="Edit area" @click="edit"><font-awesome-icon icon="edit" /></button>
       </h4>
       <div class="row h-100 position-relative">
         <edit-area v-model="valueModel" v-if="isEditing"></edit-area>
@@ -12,8 +12,8 @@
       </div>
       <div class="row mb-3 flex-shrink-1" v-if="isEditing && valueModel.type">
         <div>
-          <button class="btn btn-secondary" v-if="valueModel.id" @click="cancel">Cancel</button>
-          <button class="btn btn-success" :disabled="!valueModel.valid" @click="validate">Validate</button>
+          <button class="btn btn-secondary cancel" v-if="valueModel.id" @click="cancel">Cancel</button>
+          <button class="btn btn-success validate" :disabled="!valueModel.valid" @click="validate">Validate</button>
         </div>
       </div>
     </div>
