@@ -50,4 +50,11 @@ describe('AreaSelectionControl.vue', () => {
     expect(wrapper.vm.showModalArea).toBe(false)
     expect(wrapper.find(AreaSelectionModal).exists()).toBe(false)
   })
+
+  it('On change value', () => {
+    const newValue = 'newValue'
+    expect(wrapper.vm.val).toEqual({id: 1})
+    wrapper.setProps({ value: newValue })
+    expect(wrapper.vm.val).toBe(newValue)
+  })
 })

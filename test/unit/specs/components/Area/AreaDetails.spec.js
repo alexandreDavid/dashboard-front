@@ -23,25 +23,6 @@ jest.mock('@/store/areaLayer', () => {
   })
 })
 
-// const mockValue = 'mockValue'
-// const mockEditedValue = 'mockEditedValue'
-
-// function goToEdit () {
-//   const wrapper = shallowMount(AreaNameInput, {
-//     propsData: {
-//       value: mockValue
-//     }
-//   })
-//   expect(wrapper.vm.editing).toBe(false)
-
-//   // Click on edit
-//   wrapper.find('.edit').trigger('click')
-//   expect(wrapper.vm.editing).toBe(true)
-//   expect(wrapper.vm.val).toBe(mockValue)
-
-//   return wrapper
-// }
-
 describe('AreaDetails.vue', () => {
   it('On mount with editing', () => {
     const wrapper = shallowMount(AreaDetails, {

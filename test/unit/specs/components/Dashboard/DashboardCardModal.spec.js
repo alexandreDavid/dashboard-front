@@ -18,4 +18,37 @@ describe('DashboardCardModal.vue', () => {
     wrapper.find(Modal).vm.$emit('close')
     expect(wrapper.emitted().close).toBeTruthy()
   })
+
+  it('On validate valid', () => {
+    const card = 'card'
+    const wrapper = shallowMount(DashboardCardModal, {
+      propsData: {
+        value: {
+          isValid: true
+        }
+      },
+      stubs: {
+        Modal: Modal
+      }
+    })
+    expect(wrapper.vm.showError).toBe(false)
+    wrapper.vm.validate(card)
+    expect(wrapper.emitted().input[0]).toEqual([ card ])
+  })
+
+  it('On validate not valid', () => {
+    const wrapper = shallowMount(DashboardCardModal, {
+      propsData: {
+        value: {
+          isValid: false
+        }
+      },
+      stubs: {
+        Modal: Modal
+      }
+    })
+    expect(wrapper.vm.showError).toBe(false)
+    wrapper.vm.validate({})
+    expect(wrapper.vm.showError).toBe(true)
+  })
 })

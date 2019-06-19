@@ -10,7 +10,10 @@ const localVue = createLocalVue()
 
 localVue.use(Vuex)
 
-const mockMap = jest.fn()
+const mockMap = {
+  remove: jest.fn(),
+  setBaseMapLayer: jest.fn()
+}
 jest.mock('@/store/map', () => {
   return jest.fn().mockImplementation(() => {
     return mockMap
@@ -31,7 +34,10 @@ jest.mock('@/store/areaLayer', () => {
 const mockSelectedLayer = {
   setLayer: jest.fn(),
   addTo: jest.fn(),
-  hasTime: jest.fn()
+  hasTime: jest.fn(),
+  setUnit: jest.fn(),
+  setArea: jest.fn(),
+  setOpacity: jest.fn()
 }
 jest.mock('@/store/selectedLayer', () => {
   return jest.fn().mockImplementation(() => {
@@ -56,12 +62,18 @@ describe('WidgetMap.vue', () => {
   let baseMaps
   let settings
   let areas
+  let store
 
   beforeEach(async () => {
     baseMaps = {
       namespaced: true,
       state: {
         active: 'activeBaseMap'
+      },
+      mutations: {
+        setActive (state, active) {
+          state.active = active
+        }
       }
     }
 
@@ -86,7 +98,7 @@ describe('WidgetMap.vue', () => {
       }
     }
 
-    let store = new Vuex.Store({
+    store = new Vuex.Store({
       modules: {
         baseMaps,
         settings,
@@ -110,12 +122,23 @@ describe('WidgetMap.vue', () => {
     })
   })
 
-  it('Mount with good data', async () => {
+  it('Mount with good data', () => {
     expect(wrapper.vm.mapHeight).toBe(200)
     const mapId = 'map-container-widgetwidgetKey'
     expect(wrapper.find(`#${mapId}`).exists()).toBe(true)
     expect(MapObj).toBeCalledWith(mapId)
     expect(AreaLayer).toBeCalledWith(mockMap)
     expect(areas.getters.getArea).toBeCalled()
+  })
+
+  it('On unit changes', () => {
+    const unit = 'unit'
+    store.commit('baseMaps/setActive', unit)
+    expect(mockMap.setBaseMapLayer).toBeCalledWith(unit)
+  })
+
+  it('On destroy', () => {
+    wrapper.destroy()
+    expect(mockMap.remove).toBeCalled()
   })
 })
