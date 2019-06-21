@@ -142,7 +142,6 @@ export default {
   },
   methods: {
     async login () {
-      console.log('login adadada')
       this.messageError = false
       try {
         const callBack = await auth.login(this.email, this.pass)
