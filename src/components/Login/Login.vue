@@ -93,7 +93,7 @@
             <div class="alert alert-danger" v-if="messageError" role="alert">{{ messageError }}</div>
           </div>
           <div class="card-footer bg-primary">
-            <button v-if="!displayReset && connectTab === 'login'" type="submit" form="login-form" class="btn btn-primary btn-lg btn-block">Log In</button>
+            <button v-if="!displayReset && connectTab === 'login'" type="submit" form="login-form" class="btn btn-primary btn-lg btn-block login">Log In</button>
             <button v-if="!displayReset && connectTab === 'signup'" type="submit" form="signup-form" class="btn btn-primary btn-lg btn-block">Sign Up</button>
             <button v-if="displayReset" type="submit" form="reset-form" class="btn btn-primary btn-lg btn-block">Send Email</button>
           </div>
@@ -142,6 +142,7 @@ export default {
   },
   methods: {
     async login () {
+      console.log('login adadada')
       this.messageError = false
       try {
         const callBack = await auth.login(this.email, this.pass)
