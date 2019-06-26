@@ -11,8 +11,8 @@
           <span>{{ dashboard.title }}</span>
         </div>
         <div id="dashboard-actions" class="my-2 my-lg-0 d-none d-lg-block">
-          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showCustomiseModal = true" v-if="!config.readOnly">Customise dashboard</button>
-          <button type="button" class="btn btn-sm btn-light d-inline-block" @click="showConfirmDeleteDashboard = true" v-if="!config.readOnly">Delete dashboard</button>
+          <button type="button" class="btn btn-sm btn-light d-inline-block customise" @click="showCustomiseModal = true" v-if="!config.readOnly">Customise dashboard</button>
+          <button type="button" class="btn btn-sm btn-light d-inline-block delete" @click="showConfirmDeleteDashboard = true" v-if="!config.readOnly">Delete dashboard</button>
           <button type="button" class="btn btn-sm btn-light d-inline-block" @click="printDashboard()" v-if="config.readOnly">Export</button>
         </div>
       </div>
@@ -164,7 +164,6 @@ export default {
       this.showCardModal = false
     },
     saveTitle (title) {
-      this.editedTitle = false
       this.dashboard.title = title
       this.save()
     },

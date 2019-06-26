@@ -33,7 +33,7 @@ import Modal from '@/components/Modal/Modal'
 import Dashboard from '@/store/dashboard'
 
 export default {
-  name: 'DashboardCostumiseModal',
+  name: 'DashboardCustomiseModal',
   components: {
     Modal
   },
