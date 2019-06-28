@@ -1,6 +1,11 @@
+import { shallowMount, createLocalVue } from '@vue/test-utils'
+import Vuex from 'vuex'
 import BaseMapControl from '@/components/BaseMap/BaseMapControl'
-import { shallowMount } from '@vue/test-utils'
 import AreaLayer from '@/store/areaLayer'
+
+const localVue = createLocalVue()
+
+localVue.use(Vuex)
 
 const mockAreaLayer = {
   setSelectedArea: jest.fn()
@@ -12,8 +17,34 @@ jest.mock('@/store/areaLayer', () => {
 })
 
 describe('BaseMapControl.vue', () => {
+  let state
+  let actions
+  let store
+
+  beforeEach(() => {
+    state = {
+      all: [{ id: 'id' }],
+      active: 'active'
+    }
+    actions = {
+      setActive: jest.fn()
+    }
+    store = new Vuex.Store({
+      modules: {
+        baseMaps: {
+          namespaced: true,
+          state,
+          actions
+        }
+      }
+    })
+  })
+
   it('On create', async () => {
-    const wrapper = shallowMount(BaseMapControl)
+    const wrapper = shallowMount(BaseMapControl, {
+      store,
+      localVue
+    })
     expect(AreaLayer).toBeCalled()
     expect(mockAreaLayer.setSelectedArea).toBeCalledWith({idArea: 7552})
     await wrapper.vm.$nextTick()
@@ -21,9 +52,11 @@ describe('BaseMapControl.vue', () => {
   })
 
   it('On select basemap', () => {
-    const wrapper = shallowMount(BaseMapControl)
-    wrapper.vm.$store = { dispatch: jest.fn() }
+    const wrapper = shallowMount(BaseMapControl, {
+      store,
+      localVue
+    })
     wrapper.vm.selectBaseMap('selectedBaseMap')
-    expect(wrapper.vm.$store.dispatch).toBeCalledWith('baseMaps/setActive', 'selectedBaseMap')
+    expect(actions.setActive).toBeCalled()
   })
 })

@@ -57,9 +57,8 @@ describe('BaseMapSidebar.vue', () => {
       store,
       localVue
     })
-    wrapper.vm.$store = { dispatch: jest.fn() }
     wrapper.vm.selectBaseMap('selectedBaseMap')
-    expect(wrapper.vm.$store.dispatch).toBeCalledWith('baseMaps/setActive', 'selectedBaseMap')
+    expect(actions.setActive).toBeCalled()
   })
 
   it('On close', () => {
