@@ -1,6 +1,6 @@
 # dfms-front
 
-> DFMS project front-end
+> Dashboard front-end
 
 ## Build Setup
 
