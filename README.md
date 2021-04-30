@@ -1,4 +1,4 @@
-# dfms-front
+# dashboard-front
 
 > Dashboard front-end
 
